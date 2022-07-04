@@ -9,7 +9,7 @@ import Foundation
 
 struct I18N {
     
-    struct TabBar{
+    struct TabBar {
         static let home = "홈"
         static let travelSpot = "여행지"
         static let scrap = "스크랩"
@@ -25,8 +25,8 @@ struct I18N {
         static let notOpenTravelSpot = "추후 오픈될 예정입니다"
     }
     
-    struct PlanPreview{
-        struct Recommend{
+    struct PlanPreview {
+        struct Recommend {
             static let title = "콘텐츠를 구매하시면 이런 내용을 볼 수 있어요!"
             static let content =
 """

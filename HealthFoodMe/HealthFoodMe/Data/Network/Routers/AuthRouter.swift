@@ -39,14 +39,14 @@ extension AuthRouter: BaseRouter {
     var parameters: RequestParams {
         switch self {
         case .requestSignUp(let email, let name, let pw):
-            let body: [String : Any] = [
+            let body: [String: Any] = [
                 "email": email,
                 "name": name,
                 "password": pw
             ]
             return .requestBody(body)
         case .requestSignIn(let email, let pw):
-            let body: [String : Any] = [
+            let body: [String: Any] = [
                 "email": email,
                 "password": pw
             ]

@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 
-extension UIViewController{
-  func showToast(message: String){
+extension UIViewController {
+  func showToast(message: String) {
     Toast.show(message: message, controller: self)
   }
 }
@@ -57,6 +57,4 @@ final class Toast {
       })
     })
   }
-  
-
 }

@@ -7,15 +7,14 @@
 
 import Foundation
 
-public func calculatePastTime(date : String) -> String
-{
+public func calculatePastTime(date: String) -> String {
   
   let minute = 60
   let hour = minute * 60
   let day = hour * 60
   let week = day * 7
   
-  var message : String = ""
+  var message: String = ""
   
   let UTCDate = Date()
   let formatter = DateFormatter()
@@ -36,15 +35,15 @@ public func calculatePastTime(date : String) -> String
   
   if useTime < minute {
     message = "방금 전"
-  }else if useTime < hour{
+  } else if useTime < hour {
     message = String(useTime/minute) + "분 전"
-  }else if useTime < day{
+  } else if useTime < day {
     message = String(useTime/hour) + "시간 전"
-  }else if useTime < week{
+  } else if useTime < week {
     message = String(useTime/day) + "일 전"
-  }else if useTime < week * 4{
+  } else if useTime < week * 4 {
     message = String(useTime/week) + "주 전"
-  }else{
+  } else {
     let timeArray = articleDate.components(separatedBy: " ")
     let dateArray = timeArray[0].components(separatedBy: "-")
     message = dateArray[1] + "월 " + dateArray[2] + "일"
@@ -52,4 +51,3 @@ public func calculatePastTime(date : String) -> String
   
   return message
 }
-

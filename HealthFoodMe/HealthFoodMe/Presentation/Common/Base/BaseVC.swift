@@ -54,7 +54,6 @@ class BaseVC: UIViewController {
      */
     func setUI() {}
     
-    
     /*
      `init()` 시점에 주입되어야 할 Cocoa 종속성 properties에 대한 변경이 필요할 때 사용합니다.
      ⚠️ 주의: init 시점이 아닌 properties를 변경할 경우 viewDidLoad() 시점에 영향을 줄 수 있음

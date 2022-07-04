@@ -104,8 +104,8 @@ extension BaseRouter {
 // MARK: ParameterType
 
 enum RequestParams {
-    case queryBody(_ query: [String : Any], _ body: [String : Any])
-    case query(_ query: [String : Any])
-    case requestBody(_ body: [String : Any])
+    case queryBody(_ query: [String: Any], _ body: [String: Any])
+    case query(_ query: [String: Any])
+    case requestBody(_ body: [String: Any])
     case requestPlain
 }

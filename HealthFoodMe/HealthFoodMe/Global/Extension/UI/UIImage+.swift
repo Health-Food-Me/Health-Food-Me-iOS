@@ -34,4 +34,3 @@ extension UIImage {
         return renderImage
     }
 }
-

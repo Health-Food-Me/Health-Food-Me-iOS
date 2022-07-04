@@ -44,7 +44,7 @@ extension UIImageView {
         .transition(.fade(0.5)),
         .cacheMemoryOnly
       ],
-      completionHandler:  { result in
+      completionHandler: { result in
         result.success { imageResult in
           completion?(imageResult.image)
         }
@@ -52,4 +52,3 @@ extension UIImageView {
     )
   }
 }
-

@@ -14,7 +14,7 @@ extension UIView {
         views.forEach { self.addSubview($0) }
     }
     
-    func addSubviewFromNib(view : UIView){
+    func addSubviewFromNib(view: UIView) {
       let view = Bundle.main.loadNibNamed(view.className, owner: self, options: nil)?.first as! UIView
       view.frame = bounds
       view.clipsToBounds = true
@@ -32,7 +32,7 @@ extension UIView {
     }
 }
 
-class XibView : UIView{
+class XibView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     addSubviewFromNib(view: self)

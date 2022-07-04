@@ -22,11 +22,11 @@ extension HomeRouter: BaseRouter {
         switch self {
         case .getPostDetail(let postId):
             return "/feed/\(postId)"
-        case .changeSellStatus(_, _):
+        case .changeSellStatus:
             return "/feed/on-sale"
         case .changeLikeStatus(let postId):
             return "/feed/like/\(postId)"
-        case .createPostWrite(_, _, _, _, _, _):
+        case .createPostWrite:
             return "/feed"
         case .getPostList:
             return "/feed"
@@ -35,13 +35,13 @@ extension HomeRouter: BaseRouter {
     
     var method: HTTPMethod {
         switch self {
-        case .getPostDetail(_):
+        case .getPostDetail:
             return .get
-        case .changeSellStatus(_, _):
+        case .changeSellStatus:
             return .put
-        case .changeLikeStatus(_):
+        case .changeLikeStatus:
             return .put
-        case .createPostWrite(_, _, _, _, _, _):
+        case .createPostWrite:
             return .post
         case .getPostList:
             return .get
@@ -50,23 +50,23 @@ extension HomeRouter: BaseRouter {
     
     var parameters: RequestParams {
         switch self {
-        case .getPostDetail(_):
+        case .getPostDetail:
             return .requestPlain
         case .changeSellStatus(let postId, let onSale):
-            let body: [String : Any] =
+            let body: [String: Any] =
             ["id": postId,
              "onSale": onSale ]
             return .requestBody(body)
-        case .changeLikeStatus(_):
+        case .changeLikeStatus:
             return .requestPlain
         case .createPostWrite(let imageCount, let title, let category, let price, let contents, let isPriceSuggestion):
-            let body: [String : Any] =
-            ["imageCount" : imageCount,
-             "title" : title,
-             "category" : category,
-             "price" : price,
-             "contents" : contents,
-             "isPriceSuggestion" : isPriceSuggestion]
+            let body: [String: Any] =
+            ["imageCount": imageCount,
+             "title": title,
+             "category": category,
+             "price": price,
+             "contents": contents,
+             "isPriceSuggestion": isPriceSuggestion]
             return .requestBody(body)
             
         case .getPostList:
@@ -74,4 +74,3 @@ extension HomeRouter: BaseRouter {
         }
     }
 }
-

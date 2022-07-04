@@ -7,9 +7,9 @@
 
 import UIKit
 
-struct ImageLiterals{
+struct ImageLiterals {
     
-    struct MainTabBar{
+    struct MainTabBar {
         static let homeIcon = UIImage(named: "icn_homeT")
         static let homeIcon_selected = UIImage(named: "icn_home_selected")
         static let townIcon = UIImage(named: "icn_town")

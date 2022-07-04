@@ -23,9 +23,8 @@ enum Storyboards: String {
     case postList2 = "PostList2"
 }
 
-extension UIStoryboard{
-    static func list(_ name : Storyboards) -> UIStoryboard{
+extension UIStoryboard {
+    static func list(_ name: Storyboards) -> UIStoryboard {
         return UIStoryboard(name: name.rawValue, bundle: nil)
     }
 }
-
