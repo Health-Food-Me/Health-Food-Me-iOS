@@ -1,8 +1,8 @@
 //
 //  HomeRouter.swift
-//  DaangnMarket-iOS
+//  HealthFoodMe
 //
-//  Created by Junho Lee on 2022/05/25.
+//  Created by Junho Lee on 2022/07/04.
 //
 
 import Foundation
@@ -36,9 +36,9 @@ extension HomeRouter: BaseRouter {
     var method: HTTPMethod {
         switch self {
         case .getPostDetail(_):
-                return .get
+            return .get
         case .changeSellStatus(_, _):
-                return .put
+            return .put
         case .changeLikeStatus(_):
             return .put
         case .createPostWrite(_, _, _, _, _, _):

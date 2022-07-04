@@ -1,6 +1,6 @@
 //
 //  BaseVC.swift
-//  DaangnMarket-iOS
+//  HealthFoodMe
 //
 //  Created by Junho Lee on 2022/05/16.
 //
@@ -23,7 +23,7 @@ class BaseVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configUI()
+        setUI()
         setLayout()
     }
     
@@ -52,7 +52,7 @@ class BaseVC: UIViewController {
      
      - 컴포넌트들의 속성을 정의하는 동작을 수행
      */
-    func configUI() {}
+    func setUI() {}
     
     
     /*

@@ -1,8 +1,8 @@
 //
 //  NoData.swift
-//  DaangnMarket-iOS
+//  HealthFoodMe
 //
-//  Created by Junho Lee on 2022/05/31.
+//  Created by Junho Lee on 2022/07/04.
 //
 
 import Foundation

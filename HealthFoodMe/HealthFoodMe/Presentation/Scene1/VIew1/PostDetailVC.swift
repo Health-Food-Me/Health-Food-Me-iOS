@@ -1,6 +1,6 @@
 //
 //  PostDetailVC.swift
-//  DaangnMarket-iOS
+//  HealthFoodMe
 //
 //  Created by Junho Lee on 2022/05/16.
 //
@@ -134,7 +134,7 @@ final class PostDetailVC: BaseVC {
     
     // MARK: - UI & Layout
     
-    override func configUI() {
+    override func setUI() {
         view.backgroundColor = .carrotWhite
         
         let homeBtn = UIBarButtonItem(customView: naviHomeButton)

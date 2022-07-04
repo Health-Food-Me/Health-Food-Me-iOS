@@ -1,8 +1,8 @@
 //
 //  ImageLiterals.swift
-//  DaangnMarket-iOS
+//  HealthFoodMe
 //
-//  Created by Junho Lee on 2022/05/16.
+//  Created by Junho Lee on 2022/07/04.
 //
 
 import UIKit
