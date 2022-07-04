@@ -30,7 +30,7 @@ final class PostDetailBottomView: UIView {
         bt.adjustsImageWhenHighlighted = false
         bt.addAction(UIAction(handler: { [weak self] _ in
             self?.likeButtonTapped.accept(bt.isSelected)
-        }),for: .touchUpInside)
+        }), for: .touchUpInside)
         return bt
     }()
     

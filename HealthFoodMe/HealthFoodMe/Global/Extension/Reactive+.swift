@@ -35,4 +35,3 @@ extension ObservableType {
         throttle(dueTime, latest: latest, scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
     }
 }
-

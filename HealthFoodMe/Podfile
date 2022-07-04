@@ -18,5 +18,6 @@ target 'HealthFoodMe' do
   pod 'Firebase/RemoteConfig'
   pod 'Firebase/Crashlytics'
   pod 'Kingfisher', '~> 7.0'
+  pod 'SwiftLint'
   
 end

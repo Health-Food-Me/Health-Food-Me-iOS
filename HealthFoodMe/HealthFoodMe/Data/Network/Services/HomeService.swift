@@ -17,7 +17,7 @@ class HomeService: BaseService {
 
 extension HomeService {
     
-    func getPostDetail(postId: String, completion: @escaping (NetworkResult<Any>) -> (Void)) {
+    func getPostDetail(postId: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         AFManager.request(HomeRouter.getPostDetail(postId: postId)).responseData { response in
             switch response.result {
             case .success:
@@ -32,7 +32,7 @@ extension HomeService {
         }
     }
     
-    func getPostList(completion: @escaping (NetworkResult<Any>) -> (Void)) {
+    func getPostList(completion: @escaping (NetworkResult<Any>) -> Void) {
         AFManager.request(HomeRouter.getPostList).responseData { response in
             switch response.result {
             case .success:
@@ -47,7 +47,7 @@ extension HomeService {
         }
     }
     
-    func changeSellStatus(postId: String, onSale: String, completion: @escaping (NetworkResult<Any>) -> (Void)) {
+    func changeSellStatus(postId: String, onSale: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         AFManager.request(HomeRouter.changeSellStatus(postId: postId, onSale: onSale)).responseData { response in
             switch response.result {
             case .success:
@@ -62,7 +62,7 @@ extension HomeService {
         }
     }
     
-    func changeLikeStatus(postId: String, completion: @escaping (NetworkResult<Any>) -> (Void)) {
+    func changeLikeStatus(postId: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         AFManager.request(HomeRouter.changeLikeStatus(postId: postId)).responseData { response in
             switch response.result {
             case .success:
@@ -91,6 +91,4 @@ extension HomeService {
 //        }
 //    }
     
-
 }
-

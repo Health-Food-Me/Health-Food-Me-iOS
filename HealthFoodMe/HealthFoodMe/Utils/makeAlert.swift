@@ -23,11 +23,10 @@ import UIKit
   
  */
 extension UIViewController {
-    func makeAlert(title : String,
-                   message : String,
-                   okAction : ((UIAlertAction) -> Void)? = nil,
-                   completion : (() -> Void)? = nil)
-    {
+    func makeAlert(title: String,
+                   message: String,
+                   okAction: ((UIAlertAction) -> Void)? = nil,
+                   completion : (() -> Void)? = nil) {
         makeVibrate()
         let alertViewController = UIAlertController(title: title, message: message,
                                                     preferredStyle: .alert)

@@ -13,7 +13,7 @@ protocol ModuleFactoryProtocol {
     //    func instantiateLoginVC() -> PostDetailVC
 }
 
-class ModuleFactory: ModuleFactoryProtocol{
+class ModuleFactory: ModuleFactoryProtocol {
     
     static func resolve() -> ModuleFactory {
         return ModuleFactory()

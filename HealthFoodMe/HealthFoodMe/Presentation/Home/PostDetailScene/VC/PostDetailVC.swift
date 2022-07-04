@@ -167,7 +167,7 @@ final class PostDetailVC: BaseVC {
 
 // MARK: Collection DataSource
 
-extension PostDetailVC: UICollectionViewDataSource{
+extension PostDetailVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let sectionType = SectionType(rawValue: section) else { return 1 }
@@ -194,8 +194,7 @@ extension PostDetailVC: UICollectionViewDataSource{
                 view.setData(data: data)
             }
             return view
-        }
-        else { return UICollectionReusableView() }
+        } else { return UICollectionReusableView() }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -274,7 +273,7 @@ extension PostDetailVC {
                     self.bottomView.setData(data: data)
                 }
             default:
-                break;
+                break
             }
         }
     }
@@ -285,7 +284,7 @@ extension PostDetailVC {
             case .success(let message):
                 print(message)
             default:
-                break;
+                break
             }
         }
     }
@@ -296,9 +295,8 @@ extension PostDetailVC {
             case .success(let message):
                 print(message)
             default:
-                break;
+                break
             }
         }
     }
 }
-

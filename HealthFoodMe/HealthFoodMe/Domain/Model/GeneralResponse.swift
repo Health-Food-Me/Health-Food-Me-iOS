@@ -8,7 +8,7 @@
 import Foundation
 
 struct GeneralResponse<T> {
-    let success : Bool
+    let success: Bool
     let status: Int
     let message: String?
     let data: T?
@@ -21,7 +21,7 @@ struct GeneralResponse<T> {
     }
 }
 
-extension GeneralResponse: Decodable where T: Decodable  {
+extension GeneralResponse: Decodable where T: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         success = try container.decode(Bool.self, forKey: .success)

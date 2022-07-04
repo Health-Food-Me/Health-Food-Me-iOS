@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6005A822AEB1A47010D6C01E /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDECAEA3BF2AEAD960B4B3C /* Pods_HealthFoodMe.framework */; };
+		EB6A44C7287366DF00749582 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44C6287366DF00749582 /* .swiftlint.yml */; };
 		EBF66ABC287227F500DE0ED1 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */; };
 		EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A53287227F500DE0ED1 /* UIDevice+.swift */; };
 		EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A54287227F500DE0ED1 /* UITextView+.swift */; };
@@ -90,6 +91,7 @@
 		DEDECAEA3BF2AEAD960B4B3C /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB085ED628716E1900361837 /* HealthFoodMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthFoodMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB085EE728716E1B00361837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EB6A44C6287366DF00749582 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		EBF66A53287227F500DE0ED1 /* UIDevice+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		EBF66A54287227F500DE0ED1 /* UITextView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				EBF66A90287227F500DE0ED1 /* Presentation */,
 				EBF66AA2287227F500DE0ED1 /* Utils */,
 				EB085EE728716E1B00361837 /* Info.plist */,
+				EB6A44C6287366DF00749582 /* .swiftlint.yml */,
 			);
 			path = HealthFoodMe;
 			sourceTree = "<group>";
@@ -595,6 +598,7 @@
 				EB085ED328716E1900361837 /* Frameworks */,
 				EB085ED428716E1900361837 /* Resources */,
 				9BD3ECF9DD88A7FF05EA6CFD /* [CP] Embed Pods Frameworks */,
+				EB6A44C5287365E400749582 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -643,6 +647,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB6A44C7287366DF00749582 /* .swiftlint.yml in Resources */,
 				EBF66AD0287227F500DE0ED1 /* Assets.xcassets in Resources */,
 				EBF66AD2287227F500DE0ED1 /* LaunchScreen.storyboard in Resources */,
 				EBF66AD1287227F500DE0ED1 /* NotoSansSC-Bold.otf in Resources */,
@@ -691,6 +696,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		EB6A44C5287365E400749582 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

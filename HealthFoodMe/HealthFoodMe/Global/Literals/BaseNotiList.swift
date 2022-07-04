@@ -7,16 +7,16 @@
 
 import UIKit
 
-enum BaseNotiList : String{
+enum BaseNotiList: String {
   case moveHomeTab
   
-  static func makeNotiName(list : BaseNotiList) -> NSNotification.Name{
+  static func makeNotiName(list: BaseNotiList) -> NSNotification.Name {
     return Notification.Name(String(describing: list))
   }
   
 }
 
-extension BaseVC{
+extension BaseVC {
 //  func addObservers(){
 //    addObserverAction(.showIndicator) { _ in
 //      let indicatorVC = self.factory.instantiateIndicatorVC()
@@ -58,4 +58,3 @@ extension BaseVC{
 //  }
   
 }
-
