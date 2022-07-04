@@ -70,7 +70,6 @@
 		EBF66AF9287227F500DE0ED1 /* setDefaultFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66AAB287227F500DE0ED1 /* setDefaultFonts.swift */; };
 		EBF66AFA287227F500DE0ED1 /* getClassName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66AAC287227F500DE0ED1 /* getClassName.swift */; };
 		EBF66AFB287227F500DE0ED1 /* setImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66AAD287227F500DE0ED1 /* setImage.swift */; };
-		EBF66AFC287227F500DE0ED1 /* addSubViewFromNib.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66AAE287227F500DE0ED1 /* addSubViewFromNib.swift */; };
 		EBF66AFD287227F500DE0ED1 /* calculateTopInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66AAF287227F500DE0ED1 /* calculateTopInset.swift */; };
 		EBF66AFE287227F500DE0ED1 /* makeVibrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66AB0287227F500DE0ED1 /* makeVibrate.swift */; };
 		EBF66AFF287227F500DE0ED1 /* makeAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66AB1287227F500DE0ED1 /* makeAlert.swift */; };
@@ -153,7 +152,6 @@
 		EBF66AAB287227F500DE0ED1 /* setDefaultFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = setDefaultFonts.swift; sourceTree = "<group>"; };
 		EBF66AAC287227F500DE0ED1 /* getClassName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = getClassName.swift; sourceTree = "<group>"; };
 		EBF66AAD287227F500DE0ED1 /* setImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = setImage.swift; sourceTree = "<group>"; };
-		EBF66AAE287227F500DE0ED1 /* addSubViewFromNib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addSubViewFromNib.swift; sourceTree = "<group>"; };
 		EBF66AAF287227F500DE0ED1 /* calculateTopInset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = calculateTopInset.swift; sourceTree = "<group>"; };
 		EBF66AB0287227F500DE0ED1 /* makeVibrate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = makeVibrate.swift; sourceTree = "<group>"; };
 		EBF66AB1287227F500DE0ED1 /* makeAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = makeAlert.swift; sourceTree = "<group>"; };
@@ -376,6 +374,7 @@
 		EBF66A80287227F500DE0ED1 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				EBF66B062872AE4200DE0ED1 /* Entity */,
 				EBF66A81287227F500DE0ED1 /* Network */,
 			);
 			path = Data;
@@ -434,30 +433,29 @@
 			isa = PBXGroup;
 			children = (
 				EBF66A9F287227F500DE0ED1 /* Common */,
-				EBF66A91287227F500DE0ED1 /* Scene1 */,
+				EBF66A91287227F500DE0ED1 /* Home */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
 		};
-		EBF66A91287227F500DE0ED1 /* Scene1 */ = {
+		EBF66A91287227F500DE0ED1 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				EBF66A92287227F500DE0ED1 /* VIew1 */,
+				EBF66A92287227F500DE0ED1 /* PostDetailScene */,
 			);
-			path = Scene1;
+			path = Home;
 			sourceTree = "<group>";
 		};
-		EBF66A92287227F500DE0ED1 /* VIew1 */ = {
+		EBF66A92287227F500DE0ED1 /* PostDetailScene */ = {
 			isa = PBXGroup;
 			children = (
+				EBF66B0D2872D4D500DE0ED1 /* VC */,
 				EBF66A93287227F500DE0ED1 /* ViewModel */,
-				EBF66A95287227F500DE0ED1 /* PostDetail.storyboard */,
-				EBF66A9B287227F500DE0ED1 /* PostDetailVC.swift */,
 				EBF66A96287227F500DE0ED1 /* Cells */,
 				EBF66A99287227F500DE0ED1 /* Layout */,
 				EBF66A9C287227F500DE0ED1 /* Views */,
 			);
-			path = VIew1;
+			path = PostDetailScene;
 			sourceTree = "<group>";
 		};
 		EBF66A93287227F500DE0ED1 /* ViewModel */ = {
@@ -524,7 +522,6 @@
 				EBF66AAB287227F500DE0ED1 /* setDefaultFonts.swift */,
 				EBF66AAC287227F500DE0ED1 /* getClassName.swift */,
 				EBF66AAD287227F500DE0ED1 /* setImage.swift */,
-				EBF66AAE287227F500DE0ED1 /* addSubViewFromNib.swift */,
 				EBF66AAF287227F500DE0ED1 /* calculateTopInset.swift */,
 				EBF66AB0287227F500DE0ED1 /* makeVibrate.swift */,
 				EBF66AB1287227F500DE0ED1 /* makeAlert.swift */,
@@ -536,7 +533,6 @@
 		EBF66AB3287227F500DE0ED1 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				EBF66B062872AE4200DE0ED1 /* Entity */,
 				EBF66AB4287227F500DE0ED1 /* Model */,
 			);
 			path = Domain;
@@ -576,6 +572,15 @@
 				EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		EBF66B0D2872D4D500DE0ED1 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				EBF66A9B287227F500DE0ED1 /* PostDetailVC.swift */,
+				EBF66A95287227F500DE0ED1 /* PostDetail.storyboard */,
+			);
+			path = VC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -697,7 +702,6 @@
 				EBF66AFF287227F500DE0ED1 /* makeAlert.swift in Sources */,
 				EBF66AF3287227F500DE0ED1 /* applyShadow.swift in Sources */,
 				EBF66AE5287227F500DE0ED1 /* NetworkConstants.swift in Sources */,
-				EBF66AFC287227F500DE0ED1 /* addSubViewFromNib.swift in Sources */,
 				EBF66AC8287227F500DE0ED1 /* UIFont+.swift in Sources */,
 				EBF66AF4287227F500DE0ED1 /* calculatePastTime.swift in Sources */,
 				EBF66AD9287227F500DE0ED1 /* ModuleFactory.swift in Sources */,
@@ -902,8 +906,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FY8N9XTH66;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -920,7 +924,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

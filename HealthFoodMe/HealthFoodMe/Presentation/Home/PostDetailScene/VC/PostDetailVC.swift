@@ -166,6 +166,7 @@ final class PostDetailVC: BaseVC {
 }
 
 // MARK: Collection DataSource
+
 extension PostDetailVC: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
