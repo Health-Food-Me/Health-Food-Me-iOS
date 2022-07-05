@@ -11,18 +11,18 @@ import SnapKit
 
 class SocialLoginVC: UIViewController {
 
-    lazy var titleImage = UIImageView()
-    lazy var subTitleImage = UIImageView()
-    
+    lazy var titleImageView = UIImageView()
+    lazy var subtitleImageView = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setUI()
     }
     
     private func setUI() {
-        titleImage
+        titleImageView.image = UIImage(named: "authTitle")
+        subtitleImageView.image = UIImage(named: "authSubtitle")
     }
-    
 
 }
