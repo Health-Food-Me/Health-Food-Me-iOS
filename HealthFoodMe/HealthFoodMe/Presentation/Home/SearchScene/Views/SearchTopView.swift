@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class SearchTopView: UIView {
+final class SearchTopView: UIView {
     
     // MARK: - Properties
     
@@ -115,6 +115,6 @@ extension SearchTopView: UITextFieldDelegate {
     }
     
     private func pushToSearchResult(_ search: String) {
-        print(search)
+        
     }
 }
