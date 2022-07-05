@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		6005A822AEB1A47010D6C01E /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDECAEA3BF2AEAD960B4B3C /* Pods_HealthFoodMe.framework */; };
 		EB6A44C7287366DF00749582 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44C6287366DF00749582 /* .swiftlint.yml */; };
+		EB6A44D128737CC400749582 /* MainDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44CB28737CC400749582 /* MainDetailUseCase.swift */; };
+		EB6A44D228737CC400749582 /* MainDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44CC28737CC400749582 /* MainDetailRepository.swift */; };
+		EB6A44D328737CC400749582 /* MainDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44CD28737CC400749582 /* MainDetailModel.swift */; };
+		EB6A44D428737CC400749582 /* MainDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44CE28737CC400749582 /* MainDetailVC.swift */; };
+		EB6A44D528737CC400749582 /* MainDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44CF28737CC400749582 /* MainDetailViewModel.swift */; };
+		EB6A44D628737CC400749582 /* MainDetailEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44D028737CC400749582 /* MainDetailEntity.swift */; };
 		EBF66ABC287227F500DE0ED1 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */; };
 		EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A53287227F500DE0ED1 /* UIDevice+.swift */; };
 		EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A54287227F500DE0ED1 /* UITextView+.swift */; };
@@ -92,6 +98,12 @@
 		EB085ED628716E1900361837 /* HealthFoodMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthFoodMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB085EE728716E1B00361837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB6A44C6287366DF00749582 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
+		EB6A44CB28737CC400749582 /* MainDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailUseCase.swift; sourceTree = "<group>"; };
+		EB6A44CC28737CC400749582 /* MainDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailRepository.swift; sourceTree = "<group>"; };
+		EB6A44CD28737CC400749582 /* MainDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailModel.swift; sourceTree = "<group>"; };
+		EB6A44CE28737CC400749582 /* MainDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailVC.swift; sourceTree = "<group>"; };
+		EB6A44CF28737CC400749582 /* MainDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailViewModel.swift; sourceTree = "<group>"; };
+		EB6A44D028737CC400749582 /* MainDetailEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailEntity.swift; sourceTree = "<group>"; };
 		EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		EBF66A53287227F500DE0ED1 /* UIDevice+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		EBF66A54287227F500DE0ED1 /* UITextView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
@@ -228,6 +240,118 @@
 				EB6A44C6287366DF00749582 /* .swiftlint.yml */,
 			);
 			path = HealthFoodMe;
+			sourceTree = "<group>";
+		};
+		EB6A44C828737BF700749582 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44C928737C4600749582 /* MainDetailScene */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		EB6A44C928737C4600749582 /* MainDetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44CA28737C8200749582 /* VC */,
+				EB6A44D728737CE300749582 /* ViewModel */,
+			);
+			path = MainDetailScene;
+			sourceTree = "<group>";
+		};
+		EB6A44CA28737C8200749582 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44CE28737CC400749582 /* MainDetailVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		EB6A44D728737CE300749582 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44CF28737CC400749582 /* MainDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		EB6A44D828737CE600749582 /* MainDetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44CD28737CC400749582 /* MainDetailModel.swift */,
+			);
+			path = MainDetailScene;
+			sourceTree = "<group>";
+		};
+		EB6A44D928737D0500749582 /* MainDetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44CC28737CC400749582 /* MainDetailRepository.swift */,
+			);
+			path = MainDetailScene;
+			sourceTree = "<group>";
+		};
+		EB6A44DA28737DBD00749582 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44DB28737DC300749582 /* Detail */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		EB6A44DB28737DC300749582 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44D928737D0500749582 /* MainDetailScene */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		EB6A44DC28737DFA00749582 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44DD28737DFF00749582 /* MainDetailScene */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		EB6A44DD28737DFF00749582 /* MainDetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44D028737CC400749582 /* MainDetailEntity.swift */,
+			);
+			path = MainDetailScene;
+			sourceTree = "<group>";
+		};
+		EB6A44DE28737E5200749582 /* Usecase */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44DF28737E5A00749582 /* Detail */,
+			);
+			path = Usecase;
+			sourceTree = "<group>";
+		};
+		EB6A44DF28737E5A00749582 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44E028737E5E00749582 /* MainDetailScene */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		EB6A44E028737E5E00749582 /* MainDetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A44CB28737CC400749582 /* MainDetailUseCase.swift */,
+			);
+			path = MainDetailScene;
+			sourceTree = "<group>";
+		};
+		EB6A44E12873B9F100749582 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		EBF66A4F287227F500DE0ED1 /* Global */ = {
@@ -377,6 +501,7 @@
 		EBF66A80287227F500DE0ED1 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				EB6A44DA28737DBD00749582 /* Repository */,
 				EBF66B062872AE4200DE0ED1 /* Entity */,
 				EBF66A81287227F500DE0ED1 /* Network */,
 			);
@@ -436,6 +561,7 @@
 			isa = PBXGroup;
 			children = (
 				EBF66A9F287227F500DE0ED1 /* Common */,
+				EB6A44C828737BF700749582 /* Detail */,
 				EBF66A91287227F500DE0ED1 /* Home */,
 			);
 			path = Presentation;
@@ -536,6 +662,7 @@
 		EBF66AB3287227F500DE0ED1 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				EB6A44DE28737E5200749582 /* Usecase */,
 				EBF66AB4287227F500DE0ED1 /* Model */,
 			);
 			path = Domain;
@@ -544,10 +671,12 @@
 		EBF66AB4287227F500DE0ED1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EB6A44E12873B9F100749582 /* New Group */,
+				EB6A44D828737CE600749582 /* MainDetailScene */,
 				EBF66AB5287227F500DE0ED1 /* Scene1 */,
-				EBF66AB7287227F500DE0ED1 /* NoData.swift */,
 				EBF66AB8287227F500DE0ED1 /* Auth */,
 				EBF66ABB287227F500DE0ED1 /* GeneralResponse.swift */,
+				EBF66AB7287227F500DE0ED1 /* NoData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -572,6 +701,7 @@
 		EBF66B062872AE4200DE0ED1 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				EB6A44DC28737DFA00749582 /* Detail */,
 				EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */,
 			);
 			path = Entity;
@@ -723,6 +853,7 @@
 			files = (
 				EBF66AFF287227F500DE0ED1 /* makeAlert.swift in Sources */,
 				EBF66AF3287227F500DE0ED1 /* applyShadow.swift in Sources */,
+				EB6A44D628737CC400749582 /* MainDetailEntity.swift in Sources */,
 				EBF66AE5287227F500DE0ED1 /* NetworkConstants.swift in Sources */,
 				EBF66AC8287227F500DE0ED1 /* UIFont+.swift in Sources */,
 				EBF66AF4287227F500DE0ED1 /* calculatePastTime.swift in Sources */,
@@ -737,7 +868,9 @@
 				EBF66AFB287227F500DE0ED1 /* setImage.swift in Sources */,
 				EBF66AF6287227F500DE0ED1 /* setRootViewController.swift in Sources */,
 				EBF66AD4287227F500DE0ED1 /* UICollectionViewRegisterable.swift in Sources */,
+				EB6A44D128737CC400749582 /* MainDetailUseCase.swift in Sources */,
 				EBF66ACE287227F500DE0ED1 /* ImageLiterals.swift in Sources */,
+				EB6A44D428737CC400749582 /* MainDetailVC.swift in Sources */,
 				EBF66AF8287227F500DE0ED1 /* JsonCoder.swift in Sources */,
 				EBF66AFA287227F500DE0ED1 /* getClassName.swift in Sources */,
 				EBF66AE4287227F500DE0ED1 /* HeaderType.swift in Sources */,
@@ -748,7 +881,9 @@
 				EBF66AFE287227F500DE0ED1 /* makeVibrate.swift in Sources */,
 				EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */,
 				EBF66AEE287227F500DE0ED1 /* PostDetailBottomView.swift in Sources */,
+				EB6A44D528737CC400749582 /* MainDetailViewModel.swift in Sources */,
 				EBF66ACA287227F500DE0ED1 /* Reactive+.swift in Sources */,
+				EB6A44D228737CC400749582 /* MainDetailRepository.swift in Sources */,
 				EBF66B0C2872B4FE00DE0ED1 /* StoryboardLiterals.swift in Sources */,
 				EBF66AF7287227F500DE0ED1 /* manageObserverAction.swift in Sources */,
 				EBF66B05287227F500DE0ED1 /* GeneralResponse.swift in Sources */,
@@ -759,6 +894,7 @@
 				EBF66B082872AF5B00DE0ED1 /* SampleEntity.swift in Sources */,
 				EBF66B03287227F500DE0ED1 /* SignUp.swift in Sources */,
 				EBF66B04287227F500DE0ED1 /* SignIn.swift in Sources */,
+				EB6A44D328737CC400749582 /* MainDetailModel.swift in Sources */,
 				EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */,
 				EBF66AD5287227F500DE0ED1 /* ViewModelType.swift in Sources */,
 				EBF66ADA287227F500DE0ED1 /* controllerFromStoryBoard.swift in Sources */,
