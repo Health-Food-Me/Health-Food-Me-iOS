@@ -25,6 +25,8 @@
 		EB6A44FF2873BFAE00749582 /* MainDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44FE2873BFAE00749582 /* MainDetail.storyboard */; };
 		EB6A450C2873D6C500749582 /* DetailSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A450B2873D6C500749582 /* DetailSummaryView.swift */; };
 		EB6A450E2873FEA900749582 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A450D2873FEA900749582 /* Config.swift */; };
+		EB6A451128740CFF00749582 /* MainInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A451028740CFF00749582 /* MainInfoTVC.swift */; };
+		EB6A45132874241400749582 /* MainDetailUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A45122874241400749582 /* MainDetailUI.swift */; };
 		EBF66ABC287227F500DE0ED1 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */; };
 		EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A53287227F500DE0ED1 /* UIDevice+.swift */; };
 		EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A54287227F500DE0ED1 /* UITextView+.swift */; };
@@ -124,6 +126,8 @@
 		EB6A44FE2873BFAE00749582 /* MainDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainDetail.storyboard; sourceTree = "<group>"; };
 		EB6A450B2873D6C500749582 /* DetailSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSummaryView.swift; sourceTree = "<group>"; };
 		EB6A450D2873FEA900749582 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		EB6A451028740CFF00749582 /* MainInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInfoTVC.swift; sourceTree = "<group>"; };
+		EB6A45122874241400749582 /* MainDetailUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailUI.swift; sourceTree = "<group>"; };
 		EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		EBF66A53287227F500DE0ED1 /* UIDevice+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		EBF66A54287227F500DE0ED1 /* UITextView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
@@ -276,6 +280,7 @@
 				EB6A44CA28737C8200749582 /* VC */,
 				EB6A44D728737CE300749582 /* ViewModel */,
 				EB6A45082873D5F200749582 /* Views */,
+				EB6A450F28740CC800749582 /* Cells */,
 			);
 			path = MainDetailScene;
 			sourceTree = "<group>";
@@ -285,6 +290,7 @@
 			children = (
 				EB6A44CE28737CC400749582 /* MainDetailVC.swift */,
 				EB6A44FE2873BFAE00749582 /* MainDetail.storyboard */,
+				EB6A45122874241400749582 /* MainDetailUI.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -483,6 +489,14 @@
 				EB6A450B2873D6C500749582 /* DetailSummaryView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		EB6A450F28740CC800749582 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EB6A451028740CFF00749582 /* MainInfoTVC.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		EBF66A4F287227F500DE0ED1 /* Global */ = {
@@ -1006,6 +1020,7 @@
 				EBF66AF6287227F500DE0ED1 /* setRootViewController.swift in Sources */,
 				EB6A450E2873FEA900749582 /* Config.swift in Sources */,
 				EBF66AD4287227F500DE0ED1 /* UICollectionViewRegisterable.swift in Sources */,
+				EB6A45132874241400749582 /* MainDetailUI.swift in Sources */,
 				EB6A44D128737CC400749582 /* MainDetailUseCase.swift in Sources */,
 				EBF66ACE287227F500DE0ED1 /* ImageLiterals.swift in Sources */,
 				EB6A44D428737CC400749582 /* MainDetailVC.swift in Sources */,
@@ -1053,6 +1068,7 @@
 				EBF66ADE287227F500DE0ED1 /* HomeRouter.swift in Sources */,
 				EBF66ACF287227F500DE0ED1 /* Result+.swift in Sources */,
 				EBF66AD7287227F500DE0ED1 /* Presentable.swift in Sources */,
+				EB6A451128740CFF00749582 /* MainInfoTVC.swift in Sources */,
 				EBF66AED287227F500DE0ED1 /* PostDetailVC.swift in Sources */,
 				EB6A44F22873BED500749582 /* MainMapViewModel.swift in Sources */,
 				EBF66AE0287227F500DE0ED1 /* EventLogger.swift in Sources */,

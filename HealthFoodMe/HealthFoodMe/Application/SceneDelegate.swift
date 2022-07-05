@@ -16,18 +16,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if #available(iOS 15.0, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
-            navigationBarAppearance.configureWithOpaqueBackground()
-            navigationBarAppearance.backgroundColor = .white
-            navigationBarAppearance.shadowColor = .white
-            
+            navigationBarAppearance.configureWithTransparentBackground()
+            navigationBarAppearance.backgroundColor = .clear
+            navigationBarAppearance.shadowColor = .clear
+
             UINavigationBar.appearance().standardAppearance = navigationBarAppearance
             UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
         }
-        
+
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let rootViewController = ModuleFactory.resolve().instantiateMainMapVC()
+        let navigation = UINavigationController(rootViewController: rootViewController)
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = rootViewController
+        window.rootViewController = navigation
         self.window = window
         window.backgroundColor = .white
         window.makeKeyAndVisible()
