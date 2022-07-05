@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let rootViewController = ModuleFactory.resolve().instantiateMainDetailVC()
+        let rootViewController = ModuleFactory.resolve().instantiateMainMapVC()
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = rootViewController
         self.window = window
