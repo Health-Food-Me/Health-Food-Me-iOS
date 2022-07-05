@@ -8,6 +8,7 @@
 import UIKit
 
 import RxSwift
+import SnapKit
 
 class MainDetailVC: UIViewController {
     
@@ -18,10 +19,13 @@ class MainDetailVC: UIViewController {
     
     // MARK: - UI Components
     
+    private let detailSummaryView = DetailSummaryView()
+    
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        setLayout()
         bindViewModels()
     }
 }
@@ -32,6 +36,14 @@ extension MainDetailVC {
     
     private func setUI() {
         view.backgroundColor = .blue
+    }
+    
+    private func setLayout() {
+        view.addSubviews(detailSummaryView)
+        
+        detailSummaryView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     
     private func bindViewModels() {
