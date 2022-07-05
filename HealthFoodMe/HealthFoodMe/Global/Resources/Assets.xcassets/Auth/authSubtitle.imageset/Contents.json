@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "샐러드부터 일반식까지 다이어터를 위한 식당 추천 지도앱.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "샐러드부터 일반식까지 다이어터를 위한 식당 추천 지도앱@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "샐러드부터 일반식까지 다이어터를 위한 식당 추천 지도앱@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
