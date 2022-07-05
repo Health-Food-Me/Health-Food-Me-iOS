@@ -21,13 +21,19 @@ class MainDetailVC: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.bindViewModels()
+        setUI()
+        bindViewModels()
     }
 }
 
 // MARK: - Methods
 
 extension MainDetailVC {
+    
+    private func setUI() {
+        view.backgroundColor = .blue
+    }
+    
     private func bindViewModels() {
         let input = MainDetailViewModel.Input()
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)

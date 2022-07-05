@@ -21,8 +21,8 @@
 		EB6A44F12873BED500749582 /* MainMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44EB2873BED500749582 /* MainMapVC.swift */; };
 		EB6A44F22873BED500749582 /* MainMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44EC2873BED500749582 /* MainMapViewModel.swift */; };
 		EB6A44F32873BED500749582 /* MainMapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44ED2873BED500749582 /* MainMapEntity.swift */; };
-		EB6A44FD2873BF8800749582 /* MainMapSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44FC2873BF8800749582 /* MainMapSB.storyboard */; };
-		EB6A44FF2873BFAE00749582 /* MainDetailSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44FE2873BFAE00749582 /* MainDetailSB.storyboard */; };
+		EB6A44FD2873BF8800749582 /* MainMap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44FC2873BF8800749582 /* MainMap.storyboard */; };
+		EB6A44FF2873BFAE00749582 /* MainDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44FE2873BFAE00749582 /* MainDetail.storyboard */; };
 		EBF66ABC287227F500DE0ED1 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */; };
 		EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A53287227F500DE0ED1 /* UIDevice+.swift */; };
 		EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A54287227F500DE0ED1 /* UITextView+.swift */; };
@@ -118,8 +118,8 @@
 		EB6A44EB2873BED500749582 /* MainMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapVC.swift; sourceTree = "<group>"; };
 		EB6A44EC2873BED500749582 /* MainMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewModel.swift; sourceTree = "<group>"; };
 		EB6A44ED2873BED500749582 /* MainMapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapEntity.swift; sourceTree = "<group>"; };
-		EB6A44FC2873BF8800749582 /* MainMapSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainMapSB.storyboard; sourceTree = "<group>"; };
-		EB6A44FE2873BFAE00749582 /* MainDetailSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainDetailSB.storyboard; sourceTree = "<group>"; };
+		EB6A44FC2873BF8800749582 /* MainMap.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainMap.storyboard; sourceTree = "<group>"; };
+		EB6A44FE2873BFAE00749582 /* MainDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainDetail.storyboard; sourceTree = "<group>"; };
 		EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		EBF66A53287227F500DE0ED1 /* UIDevice+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		EBF66A54287227F500DE0ED1 /* UITextView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
@@ -247,9 +247,9 @@
 			isa = PBXGroup;
 			children = (
 				EBF66A74287227F500DE0ED1 /* Application */,
+				EBF66A4F287227F500DE0ED1 /* Global */,
 				EBF66A80287227F500DE0ED1 /* Data */,
 				EBF66AB3287227F500DE0ED1 /* Domain */,
-				EBF66A4F287227F500DE0ED1 /* Global */,
 				EBF66A90287227F500DE0ED1 /* Presentation */,
 				EBF66AA2287227F500DE0ED1 /* Utils */,
 				EB085EE728716E1B00361837 /* Info.plist */,
@@ -279,7 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				EB6A44CE28737CC400749582 /* MainDetailVC.swift */,
-				EB6A44FE2873BFAE00749582 /* MainDetailSB.storyboard */,
+				EB6A44FE2873BFAE00749582 /* MainDetail.storyboard */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -344,8 +344,8 @@
 		EB6A44DE28737E5200749582 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
-				EB6A44DF28737E5A00749582 /* Detail */,
 				EB6A44F62873BF1A00749582 /* Map */,
+				EB6A44DF28737E5A00749582 /* Detail */,
 			);
 			path = Usecase;
 			sourceTree = "<group>";
@@ -395,7 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				EB6A44EB2873BED500749582 /* MainMapVC.swift */,
-				EB6A44FC2873BF8800749582 /* MainMapSB.storyboard */,
+				EB6A44FC2873BF8800749582 /* MainMap.storyboard */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -679,8 +679,8 @@
 			isa = PBXGroup;
 			children = (
 				EBF66A9F287227F500DE0ED1 /* Common */,
-				EB6A44C828737BF700749582 /* Detail */,
 				EB6A44E22873BAAE00749582 /* Map */,
+				EB6A44C828737BF700749582 /* Detail */,
 				EBF66A91287227F500DE0ED1 /* Home */,
 			);
 			path = Presentation;
@@ -790,8 +790,8 @@
 		EBF66AB4287227F500DE0ED1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EB6A44F42873BEF100749582 /* Detail */,
 				EB6A44E12873B9F100749582 /* Map */,
+				EB6A44F42873BEF100749582 /* Detail */,
 				EBF66AB5287227F500DE0ED1 /* Scene1 */,
 				EBF66AB8287227F500DE0ED1 /* Auth */,
 				EBF66ABB287227F500DE0ED1 /* GeneralResponse.swift */,
@@ -900,8 +900,8 @@
 				EB6A44C7287366DF00749582 /* .swiftlint.yml in Resources */,
 				EBF66AD0287227F500DE0ED1 /* Assets.xcassets in Resources */,
 				EBF66AD2287227F500DE0ED1 /* LaunchScreen.storyboard in Resources */,
-				EB6A44FF2873BFAE00749582 /* MainDetailSB.storyboard in Resources */,
-				EB6A44FD2873BF8800749582 /* MainMapSB.storyboard in Resources */,
+				EB6A44FF2873BFAE00749582 /* MainDetail.storyboard in Resources */,
+				EB6A44FD2873BF8800749582 /* MainMap.storyboard in Resources */,
 				EBF66AD1287227F500DE0ED1 /* NotoSansSC-Bold.otf in Resources */,
 				EBF66AE9287227F500DE0ED1 /* PostDetail.storyboard in Resources */,
 			);
