@@ -24,6 +24,7 @@
 		EB6A44FD2873BF8800749582 /* MainMap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44FC2873BF8800749582 /* MainMap.storyboard */; };
 		EB6A44FF2873BFAE00749582 /* MainDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44FE2873BFAE00749582 /* MainDetail.storyboard */; };
 		EB6A450C2873D6C500749582 /* DetailSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A450B2873D6C500749582 /* DetailSummaryView.swift */; };
+		EB6A450E2873FEA900749582 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A450D2873FEA900749582 /* Config.swift */; };
 		EBF66ABC287227F500DE0ED1 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */; };
 		EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A53287227F500DE0ED1 /* UIDevice+.swift */; };
 		EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A54287227F500DE0ED1 /* UITextView+.swift */; };
@@ -122,6 +123,7 @@
 		EB6A44FC2873BF8800749582 /* MainMap.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainMap.storyboard; sourceTree = "<group>"; };
 		EB6A44FE2873BFAE00749582 /* MainDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainDetail.storyboard; sourceTree = "<group>"; };
 		EB6A450B2873D6C500749582 /* DetailSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSummaryView.swift; sourceTree = "<group>"; };
+		EB6A450D2873FEA900749582 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		EBF66A53287227F500DE0ED1 /* UIDevice+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		EBF66A54287227F500DE0ED1 /* UITextView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
@@ -673,6 +675,7 @@
 			isa = PBXGroup;
 			children = (
 				EBF66A8C287227F500DE0ED1 /* NetworkConstants.swift */,
+				EB6A450D2873FEA900749582 /* Config.swift */,
 			);
 			path = Environment;
 			sourceTree = "<group>";
@@ -1001,6 +1004,7 @@
 				EBF66AE6287227F500DE0ED1 /* AuthService.swift in Sources */,
 				EBF66AFB287227F500DE0ED1 /* setImage.swift in Sources */,
 				EBF66AF6287227F500DE0ED1 /* setRootViewController.swift in Sources */,
+				EB6A450E2873FEA900749582 /* Config.swift in Sources */,
 				EBF66AD4287227F500DE0ED1 /* UICollectionViewRegisterable.swift in Sources */,
 				EB6A44D128737CC400749582 /* MainDetailUseCase.swift in Sources */,
 				EBF66ACE287227F500DE0ED1 /* ImageLiterals.swift in Sources */,
