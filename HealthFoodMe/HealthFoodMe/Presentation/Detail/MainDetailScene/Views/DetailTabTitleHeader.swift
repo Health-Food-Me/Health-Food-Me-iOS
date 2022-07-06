@@ -14,7 +14,11 @@ final class DetailTabTitleHeader: UITableViewHeaderFooterView, UITableViewHeader
     // MARK: - Properties
     
     static var isFromNib: Bool = false
-    private var selectedButton: Int = 0
+    private var selectedButton: Int = 0 {
+        didSet {
+            tabIndicator.leftOffsetRatio = Double(selectedButton) / 3
+        }
+    }
     private let buttonTitles: [String] = ["메뉴", "외식대처법", "리뷰"]
     
     // MARK: - UI Components
@@ -29,10 +33,11 @@ final class DetailTabTitleHeader: UITableViewHeaderFooterView, UITableViewHeader
         return st
     }()
     
-//    private let selectorBar: UICollectionView = {
-//        let cv = UICollectionView()
-//        return cv
-//    }()
+    private let tabIndicator: TabIndicator = {
+        let tabIndicator = TabIndicator()
+        tabIndicator.widthRatio = 1/3
+        return tabIndicator
+    }()
     
     // MARK: - View Life Cycles
     
@@ -78,7 +83,7 @@ extension DetailTabTitleHeader {
     }
     
     private func setLayout() {
-        self.addSubviews(buttonStackView)
+        self.addSubviews(buttonStackView, tabIndicator)
         
         titleButtons.forEach({ button in
             let buttonWidth = UIScreen.main.bounds.width/3
@@ -90,6 +95,12 @@ extension DetailTabTitleHeader {
         
         buttonStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        tabIndicator.snp.makeConstraints { make in
+            make.top.equalTo(buttonStackView.snp.bottom)
+            make.left.right.equalTo(buttonStackView)
+            make.height.equalTo(4)
         }
     }
     
