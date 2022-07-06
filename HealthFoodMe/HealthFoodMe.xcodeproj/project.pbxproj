@@ -27,6 +27,8 @@
 		EB6A450E2873FEA900749582 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A450D2873FEA900749582 /* Config.swift */; };
 		EB6A451128740CFF00749582 /* MainInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A451028740CFF00749582 /* MainInfoTVC.swift */; };
 		EB6A45132874241400749582 /* MainDetailUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A45122874241400749582 /* MainDetailUI.swift */; };
+		EB6A4515287425F900749582 /* DetailTabTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A4514287425F900749582 /* DetailTabTVC.swift */; };
+		EB6A45172874276B00749582 /* DetailTabTitleHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A45162874276A00749582 /* DetailTabTitleHeader.swift */; };
 		EBF66ABC287227F500DE0ED1 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */; };
 		EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A53287227F500DE0ED1 /* UIDevice+.swift */; };
 		EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A54287227F500DE0ED1 /* UITextView+.swift */; };
@@ -128,6 +130,8 @@
 		EB6A450D2873FEA900749582 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		EB6A451028740CFF00749582 /* MainInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInfoTVC.swift; sourceTree = "<group>"; };
 		EB6A45122874241400749582 /* MainDetailUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailUI.swift; sourceTree = "<group>"; };
+		EB6A4514287425F900749582 /* DetailTabTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTabTVC.swift; sourceTree = "<group>"; };
+		EB6A45162874276A00749582 /* DetailTabTitleHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTabTitleHeader.swift; sourceTree = "<group>"; };
 		EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		EBF66A53287227F500DE0ED1 /* UIDevice+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		EBF66A54287227F500DE0ED1 /* UITextView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
@@ -487,6 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				EB6A450B2873D6C500749582 /* DetailSummaryView.swift */,
+				EB6A45162874276A00749582 /* DetailTabTitleHeader.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -495,6 +500,7 @@
 			isa = PBXGroup;
 			children = (
 				EB6A451028740CFF00749582 /* MainInfoTVC.swift */,
+				EB6A4514287425F900749582 /* DetailTabTVC.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1004,6 +1010,7 @@
 				EBF66AFF287227F500DE0ED1 /* makeAlert.swift in Sources */,
 				EBF66AF3287227F500DE0ED1 /* applyShadow.swift in Sources */,
 				EB6A44D628737CC400749582 /* MainDetailEntity.swift in Sources */,
+				EB6A4515287425F900749582 /* DetailTabTVC.swift in Sources */,
 				EBF66AE5287227F500DE0ED1 /* NetworkConstants.swift in Sources */,
 				EB6A44F32873BED500749582 /* MainMapEntity.swift in Sources */,
 				EBF66AC8287227F500DE0ED1 /* UIFont+.swift in Sources */,
@@ -1034,6 +1041,7 @@
 				EBF66AFE287227F500DE0ED1 /* makeVibrate.swift in Sources */,
 				EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */,
 				EBF66AEE287227F500DE0ED1 /* PostDetailBottomView.swift in Sources */,
+				EB6A45172874276B00749582 /* DetailTabTitleHeader.swift in Sources */,
 				EB6A44D528737CC400749582 /* MainDetailViewModel.swift in Sources */,
 				EBF66ACA287227F500DE0ED1 /* Reactive+.swift in Sources */,
 				EB6A44D228737CC400749582 /* MainDetailRepository.swift in Sources */,

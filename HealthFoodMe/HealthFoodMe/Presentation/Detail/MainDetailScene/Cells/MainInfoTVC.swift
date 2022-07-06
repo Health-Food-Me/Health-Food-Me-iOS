@@ -38,7 +38,7 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
 extension MainInfoTVC {
     
     private func setUI() {
-        
+        detailSummaryView.backgroundColor = .orange
     }
     
     private func setLayout() {
@@ -51,9 +51,11 @@ extension MainInfoTVC {
         }
     }
     
-    // MARK: - Initializer
-    
     func initCell(profileImageURL: String?, nickname: String?) {
 
+    }
+    
+    class func caculateRowHeihgt() -> CGFloat {
+        return 140 + 50
     }
 }

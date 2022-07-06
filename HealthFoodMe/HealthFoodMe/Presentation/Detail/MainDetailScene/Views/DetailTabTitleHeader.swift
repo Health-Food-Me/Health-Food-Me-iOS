@@ -9,10 +9,11 @@ import UIKit
 
 import SnapKit
 
-final class DetailTabTitleHeader: UICollectionReusableView {
+final class DetailTabTitleHeader: UITableViewHeaderFooterView, UITableViewHeaderFooterRegisterable {
     
     // MARK: - Properties
     
+    static var isFromNib: Bool = false
     private var selectedButton: Int = 0
     private let buttonTitles: [String] = ["메뉴", "외식대처법", "리뷰"]
     
@@ -35,9 +36,9 @@ final class DetailTabTitleHeader: UICollectionReusableView {
     
     // MARK: - View Life Cycles
     
-    init() {
-        super.init(frame: .zero)
-        
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+
         setUI()
         setLayout()
         setAddTargets()
@@ -69,6 +70,7 @@ extension DetailTabTitleHeader {
             bt.setTitle(buttonTitles[buttonIndex], for: .normal)
             bt.backgroundColor = .white
             bt.tag = buttonIndex
+            bt.isSelected = buttonIndex == 0
             bt.setTitleColor(.black, for: .selected)
             bt.setTitleColor(.blue, for: .normal)
             titleButtons.append(bt)
