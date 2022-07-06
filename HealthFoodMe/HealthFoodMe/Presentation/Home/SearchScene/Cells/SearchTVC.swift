@@ -18,7 +18,7 @@ final class SearchTVC: UITableViewCell {
     private var searchLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .black
-        lb.font = .systemFont(ofSize: 15)
+        lb.font = .systemFont(ofSize: 16)
         return lb
     }()
     
@@ -64,13 +64,14 @@ extension SearchTVC {
         contentView.addSubviews(searchLabel, deleteButton)
         
         searchLabel.snp.makeConstraints {
-            $0.leading.equalTo(safeAreaLayoutGuide).inset(15)
+            $0.leading.equalTo(safeAreaLayoutGuide).inset(20)
             $0.centerY.equalToSuperview()
         }
         
         deleteButton.snp.makeConstraints {
-            $0.trailing.equalTo(safeAreaLayoutGuide).inset(15)
+            $0.trailing.equalTo(safeAreaLayoutGuide).inset(20)
             $0.centerY.equalToSuperview()
+            $0.height.width.equalTo(24)
         }
     }
 }
