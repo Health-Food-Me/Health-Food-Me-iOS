@@ -15,8 +15,16 @@ final class SearchVC: UIViewController {
     // MARK: - Properties
     
     let realm = try? Realm()
-     
-    var searchRecentList: [String] = [] {
+    
+    var searchFlag: Bool = false {
+        didSet {
+            searchTableView.reloadData()
+        }
+    }
+    
+    var searchRecentList: [String] = []
+    
+    var searchList: [String] = ["자", "동", "완", "성", "어"] {
         didSet {
             searchTableView.reloadData()
         }
@@ -57,9 +65,9 @@ final class SearchVC: UIViewController {
         return view
     }()
     
-    private let recentView: UIView = UIView()
+    private let topView: UIView = UIView()
     
-    private let recentLabel: UILabel = {
+    private let topLabel: UILabel = {
         let lb = UILabel()
         lb.text = "최근 검색어"
         lb.textColor = .lightGray
@@ -75,7 +83,7 @@ final class SearchVC: UIViewController {
         tv.rowHeight = 56
         tv.backgroundColor = .white
         tv.keyboardDismissMode = .onDrag
-        tv.tableHeaderView = recentView
+        tv.tableHeaderView = topView
         tv.tableHeaderView?.frame.size.height = 56
         return tv
     }()
@@ -99,14 +107,14 @@ final class SearchVC: UIViewController {
     
     @objc func didTapClearButton() {
         searchTextField.text?.removeAll()
-        emptyTextField()
+        isEmptyTextField()
     }
     
     @objc func editingChanged(_ textField: UITextField) {
         if searchTextField.isEmpty {
-            emptyTextField()
+            isEmptyTextField()
         } else {
-            notEmptyTextField()
+            isNotEmptyTextField()
         }
     }
 }
@@ -151,11 +159,11 @@ extension SearchVC {
             $0.height.equalTo(1)
         }
         
-        recentView.addSubviews(recentLabel)
+        topView.addSubviews(topLabel)
         
-        recentLabel.snp.makeConstraints {
-            $0.top.equalTo(recentView.snp.top).offset(20)
-            $0.leading.equalTo(recentView.snp.leading).inset(20)
+        topLabel.snp.makeConstraints {
+            $0.top.equalTo(topView.snp.top).offset(20)
+            $0.leading.equalTo(topView.snp.leading).inset(20)
         }
         
         searchTableView.snp.makeConstraints {
@@ -180,14 +188,16 @@ extension SearchVC {
         searchRecentList.insert(title, at: 0)
     }
     
-    private func emptyTextField() {
+    private func isEmptyTextField() {
         searchTextField.rightViewMode = .never
-        recentLabel.text = "최근 검색어"
+        topLabel.text = "최근 검색어"
+        searchFlag = false
     }
     
-    private func notEmptyTextField() {
+    private func isNotEmptyTextField() {
         searchTextField.rightViewMode = .always
-        recentLabel.text = "자동 완성어"
+        topLabel.text = "자동 완성어"
+        searchFlag = true
     }
 }
 
@@ -211,12 +221,21 @@ extension SearchVC: UITableViewDelegate {
 
 extension SearchVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchRecentList.count
+        if searchFlag {
+            return searchList.count
+        } else {
+            return searchRecentList.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTVC.cellIdentifier, for: indexPath) as? SearchTVC else { return UITableViewCell() }
-        cell.setData(data: searchRecentList[indexPath.row])
+        cell.searchFlag = searchFlag
+        if searchFlag {
+            cell.setData(data: searchList[indexPath.row])
+        } else {
+            cell.setData(data: searchRecentList[indexPath.row])
+        }
         cell.index = indexPath.row
         cell.delegate = self
         return cell
@@ -232,6 +251,7 @@ extension SearchVC: SearchTVCDelegate {
             realm?.delete(savedSearchRecent?[index] ?? SearchRecent())
         }
         searchRecentList.remove(at: index)
+        searchTableView.reloadData()
     }
 }
 

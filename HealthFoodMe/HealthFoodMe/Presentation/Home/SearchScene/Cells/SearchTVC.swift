@@ -22,6 +22,7 @@ final class SearchTVC: UITableViewCell {
     weak var delegate: SearchTVCDelegate?
 
     var index: Int = 0
+    var searchFlag: Bool = false
     
     private var searchLabel: UILabel = {
         let lb = UILabel()
@@ -62,6 +63,11 @@ final class SearchTVC: UITableViewCell {
 extension SearchTVC {
     func setData(data: String) {
         searchLabel.text = data
+        if searchFlag {
+            deleteButton.isHidden = true
+        } else {
+            deleteButton.isHidden = false
+        }
     }
     
     private func setUI() {
