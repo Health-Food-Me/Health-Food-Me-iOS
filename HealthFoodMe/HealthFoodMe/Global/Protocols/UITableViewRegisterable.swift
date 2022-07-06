@@ -23,3 +23,18 @@ extension UITableViewRegisterable where Self: UITableViewCell {
         }
     }
 }
+
+protocol UITableViewHeaderFooterRegisterable {
+    static var isFromNib: Bool { get }
+    static func register(target: UITableView)
+}
+
+extension UITableViewHeaderFooterRegisterable where Self: UITableViewHeaderFooterView {
+    static func register(target: UITableView) {
+        if self.isFromNib {
+          target.register(UINib(nibName: Self.className, bundle: nil), forHeaderFooterViewReuseIdentifier: Self.className)
+        } else {
+          target.register(Self.self, forHeaderFooterViewReuseIdentifier: Self.className)
+        }
+    }
+}
