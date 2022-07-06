@@ -26,6 +26,7 @@ final class SearchVC: UIViewController {
         let tf = UITextField()
         tf.leftViewMode = .always
         tf.rightViewMode = .never
+        tf.enablesReturnKeyAutomatically = true
         tf.attributedPlaceholder = NSAttributedString(string: "식당, 음식 검색", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         tf.font = .systemFont(ofSize: 15)
         tf.textColor = .black
@@ -98,17 +99,14 @@ final class SearchVC: UIViewController {
     
     @objc func didTapClearButton() {
         searchTextField.text?.removeAll()
-        searchTextField.rightViewMode = .never
-        recentLabel.text = "최근 검색어"
+        emptyTextField()
     }
     
     @objc func editingChanged(_ textField: UITextField) {
         if searchTextField.isEmpty {
-            searchTextField.rightViewMode = .never
-            recentLabel.text = "최근 검색어"
+            emptyTextField()
         } else {
-            searchTextField.rightViewMode = .always
-            recentLabel.text = "자동 완성어"
+            notEmptyTextField()
         }
     }
 }
@@ -119,7 +117,7 @@ extension SearchVC {
     private func setData() {
         let savedSearchRecent = realm?.objects(SearchRecent.self)
         savedSearchRecent?.forEach { object in
-            searchRecentList.append(object.title)
+            searchRecentList.insert(object.title, at: 0)
         }
     }
     
@@ -179,7 +177,17 @@ extension SearchVC {
         try? realm?.write {
             realm?.add(searchRecent)
         }
-        searchRecentList.append(title)
+        searchRecentList.insert(title, at: 0)
+    }
+    
+    private func emptyTextField() {
+        searchTextField.rightViewMode = .never
+        recentLabel.text = "최근 검색어"
+    }
+    
+    private func notEmptyTextField() {
+        searchTextField.rightViewMode = .always
+        recentLabel.text = "자동 완성어"
     }
 }
 
