@@ -19,6 +19,7 @@ class MainDetailVC: UIViewController {
     var viewModel: MainDetailViewModel!
     private var detailTabTVC = DetailTabTVC()
     private var detailTabTitleHeader = DetailTabTitleHeader()
+    private var childVC = ModuleFactory.resolve().instantiateMainMapVC()
     
     // MARK: - UI Components
     
@@ -149,6 +150,10 @@ extension MainDetailVC: UITableViewDataSource {
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTabTVC.className, for: indexPath) as? DetailTabTVC else { return UITableViewCell() }
             detailTabTVC = cell
+            
+            // TODO: - 멈추면 헤더 타이틀 선택 상태도 바뀌게
+            self.addChild(childVC)
+            cell.receiveChildVC(childVC: childVC)
             cell.scrollRatio.asDriver(onErrorJustReturn: 0)
                 .drive { ratio in
                     self.detailTabTitleHeader.moveWithContinuousRatio(ratio: ratio)

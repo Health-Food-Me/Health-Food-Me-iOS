@@ -18,6 +18,11 @@ final class DetailTabTVC: UITableViewCell, UITableViewRegisterable {
     static var isFromNib: Bool = false
     let disposeBag = DisposeBag()
     let scrollRatio = PublishRelay<CGFloat>()
+    var childControllers = [UIViewController]() {
+        didSet {
+            containerCollectionView.reloadData()
+        }
+    }
     
     // MARK: - UI Components
     
@@ -85,6 +90,13 @@ extension DetailTabTVC {
     func scrollToSelectedIndex(index: Int) {
         containerCollectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
     }
+    
+    func receiveChildVC(childVC: UIViewController) {
+        if !childControllers.contains(childVC) {
+            childControllers.append(childVC)
+        }
+    }
+}
 
 // MARK: - CollectionView Delegate
 
@@ -105,5 +117,18 @@ extension DetailTabTVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabContainerCVC.className, for: indexPath) as? TabContainerCVC else { return UICollectionViewCell() }
         
+        if indexPath.item == 0,
+           childControllers.count > 0 {
+            cell.addSubview(childControllers[indexPath.item].view)
+            childControllers[indexPath.item].view.frame = cell.bounds
+        } else if (indexPath.item == 1 && childControllers.count > 1) {
+            cell.addSubview(childControllers[indexPath.item].view)
+            childControllers[indexPath.item].view.frame = cell.bounds
+        } else if (indexPath.item == 2 && childControllers.count > 2) {
+            cell.addSubview(childControllers[indexPath.item].view)
+            childControllers[indexPath.item].view.frame = cell.bounds
+        }
+        
+        return cell
     }
 }
