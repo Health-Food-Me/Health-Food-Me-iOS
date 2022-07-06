@@ -93,6 +93,7 @@ extension SocialLoginVC {
     }
     
     func showKakaoLoginFailMessage() {
+        self.makeAlert(title: I18N.Alert.error, message: I18N.Auth.kakaoLoginError, okAction: nil, completion: nil)
     }
     
     func postSocialLoginData(socialToken: String, socialType: String) {
