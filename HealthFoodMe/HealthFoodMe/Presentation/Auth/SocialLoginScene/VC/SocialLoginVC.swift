@@ -8,6 +8,7 @@
 import UIKit
 
 import SnapKit
+import AuthenticationServices
 import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
@@ -24,6 +25,7 @@ class SocialLoginVC: UIViewController {
 
         setUI()
         setLayout()
+        setAddTarget()
     }
     
     private func setUI() {
@@ -32,7 +34,6 @@ class SocialLoginVC: UIViewController {
         
         kakaoLoginButton.setTitle("카카오톡 아이디로 로그인", for: .normal)
         kakaoLoginButton.setTitleColor(.black, for: .normal)
-        kakaoLoginButton.backgroundColor = UIColor.yellow
         
         appleLoginButton.setTitle("애플 아이디로 로그인", for: .normal)
         appleLoginButton.backgroundColor = UIColor.carrotBlack
@@ -62,31 +63,43 @@ class SocialLoginVC: UIViewController {
             make.centerX.equalToSuperview()
         }
     }
+    
+    func setAddTarget() {
+        kakaoLoginButton.addTarget(self, action: #selector(doKakaoLogin), for: .touchUpInside)
+        appleLoginButton.addTarget(self, action: #selector(doAppleLogin), for: .touchUpInside)
+    }
+    
+    @objc func doKakaoLogin() {
+        kakaoLogin()
+    }
+    
+    @objc func doAppleLogin() {
+        appleLogin()
+    }
 }
 
 extension SocialLoginVC {
     func kakaoLogin() {
-        if (UserApi.isKakaoTalkLoginAvailable()) {
-            //카카오톡 로그인. api 호출 결과를 클로저로 전달.
+        if UserApi.isKakaoTalkLoginAvailable() {
+            // 카카오톡 로그인. api 호출 결과를 클로저로 전달.
             UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
-                if let _ = error { self.showKakaoLoginFailMessage() }
-                else {
+                if let _ = error { self.showKakaoLoginFailMessage() } else {
                     if let accessToken = oauthToken?.accessToken {
-                        //엑세스 토큰 받아와서 서버에게 넘겨주는 로직 작성
+                        // 엑세스 토큰 받아와서 서버에게 넘겨주는 로직 작성
+
                         print("TOKEN", accessToken)
                         self.postSocialLoginData(socialToken: accessToken, socialType: "KAKAO")
                     }
                 }
             }
-        }
-        else { //웹으로 로그인해도 똑같이 처리되도록
+        } else { // 웹으로 로그인해도 똑같이 처리되도록
             UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
-                if let _ = error { self.showKakaoLoginFailMessage() }
-                else {
+                if let _ = error { self.showKakaoLoginFailMessage() } else {
                     if let accessToken = oauthToken?.accessToken {
+                        print("TOKEN", accessToken)
                         self.postSocialLoginData(socialToken: accessToken, socialType: "KAKAO")
                     }
-                    //성공해서 성공 VC로 이동
+                    // 성공해서 성공 VC로 이동
                 }
             }
         }
@@ -98,5 +111,49 @@ extension SocialLoginVC {
     
     func postSocialLoginData(socialToken: String, socialType: String) {
 
+    }
+    
+    func appleLogin() {
+      let appleIDProvider = ASAuthorizationAppleIDProvider()
+      let request = appleIDProvider.createRequest()
+      request.requestedScopes = [.fullName, .email]
+      
+      let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+      authorizationController.delegate = self
+      authorizationController.presentationContextProvider = self
+      authorizationController.performRequests()
+    }
+}
+
+extension SocialLoginVC: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+}
+
+extension SocialLoginVC: ASAuthorizationControllerDelegate {
+    // Apple ID 연동 성공시
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+            // Apple ID
+        case let appleIDCredential as ASAuthorizationAppleIDCredential :
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            
+            print("User ID : \(userIdentifier)")
+            print("User Email : \(email ?? "")")
+            print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
+            
+            let identityToken = appleIDCredential.identityToken
+            let tokenString = String(data: identityToken!, encoding: .utf8)
+            
+            if let token = tokenString {
+                postSocialLoginData(socialToken: token, socialType: "APPLE")
+            }
+        default:
+            // 실패 시 실패VC로 이동
+            print("애플아이디 로그인 실패")
+        }
     }
 }
