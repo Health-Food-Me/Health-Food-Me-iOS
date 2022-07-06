@@ -8,16 +8,32 @@
 import UIKit
 
 import SnapKit
+import RxSwift
+import RxRelay
 
 final class DetailTabTVC: UITableViewCell, UITableViewRegisterable {
     
     // MARK: - Properties
     
     static var isFromNib: Bool = false
+    let disposeBag = DisposeBag()
+    let scrollRatio = PublishRelay<CGFloat>()
     
     // MARK: - UI Components
     
-    private let detailSummaryView = DetailSummaryView()
+    private lazy var containerCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-104)
+        layout.minimumLineSpacing = .zero
+        
+        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-104), collectionViewLayout: layout)
+        cv.showsHorizontalScrollIndicator = false
+        cv.isPagingEnabled = true
+        cv.backgroundColor = .white
+        
+        return cv
+    }()
     
     // MARK: - View Life Cycle
     
@@ -26,6 +42,8 @@ final class DetailTabTVC: UITableViewCell, UITableViewRegisterable {
         
         setUI()
         setLayout()
+        setDelegate()
+        registerCell()
     }
     
     required init?(coder: NSCoder) {
@@ -33,25 +51,59 @@ final class DetailTabTVC: UITableViewCell, UITableViewRegisterable {
     }
 }
 
-// MARK: - Extension
+// MARK: - Methods
 
 extension DetailTabTVC {
+    
+    private func setDelegate() {
+        containerCollectionView.delegate = self
+        containerCollectionView.dataSource = self
+    }
+    
+    private func registerCell() {
+        TabContainerCVC.register(target: containerCollectionView)
+    }
     
     private func setUI() {
         
     }
     
     private func setLayout() {
-        self.addSubviews(detailSummaryView)
+        self.contentView.addSubviews(containerCollectionView)
         
-        detailSummaryView.snp.makeConstraints { make in
+        containerCollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
     // MARK: - Initializer
     
-    func initCell(profileImageURL: String?, nickname: String?) {
+    func initCell() {
+        
+    }
+    
+    func scrollToSelectedIndex(index: Int) {
+        containerCollectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+    }
 
+// MARK: - CollectionView Delegate
+
+extension DetailTabTVC: UICollectionViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scroll = scrollView.contentOffset.x + scrollView.contentInset.left
+        let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
+        let scrollRatio = scroll / width
+        self.scrollRatio.accept(scrollRatio)
+    }
+}
+
+extension DetailTabTVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabContainerCVC.className, for: indexPath) as? TabContainerCVC else { return UICollectionViewCell() }
+        
     }
 }

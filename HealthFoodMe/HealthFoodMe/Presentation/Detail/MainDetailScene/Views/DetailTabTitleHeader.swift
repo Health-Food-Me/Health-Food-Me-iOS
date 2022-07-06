@@ -8,15 +8,20 @@
 import UIKit
 
 import SnapKit
+import RxSwift
+import RxRelay
 
 final class DetailTabTitleHeader: UITableViewHeaderFooterView, UITableViewHeaderFooterRegisterable {
     
     // MARK: - Properties
     
     static var isFromNib: Bool = false
+    let disposeBag = DisposeBag()
+    let titleButtonTapped = PublishRelay<Int>()
     private var selectedButton: Int = 0 {
         didSet {
-            tabIndicator.leftOffsetRatio = Double(selectedButton) / 3
+//            tabIndicator.leftOffsetRatio = Double(selectedButton) / 3
+            titleButtonTapped.accept(selectedButton)
         }
     }
     private let buttonTitles: [String] = ["메뉴", "외식대처법", "리뷰"]
@@ -117,5 +122,9 @@ extension DetailTabTitleHeader {
         titleButtons.forEach { button in
             button.isSelected = sender == button
         }
+    }
+    
+    func moveWithContinuousRatio(ratio: CGFloat) {
+        tabIndicator.leftOffsetRatio = ratio
     }
 }

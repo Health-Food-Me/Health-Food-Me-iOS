@@ -33,7 +33,7 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
     }
 }
 
-// MARK: - Extension
+// MARK: - Methods
 
 extension MainInfoTVC {
     
@@ -49,10 +49,6 @@ extension MainInfoTVC {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
         }
-    }
-    
-    func initCell(profileImageURL: String?, nickname: String?) {
-
     }
     
     class func caculateRowHeihgt() -> CGFloat {

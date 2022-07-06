@@ -7,8 +7,9 @@
 
 import UIKit
 
-import RxSwift
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class MainDetailVC: UIViewController {
     
@@ -16,6 +17,8 @@ class MainDetailVC: UIViewController {
     
     private let disposeBag = DisposeBag()
     var viewModel: MainDetailViewModel!
+    private var detailTabTVC = DetailTabTVC()
+    private var detailTabTitleHeader = DetailTabTitleHeader()
     
     // MARK: - UI Components
     
@@ -70,6 +73,7 @@ extension MainDetailVC {
     
     private func registerCell() {
         MainInfoTVC.register(target: mainTableView)
+        DetailTabTVC.register(target: mainTableView)
         DetailTabTitleHeader.register(target: mainTableView)
     }
     
@@ -88,10 +92,14 @@ extension MainDetailVC {
 
 extension MainDetailVC: UITableViewDelegate {
    
-    // -TODO: expendable 고려해서 로직 짜기
+    // TODO: expendable 고려해서 로직 짜기
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return MainInfoTVC.caculateRowHeihgt()
+        if indexPath.section == 0 {
+            return MainInfoTVC.caculateRowHeihgt()
+        } else {
+            return UIScreen.main.bounds.height - 104
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -101,6 +109,11 @@ extension MainDetailVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 1,
               let headerCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: DetailTabTitleHeader.className) as? DetailTabTitleHeader else { return nil }
+        headerCell.titleButtonTapped.asDriver(onErrorJustReturn: 0)
+            .drive { selectedIndex in
+                self.detailTabTVC.scrollToSelectedIndex(index: selectedIndex)
+            }.disposed(by: headerCell.disposeBag)
+        detailTabTitleHeader = headerCell
         return headerCell
     }
     
@@ -130,8 +143,17 @@ extension MainDetailVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainInfoTVC.className, for: indexPath) as? MainInfoTVC else { return UITableViewCell() }
-        
-        return cell
+        if indexPath.section == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MainInfoTVC.className, for: indexPath) as? MainInfoTVC else { return UITableViewCell() }
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTabTVC.className, for: indexPath) as? DetailTabTVC else { return UITableViewCell() }
+            detailTabTVC = cell
+            cell.scrollRatio.asDriver(onErrorJustReturn: 0)
+                .drive { ratio in
+                    self.detailTabTitleHeader.moveWithContinuousRatio(ratio: ratio)
+                }.disposed(by: cell.disposeBag)
+            return cell
+        }
     }
 }

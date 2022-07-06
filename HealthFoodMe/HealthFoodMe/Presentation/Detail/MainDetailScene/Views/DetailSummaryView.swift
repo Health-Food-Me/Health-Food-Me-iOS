@@ -69,6 +69,7 @@ final class DetailSummaryView: UIView {
 
 extension DetailSummaryView {
     func setData() {
+        
     }
 }
 
@@ -86,7 +87,8 @@ extension DetailSummaryView {
             make.height.equalTo(140)
         }
         
-        self.addSubviews(logoImageView, restaurantNameLabel, categoryLabel, starStackView, rateLabel)
+        self.addSubviews(logoImageView, restaurantNameLabel, categoryLabel,
+                         starStackView, rateLabel)
         
         logoImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)

@@ -30,9 +30,6 @@ final class TabIndicator: UIView {
         didSet {
             guard let leftOffsetRatio = self.leftOffsetRatio else { return }
             self.leftInsetConstraint?.update(inset: leftOffsetRatio * self.bounds.width)
-//            UIView.animate(withDuration: 0.1, delay: 0) {
-//                self.layoutIfNeeded()
-//            }
         }
     }
     
