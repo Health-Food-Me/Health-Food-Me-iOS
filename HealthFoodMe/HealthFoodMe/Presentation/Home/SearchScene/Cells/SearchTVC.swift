@@ -9,11 +9,19 @@ import UIKit
 
 import SnapKit
 
+protocol SearchTVCDelegate: AnyObject {
+    func SearchTVCDelete(index: Int)
+}
+
 final class SearchTVC: UITableViewCell {
 
     // MARK: - Properties
     
     static var cellIdentifier: String { return String(describing: self) }
+    
+    weak var delegate: SearchTVCDelegate?
+
+    var index: Int = 0
     
     private var searchLabel: UILabel = {
         let lb = UILabel()
@@ -22,10 +30,10 @@ final class SearchTVC: UITableViewCell {
         return lb
     }()
     
-    private var deleteButton: UIButton = {
+    private lazy var deleteButton: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(systemName: "xmark"), for: .normal)
-        btn.addTarget(SearchTVC.self, action: #selector(deleteSearch), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(deleteSearch), for: .touchUpInside)
         return btn
     }()
   
@@ -45,7 +53,7 @@ final class SearchTVC: UITableViewCell {
     // MARK: - @objc Methods
     
     @objc func deleteSearch() {
-        
+        delegate?.SearchTVCDelete(index: index)
     }
 }
 

@@ -7,11 +7,20 @@
 
 import UIKit
 
+import RealmSwift
 import SnapKit
 
 final class SearchVC: UIViewController {
     
     // MARK: - Properties
+    
+    let realm = try? Realm()
+     
+    var searchRecentList: [String] = [] {
+        didSet {
+            searchTableView.reloadData()
+        }
+    }
     
     private lazy var searchTextField: UITextField = {
         let tf = UITextField()
@@ -71,10 +80,11 @@ final class SearchVC: UIViewController {
     }()
     
     // MARK: - View Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setData()
         setUI()
         setLayout()
         setDelegate()
@@ -89,13 +99,16 @@ final class SearchVC: UIViewController {
     @objc func didTapClearButton() {
         searchTextField.text?.removeAll()
         searchTextField.rightViewMode = .never
+        recentLabel.text = "최근 검색어"
     }
     
     @objc func editingChanged(_ textField: UITextField) {
         if searchTextField.isEmpty {
             searchTextField.rightViewMode = .never
+            recentLabel.text = "최근 검색어"
         } else {
             searchTextField.rightViewMode = .always
+            recentLabel.text = "자동 완성어"
         }
     }
 }
@@ -103,17 +116,18 @@ final class SearchVC: UIViewController {
 // MARK: - Methods
 
 extension SearchVC {
+    private func setData() {
+        let savedSearchRecent = realm?.objects(SearchRecent.self)
+        savedSearchRecent?.forEach { object in
+            searchRecentList.append(object.title)
+        }
+    }
+    
     private func setUI() {
         dismissKeyboard()
     }
     
     private func setLayout() {
-        recentView.addSubviews(recentLabel)
-        
-        recentLabel.snp.makeConstraints {
-            $0.top.equalTo(recentView.snp.top).offset(20)
-            $0.leading.equalTo(recentView.snp.leading).inset(20)
-        }
         
         view.addSubviews(searchTextField, lineView, searchTableView)
         
@@ -139,6 +153,13 @@ extension SearchVC {
             $0.height.equalTo(1)
         }
         
+        recentView.addSubviews(recentLabel)
+        
+        recentLabel.snp.makeConstraints {
+            $0.top.equalTo(recentView.snp.top).offset(20)
+            $0.leading.equalTo(recentView.snp.leading).inset(20)
+        }
+        
         searchTableView.snp.makeConstraints {
             $0.top.equalTo(lineView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
@@ -151,6 +172,15 @@ extension SearchVC {
         searchTableView.delegate = self
         searchTableView.dataSource = self
     }
+    
+    func createSearchRecent(title: String) {
+        let searchRecent = SearchRecent()
+        searchRecent.title = title
+        try? realm?.write {
+            realm?.add(searchRecent)
+        }
+        searchRecentList.append(title)
+    }
 }
 
 // MARK: - UITextFieldDelegate
@@ -158,6 +188,7 @@ extension SearchVC {
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        createSearchRecent(title: textField.text ?? "")
         return true
     }
 }
@@ -172,13 +203,27 @@ extension SearchVC: UITableViewDelegate {
 
 extension SearchVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return searchRecentList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTVC.cellIdentifier, for: indexPath) as? SearchTVC else { return UITableViewCell() }
-        cell.setData(data: "샐러디")
+        cell.setData(data: searchRecentList[indexPath.row])
+        cell.index = indexPath.row
+        cell.delegate = self
         return cell
+    }
+}
+
+// MARK: - SearchTVCDelegate
+
+extension SearchVC: SearchTVCDelegate {
+    func SearchTVCDelete(index: Int) {
+        let savedSearchRecent = realm?.objects(SearchRecent.self)
+        try? realm?.write {
+            realm?.delete(savedSearchRecent?[index] ?? SearchRecent())
+        }
+        searchRecentList.remove(at: index)
     }
 }
 
