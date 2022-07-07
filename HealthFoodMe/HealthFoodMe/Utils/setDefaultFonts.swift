@@ -9,9 +9,13 @@ import Foundation
 import UIKit
 
 struct AppFontName {
-    static let bold = "Poppins-Bold"
-    static let regular = "Poppins-Regular"
-    static let light = "Poppins-Light"
+    static let pretendardBold = "Pretendard-Bold"
+    static let pretendardMedium = "Pretendard-Medium"
+    static let pretendardRegular = "Pretendard-Regular"
+
+    static let notoBold = "NotoSansCJKkr-Bold"
+    static let notoMedium = "NotoSansCJKkr-Medium"
+    static let notoRegular = "NotoSansCJKkr-Regular"
 }
 
 extension UIFontDescriptor.AttributeName {
@@ -21,16 +25,45 @@ extension UIFontDescriptor.AttributeName {
 
 extension UIFont {
 
-    @objc class func mySystemFont(ofSize size: CGFloat) -> UIFont {
-        return UIFont(name: AppFontName.regular, size: size)!
+    // MARK: Pretendard Font
+    @nonobjc class func PopBold(size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.notoBold, size: size)!
+    }
+
+    @nonobjc class func PretendardBold(size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.pretendardBold, size: size)!
+    }
+
+    @nonobjc class func PretendardMedium(size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.pretendardMedium, size: size)!
+    }
+
+    @nonobjc class func PretendardRegular(size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.pretendardRegular, size: size)!
+    }
+
+    @nonobjc class func PopExtraBold(size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.notoMedium, size: size)!
+    }
+
+    @nonobjc class func NotoRegular(size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.notoRegular, size: size)!
+    }
+
+    @nonobjc class func NotoBold(size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.notoBold, size: size)!
+    }
+    
+    @objc class func myRegularSystemFont(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.pretendardRegular, size: size)!
     }
 
     @objc class func myBoldSystemFont(ofSize size: CGFloat) -> UIFont {
-        return UIFont(name: AppFontName.bold, size: size)!
+        return UIFont(name: AppFontName.pretendardBold, size: size)!
     }
 
-    @objc class func myItalicSystemFont(ofSize size: CGFloat) -> UIFont {
-        return UIFont(name: AppFontName.light, size: size)!
+    @objc class func myMediumSystemFont(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.pretendardMedium, size: size)!
     }
 
     @objc convenience init(myCoder aDecoder: NSCoder) {
@@ -39,13 +72,13 @@ extension UIFont {
                 var fontName = ""
                 switch fontAttribute {
                 case "CTFontRegularUsage":
-                    fontName = AppFontName.regular
+                    fontName = AppFontName.pretendardRegular
                 case "CTFontEmphasizedUsage", "CTFontBoldUsage":
-                    fontName = AppFontName.bold
-                case "CTFontObliqueUsage":
-                    fontName = AppFontName.light
+                    fontName = AppFontName.pretendardBold
+                case "CTFontMediumUsage":
+                    fontName = AppFontName.pretendardMedium
                 default:
-                    fontName = AppFontName.regular
+                    fontName = AppFontName.pretendardRegular
                 }
                 self.init(name: fontName, size: fontDescriptor.pointSize)!
             } else {
@@ -59,17 +92,12 @@ extension UIFont {
      class func overrideInitialize() {
         if self == UIFont.self {
            let systemFontMethod = class_getClassMethod(self, #selector(systemFont(ofSize:)))
-           let mySystemFontMethod = class_getClassMethod(self, #selector(mySystemFont(ofSize:)))
+           let mySystemFontMethod = class_getClassMethod(self, #selector(myRegularSystemFont(ofSize:)))
            method_exchangeImplementations(systemFontMethod!, mySystemFontMethod!)
 
            let boldSystemFontMethod = class_getClassMethod(self, #selector(boldSystemFont(ofSize:)))
            let myBoldSystemFontMethod = class_getClassMethod(self, #selector(myBoldSystemFont(ofSize:)))
            method_exchangeImplementations(boldSystemFontMethod!, myBoldSystemFontMethod!)
-
-           let italicSystemFontMethod = class_getClassMethod(self, #selector(italicSystemFont(ofSize:)))
-           let myItalicSystemFontMethod = class_getClassMethod(self, #selector(myItalicSystemFont(ofSize:)))
-           method_exchangeImplementations(italicSystemFontMethod!, myItalicSystemFontMethod!)
-
            let initCoderMethod = class_getInstanceMethod(self, #selector(UIFontDescriptor.init(coder:)))
            let myInitCoderMethod = class_getInstanceMethod(self, #selector(UIFont.init(myCoder:)))
            method_exchangeImplementations(initCoderMethod!, myInitCoderMethod!)

@@ -4,8 +4,12 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Pretendard </string>
-		<string>Noto Sans KR</string>
+		<string>Pretendard-Bold.otf</string>
+		<string>Pretendard-Regular.otf</string>
+		<string>Pretendard-Medium.otf</string>
+		<string>NotoSansCJKkr-Bold.otf</string>
+		<string>NotoSansCJKkr-Medium.otf</string>
+		<string>NotoSansCJKkr-Regular.otf</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
