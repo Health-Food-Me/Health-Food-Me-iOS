@@ -131,14 +131,14 @@ extension SocialLoginVC {
 }
 
 extension SocialLoginVC: ASAuthorizationControllerPresentationContextProviding {
-    private func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
 }
 
 extension SocialLoginVC: ASAuthorizationControllerDelegate {
     // Apple ID 연동 성공시
-    private func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
             // Apple ID
         case let appleIDCredential as ASAuthorizationAppleIDCredential :
