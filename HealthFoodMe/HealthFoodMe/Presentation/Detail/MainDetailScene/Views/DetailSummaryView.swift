@@ -16,6 +16,7 @@ final class DetailSummaryView: UIView {
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
+        iv.image = ImageLiterals.MainDetail.tempSalady
         return iv
     }()
     

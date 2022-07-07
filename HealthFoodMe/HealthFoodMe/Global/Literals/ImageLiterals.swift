@@ -20,6 +20,8 @@ struct ImageLiterals {
         static let showdownIcon = UIImage(named: "icn_showdown")
         static let showupIcon = UIImage(named: "icn_showup")
         static let timeIcon = UIImage(named: "icn_time")
+        
+        static let tempSalady = UIImage(named: "tempSalady")
     }
     
     struct PostList2 {
