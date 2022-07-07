@@ -7,6 +7,8 @@
 
 import UIKit
 
+import AuthenticationServices
+import KakaoSDKCommon
 import NMapsMap
 
 @main
@@ -20,9 +22,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        KakaoSDK.initSDK(appKey : "8483f545857597ac5a551516e471a131")
+        
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.getCredentialState(forUserID: "00000.abcabcabcabc.0000(로그인에 사용한 UserIdentifier)") { (credentialState, error) in
+            switch credentialState {
+            case .authorized: // 이미 증명이 된 경우 (정상)
+                print("authorized")
+            // The Apple ID credential is valid.
+            case .revoked:    // 증명을 취소했을 때,
+                print("revoked")
+                                // 로그인뷰로 이동하기
+            case .notFound:   // 증명이 존재하지 않을 경우
+                print("notFound")
+                                // 로그인뷰로 이동하기
+                
+            default:
+                break
+            }
+        }
+        
         NMFAuthManager.shared().clientId = IDLiterals.naverMapsClientID
         return true
     }
+
     
     // MARK: UISceneSession Lifecycle
     
