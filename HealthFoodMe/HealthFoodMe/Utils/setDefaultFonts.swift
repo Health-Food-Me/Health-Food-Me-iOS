@@ -75,7 +75,7 @@ extension UIFont {
                     fontName = AppFontName.pretendardRegular
                 case "CTFontEmphasizedUsage", "CTFontBoldUsage":
                     fontName = AppFontName.pretendardBold
-                case "CTFontMediumUsage":
+                case "CTFontObliqueUsage":
                     fontName = AppFontName.pretendardMedium
                 default:
                     fontName = AppFontName.pretendardRegular
