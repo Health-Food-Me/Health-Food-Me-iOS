@@ -9,20 +9,21 @@ import UIKit
 
 import SnapKit
 
-protocol SearchTVCDelegate: AnyObject {
-    func SearchTVCDelete(index: Int)
+protocol SearchRecentTVCDelegate: AnyObject {
+    func SearchRecentTVCDelete(index: Int)
 }
 
-final class SearchTVC: UITableViewCell {
-
+final class SearchRecentTVC: UITableViewCell, UITableViewRegisterable {
+    
     // MARK: - Properties
+    
+    static var isFromNib: Bool = false
     
     static var cellIdentifier: String { return String(describing: self) }
     
-    weak var delegate: SearchTVCDelegate?
+    weak var delegate: SearchRecentTVCDelegate?
 
     var index: Int = 0
-    var searchFlag: Bool = false
     
     private var searchLabel: UILabel = {
         let lb = UILabel()
@@ -54,20 +55,15 @@ final class SearchTVC: UITableViewCell {
     // MARK: - @objc Methods
     
     @objc func deleteSearch() {
-        delegate?.SearchTVCDelete(index: index)
+        delegate?.SearchRecentTVCDelete(index: index)
     }
 }
 
 // MARK: - Methods
 
-extension SearchTVC {
+extension SearchRecentTVC {
     func setData(data: String) {
         searchLabel.text = data
-        if searchFlag {
-            deleteButton.isHidden = true
-        } else {
-            deleteButton.isHidden = false
-        }
     }
     
     private func setUI() {

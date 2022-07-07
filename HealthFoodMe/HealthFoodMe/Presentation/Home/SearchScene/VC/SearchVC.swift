@@ -18,17 +18,11 @@ final class SearchVC: UIViewController {
     
     var searchFlag: Bool = false {
         didSet {
-            searchTableView.reloadData()
+            searchRecentTableView.reloadData()
         }
     }
     
     var searchRecentList: [String] = []
-    
-    var searchList: [String] = ["자", "동", "완", "성", "어"] {
-        didSet {
-            searchTableView.reloadData()
-        }
-    }
     
     private lazy var searchTextField: UITextField = {
         let tf = UITextField()
@@ -75,11 +69,10 @@ final class SearchVC: UIViewController {
         return lb
     }()
     
-    private lazy var searchTableView: UITableView = {
+    private lazy var searchRecentTableView: UITableView = {
         let tv = UITableView()
         tv.separatorStyle = .none
         tv.showsVerticalScrollIndicator = false
-        tv.register(SearchTVC.self, forCellReuseIdentifier: SearchTVC.cellIdentifier)
         tv.rowHeight = 56
         tv.backgroundColor = .white
         tv.keyboardDismissMode = .onDrag
@@ -114,7 +107,8 @@ final class SearchVC: UIViewController {
         if searchTextField.isEmpty {
             isEmptyTextField()
         } else {
-            isNotEmptyTextField()
+            searchTextField.rightViewMode = .always
+            searchFlag = true
         }
     }
 }
@@ -134,8 +128,7 @@ extension SearchVC {
     }
     
     private func setLayout() {
-        
-        view.addSubviews(searchTextField, lineView, searchTableView)
+        view.addSubviews(searchTextField, lineView, searchRecentTableView)
         
         searchTextField.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -166,7 +159,7 @@ extension SearchVC {
             $0.leading.equalTo(topView.snp.leading).inset(20)
         }
         
-        searchTableView.snp.makeConstraints {
+        searchRecentTableView.snp.makeConstraints {
             $0.top.equalTo(lineView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
@@ -175,11 +168,12 @@ extension SearchVC {
     private func setDelegate() {
         searchTextField.delegate = self
         
-        searchTableView.delegate = self
-        searchTableView.dataSource = self
+        searchRecentTableView.delegate = self
+        searchRecentTableView.dataSource = self
+        SearchRecentTVC.register(target: searchRecentTableView)
     }
     
-    func createSearchRecent(title: String) {
+    func addSearchRecent(title: String) {
         let searchRecent = SearchRecent()
         searchRecent.title = title
         try? realm?.write {
@@ -193,12 +187,6 @@ extension SearchVC {
         topLabel.text = "최근 검색어"
         searchFlag = false
     }
-    
-    private func isNotEmptyTextField() {
-        searchTextField.rightViewMode = .always
-        topLabel.text = "자동 완성어"
-        searchFlag = true
-    }
 }
 
 // MARK: - UITextFieldDelegate
@@ -206,7 +194,7 @@ extension SearchVC {
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        createSearchRecent(title: textField.text ?? "")
+        addSearchRecent(title: textField.text ?? "")
         return true
     }
 }
@@ -221,21 +209,12 @@ extension SearchVC: UITableViewDelegate {
 
 extension SearchVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchFlag {
-            return searchList.count
-        } else {
-            return searchRecentList.count
-        }
+        return searchRecentList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTVC.cellIdentifier, for: indexPath) as? SearchTVC else { return UITableViewCell() }
-        cell.searchFlag = searchFlag
-        if searchFlag {
-            cell.setData(data: searchList[indexPath.row])
-        } else {
-            cell.setData(data: searchRecentList[indexPath.row])
-        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchRecentTVC.cellIdentifier, for: indexPath) as? SearchRecentTVC else { return UITableViewCell() }
+        cell.setData(data: searchRecentList[indexPath.row])
         cell.index = indexPath.row
         cell.delegate = self
         return cell
@@ -244,14 +223,14 @@ extension SearchVC: UITableViewDataSource {
 
 // MARK: - SearchTVCDelegate
 
-extension SearchVC: SearchTVCDelegate {
-    func SearchTVCDelete(index: Int) {
+extension SearchVC: SearchRecentTVCDelegate {
+    func SearchRecentTVCDelete(index: Int) {
         let savedSearchRecent = realm?.objects(SearchRecent.self)
         try? realm?.write {
             realm?.delete(savedSearchRecent?[index] ?? SearchRecent())
         }
         searchRecentList.remove(at: index)
-        searchTableView.reloadData()
+        searchRecentTableView.reloadData()
     }
 }
 
