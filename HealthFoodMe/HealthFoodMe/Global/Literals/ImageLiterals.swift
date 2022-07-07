@@ -10,8 +10,16 @@ import UIKit
 struct ImageLiterals {
     
     struct MainDetail {
+        static let scrapIcon = UIImage(named: "icn_scrap")
+        static let beforeIcon = UIImage(named: "icn_before")
         static let starIcon = UIImage(named: "icn_star")
         static let starIcon_filled = UIImage(named: "icn_star_filled")
+        static let directionIcon = UIImage(named: "icn_direction")
+        static let locationIcon = UIImage(named: "icn_location")
+        static let phoneIcon = UIImage(named: "icn_phone")
+        static let showdownIcon = UIImage(named: "icn_showdown")
+        static let showupIcon = UIImage(named: "icn_showup")
+        static let timeIcon = UIImage(named: "icn_time")
     }
     
     struct PostList2 {
