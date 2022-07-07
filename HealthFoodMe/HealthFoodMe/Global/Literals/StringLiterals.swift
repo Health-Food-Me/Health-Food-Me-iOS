@@ -20,7 +20,6 @@ struct I18N {
       static let kakaoLoginError = "카카오 로그인에 실패하였습니다."
       static let appleLoginError = "애플 로그인에 실패하였습니다."
     }
-
     
     struct Alert {
         static let alarm = "알림"

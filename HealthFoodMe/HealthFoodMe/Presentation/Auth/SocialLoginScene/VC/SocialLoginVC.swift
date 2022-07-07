@@ -7,25 +7,76 @@
 
 import UIKit
 
-import SnapKit
 import AuthenticationServices
 import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
+import SnapKit
 
 class SocialLoginVC: UIViewController {
 
-    lazy var titleImageView = UIImageView()
-    lazy var subtitleImageView = UIImageView()
-    lazy var kakaoLoginButton = UIButton()
-    lazy var appleLoginButton = UIButton()
+    // MARK: - Properties
+    private lazy var titleImageView = UIImageView()
+    private lazy var subtitleImageView = UIImageView()
+    private lazy var kakaoLoginButton = UIButton()
+    private lazy var appleLoginButton = UIButton()
     
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUI()
         setLayout()
         setAddTarget()
+    }
+    
+}
+
+// MARK: - extension
+extension SocialLoginVC {
+    private func kakaoLogin() {
+        if UserApi.isKakaoTalkLoginAvailable() {
+            // 카카오톡 로그인. api 호출 결과를 클로저로 전달.
+            UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
+                if let _ = error { self.showKakaoLoginFailMessage() } else {
+                    if let accessToken = oauthToken?.accessToken {
+                        // 엑세스 토큰 받아와서 서버에게 넘겨주는 로직 작성
+
+                        print("TOKEN", accessToken)
+                        self.postSocialLoginData(socialToken: accessToken, socialType: "KAKAO")
+                    }
+                }
+            }
+        } else { // 웹으로 로그인해도 똑같이 처리되도록
+            UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
+                if let _ = error { self.showKakaoLoginFailMessage() } else {
+                    if let accessToken = oauthToken?.accessToken {
+                        print("TOKEN", accessToken)
+                        self.postSocialLoginData(socialToken: accessToken, socialType: "KAKAO")
+                    }
+                    // 성공해서 성공 VC로 이동
+                }
+            }
+        }
+    }
+    
+    private func showKakaoLoginFailMessage() {
+        self.makeAlert(title: I18N.Alert.error, message: I18N.Auth.kakaoLoginError, okAction: nil, completion: nil)
+    }
+    
+    private func postSocialLoginData(socialToken: String, socialType: String) {
+
+    }
+    
+    private func appleLogin() {
+      let appleIDProvider = ASAuthorizationAppleIDProvider()
+      let request = appleIDProvider.createRequest()
+      request.requestedScopes = [.fullName, .email]
+      
+      let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+      authorizationController.delegate = self
+      authorizationController.presentationContextProvider = self
+      authorizationController.performRequests()
     }
     
     private func setUI() {
@@ -64,11 +115,12 @@ class SocialLoginVC: UIViewController {
         }
     }
     
-    func setAddTarget() {
+    private func setAddTarget() {
         kakaoLoginButton.addTarget(self, action: #selector(doKakaoLogin), for: .touchUpInside)
         appleLoginButton.addTarget(self, action: #selector(doAppleLogin), for: .touchUpInside)
     }
     
+    // MARK: - @objc Methods
     @objc func doKakaoLogin() {
         kakaoLogin()
     }
@@ -78,62 +130,15 @@ class SocialLoginVC: UIViewController {
     }
 }
 
-extension SocialLoginVC {
-    func kakaoLogin() {
-        if UserApi.isKakaoTalkLoginAvailable() {
-            // 카카오톡 로그인. api 호출 결과를 클로저로 전달.
-            UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
-                if let _ = error { self.showKakaoLoginFailMessage() } else {
-                    if let accessToken = oauthToken?.accessToken {
-                        // 엑세스 토큰 받아와서 서버에게 넘겨주는 로직 작성
-
-                        print("TOKEN", accessToken)
-                        self.postSocialLoginData(socialToken: accessToken, socialType: "KAKAO")
-                    }
-                }
-            }
-        } else { // 웹으로 로그인해도 똑같이 처리되도록
-            UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
-                if let _ = error { self.showKakaoLoginFailMessage() } else {
-                    if let accessToken = oauthToken?.accessToken {
-                        print("TOKEN", accessToken)
-                        self.postSocialLoginData(socialToken: accessToken, socialType: "KAKAO")
-                    }
-                    // 성공해서 성공 VC로 이동
-                }
-            }
-        }
-    }
-    
-    func showKakaoLoginFailMessage() {
-        self.makeAlert(title: I18N.Alert.error, message: I18N.Auth.kakaoLoginError, okAction: nil, completion: nil)
-    }
-    
-    func postSocialLoginData(socialToken: String, socialType: String) {
-
-    }
-    
-    func appleLogin() {
-      let appleIDProvider = ASAuthorizationAppleIDProvider()
-      let request = appleIDProvider.createRequest()
-      request.requestedScopes = [.fullName, .email]
-      
-      let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-      authorizationController.delegate = self
-      authorizationController.presentationContextProvider = self
-      authorizationController.performRequests()
-    }
-}
-
 extension SocialLoginVC: ASAuthorizationControllerPresentationContextProviding {
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+    private func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
 }
 
 extension SocialLoginVC: ASAuthorizationControllerDelegate {
     // Apple ID 연동 성공시
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    private func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
             // Apple ID
         case let appleIDCredential as ASAuthorizationAppleIDCredential :
