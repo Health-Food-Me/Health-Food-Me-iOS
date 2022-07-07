@@ -7,40 +7,29 @@
 
 import UIKit
 
-//extension AppFontName {
-//    static let popLight = "Poppins-Light"
-//    static let popRegular = "Poppins-Regular"
-//    static let popMedium = "Poppins-Medium"
-//    static let popBold = "Poppins-Bold"
-//    static let popExtraBold = "Poppins-ExtraBold"
-//
-//    static let notoBold = "NotoSansSC-Bold"
-//    static let notoRegular = "NotoSansSC-Regular"
-//
-//    static let nunitoExtraBold = "NunitoSans-ExtraBold"
-//}
-//
-//extension UIFont {
-//
+extension AppFontName {
+}
+
+extension UIFont {
 //    // MARK: Pretendard Font
 //    @nonobjc class func PopBold(size: CGFloat) -> UIFont {
-//        return UIFont(name: AppFontName.popBold, size: size)!
+//        return UIFont(name: AppFontName.notoBold, size: size)!
 //    }
 //
-//    @nonobjc class func PopLight(size: CGFloat) -> UIFont {
-//        return UIFont(name: AppFontName.popLight, size: size)!
+//    @nonobjc class func PretendardBold(size: CGFloat) -> UIFont {
+//        return UIFont(name: AppFontName.pretendardBold, size: size)!
 //    }
 //
-//    @nonobjc class func PopRegular(size: CGFloat) -> UIFont {
-//        return UIFont(name: AppFontName.popRegular, size: size)!
+//    @nonobjc class func PretendardMedium(size: CGFloat) -> UIFont {
+//        return UIFont(name: AppFontName.pretendardMedium, size: size)!
 //    }
 //
-//    @nonobjc class func PopMedium(size: CGFloat) -> UIFont {
-//        return UIFont(name: AppFontName.popMedium, size: size)!
+//    @nonobjc class func PretendardRegular(size: CGFloat) -> UIFont {
+//        return UIFont(name: AppFontName.pretendardRegular, size: size)!
 //    }
 //
 //    @nonobjc class func PopExtraBold(size: CGFloat) -> UIFont {
-//        return UIFont(name: AppFontName.popExtraBold, size: size)!
+//        return UIFont(name: AppFontName.notoMedium, size: size)!
 //    }
 //
 //    @nonobjc class func NotoRegular(size: CGFloat) -> UIFont {
@@ -50,8 +39,4 @@ import UIKit
 //    @nonobjc class func NotoBold(size: CGFloat) -> UIFont {
 //        return UIFont(name: AppFontName.notoBold, size: size)!
 //    }
-//
-//    @nonobjc class func NunitoExtraBold(size: CGFloat) -> UIFont {
-//        return UIFont(name: AppFontName.nunitoExtraBold, size: size)!
-//    }
-//}
+}
