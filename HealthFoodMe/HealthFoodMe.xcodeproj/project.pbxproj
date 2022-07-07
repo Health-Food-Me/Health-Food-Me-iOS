@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC441D28745FD800661A12 /* SocialLoginVC.swift */; };
+		3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC441F28745FE500661A12 /* SocialLogin.storyboard */; };
 		6005A822AEB1A47010D6C01E /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDECAEA3BF2AEAD960B4B3C /* Pods_HealthFoodMe.framework */; };
 		EB6A44C7287366DF00749582 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44C6287366DF00749582 /* .swiftlint.yml */; };
 		EBF66ABC287227F500DE0ED1 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */; };
@@ -87,6 +89,9 @@
 
 /* Begin PBXFileReference section */
 		26C3E6667A430DB48E0CC0FE /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
+		3B0B254D28757C7100950539 /* HealthFoodMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthFoodMe.entitlements; sourceTree = "<group>"; };
+		3BCC441D28745FD800661A12 /* SocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginVC.swift; sourceTree = "<group>"; };
+		3BCC441F28745FE500661A12 /* SocialLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SocialLogin.storyboard; sourceTree = "<group>"; };
 		75E42041F59816FF5154CDD3 /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
 		DEDECAEA3BF2AEAD960B4B3C /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB085ED628716E1900361837 /* HealthFoodMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthFoodMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,6 +193,31 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3BCC441A28745FA900661A12 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				3BCC441B28745FB000661A12 /* SocialLoginScene */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		3BCC441B28745FB000661A12 /* SocialLoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				3BCC441C28745FC500661A12 /* VC */,
+			);
+			path = SocialLoginScene;
+			sourceTree = "<group>";
+		};
+		3BCC441C28745FC500661A12 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				3BCC441D28745FD800661A12 /* SocialLoginVC.swift */,
+				3BCC441F28745FE500661A12 /* SocialLogin.storyboard */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
 		E3F60CBC9B890A7FB4D4AAAF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +248,7 @@
 		EB085ED828716E1900361837 /* HealthFoodMe */ = {
 			isa = PBXGroup;
 			children = (
+				3B0B254D28757C7100950539 /* HealthFoodMe.entitlements */,
 				EBF66A74287227F500DE0ED1 /* Application */,
 				EBF66A80287227F500DE0ED1 /* Data */,
 				EBF66AB3287227F500DE0ED1 /* Domain */,
@@ -435,6 +466,7 @@
 		EBF66A90287227F500DE0ED1 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				3BCC441A28745FA900661A12 /* Auth */,
 				EBF66A9F287227F500DE0ED1 /* Common */,
 				EBF66A91287227F500DE0ED1 /* Home */,
 			);
@@ -648,6 +680,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB6A44C7287366DF00749582 /* .swiftlint.yml in Resources */,
+				3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */,
 				EBF66AD0287227F500DE0ED1 /* Assets.xcassets in Resources */,
 				EBF66AD2287227F500DE0ED1 /* LaunchScreen.storyboard in Resources */,
 				EBF66AD1287227F500DE0ED1 /* NotoSansSC-Bold.otf in Resources */,
@@ -762,6 +795,7 @@
 				EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */,
 				EBF66AD5287227F500DE0ED1 /* ViewModelType.swift in Sources */,
 				EBF66ADA287227F500DE0ED1 /* controllerFromStoryBoard.swift in Sources */,
+				3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */,
 				EBF66AEC287227F500DE0ED1 /* PostDetailCVLayout.swift in Sources */,
 				EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */,
 				EBF66AE1287227F500DE0ED1 /* BaseService.swift in Sources */,
@@ -928,6 +962,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HealthFoodMe/HealthFoodMe.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -959,6 +994,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HealthFoodMe/HealthFoodMe.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
