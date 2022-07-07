@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B0B25542876BBE400950539 /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B254E2876BBE300950539 /* NotoSansCJKkr-Regular.otf */; };
+		3B0B25552876BBE400950539 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B254F2876BBE300950539 /* Pretendard-Bold.otf */; };
+		3B0B25562876BBE400950539 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B25502876BBE300950539 /* Pretendard-Regular.otf */; };
+		3B0B25572876BBE400950539 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B25512876BBE300950539 /* Pretendard-Medium.otf */; };
+		3B0B25582876BBE400950539 /* NotoSansCJKkr-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B25522876BBE400950539 /* NotoSansCJKkr-Bold.otf */; };
+		3B0B25592876BBE400950539 /* NotoSansCJKkr-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B25532876BBE400950539 /* NotoSansCJKkr-Medium.otf */; };
 		3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC441D28745FD800661A12 /* SocialLoginVC.swift */; };
 		3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC441F28745FE500661A12 /* SocialLogin.storyboard */; };
 		6005A822AEB1A47010D6C01E /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDECAEA3BF2AEAD960B4B3C /* Pods_HealthFoodMe.framework */; };
@@ -90,6 +96,12 @@
 /* Begin PBXFileReference section */
 		26C3E6667A430DB48E0CC0FE /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
 		3B0B254D28757C7100950539 /* HealthFoodMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthFoodMe.entitlements; sourceTree = "<group>"; };
+		3B0B254E2876BBE300950539 /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
+		3B0B254F2876BBE300950539 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		3B0B25502876BBE300950539 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		3B0B25512876BBE300950539 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		3B0B25522876BBE400950539 /* NotoSansCJKkr-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Bold.otf"; sourceTree = "<group>"; };
+		3B0B25532876BBE400950539 /* NotoSansCJKkr-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Medium.otf"; sourceTree = "<group>"; };
 		3BCC441D28745FD800661A12 /* SocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginVC.swift; sourceTree = "<group>"; };
 		3BCC441F28745FE500661A12 /* SocialLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SocialLogin.storyboard; sourceTree = "<group>"; };
 		75E42041F59816FF5154CDD3 /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -336,6 +348,12 @@
 		EBF66A6A287227F500DE0ED1 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				3B0B25522876BBE400950539 /* NotoSansCJKkr-Bold.otf */,
+				3B0B25532876BBE400950539 /* NotoSansCJKkr-Medium.otf */,
+				3B0B254E2876BBE300950539 /* NotoSansCJKkr-Regular.otf */,
+				3B0B254F2876BBE300950539 /* Pretendard-Bold.otf */,
+				3B0B25512876BBE300950539 /* Pretendard-Medium.otf */,
+				3B0B25502876BBE300950539 /* Pretendard-Regular.otf */,
 				EBF66A6B287227F500DE0ED1 /* NotoSansSC-Bold.otf */,
 			);
 			path = Fonts;
@@ -680,11 +698,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB6A44C7287366DF00749582 /* .swiftlint.yml in Resources */,
+				3B0B25582876BBE400950539 /* NotoSansCJKkr-Bold.otf in Resources */,
+				3B0B25572876BBE400950539 /* Pretendard-Medium.otf in Resources */,
+				3B0B25552876BBE400950539 /* Pretendard-Bold.otf in Resources */,
+				3B0B25542876BBE400950539 /* NotoSansCJKkr-Regular.otf in Resources */,
 				3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */,
+				3B0B25562876BBE400950539 /* Pretendard-Regular.otf in Resources */,
 				EBF66AD0287227F500DE0ED1 /* Assets.xcassets in Resources */,
 				EBF66AD2287227F500DE0ED1 /* LaunchScreen.storyboard in Resources */,
 				EBF66AD1287227F500DE0ED1 /* NotoSansSC-Bold.otf in Resources */,
 				EBF66AE9287227F500DE0ED1 /* PostDetail.storyboard in Resources */,
+				3B0B25592876BBE400950539 /* NotoSansCJKkr-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

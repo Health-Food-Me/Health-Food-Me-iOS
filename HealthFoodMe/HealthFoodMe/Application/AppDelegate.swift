@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        UIFont.overrideInitialize()
         KakaoSDK.initSDK(appKey : "8483f545857597ac5a551516e471a131")
         
         let appleIDProvider = ASAuthorizationAppleIDProvider()
