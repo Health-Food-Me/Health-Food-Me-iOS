@@ -207,6 +207,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3B0B255A2876CEBA00950539 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				3B0B255B2876CEC300950539 /* HambargurBarScene */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		3B0B255B2876CEC300950539 /* HambargurBarScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HambargurBarScene;
+			sourceTree = "<group>";
+		};
 		3BCC441A28745FA900661A12 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,6 +502,7 @@
 		EBF66A90287227F500DE0ED1 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				3B0B255A2876CEBA00950539 /* Menu */,
 				3BCC441A28745FA900661A12 /* Auth */,
 				EBF66A9F287227F500DE0ED1 /* Common */,
 				EBF66A91287227F500DE0ED1 /* Home */,
