@@ -28,14 +28,6 @@ final class DetailSummaryView: UIView {
         return lb
     }()
     
-    private let categoryLabel: UILabel = {
-        let lb = UILabel()
-        lb.text = "샐러드"
-        lb.textColor = .lightGray
-//        lb.font = .NotoBold(size: 13)
-        return lb
-    }()
-    
     private let starStackView: UIStackView = {
         let st = UIStackView()
         st.axis = .horizontal
@@ -79,32 +71,27 @@ extension DetailSummaryView {
 extension DetailSummaryView {
    
     private func setUI() {
-        self.backgroundColor = .carrotWhite
+        self.backgroundColor = .white
     }
     
     private func setLayout() {
         self.snp.makeConstraints { make in
             make.width.equalTo(UIScreen.main.bounds.width)
-            make.height.equalTo(140)
+            make.height.equalTo(142)
         }
         
-        self.addSubviews(logoImageView, restaurantNameLabel, categoryLabel,
+        self.addSubviews(logoImageView, restaurantNameLabel,
                          starStackView, rateLabel)
         
         logoImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
-            make.top.equalToSuperview().inset(12)
-            make.width.height.equalTo(116)
+            make.top.equalToSuperview().inset(15)
+            make.width.height.equalTo(112)
         }
         
         restaurantNameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(32)
             make.leading.equalTo(logoImageView.snp.trailing).offset(16)
-        }
-        
-        categoryLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(38)
-            make.leading.equalTo(restaurantNameLabel.snp.trailing).offset(5)
         }
         
         setStarStackView()

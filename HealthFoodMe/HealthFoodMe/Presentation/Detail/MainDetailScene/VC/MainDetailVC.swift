@@ -28,8 +28,8 @@ class MainDetailVC: UIViewController {
         tv.separatorStyle = .none
         tv.backgroundColor = .white
         tv.clipsToBounds = true
-        tv.allowsSelection = false
         tv.sectionFooterHeight = 0
+        tv.allowsSelection = false
         if #available(iOS 15, *) {
             tv.sectionHeaderTopPadding = 0
         }
@@ -97,14 +97,18 @@ extension MainDetailVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return MainInfoTVC.caculateRowHeihgt()
+            return 300
         } else {
             return UIScreen.main.bounds.height - 104
         }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+        if section == 0 {
+            return 0
+        } else {
+            return 60
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

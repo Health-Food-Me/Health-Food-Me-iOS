@@ -8,6 +8,7 @@
 import UIKit
 
 import SnapKit
+import RxSwift
 import RxRelay
 
 final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
@@ -15,9 +16,9 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     // MARK: - Properties
     
     static var isFromNib: Bool = false
-    let toggleButtonTapped = PublishRelay<Bool>()
+    let disposeBag = DisposeBag()
+    let toggleButtonTapped = PublishRelay<Void>()
     var willUseExpandableOption: Bool = false
-    var isFirstRow: Bool = false
     var isOpenned = false {
         didSet {
             
@@ -28,8 +29,9 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     
     private let iconImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.isHidden = true
+        iv.contentMode = .center
+        iv.image = ImageLiterals.MainDetail.locationIcon
+        iv.isHidden = false
         return iv
     }()
     
@@ -42,10 +44,16 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
         return lb
     }()
     
-    private let toggleButton: UIButton = {
+    private lazy var toggleButton: UIButton = {
         let bt = UIButton()
         bt.setImage(ImageLiterals.MainDetail.showdownIcon, for: .normal)
-        bt.setImage(ImageLiterals.MainDetail.showupIcon, for: .normal)
+        bt.setImage(ImageLiterals.MainDetail.showupIcon, for: .selected)
+        bt.addAction(UIAction(handler: { _ in
+            self.isOpenned.toggle()
+            print(self.isOpenned)
+            print(1)
+            self.toggleButtonTapped.accept(())
+        }), for: .touchUpInside)
         return bt
     }()
     
@@ -72,20 +80,32 @@ extension ExpandableInfoTVC {
     }
     
     private func setLayout() {
-        self.addSubviews(iconImageView, infoLabel, toggleButton)
+        self.contentView.addSubviews(iconImageView, infoLabel, toggleButton)
         
         iconImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
+            make.width.height.equalTo(20)
             make.top.bottom.equalTo(4.5)
         }
         
         infoLabel.snp.makeConstraints { make in
-            
+            make.leading.equalTo(iconImageView.snp.trailing).offset(12.5)
+            make.centerY.equalTo(iconImageView.snp.centerY)
         }
         
         toggleButton.snp.makeConstraints { make in
-            
+            make.leading.equalTo(infoLabel.snp.trailing).offset(2)
+            make.centerY.equalTo(infoLabel.snp.centerY)
         }
+    }
+    
+    func setUIWithIndex(indexPath: IndexPath, isOppend: Bool) {
+        let isFirstRow = indexPath.row == 0
+        let isSecondSection = indexPath.section == 1
+        toggleButton.isSelected = isOpenned
+        
+        iconImageView.isHidden = !isFirstRow
+        toggleButton.isHidden = !(isFirstRow && isSecondSection)
     }
     
     class func caculateRowHeihgt() -> CGFloat {
