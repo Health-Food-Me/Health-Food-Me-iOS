@@ -8,22 +8,83 @@
 import UIKit
 
 class HamburgerBarVC: UIViewController {
+    
+    var name: String? = "배부른 현우는 행복해요"
+    
+    private var menuButtons: [UIButton] = []
+    private let buttonTitles: [String] = ["스크랩한 식당", "내가 쓴 리뷰", "가게 제보하기",
+                                          "수정사항 제보하기"]
+    private var dividingLineViews: [UIView] = []
+    
+    private let hamburgerBarView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .helfmeWhite
+        
+        return view
+    }()
 
-    private lazy var hamburgerBarView = UIView()
-    private lazy var helloLabel = UILabel()
-    private lazy var nameLabel = UILabel()
-    private lazy var sirLabel = UILabel()
-    private lazy var todayHelfmeLabel = UILabel()
-    private lazy var editNameButton = UIButton()
-    private lazy var scrapListButton = UIButton()
-    private lazy var myReviewButton = UIButton()
-    private lazy var reportStoreButton = UIButton()
-    private lazy var repostCorrectionButton = UIButton()
-    private lazy var settingButton = UIButton()
-    private lazy var logoutButton = UIButton()
-    private lazy var firstDividingLineView = UIView()
-    private lazy var secondDividingLineView = UIView()
-    private lazy var thirdDividingLineView = UIView()
+    private lazy var helloLabel: UILabel = {
+        let lb = UILabel()
+        if let name = name {
+            lb.text =
+    """
+    안녕하세요!
+    \(name)님
+    오늘도 헬푸미하세요
+    """
+        }
+        lb.textColor = .helfmeBlack
+        lb.font = UIFont.PretendardRegular(size: 18)
+        lb.numberOfLines = 3
+        lb.setLineSpacing(lineSpacing: 3)
+        
+        return lb
+    }()
+    
+    private lazy var editNameButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "btn_edit"), for: .normal)
+        
+        return button
+    }()
+    
+    private var logoutButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(I18N.HamburgerBar.logout, for: .normal)
+        button.setTitleColor(.helfmeGray1, for: .normal)
+        button.titleLabel?.font = UIFont.PretendardRegular(size: 12)
+        
+        return button
+    }()
+    
+    private var settingButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(I18N.HamburgerBar.setting, for: .normal)
+        button.setTitleColor(.helfmeBlack, for: .normal)
+        button.titleLabel?.font = UIFont.PretendardRegular(size: 16)
+        
+        return button
+    }()
+
+    private var storeButtonStackView: UIStackView = {
+        let st = UIStackView()
+        st.axis = .vertical
+        st.spacing = 20
+        st.distribution = .equalSpacing
+        st.alignment = .leading
+        
+        return st
+    }()
+    
+    private var reportButtonStackView: UIStackView = {
+        let st = UIStackView()
+        st.axis = .vertical
+        st.spacing = 20
+        st.distribution = .equalSpacing
+        st.alignment = .leading
+        
+        return st
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,56 +96,43 @@ class HamburgerBarVC: UIViewController {
 
 extension HamburgerBarVC {
     private func setUI() {
-        let blackColorWithAlpha: UIColor = UIColor(.black).withAlphaComponent(0.6)
+        let blackColorWithAlpha: UIColor = .helfmeBlack.withAlphaComponent(0.6)
         view.backgroundColor = blackColorWithAlpha
-        hamburgerBarView.backgroundColor = .helfmeWhite
         
-        editNameButton.setImage(UIImage(named: "btn_edit"), for: .normal)
-        
-        helloLabel.text = I18N.HamburgerBar.hello
-        nameLabel.text = "배부른 현우는 행복해요"
-        sirLabel.text = I18N.HamburgerBar.sir
-        todayHelfmeLabel.text = I18N.HamburgerBar.todayHelfme
-        scrapListButton.setTitle(I18N.HamburgerBar.scrapList, for: .normal)
-        myReviewButton.setTitle(I18N.HamburgerBar.myReview, for: .normal)
-        reportStoreButton.setTitle(I18N.HamburgerBar.reportStore, for: .normal)
-        repostCorrectionButton.setTitle(I18N.HamburgerBar.reposrtCorrection, for: .normal)
-        settingButton.setTitle(I18N.HamburgerBar.setting, for: .normal)
-        logoutButton.setTitle(I18N.HamburgerBar.logout, for: .normal)
-        
-        helloLabel.textColor = .helfmeBlack
-        nameLabel.textColor = .helfmeBlack
-        sirLabel.textColor = .helfmeBlack
-        todayHelfmeLabel.textColor = .helfmeBlack
-        scrapListButton.setTitleColor(.helfmeBlack, for: .normal)
-        myReviewButton.setTitleColor(.helfmeBlack, for: .normal)
-        reportStoreButton.setTitleColor(.helfmeBlack, for: .normal)
-        repostCorrectionButton.setTitleColor(.helfmeBlack, for: .normal)
-        settingButton.setTitleColor(.helfmeBlack, for: .normal)
-        logoutButton.setTitleColor(.helfmeGray1, for: .normal)
-        
-        firstDividingLineView.backgroundColor = .helfmeLineGray
-        secondDividingLineView.backgroundColor = .helfmeLineGray
-        thirdDividingLineView.backgroundColor = .helfmeLineGray
-        
-        helloLabel.font = UIFont.PretendardRegular(size: 18)
-        nameLabel.font = UIFont.PretendardRegular(size: 18)
-        sirLabel.font = UIFont.PretendardRegular(size: 18)
-        todayHelfmeLabel.font = UIFont.PretendardRegular(size: 18)
-        scrapListButton.titleLabel?.font = UIFont.PretendardRegular(size: 16)
-        myReviewButton.titleLabel?.font = UIFont.PretendardRegular(size: 16)
-        reportStoreButton.titleLabel?.font = UIFont.PretendardRegular(size: 16)
-        repostCorrectionButton.titleLabel?.font = UIFont.PretendardRegular(size: 16)
-        settingButton.titleLabel?.font = UIFont.PretendardRegular(size: 16)
-        logoutButton.titleLabel?.font = UIFont.PretendardRegular(size: 12)
+        setButtons()
+        setDivindingView()
     }
     
+    private func setButtons() {
+        for buttonIndex in 0...3 {
+            let button = UIButton()
+            button.setTitle(buttonTitles[buttonIndex], for: .normal)
+            button.setTitleColor(.helfmeBlack, for: .normal)
+            button.titleLabel?.font = UIFont.PretendardRegular(size: 16)
+            menuButtons.append(button)
+            
+            if buttonIndex < 2 {
+                storeButtonStackView.addArrangedSubviews(menuButtons[buttonIndex])
+            } else {
+                reportButtonStackView.addArrangedSubviews(menuButtons[buttonIndex])
+            }
+        }
+    }
+    
+    private func setDivindingView() {
+        for _ in 0...2 {
+            let view = UIView()
+            view.backgroundColor = .helfmeLineGray
+            dividingLineViews.append(view)
+        }
+    }
+
     private func setLayout() {
-        view.addSubviews(hamburgerBarView, helloLabel, nameLabel,
-                         sirLabel, todayHelfmeLabel, editNameButton,
-                         scrapListButton, myReviewButton, reportStoreButton,
-                         repostCorrectionButton, settingButton, logoutButton,
-                         firstDividingLineView, secondDividingLineView, thirdDividingLineView)
+        view.addSubviews(hamburgerBarView, helloLabel, editNameButton,
+                         storeButtonStackView, reportButtonStackView,
+                         settingButton, logoutButton, dividingLineViews[0],
+                         dividingLineViews[1], dividingLineViews[2]
+        )
         
         hamburgerBarView.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.71)
@@ -98,66 +146,41 @@ extension HamburgerBarVC {
             make.leading.equalTo(20)
         }
         
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(helloLabel.snp.bottom).offset(3)
-            make.leading.equalTo(20)
-        }
-        
-        sirLabel.snp.makeConstraints { make in
-            make.top.equalTo(helloLabel.snp.bottom).offset(3)
-            make.leading.equalTo(nameLabel.snp.trailing).offset(2)
-        }
-        
         editNameButton.snp.makeConstraints { make in
-            make.top.equalTo(helloLabel.snp.bottom).offset(3)
-            make.leading.equalTo(sirLabel.snp.trailing).offset(8)
+            make.centerY.equalTo(helloLabel.snp.centerY)
+            make.leading.equalTo(helloLabel.snp.trailing).offset(8)
         }
         
-        todayHelfmeLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(3)
+        dividingLineViews[0].snp.makeConstraints { make in
+            make.width.equalTo(hamburgerBarView)
+            make.top.equalTo(helloLabel.snp.bottom).offset(38)
+            make.height.equalTo(1)
+        }
+        
+        storeButtonStackView.snp.makeConstraints { make in
+            make.top.equalTo(dividingLineViews[0].snp.bottom).offset(28)
             make.leading.equalTo(20)
         }
         
-        firstDividingLineView.snp.makeConstraints { make in
-            make.top.equalTo(todayHelfmeLabel.snp.bottom).offset(38)
+        dividingLineViews[1].snp.makeConstraints { make in
+            make.top.equalTo(storeButtonStackView.snp.bottom).offset(28)
             make.width.equalTo(hamburgerBarView)
             make.height.equalTo(1)
         }
         
-        scrapListButton.snp.makeConstraints { make in
-            make.top.equalTo(firstDividingLineView.snp.bottom).offset(28)
+        reportButtonStackView.snp.makeConstraints { make in
+            make.top.equalTo(dividingLineViews[1].snp.bottom).offset(28)
             make.leading.equalTo(20)
         }
         
-        myReviewButton.snp.makeConstraints { make in
-            make.top.equalTo(scrapListButton.snp.bottom).offset(20)
-            make.leading.equalTo(20)
-        }
-        
-        secondDividingLineView.snp.makeConstraints { make in
-            make.top.equalTo(myReviewButton.snp.bottom).offset(28)
+        dividingLineViews[2].snp.makeConstraints { make in
+            make.top.equalTo(reportButtonStackView.snp.bottom).offset(20)
             make.width.equalTo(hamburgerBarView)
             make.height.equalTo(1)
         }
-        
-        reportStoreButton.snp.makeConstraints { make in
-            make.top.equalTo(secondDividingLineView.snp.bottom).offset(20)
-            make.leading.equalTo(20)
-        }
-        
-        repostCorrectionButton.snp.makeConstraints { make in
-            make.top.equalTo(reportStoreButton.snp.bottom).offset(20)
-            make.leading.equalTo(20)
-        }
-        
-        thirdDividingLineView.snp.makeConstraints { make in
-            make.top.equalTo(repostCorrectionButton.snp.bottom).offset(20)
-            make.width.equalTo(hamburgerBarView)
-            make.height.equalTo(1)
-        }
-        
+
         settingButton.snp.makeConstraints { make in
-            make.top.equalTo(thirdDividingLineView.snp.bottom).offset(28)
+            make.top.equalTo(dividingLineViews[2].snp.bottom).offset(28)
             make.leading.equalTo(20)
         }
         
