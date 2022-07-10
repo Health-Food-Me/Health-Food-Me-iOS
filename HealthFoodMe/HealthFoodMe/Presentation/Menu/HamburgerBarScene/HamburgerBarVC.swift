@@ -10,7 +10,7 @@ import UIKit
 class HamburgerBarVC: UIViewController {
     
     var name: String? = "배부른 현우는 행복해요"
-    
+    private lazy var hamburgerBarButton = UIButton()
     private var menuButtons: [UIButton] = []
     private let buttonTitles: [String] = ["스크랩한 식당", "내가 쓴 리뷰", "가게 제보하기",
                                           "수정사항 제보하기"]
@@ -96,14 +96,18 @@ class HamburgerBarVC: UIViewController {
 
 extension HamburgerBarVC {
     private func setUI() {
-        let blackColorWithAlpha: UIColor = .helfmeBlack.withAlphaComponent(0.6)
-        view.backgroundColor = blackColorWithAlpha
+//        let blackColorWithAlpha: UIColor = .helfmeBlack.withAlphaComponent(0.6)
+//        view.backgroundColor = blackColorWithAlpha
         
         setButtons()
         setDivindingView()
     }
     
     private func setButtons() {
+        hamburgerBarButton.setTitleColor(.helfmeBlack, for: .normal)
+        hamburgerBarButton.setTitle("햄버거바", for: .normal)
+        hamburgerBarButton.addTarget(self, action: #selector(showHamburgerBarWithAnimation(_:)), for: .touchUpInside)
+        
         for buttonIndex in 0...3 {
             let button = UIButton()
             button.setTitle(buttonTitles[buttonIndex], for: .normal)
@@ -128,11 +132,16 @@ extension HamburgerBarVC {
     }
 
     private func setLayout() {
-        view.addSubviews(hamburgerBarView, helloLabel, editNameButton,
-                         storeButtonStackView, reportButtonStackView,
+        view.addSubviews(hamburgerBarButton, hamburgerBarView, helloLabel,
+                         editNameButton, storeButtonStackView, reportButtonStackView,
                          settingButton, logoutButton, dividingLineViews[0],
                          dividingLineViews[1], dividingLineViews[2]
         )
+        
+        hamburgerBarButton.snp.makeConstraints { make in
+            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(100)
+        }
         
         hamburgerBarView.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.71)
@@ -187,6 +196,12 @@ extension HamburgerBarVC {
         logoutButton.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(14)
             make.leading.equalTo(20)
+        }
+    }
+    
+    @objc func showHamburgerBarWithAnimation(_ button: UIButton) {
+        UIView.animate(withDuration: 0.4) {
+            self.view.backgroundColor = .helfmeBlack.withAlphaComponent(0.4)
         }
     }
 }
