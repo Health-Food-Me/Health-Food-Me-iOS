@@ -46,7 +46,7 @@
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
 					<key>UISceneStoryboardFile</key>
-					<string>SocialLogin</string>
+					<string>HamburgerBar</string>
 				</dict>
 			</array>
 		</dict>
