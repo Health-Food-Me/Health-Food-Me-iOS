@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2EB23785D4711C41BE97BA3F /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DC488961BE98CD8C010993 /* Pods_HealthFoodMe.framework */; };
 		3B0B25542876BBE400950539 /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B254E2876BBE300950539 /* NotoSansCJKkr-Regular.otf */; };
 		3B0B25552876BBE400950539 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B254F2876BBE300950539 /* Pretendard-Bold.otf */; };
 		3B0B25562876BBE400950539 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B25502876BBE300950539 /* Pretendard-Regular.otf */; };
@@ -15,11 +16,7 @@
 		3B0B25592876BBE400950539 /* NotoSansCJKkr-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B25532876BBE400950539 /* NotoSansCJKkr-Medium.otf */; };
 		3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC441D28745FD800661A12 /* SocialLoginVC.swift */; };
 		3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC441F28745FE500661A12 /* SocialLogin.storyboard */; };
-		6005A822AEB1A47010D6C01E /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDECAEA3BF2AEAD960B4B3C /* Pods_HealthFoodMe.framework */; };
 		A9E593CF2876C26900B0F8B5 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9E593CE2876C26900B0F8B5 /* Color.xcassets */; };
-		2EB23785D4711C41BE97BA3F /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DC488961BE98CD8C010993 /* Pods_HealthFoodMe.framework */; };
-		3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC441D28745FD800661A12 /* SocialLoginVC.swift */; };
-		3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC441F28745FE500661A12 /* SocialLogin.storyboard */; };
 		EB6A44C7287366DF00749582 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44C6287366DF00749582 /* .swiftlint.yml */; };
 		EB6A44D128737CC400749582 /* MainDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44CB28737CC400749582 /* MainDetailUseCase.swift */; };
 		EB6A44D228737CC400749582 /* MainDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44CC28737CC400749582 /* MainDetailRepository.swift */; };
@@ -85,14 +82,6 @@
 		EBF66AE5287227F500DE0ED1 /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A8C287227F500DE0ED1 /* NetworkConstants.swift */; };
 		EBF66AE6287227F500DE0ED1 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A8E287227F500DE0ED1 /* AuthService.swift */; };
 		EBF66AE7287227F500DE0ED1 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A8F287227F500DE0ED1 /* HomeService.swift */; };
-		EBF66AE8287227F500DE0ED1 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A94287227F500DE0ED1 /* PostDetailViewModel.swift */; };
-		EBF66AE9287227F500DE0ED1 /* PostDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBF66A95287227F500DE0ED1 /* PostDetail.storyboard */; };
-		EBF66AEA287227F500DE0ED1 /* PostContentCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A97287227F500DE0ED1 /* PostContentCVC.swift */; };
-		EBF66AEB287227F500DE0ED1 /* PostImageCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A98287227F500DE0ED1 /* PostImageCVC.swift */; };
-		EBF66AEC287227F500DE0ED1 /* PostDetailCVLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A9A287227F500DE0ED1 /* PostDetailCVLayout.swift */; };
-		EBF66AED287227F500DE0ED1 /* PostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A9B287227F500DE0ED1 /* PostDetailVC.swift */; };
-		EBF66AEE287227F500DE0ED1 /* PostDetailBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A9D287227F500DE0ED1 /* PostDetailBottomView.swift */; };
-		EBF66AEF287227F500DE0ED1 /* PostDetailUserHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A9E287227F500DE0ED1 /* PostDetailUserHeader.swift */; };
 		EBF66AF0287227F500DE0ED1 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66AA1287227F500DE0ED1 /* BaseVC.swift */; };
 		EBF66AF1287227F500DE0ED1 /* ShowToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66AA3287227F500DE0ED1 /* ShowToast.swift */; };
 		EBF66AF2287227F500DE0ED1 /* buttonPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66AA4287227F500DE0ED1 /* buttonPress.swift */; };
@@ -130,9 +119,7 @@
 		3B0B25532876BBE400950539 /* NotoSansCJKkr-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Medium.otf"; sourceTree = "<group>"; };
 		3BCC441D28745FD800661A12 /* SocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginVC.swift; sourceTree = "<group>"; };
 		3BCC441F28745FE500661A12 /* SocialLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SocialLogin.storyboard; sourceTree = "<group>"; };
-		75E42041F59816FF5154CDD3 /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
 		A9E593CE2876C26900B0F8B5 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
-		DEDECAEA3BF2AEAD960B4B3C /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E71673C053B2E49E39F1AADB /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
 		EB085ED628716E1900361837 /* HealthFoodMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthFoodMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB085EE728716E1B00361837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -201,14 +188,6 @@
 		EBF66A8C287227F500DE0ED1 /* NetworkConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
 		EBF66A8E287227F500DE0ED1 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		EBF66A8F287227F500DE0ED1 /* HomeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
-		EBF66A94287227F500DE0ED1 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
-		EBF66A95287227F500DE0ED1 /* PostDetail.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PostDetail.storyboard; sourceTree = "<group>"; };
-		EBF66A97287227F500DE0ED1 /* PostContentCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostContentCVC.swift; sourceTree = "<group>"; };
-		EBF66A98287227F500DE0ED1 /* PostImageCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostImageCVC.swift; sourceTree = "<group>"; };
-		EBF66A9A287227F500DE0ED1 /* PostDetailCVLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailCVLayout.swift; sourceTree = "<group>"; };
-		EBF66A9B287227F500DE0ED1 /* PostDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailVC.swift; sourceTree = "<group>"; };
-		EBF66A9D287227F500DE0ED1 /* PostDetailBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailBottomView.swift; sourceTree = "<group>"; };
-		EBF66A9E287227F500DE0ED1 /* PostDetailUserHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailUserHeader.swift; sourceTree = "<group>"; };
 		EBF66AA1287227F500DE0ED1 /* BaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		EBF66AA3287227F500DE0ED1 /* ShowToast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowToast.swift; sourceTree = "<group>"; };
 		EBF66AA4287227F500DE0ED1 /* buttonPress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = buttonPress.swift; sourceTree = "<group>"; };
@@ -775,67 +754,12 @@
 		EBF66A90287227F500DE0ED1 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				3BCC441A28745FA900661A12 /* Auth */,
 				EBF66A9F287227F500DE0ED1 /* Common */,
+				3BCC441A28745FA900661A12 /* Auth */,
 				EB6A44E22873BAAE00749582 /* Map */,
 				EB6A44C828737BF700749582 /* Detail */,
-				EBF66A91287227F500DE0ED1 /* Home */,
 			);
 			path = Presentation;
-			sourceTree = "<group>";
-		};
-		EBF66A91287227F500DE0ED1 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				EBF66A92287227F500DE0ED1 /* PostDetailScene */,
-			);
-			path = Home;
-			sourceTree = "<group>";
-		};
-		EBF66A92287227F500DE0ED1 /* PostDetailScene */ = {
-			isa = PBXGroup;
-			children = (
-				EBF66B0D2872D4D500DE0ED1 /* VC */,
-				EBF66A93287227F500DE0ED1 /* ViewModel */,
-				EBF66A96287227F500DE0ED1 /* Cells */,
-				EBF66A99287227F500DE0ED1 /* Layout */,
-				EBF66A9C287227F500DE0ED1 /* Views */,
-			);
-			path = PostDetailScene;
-			sourceTree = "<group>";
-		};
-		EBF66A93287227F500DE0ED1 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				EBF66A94287227F500DE0ED1 /* PostDetailViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		EBF66A96287227F500DE0ED1 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				EBF66A97287227F500DE0ED1 /* PostContentCVC.swift */,
-				EBF66A98287227F500DE0ED1 /* PostImageCVC.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		EBF66A99287227F500DE0ED1 /* Layout */ = {
-			isa = PBXGroup;
-			children = (
-				EBF66A9A287227F500DE0ED1 /* PostDetailCVLayout.swift */,
-			);
-			path = Layout;
-			sourceTree = "<group>";
-		};
-		EBF66A9C287227F500DE0ED1 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				EBF66A9D287227F500DE0ED1 /* PostDetailBottomView.swift */,
-				EBF66A9E287227F500DE0ED1 /* PostDetailUserHeader.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		EBF66A9F287227F500DE0ED1 /* Common */ = {
@@ -925,15 +849,6 @@
 			path = Entity;
 			sourceTree = "<group>";
 		};
-		EBF66B0D2872D4D500DE0ED1 /* VC */ = {
-			isa = PBXGroup;
-			children = (
-				EBF66A9B287227F500DE0ED1 /* PostDetailVC.swift */,
-				EBF66A95287227F500DE0ED1 /* PostDetail.storyboard */,
-			);
-			path = VC;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1008,7 +923,6 @@
 				EB6A44FF2873BFAE00749582 /* MainDetail.storyboard in Resources */,
 				EB6A44FD2873BF8800749582 /* MainMap.storyboard in Resources */,
 				EBF66AD1287227F500DE0ED1 /* NotoSansSC-Bold.otf in Resources */,
-				EBF66AE9287227F500DE0ED1 /* PostDetail.storyboard in Resources */,
 				3B0B25592876BBE400950539 /* NotoSansCJKkr-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1092,7 +1006,6 @@
 				EBF66ADD287227F500DE0ED1 /* SceneDelegate.swift in Sources */,
 				EBF66AC2287227F500DE0ED1 /* UIViewController+.swift in Sources */,
 				EBF66AD6287227F500DE0ED1 /* UITableViewRegisterable.swift in Sources */,
-				EBF66AEF287227F500DE0ED1 /* PostDetailUserHeader.swift in Sources */,
 				EBF66AC5287227F500DE0ED1 /* UITextField+.swift in Sources */,
 				EBF66AE6287227F500DE0ED1 /* AuthService.swift in Sources */,
 				EBF66AFB287227F500DE0ED1 /* setImage.swift in Sources */,
@@ -1111,7 +1024,6 @@
 				EBF66AC3287227F500DE0ED1 /* UILabel+.swift in Sources */,
 				EBF66AFE287227F500DE0ED1 /* makeVibrate.swift in Sources */,
 				EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */,
-				EBF66AEE287227F500DE0ED1 /* PostDetailBottomView.swift in Sources */,
 				EB6A45172874276B00749582 /* DetailTabTitleHeader.swift in Sources */,
 				EB6A451B2875365B00749582 /* TabIndicator.swift in Sources */,
 				EB6A44D528737CC400749582 /* MainDetailViewModel.swift in Sources */,
@@ -1132,7 +1044,6 @@
 				EBF66AD5287227F500DE0ED1 /* ViewModelType.swift in Sources */,
 				EBF66ADA287227F500DE0ED1 /* controllerFromStoryBoard.swift in Sources */,
 				3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */,
-				EBF66AEC287227F500DE0ED1 /* PostDetailCVLayout.swift in Sources */,
 				EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */,
 				EBF66AE1287227F500DE0ED1 /* BaseService.swift in Sources */,
 				EBF66AE2287227F500DE0ED1 /* BaseRouter.swift in Sources */,
@@ -1141,7 +1052,6 @@
 				EBF66AF5287227F500DE0ED1 /* Logger.swift in Sources */,
 				EB6A4528287664D600749582 /* ExpandableInfoTVC.swift in Sources */,
 				EBF66ACB287227F500DE0ED1 /* String+.swift in Sources */,
-				EBF66AEA287227F500DE0ED1 /* PostContentCVC.swift in Sources */,
 				EBF66AF2287227F500DE0ED1 /* buttonPress.swift in Sources */,
 				EBF66ADF287227F500DE0ED1 /* AuthRouter.swift in Sources */,
 				EBF66ADC287227F500DE0ED1 /* AppDelegate.swift in Sources */,
@@ -1152,7 +1062,6 @@
 				EBF66ACF287227F500DE0ED1 /* Result+.swift in Sources */,
 				EBF66AD7287227F500DE0ED1 /* Presentable.swift in Sources */,
 				EB6A451128740CFF00749582 /* MainInfoTVC.swift in Sources */,
-				EBF66AED287227F500DE0ED1 /* PostDetailVC.swift in Sources */,
 				EB6A44F22873BED500749582 /* MainMapViewModel.swift in Sources */,
 				EBF66AE0287227F500DE0ED1 /* EventLogger.swift in Sources */,
 				EBF66AC7287227F500DE0ED1 /* UITableView+.swift in Sources */,
@@ -1167,9 +1076,7 @@
 				EB6A44F02873BED500749582 /* MainMapModel.swift in Sources */,
 				EB6A44EF2873BED500749582 /* MainMapRepository.swift in Sources */,
 				EBF66AC9287227F500DE0ED1 /* UIColor+.swift in Sources */,
-				EBF66AEB287227F500DE0ED1 /* PostImageCVC.swift in Sources */,
 				EBF66B00287227F500DE0ED1 /* Adjusted+.swift in Sources */,
-				EBF66AE8287227F500DE0ED1 /* PostDetailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

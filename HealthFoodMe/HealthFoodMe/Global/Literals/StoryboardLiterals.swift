@@ -16,7 +16,6 @@ import UIKit
  */
 
 enum Storyboards: String {
-    case postDetail = "PostDetail"
     case mainMap = "MainMap"
     case mainDetail = "MainDetail"
 }

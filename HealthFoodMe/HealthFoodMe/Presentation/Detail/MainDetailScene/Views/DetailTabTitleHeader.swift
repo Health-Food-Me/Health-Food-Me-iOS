@@ -77,7 +77,7 @@ extension DetailTabTitleHeader {
     private func setButtons() {
         for buttonIndex in 0...2 {
             let bt = UIButton()
-            bt.setTitle(buttonTitles[buttonIndex], for: .normal)
+            bt.setTitle(I18N.Detail.Main.buttonTitles[buttonIndex], for: .normal)
             bt.backgroundColor = .white
             bt.tag = buttonIndex
             bt.isSelected = buttonIndex == 0
