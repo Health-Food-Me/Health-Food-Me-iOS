@@ -153,14 +153,15 @@ extension MainDetailVC: UITableViewDataSource {
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTabTVC.className, for: indexPath) as? DetailTabTVC else { return UITableViewCell() }
             detailTabTVC = cell
-            
-            // TODO: - 멈추면 헤더 타이틀 선택 상태도 바뀌게
-            
             self.addChild(childVC)
             cell.receiveChildVC(childVC: childVC)
             cell.scrollRatio.asDriver(onErrorJustReturn: 0)
                 .drive { ratio in
                     self.detailTabTitleHeader.moveWithContinuousRatio(ratio: ratio)
+                }.disposed(by: cell.disposeBag)
+            cell.scrollEnded.asDriver(onErrorJustReturn: 0)
+                .drive { pageIndex in
+                    self.detailTabTitleHeader.setSelectedButton(buttonIndex: pageIndex)
                 }.disposed(by: cell.disposeBag)
             return cell
         }

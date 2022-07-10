@@ -112,12 +112,12 @@ extension DetailTabTitleHeader {
     
     private func setAddTargets() {
         titleButtons.forEach { button in
-            button.addTarget(self, action: #selector(setSelectedButton), for: .touchUpInside)
+            button.addTarget(self, action: #selector(changeSelectedButton), for: .touchUpInside)
         }
     }
     
     @objc
-    private func setSelectedButton(sender: UIButton) {
+    private func changeSelectedButton(sender: UIButton) {
         self.selectedButton = sender.tag
         
         titleButtons.forEach { button in
@@ -127,5 +127,11 @@ extension DetailTabTitleHeader {
     
     func moveWithContinuousRatio(ratio: CGFloat) {
         tabIndicator.leftOffsetRatio = ratio
+    }
+    
+    func setSelectedButton(buttonIndex: Int) {
+        titleButtons.forEach { button in
+            button.isSelected = button.tag == buttonIndex
+        }
     }
 }

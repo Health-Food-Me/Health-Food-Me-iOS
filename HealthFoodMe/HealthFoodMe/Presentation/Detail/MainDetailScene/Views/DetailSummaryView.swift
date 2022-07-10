@@ -97,14 +97,14 @@ extension DetailSummaryView {
     private func setLayout() {
         self.snp.makeConstraints { make in
             make.width.equalTo(UIScreen.main.bounds.width)
-            make.height.equalTo(142)
+            make.height.equalTo(140)
         }
         
         self.addSubviews(logoImageView, titleStackView)
         
         logoImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
-            make.top.equalToSuperview().inset(15)
+            make.top.bottom.equalToSuperview().inset(15)
             make.width.height.equalTo(112)
         }
         

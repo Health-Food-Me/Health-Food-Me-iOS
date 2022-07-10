@@ -21,7 +21,6 @@ final class TabContainerCVC: UICollectionViewCell, UICollectionViewRegisterable 
         let lb = UILabel()
         lb.text = "샐러디 태릉입구점"
         lb.textColor = .black
-//        lb.font = .PopBold(size: 16)
         return lb
     }()
     

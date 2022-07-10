@@ -18,6 +18,7 @@ final class DetailTabTVC: UITableViewCell, UITableViewRegisterable {
     static var isFromNib: Bool = false
     let disposeBag = DisposeBag()
     let scrollRatio = PublishRelay<CGFloat>()
+    let scrollEnded = PublishRelay<Int>()
     var childControllers = [UIViewController]() {
         didSet {
             containerCollectionView.reloadData()
@@ -106,6 +107,13 @@ extension DetailTabTVC: UICollectionViewDelegate {
         let width = scrollView.contentSize.width + scrollView.contentInset.left + scrollView.contentInset.right
         let scrollRatio = scroll / width
         self.scrollRatio.accept(scrollRatio)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let scroll = scrollView.contentOffset.x
+        let width = scrollView.frame.width
+        let scrollIndex = Int(scroll / width)
+        self.scrollEnded.accept(scrollIndex)
     }
 }
 
