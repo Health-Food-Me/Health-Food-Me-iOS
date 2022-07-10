@@ -17,7 +17,7 @@ final class PostImageCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .carrotBlue
+//        iv.backgroundColor = .carrotBlue
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
         return iv
@@ -53,7 +53,7 @@ final class PostImageCVC: UICollectionViewCell, UICollectionViewRegisterable {
     // MARK: UI & Layout
     
     private func setUI() {
-        self.backgroundColor = .carrotWhite
+//        self.backgroundColor = .carrotWhite
     }
     
     private func setLayout() {

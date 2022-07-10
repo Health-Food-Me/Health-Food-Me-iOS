@@ -19,7 +19,7 @@ final class PostDetailBottomView: UIView {
     
     private let lineView: UIView = {
         let view = UIView()
-        view.backgroundColor = .carrotLineLightGray
+//        view.backgroundColor = .carrotLineLightGray
         return view
     }()
     
@@ -36,14 +36,14 @@ final class PostDetailBottomView: UIView {
     
     private let verticalLineView: UIView = {
         let view = UIView()
-        view.backgroundColor = .carrotLineLightGray
+//        view.backgroundColor = .carrotLineLightGray
         return view
     }()
     
     private let priceLabel: UILabel = {
         let lb = UILabel()
         lb.text = "16,000원"
-        lb.textColor = .carrotBlack
+//        lb.textColor = .carrotBlack
 //        lb.font = .PopBold(size: 16)
         return lb
     }()
@@ -51,17 +51,17 @@ final class PostDetailBottomView: UIView {
     private let guideLabel: UILabel = {
         let lb = UILabel()
         lb.text = "가격제안불가"
-        lb.textColor = .carrotDarkLightGray
+//        lb.textColor = .carrotDarkLightGray
 //        lb.font = .NotoBold(size: 13)
         return lb
     }()
     
     private lazy var chatButton: UIButton = {
         let bt = UIButton()
-        bt.backgroundColor = .carrotButtonOrange
+//        bt.backgroundColor = .carrotButtonOrange
 //        bt.titleLabel?.font = .NotoBold(size: 15)
         bt.setTitle("채팅 목록 보기", for: .normal)
-        bt.setTitleColor(UIColor.carrotWhite, for: .normal)
+//        bt.setTitleColor(UIColor.carrotWhite, for: .normal)
         bt.layer.cornerRadius = 5
         return bt
     }()
@@ -100,7 +100,7 @@ final class PostDetailBottomView: UIView {
     // MARK: - UI & Layout
     
     private func setUI() {
-        self.backgroundColor = .carrotWhite
+//        self.backgroundColor = .carrotWhite
     }
     
     private func setLayout() {

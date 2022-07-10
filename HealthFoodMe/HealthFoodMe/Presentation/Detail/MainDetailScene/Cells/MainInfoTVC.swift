@@ -95,7 +95,7 @@ extension MainInfoTVC {
             make.top.equalTo(detailSummaryView.snp.bottom)
             make.leading.equalToSuperview().offset(17.5)
             make.width.equalTo(250)
-            make.height.equalTo(29 * 3)
+            make.height.equalTo(34 * 2 + 20 * 1)
             make.bottom.equalToSuperview().inset(9)
         }
         
@@ -125,7 +125,11 @@ extension MainInfoTVC {
 
 extension MainInfoTVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 29
+        if indexPath.section == 1 {
+            return 20
+        } else {
+            return 34
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -183,9 +187,9 @@ extension MainInfoTVC: UITableViewDataSource {
     private func remakeConstraintsForCells() {
         expandableTableView.snp.updateConstraints { make in
             if isOpenned {
-                make.height.equalTo(29 * (3 + 6))
+                make.height.equalTo(34 * 2 + 20 * 7)
             } else {
-                make.height.equalTo(29 * (3))
+                make.height.equalTo(34 * 2 + 20 * 1)
             }
         }
     }

@@ -77,7 +77,7 @@ extension ExpandableInfoTVC {
         iconImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
             make.width.height.equalTo(20)
-            make.top.bottom.equalTo(4.5)
+            make.centerY.equalToSuperview()
         }
         
         infoLabel.snp.makeConstraints { make in

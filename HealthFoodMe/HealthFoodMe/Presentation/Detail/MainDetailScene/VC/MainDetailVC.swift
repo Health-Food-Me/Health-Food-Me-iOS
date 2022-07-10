@@ -33,8 +33,6 @@ class MainDetailVC: UIViewController {
         if #available(iOS 15, *) {
             tv.sectionHeaderTopPadding = 0
         }
-        tv.estimatedRowHeight = 100
-        tv.estimatedSectionHeaderHeight = 80
         return tv
     }()
     
@@ -92,9 +90,6 @@ extension MainDetailVC {
 // MARK: TableViewDelegate
 
 extension MainDetailVC: UITableViewDelegate {
-   
-    // TODO: expendable 고려해서 로직 짜기
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return UITableView.automaticDimension

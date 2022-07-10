@@ -26,7 +26,7 @@ final class PostDetailUserHeader: UICollectionReusableView {
     
     private let nameLabel: UILabel = {
         let lb = UILabel()
-        lb.textColor = .carrotBlack
+//        lb.textColor = .carrotBlack
 //        lb.font = .NotoBold(size: 16)
         lb.text = "Usssj"
         lb.textAlignment = .center
@@ -36,7 +36,7 @@ final class PostDetailUserHeader: UICollectionReusableView {
     private let guideLabel: UILabel = {
         let lb = UILabel()
         lb.text = "개봉동"
-        lb.textColor = .carrotBlack
+//        lb.textColor = .carrotBlack
 //        lb.font = .PopLight(size: 12)
         return lb
     }()
@@ -44,15 +44,15 @@ final class PostDetailUserHeader: UICollectionReusableView {
     private let temperatureLabel: UILabel = {
         let lb = UILabel()
         lb.text = "36.5°C"
-        lb.textColor = .carrotBlue
+//        lb.textColor = .carrotBlue
 //        lb.font = .NunitoExtraBold(size: 16)
         return lb
     }()
     
     private let temperatureProgressBar: UIProgressView = {
         let pb = UIProgressView()
-        pb.progressTintColor = .carrotBlue
-        pb.trackTintColor = .carrotSquareLightGray
+//        pb.progressTintColor = .carrotBlue
+//        pb.trackTintColor = .carrotSquareLightGray
         pb.layer.cornerRadius = 3
         pb.progress = 36.5/100
         return pb
@@ -69,7 +69,7 @@ final class PostDetailUserHeader: UICollectionReusableView {
     
     private lazy var mannerButton: UIButton = {
         let bt = UIButton()
-        bt.setTitleColor(UIColor.carrotDarkLightGray, for: .normal)
+//        bt.setTitleColor(UIColor.carrotDarkLightGray, for: .normal)
         bt.setTitle("매너온도", for: .normal)
 //        bt.titleLabel?.font = .PopLight(size: 12)
         bt.setUnderline()
@@ -78,7 +78,7 @@ final class PostDetailUserHeader: UICollectionReusableView {
     
     private let bottomLineView: UIView = {
         let view = UIView()
-        view.backgroundColor = .carrotLineLightGray
+//        view.backgroundColor = .carrotLineLightGray
         return view
     }()
     
@@ -106,7 +106,7 @@ final class PostDetailUserHeader: UICollectionReusableView {
     // MARK: UI & Layout
     
     private func setUI() {
-        self.backgroundColor = .carrotWhite
+//        self.backgroundColor = .carrotWhite
     }
     
     private func setLayout() {

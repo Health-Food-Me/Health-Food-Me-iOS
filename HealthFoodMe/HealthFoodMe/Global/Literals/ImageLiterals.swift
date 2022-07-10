@@ -22,6 +22,7 @@ struct ImageLiterals {
         static let timeIcon = UIImage(named: "icn_time")
         
         static let tempSalady = UIImage(named: "tempSalady")
+        static let tempMuseum = UIImage(named: "tempMuseum")
     }
     
     struct PostList2 {

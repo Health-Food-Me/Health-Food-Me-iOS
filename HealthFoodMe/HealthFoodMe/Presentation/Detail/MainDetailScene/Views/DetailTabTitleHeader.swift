@@ -20,7 +20,6 @@ final class DetailTabTitleHeader: UITableViewHeaderFooterView, UITableViewHeader
     let titleButtonTapped = PublishRelay<Int>()
     private var selectedButton: Int = 0 {
         didSet {
-//            tabIndicator.leftOffsetRatio = Double(selectedButton) / 3
             titleButtonTapped.accept(selectedButton)
         }
     }
@@ -100,13 +99,14 @@ extension DetailTabTitleHeader {
         })
         
         buttonStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview()
         }
         
         tabIndicator.snp.makeConstraints { make in
             make.top.equalTo(buttonStackView.snp.bottom)
             make.left.right.equalTo(buttonStackView)
             make.height.equalTo(2)
+            make.bottom.equalToSuperview()
         }
     }
     

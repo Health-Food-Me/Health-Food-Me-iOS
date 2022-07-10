@@ -23,8 +23,8 @@ final class PostContentCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     private let sellStatusView: UIView = {
         let view = UIView()
-        view.backgroundColor = .carrotWhite
-        view.layer.borderColor = UIColor.carrotSquareGray.cgColor
+//        view.backgroundColor = .carrotWhite
+//        view.layer.borderColor = UIColor.carrotSquareGray.cgColor
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 3
         return view
@@ -32,7 +32,7 @@ final class PostContentCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     private let sellStatusLabel: UILabel = {
         let lb = UILabel()
-        lb.textColor = .carrotBlack
+//        lb.textColor = .carrotBlack
 //        lb.font = .PopExtraBold(size: 14)
         lb.text = "판매중"
         lb.textAlignment = .center
@@ -49,7 +49,7 @@ final class PostContentCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     private let postTitleLabel: UILabel = {
         let lb = UILabel()
-        lb.textColor = .carrotBlack
+//        lb.textColor = .carrotBlack
 //        lb.font = .PopExtraBold(size: 19)
         lb.text = "최태성 한능검 심화 기출 500제"
         return lb
@@ -57,7 +57,7 @@ final class PostContentCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     private lazy var categoryButton: UIButton = {
         let bt = UIButton()
-        bt.setTitleColor(UIColor.carrotDarkLightGray, for: .normal)
+//        bt.setTitleColor(UIColor.carrotDarkLightGray, for: .normal)
         bt.setTitle("도서/티켓/음반", for: .normal)
 //        bt.titleLabel?.font = .PopMedium(size: 13)
         bt.setUnderline()
@@ -67,7 +67,7 @@ final class PostContentCVC: UICollectionViewCell, UICollectionViewRegisterable {
     private let timeLabel: UILabel = {
         let lb = UILabel()
         lb.text = "5분 전"
-        lb.textColor = .carrotDarkLightGray
+//        lb.textColor = .carrotDarkLightGray
 //        lb.font = .PopMedium(size: 13)
         return lb
     }()
@@ -75,7 +75,7 @@ final class PostContentCVC: UICollectionViewCell, UICollectionViewRegisterable {
     private let postContentLabel: UILabel = {
         let lb = UILabel()
         lb.text = "새책입니다."
-        lb.textColor = .carrotBlack
+//        lb.textColor = .carrotBlack
 //        lb.font = .PopMedium(size: 15)
         lb.numberOfLines = 0
         lb.lineBreakMode = .byCharWrapping
@@ -85,7 +85,7 @@ final class PostContentCVC: UICollectionViewCell, UICollectionViewRegisterable {
     private let viewCountLabel: UILabel = {
         let lb = UILabel()
         lb.text = "조회 3"
-        lb.textColor = .carrotDarkLightGray
+//        lb.textColor = .carrotDarkLightGray
 //        lb.font = .PopMedium(size: 13)
         return lb
     }()
