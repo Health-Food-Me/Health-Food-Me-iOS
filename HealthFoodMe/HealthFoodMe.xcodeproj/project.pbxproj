@@ -15,6 +15,7 @@
 		3B0B25592876BBE400950539 /* NotoSansCJKkr-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B25532876BBE400950539 /* NotoSansCJKkr-Medium.otf */; };
 		3B18D8AC287AB7CD009AF9E7 /* HamburgerBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B18D8AB287AB7CD009AF9E7 /* HamburgerBarVC.swift */; };
 		3B18D8AE287AB7D8009AF9E7 /* HamburgerBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B18D8AD287AB7D8009AF9E7 /* HamburgerBar.storyboard */; };
+		3B387C66287B03D20044124C /* ButtonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B387C65287B03D20044124C /* ButtonVC.swift */; };
 		3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC441D28745FD800661A12 /* SocialLoginVC.swift */; };
 		3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC441F28745FE500661A12 /* SocialLogin.storyboard */; };
 		6005A822AEB1A47010D6C01E /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDECAEA3BF2AEAD960B4B3C /* Pods_HealthFoodMe.framework */; };
@@ -107,6 +108,7 @@
 		3B0B25532876BBE400950539 /* NotoSansCJKkr-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Medium.otf"; sourceTree = "<group>"; };
 		3B18D8AB287AB7CD009AF9E7 /* HamburgerBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerBarVC.swift; sourceTree = "<group>"; };
 		3B18D8AD287AB7D8009AF9E7 /* HamburgerBar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HamburgerBar.storyboard; sourceTree = "<group>"; };
+		3B387C65287B03D20044124C /* ButtonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonVC.swift; sourceTree = "<group>"; };
 		3BCC441D28745FD800661A12 /* SocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginVC.swift; sourceTree = "<group>"; };
 		3BCC441F28745FE500661A12 /* SocialLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SocialLogin.storyboard; sourceTree = "<group>"; };
 		75E42041F59816FF5154CDD3 /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 			children = (
 				3B18D8AB287AB7CD009AF9E7 /* HamburgerBarVC.swift */,
 				3B18D8AD287AB7D8009AF9E7 /* HamburgerBar.storyboard */,
+				3B387C65287B03D20044124C /* ButtonVC.swift */,
 			);
 			path = HamburgerBarScene;
 			sourceTree = "<group>";
@@ -872,6 +875,7 @@
 				EBF66AD8287227F500DE0ED1 /* BaseControllable.swift in Sources */,
 				EBF66ABF287227F500DE0ED1 /* UITabBar+.swift in Sources */,
 				EBF66AC0287227F500DE0ED1 /* UIView+.swift in Sources */,
+				3B387C66287B03D20044124C /* ButtonVC.swift in Sources */,
 				EBF66B02287227F500DE0ED1 /* NoData.swift in Sources */,
 				EBF66AC9287227F500DE0ED1 /* UIColor+.swift in Sources */,
 				EBF66AEB287227F500DE0ED1 /* PostImageCVC.swift in Sources */,
