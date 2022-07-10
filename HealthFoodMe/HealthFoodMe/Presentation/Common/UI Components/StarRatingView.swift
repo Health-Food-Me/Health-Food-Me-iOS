@@ -27,7 +27,7 @@ final class StarRatingView: UIView {
     
     private var starImageViews: [UIImageView] = []
     
-    private var starScale: CGFloat = 50
+    private var starScale: CGFloat = 16
     
     // MARK: - UI Components
     
@@ -77,7 +77,10 @@ extension StarRatingView {
     
     private func setStarStackView() {
         for starNumber in 0...4 {
-            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.starScale, height: self.starScale))
+            let imageView = UIImageView()
+            imageView.snp.makeConstraints { make in
+                make.width.height.equalTo(self.starScale)
+            }
             imageView.contentMode = .scaleToFill
             imageView.image = ImageLiterals.Common.starIcon
             imageView.tag = starNumber
@@ -88,7 +91,7 @@ extension StarRatingView {
     
     func paintStars() {
         starImageViews.forEach { star in
-            let starTag = CGFloat(star.tag) - 0.001
+            let starTag = CGFloat(star.tag) - 0.0001
             
             if starTag <= rate - 1 {
                 star.image = ImageLiterals.Common.starIcon_filled
