@@ -11,6 +11,7 @@ struct ImageLiterals {
     
     struct MainDetail {
         static let scrapIcon = UIImage(named: "icn_scrap")
+        static let scrapIcon_filled = UIImage(named: "icn_scrap_filled")
         static let beforeIcon = UIImage(named: "icn_before")
         static let starIcon = UIImage(named: "icn_star")
         static let starIcon_filled = UIImage(named: "icn_star_filled")

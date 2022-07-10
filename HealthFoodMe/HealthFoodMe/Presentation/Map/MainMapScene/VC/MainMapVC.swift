@@ -37,6 +37,7 @@ class MainMapVC: UIViewController {
         bt.setTitle("디테일로 이동", for: .normal)
         bt.addAction(UIAction(handler: { _ in
             let nextVC = ModuleFactory.resolve().instantiateMainDetailVC()
+            nextVC.navigationController?.isNavigationBarHidden = false
             self.navigationController?.pushViewController(nextVC, animated: true)
         }), for: .touchUpInside)
         bt.frame = CGRect(x: 0, y: 0, width: 24, height: 24)

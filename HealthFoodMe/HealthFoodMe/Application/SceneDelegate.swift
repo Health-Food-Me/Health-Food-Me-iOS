@@ -26,8 +26,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if #available(iOS 15.0, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.configureWithTransparentBackground()
-            navigationBarAppearance.backgroundColor = .clear
-            navigationBarAppearance.shadowColor = .clear
+            navigationBarAppearance.backgroundColor = .white
+            navigationBarAppearance.shadowColor = .helfmeGray1.withAlphaComponent(0.3)
 
             UINavigationBar.appearance().standardAppearance = navigationBarAppearance
             UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance

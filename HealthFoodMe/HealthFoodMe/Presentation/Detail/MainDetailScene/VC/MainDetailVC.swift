@@ -40,6 +40,7 @@ class MainDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setUI()
         setLayout()
         registerCell()
@@ -57,8 +58,27 @@ class MainDetailVC: UIViewController {
 extension MainDetailVC {
     
     private func setUI() {
-        self.navigationController?.isNavigationBarHidden = false
+        DispatchQueue.main.async {
+            self.navigationController?.isNavigationBarHidden = false
+        }
         view.backgroundColor = .white
+        
+        let backButton = UIButton()
+        backButton.setImage(ImageLiterals.MainDetail.beforeIcon, for: .normal)
+        backButton.tintColor = .helfmeBlack
+        backButton.addAction(UIAction(handler: { _ in
+            self.navigationController?.popViewController(animated: true)
+        }), for: .touchUpInside)
+        
+        let scrapButton = UIButton()
+        scrapButton.setImage(ImageLiterals.MainDetail.scrapIcon, for: .normal)
+        scrapButton.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
+        scrapButton.addAction(UIAction(handler: { _ in
+            scrapButton.isSelected.toggle()
+        }), for: .touchUpInside)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: scrapButton)
     }
     
     private func setLayout() {
@@ -118,15 +138,14 @@ extension MainDetailVC: UITableViewDelegate {
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // let scrollHeaderHeight = friendsTableView.sectionHeaderHeight
         let scrollHeaderHeight = mainTableView.rowHeight
         
         if scrollView.contentOffset.y <= scrollHeaderHeight {
             if scrollView.contentOffset.y >= 0 {
                 scrollView.contentInset = UIEdgeInsets(top: -scrollView.contentOffset.y, left: 0, bottom: 0, right: 0)
             }
-        } else if (scrollView.contentOffset.y >= scrollHeaderHeight) {
-            scrollView.contentInset = UIEdgeInsets(top: -scrollHeaderHeight, left: 0, bottom: 0, right: 0)
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: -(scrollHeaderHeight+1), left: 0, bottom: 0, right: 0)
         }
     }
 }

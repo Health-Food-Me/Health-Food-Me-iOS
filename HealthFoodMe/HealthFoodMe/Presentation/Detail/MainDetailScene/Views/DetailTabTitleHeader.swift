@@ -40,6 +40,7 @@ final class DetailTabTitleHeader: UITableViewHeaderFooterView, UITableViewHeader
     private let tabIndicator: TabIndicator = {
         let tabIndicator = TabIndicator()
         tabIndicator.widthRatio = 1/3
+        tabIndicator.backgroundColor = .white
         return tabIndicator
     }()
     
