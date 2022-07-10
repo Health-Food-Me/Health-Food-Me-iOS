@@ -81,8 +81,9 @@ extension DetailTabTitleHeader {
             bt.backgroundColor = .white
             bt.tag = buttonIndex
             bt.isSelected = buttonIndex == 0
-            bt.setTitleColor(.black, for: .selected)
-            bt.setTitleColor(.blue, for: .normal)
+            bt.titleLabel?.font = .NotoBold(size: 14)
+            bt.setTitleColor(.mainRed, for: .selected)
+            bt.setTitleColor(.helfmeGray1, for: .normal)
             titleButtons.append(bt)
         }
     }
@@ -105,7 +106,7 @@ extension DetailTabTitleHeader {
         tabIndicator.snp.makeConstraints { make in
             make.top.equalTo(buttonStackView.snp.bottom)
             make.left.right.equalTo(buttonStackView)
-            make.height.equalTo(4)
+            make.height.equalTo(2)
         }
     }
     

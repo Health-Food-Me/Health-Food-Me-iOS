@@ -52,7 +52,8 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
     private let distanceLabel: UILabel = {
         let lb = UILabel()
         lb.text = "593m"
-        lb.textColor = .black
+        lb.textColor = .mainRed
+        lb.font = .NotoMedium(size: 12)
         return lb
     }()
     
@@ -149,7 +150,7 @@ extension MainInfoTVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ExpandableInfoTVC.className, for: indexPath) as? ExpandableInfoTVC else { return UITableViewCell() }
-        cell.setUIWithIndex(indexPath: indexPath, isOppend: !isOpenned)
+        cell.setUIWithIndex(indexPath: indexPath)
         cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
             .drive { _ in
                 self.toggleCells()

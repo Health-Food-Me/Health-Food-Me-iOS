@@ -39,13 +39,14 @@ final class TabIndicator: UIView {
     
     private let trackView: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray.withAlphaComponent(0.3)
+        view.backgroundColor = .helfmeGray1.withAlphaComponent(0.3)
         return view
     }()
     
     private let trackTintView: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray
+        view.backgroundColor = .mainRed
+        view.layer.cornerRadius = 2
         return view
     }()
     
@@ -66,16 +67,16 @@ final class TabIndicator: UIView {
 
 extension TabIndicator {
     private func setLayout() {
-        self.addSubview(self.trackView)
-        self.trackView.addSubview(self.trackTintView)
+        self.addSubviews(trackView, trackTintView)
         
-        trackView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        trackView.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalToSuperview()
+            make.height.equalTo(0.5)
         }
         
         trackTintView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(1.0/5.0)
+            make.width.equalToSuperview()
             make.left.greaterThanOrEqualToSuperview()
             make.right.lessThanOrEqualToSuperview()
             self.leftInsetConstraint = make.left.equalToSuperview().priority(999).constraint

@@ -34,8 +34,8 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
         let lb = UILabel()
         lb.text = "월요일 09:00~20:00"
         lb.textAlignment = .left
-        lb.textColor = .black
-//        lb.font = .PopBold(size: 16)
+        lb.textColor = .helfmeGray1
+        lb.font = .NotoMedium(size: 12)
         return lb
     }()
     
@@ -67,9 +67,8 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
 // MARK: - Methods
 
 extension ExpandableInfoTVC {
-    
     private func setUI() {
-        
+        self.contentView.backgroundColor = .helfmeWhite
     }
     
     private func setLayout() {
@@ -92,15 +91,20 @@ extension ExpandableInfoTVC {
         }
     }
     
-    func setUIWithIndex(indexPath: IndexPath, isOppend: Bool) {
+    func setUIWithIndex(indexPath: IndexPath) {
         let isFirstRow = indexPath.row == 0
         let isSecondSection = indexPath.section == 1
         
+        switch indexPath.section {
+        case 0:
+            iconImageView.image = ImageLiterals.MainDetail.locationIcon
+        case 1:
+            iconImageView.image = ImageLiterals.MainDetail.timeIcon
+        default:
+            iconImageView.image = ImageLiterals.MainDetail.phoneIcon
+        }
+        
         iconImageView.isHidden = !isFirstRow
         toggleButton.isHidden = !(isFirstRow && isSecondSection)
-    }
-    
-    class func caculateRowHeihgt() -> CGFloat {
-        return 140 + 50
     }
 }

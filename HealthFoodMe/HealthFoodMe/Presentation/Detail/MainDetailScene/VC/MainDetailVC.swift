@@ -107,7 +107,7 @@ extension MainDetailVC: UITableViewDelegate {
         if section == 0 {
             return 0
         } else {
-            return 60
+            return 44
         }
     }
     
