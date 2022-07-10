@@ -19,22 +19,20 @@ final class SearchRecentTVC: UITableViewCell, UITableViewRegisterable {
     
     static var isFromNib: Bool = false
     
-    static var cellIdentifier: String { return String(describing: self) }
-    
     weak var delegate: SearchRecentTVCDelegate?
 
     var index: Int = 0
     
     private var searchLabel: UILabel = {
         let lb = UILabel()
-        lb.textColor = .black
-        lb.font = .systemFont(ofSize: 16)
+        lb.textColor = .helfmeBlack
+        lb.font = .NotoRegular(size: 16)
         return lb
     }()
     
     private lazy var deleteButton: UIButton = {
         let btn = UIButton()
-        btn.setImage(UIImage(systemName: "xmark"), for: .normal)
+        btn.setImage(ImageLiterals.Search.deleteBtn, for: .normal)
         btn.addTarget(self, action: #selector(deleteSearch), for: .touchUpInside)
         return btn
     }()
@@ -67,7 +65,7 @@ extension SearchRecentTVC {
     }
     
     private func setUI() {
-        backgroundColor = .white
+        backgroundColor = .helfmeWhite
     }
     
     private func setLayout() {
