@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 class HamburgerBarVC: UIViewController {
     
     var name: String? = "배부른 현우는 행복해요"
@@ -96,8 +98,8 @@ class HamburgerBarVC: UIViewController {
 
 extension HamburgerBarVC {
     private func setUI() {
-//        let blackColorWithAlpha: UIColor = .helfmeBlack.withAlphaComponent(0.6)
-//        view.backgroundColor = blackColorWithAlpha
+        let blackColorWithAlpha: UIColor = .blue.withAlphaComponent(0.6)
+        view.backgroundColor = blackColorWithAlpha
         
         setButtons()
         setDivindingView()
@@ -147,11 +149,12 @@ extension HamburgerBarVC {
             make.width.equalToSuperview().multipliedBy(0.71)
             make.height.equalToSuperview()
             make.top.equalTo(0)
-            make.leading.equalTo(0)
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(-440)
+            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.leading)
         }
         
         helloLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(52)
+            make.top.equalTo(hamburgerBarView).inset(96)
             make.leading.equalTo(20)
         }
         
@@ -202,6 +205,11 @@ extension HamburgerBarVC {
     @objc func showHamburgerBarWithAnimation(_ button: UIButton) {
         UIView.animate(withDuration: 0.4) {
             self.view.backgroundColor = .helfmeBlack.withAlphaComponent(0.4)
+
+            self.hamburgerBarView.snp.makeConstraints { make in
+                make.leading.equalTo(0)
+            }
+            self.view.layoutIfNeeded()
         }
     }
 }
