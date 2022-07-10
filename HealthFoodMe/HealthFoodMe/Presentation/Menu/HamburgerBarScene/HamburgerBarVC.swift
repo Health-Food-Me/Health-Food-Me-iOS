@@ -98,8 +98,8 @@ class HamburgerBarVC: UIViewController {
 
 extension HamburgerBarVC {
     private func setUI() {
-        let blackColorWithAlpha: UIColor = .blue.withAlphaComponent(0.6)
-        view.backgroundColor = blackColorWithAlpha
+//        let blackColorWithAlpha: UIColor = .blue.withAlphaComponent(0.6)
+//        view.backgroundColor = blackColorWithAlpha
         
         setButtons()
         setDivindingView()
@@ -155,7 +155,7 @@ extension HamburgerBarVC {
         
         helloLabel.snp.makeConstraints { make in
             make.top.equalTo(hamburgerBarView).inset(96)
-            make.leading.equalTo(20)
+            make.leading.equalTo(hamburgerBarView).inset(20)
         }
         
         editNameButton.snp.makeConstraints { make in
@@ -167,38 +167,41 @@ extension HamburgerBarVC {
             make.width.equalTo(hamburgerBarView)
             make.top.equalTo(helloLabel.snp.bottom).offset(38)
             make.height.equalTo(1)
+            make.leading.equalTo(hamburgerBarView).inset(0)
         }
         
         storeButtonStackView.snp.makeConstraints { make in
             make.top.equalTo(dividingLineViews[0].snp.bottom).offset(28)
-            make.leading.equalTo(20)
+            make.leading.equalTo(hamburgerBarView).inset(20)
         }
         
         dividingLineViews[1].snp.makeConstraints { make in
             make.top.equalTo(storeButtonStackView.snp.bottom).offset(28)
             make.width.equalTo(hamburgerBarView)
             make.height.equalTo(1)
+            make.leading.equalTo(hamburgerBarView).inset(0)
         }
         
         reportButtonStackView.snp.makeConstraints { make in
             make.top.equalTo(dividingLineViews[1].snp.bottom).offset(28)
-            make.leading.equalTo(20)
+            make.leading.equalTo(hamburgerBarView).inset(20)
         }
         
         dividingLineViews[2].snp.makeConstraints { make in
             make.top.equalTo(reportButtonStackView.snp.bottom).offset(20)
             make.width.equalTo(hamburgerBarView)
             make.height.equalTo(1)
+            make.leading.equalTo(hamburgerBarView).inset(0)
         }
 
         settingButton.snp.makeConstraints { make in
             make.top.equalTo(dividingLineViews[2].snp.bottom).offset(28)
-            make.leading.equalTo(20)
+            make.leading.equalTo(hamburgerBarView).inset(20)
         }
         
         logoutButton.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(14)
-            make.leading.equalTo(20)
+            make.leading.equalTo(hamburgerBarView).inset(20)
         }
     }
     
