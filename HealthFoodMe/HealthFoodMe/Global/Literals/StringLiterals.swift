@@ -43,4 +43,16 @@ struct I18N {
 """
         }
     }
+    
+    struct HamburgerBar {
+        static let hello = "안녕하세요!"
+        static let sir = "님"
+        static let todayHelfme = "오늘도 헬푸미하세요"
+        static let scrapList = "스크랩한 식당"
+        static let myReview = "내가 쓴 리뷰"
+        static let reportStore = "가게 제보하기"
+        static let reposrtCorrection = "수정사항 제보하기"
+        static let setting = "설정"
+        static let logout = "로그아웃"
+    }
 }
