@@ -51,15 +51,6 @@ extension HeaderView {
     }
     
     @objc func indexChanged(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            print("메뉴")
-            delegate?.controlSegement()
-        case 1:
-            print("영양정보")
-            delegate?.controlSegement()
-        default:
-            break
-        }
+        delegate?.controlSegement()
     }
 }

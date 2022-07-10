@@ -15,7 +15,7 @@ final class MenuDetailView: UIView {
     
     private let menuView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .helfmeWhite
         view.layer.borderWidth = 0.5
         view.layer.borderColor = UIColor.helfmeLineGray.cgColor
         view.roundCorners(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMinXMaxYCorner])
@@ -24,7 +24,7 @@ final class MenuDetailView: UIView {
     
     private let kcalView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.mainGreen
+        view.backgroundColor = .mainGreen
         view.roundCorners(cornerRadius: 15, maskedCorners: [.layerMaxXMinYCorner, .layerMaxXMaxYCorner])
         return view
     }()
@@ -37,7 +37,7 @@ final class MenuDetailView: UIView {
     
     lazy var titleLabel: UILabel = {
         let lb = UILabel()
-        lb.textColor = .black
+        lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 15)
         return lb
     }()
@@ -45,14 +45,14 @@ final class MenuDetailView: UIView {
     private let standardLabel: UILabel = {
         let lb = UILabel()
         lb.text = I18N.Detail.Menu.standard
-        lb.textColor = .lightGray
+        lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 8)
         return lb
     }()
     
     lazy var cAmountLabel: UILabel = {
         let lb = UILabel()
-        lb.textColor = .black
+        lb.textColor = .helfmeBlack
         lb.font = .PretendardMedium(size: 14)
         return lb
     }()
@@ -60,7 +60,7 @@ final class MenuDetailView: UIView {
     private let cTextLabel: UILabel = {
         let lb = UILabel()
         lb.text = I18N.Detail.Menu.carbohydrate
-        lb.textColor = .darkGray
+        lb.textColor = .helfmeGray1
         lb.font = .NotoRegular(size: 9)
         return lb
     }()
@@ -70,14 +70,13 @@ final class MenuDetailView: UIView {
         sv.axis = .vertical
         sv.alignment = .center
         sv.spacing = 4
-        sv.addArrangedSubview(cAmountLabel)
-        sv.addArrangedSubview(cTextLabel)
+        sv.addArrangedSubviews(cAmountLabel, cTextLabel)
         return sv
     }()
     
     lazy var pAmountLabel: UILabel = {
         let lb = UILabel()
-        lb.textColor = .black
+        lb.textColor = .helfmeBlack
         lb.font = .PretendardMedium(size: 14)
         return lb
     }()
@@ -85,7 +84,7 @@ final class MenuDetailView: UIView {
     private let pTextLabel: UILabel = {
         let lb = UILabel()
         lb.text = I18N.Detail.Menu.protein
-        lb.textColor = .darkGray
+        lb.textColor = .helfmeGray1
         lb.font = .NotoRegular(size: 9)
         return lb
     }()
@@ -95,14 +94,13 @@ final class MenuDetailView: UIView {
         sv.axis = .vertical
         sv.alignment = .center
         sv.spacing = 4
-        sv.addArrangedSubview(pAmountLabel)
-        sv.addArrangedSubview(pTextLabel)
+        sv.addArrangedSubviews(pAmountLabel, pTextLabel)
         return sv
     }()
     
     lazy var fAmountLabel: UILabel = {
         let lb = UILabel()
-        lb.textColor = .black
+        lb.textColor = .helfmeBlack
         lb.font = .PretendardMedium(size: 14)
         return lb
     }()
@@ -110,7 +108,7 @@ final class MenuDetailView: UIView {
     private let fTextLabel: UILabel = {
         let lb = UILabel()
         lb.text = I18N.Detail.Menu.fats
-        lb.textColor = .darkGray
+        lb.textColor = .helfmeGray1
         lb.font = .NotoRegular(size: 9)
         return lb
     }()
@@ -120,8 +118,7 @@ final class MenuDetailView: UIView {
         sv.axis = .vertical
         sv.alignment = .center
         sv.spacing = 4
-        sv.addArrangedSubview(fAmountLabel)
-        sv.addArrangedSubview(fTextLabel)
+        sv.addArrangedSubviews(fAmountLabel, fTextLabel)
         return sv
     }()
     
@@ -130,23 +127,21 @@ final class MenuDetailView: UIView {
         sv.axis = .horizontal
         sv.alignment = .center
         sv.spacing = 10
-        sv.addArrangedSubview(carbohydrateStackView)
-        sv.addArrangedSubview(proteinStackView)
-        sv.addArrangedSubview(fatsStackView)
+        sv.addArrangedSubviews(carbohydrateStackView, proteinStackView, fatsStackView)
         return sv
     }()
     
     lazy var kcalLabel: UILabel = {
         let lb = UILabel()
-        lb.textColor = .white
+        lb.textColor = .helfmeWhite
         lb.font = .NotoBold(size: 16)
         return lb
     }()
     
     private let unitLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "kcal"
-        lb.textColor = .white
+        lb.text = I18N.Detail.Menu.kcalUnit
+        lb.textColor = .helfmeWhite
         lb.font = .NotoRegular(size: 10)
         return lb
     }()
@@ -165,7 +160,6 @@ final class MenuDetailView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUI()
         setLayout()
     }
     
@@ -177,10 +171,6 @@ final class MenuDetailView: UIView {
 // MARK: - Methods
 
 extension MenuDetailView {
-    private func setUI() {
-        
-    }
-    
     private func setLayout() {
         self.snp.makeConstraints { make in
             make.width.equalTo(UIScreen.main.bounds.width)

@@ -17,9 +17,7 @@ final class MenuTabVC: UIViewController {
     
     // MARK: - UI Components
     
-    private lazy var headerView = HeaderView()
-    private lazy var menuView = MenuView()
-    private lazy var menuDetailView = MenuDetailView()
+    private var headerView = HeaderView()
     
     private lazy var menuCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -28,6 +26,7 @@ final class MenuTabVC: UIViewController {
         layout.sectionInset = .zero
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.showsVerticalScrollIndicator = false
         return cv
     }()
     
@@ -35,10 +34,9 @@ final class MenuTabVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUI()
         setLayout()
         setDelegate()
-        setCollectionView()
+        registerCell()
     }
 }
 
@@ -51,25 +49,20 @@ extension MenuTabVC {
         headerView.delegate = self
     }
     
-    private func setUI() {
-        menuCV.showsVerticalScrollIndicator = false
-    }
-    
     private func setLayout() {
-        view.addSubview(headerView)
+        view.addSubviews(headerView, menuCV)
         headerView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(68)
         }
         
-        view.addSubview(menuCV)
         menuCV.snp.makeConstraints { make in
             make.top.equalTo(headerView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
     }
     
-    private func setCollectionView() {
+    private func registerCell() {
         MenuCellCVC.register(target: menuCV)
     }
 }
@@ -82,6 +75,7 @@ extension MenuTabVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return MenuDataModel.sampleMenuData.count
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = menuCV.dequeueReusableCell(withReuseIdentifier: MenuCellCVC.className, for: indexPath) as? MenuCellCVC
         else { return UICollectionViewCell() }

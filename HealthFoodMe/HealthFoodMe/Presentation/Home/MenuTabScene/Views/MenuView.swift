@@ -15,7 +15,7 @@ final class MenuView: UIView {
     
     let menuView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .helfmeWhite
         view.layer.borderWidth = 0.5
         view.layer.borderColor = UIColor.helfmeLineGray.cgColor
         view.roundCorners(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMinXMaxYCorner])
@@ -24,7 +24,7 @@ final class MenuView: UIView {
     
     let kcalView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.mainGreen
+        view.backgroundColor = .mainGreen
         view.roundCorners(cornerRadius: 15, maskedCorners: [.layerMaxXMinYCorner, .layerMaxXMaxYCorner])
         return view
     }()
@@ -44,14 +44,14 @@ final class MenuView: UIView {
     
     lazy var titleLabel: UILabel = {
         let lb = UILabel()
-        lb.textColor = .black
+        lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 14)
         return lb
     }()
     
     lazy var priceLabel: UILabel = {
         let lb = UILabel()
-        lb.textColor = .black
+        lb.textColor = .helfmeBlack
         lb.font = .NotoRegular(size: 12)
         return lb
     }()
@@ -68,7 +68,7 @@ final class MenuView: UIView {
     
     lazy var kcalLabel: UILabel = {
         let lb = UILabel()
-        lb.textColor = .white
+        lb.textColor = .helfmeWhite
         lb.font = .NotoBold(size: 16)
         return lb
     }()
@@ -76,7 +76,7 @@ final class MenuView: UIView {
     lazy var unitLabel: UILabel = {
         let lb = UILabel()
         lb.text = I18N.Detail.Menu.kcalUnit
-        lb.textColor = .white
+        lb.textColor = .helfmeWhite
         lb.font = .NotoRegular(size: 10)
         return lb
     }()
@@ -108,7 +108,7 @@ final class MenuView: UIView {
 
 extension MenuView {
     private func setUI() {
-        self.backgroundColor = .white
+        self.backgroundColor = .helfmeWhite
     }
     
     private func setLayout() {
@@ -153,13 +153,5 @@ extension MenuView {
         kcalStackView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
-    }
-}
-
-extension UIView {
-    func roundCorners(cornerRadius: CGFloat, maskedCorners: CACornerMask) {
-        clipsToBounds = true
-        layer.cornerRadius = cornerRadius
-        layer.maskedCorners = CACornerMask(arrayLiteral: maskedCorners)
     }
 }
