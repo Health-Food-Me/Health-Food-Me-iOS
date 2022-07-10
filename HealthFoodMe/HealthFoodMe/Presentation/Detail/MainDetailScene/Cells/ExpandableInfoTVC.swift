@@ -19,11 +19,6 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     let disposeBag = DisposeBag()
     let toggleButtonTapped = PublishRelay<Void>()
     var willUseExpandableOption: Bool = false
-    var isOpenned = false {
-        didSet {
-            
-        }
-    }
     
     // MARK: - UI Components
     
@@ -49,9 +44,7 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
         bt.setImage(ImageLiterals.MainDetail.showdownIcon, for: .normal)
         bt.setImage(ImageLiterals.MainDetail.showupIcon, for: .selected)
         bt.addAction(UIAction(handler: { _ in
-            self.isOpenned.toggle()
-            print(self.isOpenned)
-            print(1)
+            bt.isSelected.toggle()
             self.toggleButtonTapped.accept(())
         }), for: .touchUpInside)
         return bt
@@ -102,7 +95,6 @@ extension ExpandableInfoTVC {
     func setUIWithIndex(indexPath: IndexPath, isOppend: Bool) {
         let isFirstRow = indexPath.row == 0
         let isSecondSection = indexPath.section == 1
-        toggleButton.isSelected = isOpenned
         
         iconImageView.isHidden = !isFirstRow
         toggleButton.isHidden = !(isFirstRow && isSecondSection)

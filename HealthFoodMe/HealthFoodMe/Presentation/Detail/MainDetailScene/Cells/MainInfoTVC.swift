@@ -131,14 +131,11 @@ extension MainInfoTVC: UITableViewDelegate {
 
 extension MainInfoTVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (expandableTVC.count != 0) {
-            if (section == 1) && isOpennedFlag == true {
-                return 1 + 6
-            } else {
-                return 1
-            }
+        if (section == 1) && isOpennedFlag {
+            return 7
+        } else {
+            return 1
         }
-        return 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -150,11 +147,28 @@ extension MainInfoTVC: UITableViewDataSource {
         cell.setUIWithIndex(indexPath: indexPath, isOppend: !isOpennedFlag)
         cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
             .drive { _ in
-                self.isOpennedFlag.toggle()
-                self.expandableTableView.reloadData()
+                self.toggleCells()
             }
             .disposed(by: cell.disposeBag)
-        if (expandableTVC.count < 4) { self.expandableTVC.append(cell) }
         return cell
+    }
+    
+    private func toggleCells() {
+        self.isOpennedFlag.toggle()
+        if isOpennedFlag {
+            self.expandableTableView.insertRows(at: makeIndexPaths(), with: .none)
+        } else {
+            self.expandableTableView.deleteRows(at: makeIndexPaths(), with: .none)
+        }
+    }
+    
+    private func makeIndexPaths() -> [IndexPath] {
+        var indexPath = [IndexPath]()
+        
+        for row in 1...6 {
+            indexPath.append(IndexPath(row: row, section: 1))
+        }
+        
+        return indexPath
     }
 }
