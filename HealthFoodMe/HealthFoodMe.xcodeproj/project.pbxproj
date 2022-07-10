@@ -17,6 +17,7 @@
 		3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC441D28745FD800661A12 /* SocialLoginVC.swift */; };
 		3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC441F28745FE500661A12 /* SocialLogin.storyboard */; };
 		A9E593CF2876C26900B0F8B5 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9E593CE2876C26900B0F8B5 /* Color.xcassets */; };
+		EB033E84287B5BE300C48FB9 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB033E83287B5BE300C48FB9 /* StarRatingView.swift */; };
 		EB6A44C7287366DF00749582 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44C6287366DF00749582 /* .swiftlint.yml */; };
 		EB6A44D128737CC400749582 /* MainDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44CB28737CC400749582 /* MainDetailUseCase.swift */; };
 		EB6A44D228737CC400749582 /* MainDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44CC28737CC400749582 /* MainDetailRepository.swift */; };
@@ -121,6 +122,7 @@
 		3BCC441F28745FE500661A12 /* SocialLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SocialLogin.storyboard; sourceTree = "<group>"; };
 		A9E593CE2876C26900B0F8B5 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		E71673C053B2E49E39F1AADB /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
+		EB033E83287B5BE300C48FB9 /* StarRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
 		EB085ED628716E1900361837 /* HealthFoodMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthFoodMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB085EE728716E1B00361837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB6A44C6287366DF00749582 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
@@ -267,6 +269,14 @@
 				E71673C053B2E49E39F1AADB /* Pods-HealthFoodMe.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		EB033E82287B5B6E00C48FB9 /* UI Components */ = {
+			isa = PBXGroup;
+			children = (
+				EB033E83287B5BE300C48FB9 /* StarRatingView.swift */,
+			);
+			path = "UI Components";
 			sourceTree = "<group>";
 		};
 		EB085ECD28716E1900361837 = {
@@ -765,6 +775,7 @@
 		EBF66A9F287227F500DE0ED1 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				EB033E82287B5B6E00C48FB9 /* UI Components */,
 				EBF66AA0287227F500DE0ED1 /* Base */,
 			);
 			path = Common;
@@ -1061,6 +1072,7 @@
 				EBF66ADE287227F500DE0ED1 /* HomeRouter.swift in Sources */,
 				EBF66ACF287227F500DE0ED1 /* Result+.swift in Sources */,
 				EBF66AD7287227F500DE0ED1 /* Presentable.swift in Sources */,
+				EB033E84287B5BE300C48FB9 /* StarRatingView.swift in Sources */,
 				EB6A451128740CFF00749582 /* MainInfoTVC.swift in Sources */,
 				EB6A44F22873BED500749582 /* MainMapViewModel.swift in Sources */,
 				EBF66AE0287227F500DE0ED1 /* EventLogger.swift in Sources */,
