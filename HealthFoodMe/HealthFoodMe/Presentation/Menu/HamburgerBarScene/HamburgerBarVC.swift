@@ -38,6 +38,18 @@ class HamburgerBarVC: UIViewController {
         hamburgerBarView.backgroundColor = .helfmeWhite
         
         editNameButton.setImage(UIImage(named: "btn_edit"), for: .normal)
+        
+        helloLabel.text = I18N.HamburgerBar.hello
+        nameLabel.text = "배부른 현우는 행복해요"
+        sirLabel.text = I18N.HamburgerBar.sir
+        todayHelfmeLabel.text = I18N.HamburgerBar.todayHelfme
+        scrapListButton.setTitle(I18N.HamburgerBar.scrapList, for: .normal)
+        myReviewButton.setTitle(I18N.HamburgerBar.myReview, for: .normal)
+        reportStoreButton.setTitle(I18N.HamburgerBar.reportStore, for: .normal)
+        repostCorrectionButton.setTitle(I18N.HamburgerBar.reposrtCorrection, for: .normal)
+        settingButton.setTitle(I18N.HamburgerBar.setting, for: .normal)
+        logoutButton.setTitle(I18N.HamburgerBar.logout, for: .normal)
+        
     }
     
     private func setLayout() {
