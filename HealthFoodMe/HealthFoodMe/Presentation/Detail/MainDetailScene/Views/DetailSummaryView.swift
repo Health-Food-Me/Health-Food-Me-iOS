@@ -22,16 +22,36 @@ final class DetailSummaryView: UIView {
     
     private let restaurantNameLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "샐러디 태릉입구점"
-        lb.textColor = .black
-//        lb.font = .PopBold(size: 16)
+        lb.text = "서브웨이 동대문역사문화공원역점"
+        lb.textColor = .helfmeBlack
+        lb.lineBreakMode = .byWordWrapping
+        lb.numberOfLines = 0
+        lb.font = .NotoBold(size: 16)
         return lb
+    }()
+    
+    private let titleStackView: UIStackView = {
+        let st = UIStackView()
+        st.axis = .vertical
+        st.spacing = 6
+        st.distribution = .fillProportionally
+        st.alignment = .leading
+        return st
+    }()
+    
+    private let starRateStackView: UIStackView = {
+        let st = UIStackView()
+        st.axis = .horizontal
+        st.spacing = 2
+        st.distribution = .fillProportionally
+        st.alignment = .leading
+        return st
     }()
     
     private let starStackView: UIStackView = {
         let st = UIStackView()
         st.axis = .horizontal
-        st.spacing = 0
+        st.spacing = 2
         st.distribution = .equalSpacing
         return st
     }()
@@ -40,7 +60,7 @@ final class DetailSummaryView: UIView {
         let lb = UILabel()
         lb.text = "(4.3)"
         lb.textColor = .lightGray
-//        lb.font = .NotoBold(size: 13)
+        lb.font = .NotoRegular(size: 12)
         return lb
     }()
     
@@ -80,8 +100,7 @@ extension DetailSummaryView {
             make.height.equalTo(142)
         }
         
-        self.addSubviews(logoImageView, restaurantNameLabel,
-                         starStackView, rateLabel)
+        self.addSubviews(logoImageView, titleStackView)
         
         logoImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
@@ -89,28 +108,33 @@ extension DetailSummaryView {
             make.width.height.equalTo(112)
         }
         
-        restaurantNameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(32)
-            make.leading.equalTo(logoImageView.snp.trailing).offset(16)
-        }
-        
+        titleStackView.addArrangedSubviews(restaurantNameLabel, starRateStackView)
+        starRateStackView.addArrangedSubviews(starStackView, rateLabel)
         setStarStackView()
-        starStackView.snp.makeConstraints { make in
-            make.leading.equalTo(restaurantNameLabel.snp.leading)
-            make.top.equalTo(restaurantNameLabel.snp.bottom).offset(9)
+        
+        restaurantNameLabel.snp.makeConstraints { make in
+            make.width.lessThanOrEqualTo(200)
         }
         
         rateLabel.snp.makeConstraints { make in
-            make.leading.equalTo(starStackView.snp.trailing).offset(8)
-            make.top.equalTo(restaurantNameLabel.snp.bottom).offset(7)
+            make.height.equalTo(13)
+        }
+        
+        titleStackView.snp.makeConstraints { make in
+            make.leading.equalTo(logoImageView.snp.trailing).offset(16)
+            make.centerY.equalTo(logoImageView)
         }
     }
     
     private func setStarStackView() {
         for starNumber in 1...5 {
-            let imageView = UIImageView()
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 16, height: 16))
             imageView.contentMode = .scaleAspectFill
-            imageView.image = ImageLiterals.MainDetail.starIcon
+            if starNumber < 5 {
+                imageView.image = ImageLiterals.MainDetail.starIcon_filled
+            } else {
+                imageView.image = ImageLiterals.MainDetail.starIcon
+            }
             imageView.tag = starNumber
             starStackView.addArrangedSubviews(imageView)
         }
