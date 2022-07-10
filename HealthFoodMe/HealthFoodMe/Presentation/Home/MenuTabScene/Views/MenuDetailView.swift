@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MenuDetailView: UIView {
+final class MenuDetailView: UIView {
     
     // MARK: - Properties
   
@@ -17,6 +17,7 @@ class MenuDetailView: UIView {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.borderWidth = 0.5
+        view.layer.borderColor = UIColor.lightGray.cgColor
         view.roundCorners(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMinXMaxYCorner])
         return view
     }()

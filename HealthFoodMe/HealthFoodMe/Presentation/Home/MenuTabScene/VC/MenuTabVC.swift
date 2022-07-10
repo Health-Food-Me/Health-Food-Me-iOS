@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class MenuTabVC: UIViewController {
+final class MenuTabVC: UIViewController {
     
     // MARK: - Properties
   
@@ -71,12 +71,6 @@ extension MenuTabVC {
     }
 }
 
-// MARK: - Network
-
-extension MenuTabVC {
-
-}
-
 extension MenuTabVC: UICollectionViewDelegate {
     
 }
@@ -104,7 +98,7 @@ extension MenuTabVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 15, left: 20, bottom: 15, right: 20)
+        return UIEdgeInsets(top: 0, left: 20, bottom: 15, right: 20)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

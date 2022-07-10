@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		6005A822AEB1A47010D6C01E /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDECAEA3BF2AEAD960B4B3C /* Pods_HealthFoodMe.framework */; };
+		69028BA62874673600373984 /* MenuCellCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BA52874673600373984 /* MenuCellCVC.swift */; };
+		69028BA82874675800373984 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BA72874675800373984 /* MenuView.swift */; };
+		69028BAA287467F100373984 /* MenuDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BA9287467F100373984 /* MenuDetailView.swift */; };
+		69028BAC2874681700373984 /* MenuTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BAB2874681700373984 /* MenuTabVC.swift */; };
+		69028BB02874A60E00373984 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BAF2874A60E00373984 /* HeaderView.swift */; };
+		690AB5492875C1B200DE72D4 /* MenuDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690AB5482875C1B200DE72D4 /* MenuDataModel.swift */; };
+		690AB54B2876930D00DE72D4 /* MenuTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 690AB54A2876930D00DE72D4 /* MenuTab.storyboard */; };
 		EB6A44C7287366DF00749582 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44C6287366DF00749582 /* .swiftlint.yml */; };
 		EBF66ABC287227F500DE0ED1 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */; };
 		EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66A53287227F500DE0ED1 /* UIDevice+.swift */; };
@@ -87,6 +94,13 @@
 
 /* Begin PBXFileReference section */
 		26C3E6667A430DB48E0CC0FE /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
+		69028BA52874673600373984 /* MenuCellCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellCVC.swift; sourceTree = "<group>"; };
+		69028BA72874675800373984 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		69028BA9287467F100373984 /* MenuDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailView.swift; sourceTree = "<group>"; };
+		69028BAB2874681700373984 /* MenuTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTabVC.swift; sourceTree = "<group>"; };
+		69028BAF2874A60E00373984 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		690AB5482875C1B200DE72D4 /* MenuDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDataModel.swift; sourceTree = "<group>"; };
+		690AB54A2876930D00DE72D4 /* MenuTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MenuTab.storyboard; sourceTree = "<group>"; };
 		75E42041F59816FF5154CDD3 /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
 		DEDECAEA3BF2AEAD960B4B3C /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB085ED628716E1900361837 /* HealthFoodMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthFoodMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,6 +200,52 @@
 				DEDECAEA3BF2AEAD960B4B3C /* Pods_HealthFoodMe.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		697074FB28737D78001A607F /* MenuTabScene */ = {
+			isa = PBXGroup;
+			children = (
+				697074FC28737DCA001A607F /* VC */,
+				697074FE28737E0E001A607F /* ViewModel */,
+				697074FD28737DFA001A607F /* Cells */,
+				697074FF28737E55001A607F /* Views */,
+			);
+			path = MenuTabScene;
+			sourceTree = "<group>";
+		};
+		697074FC28737DCA001A607F /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				69028BAB2874681700373984 /* MenuTabVC.swift */,
+				690AB54A2876930D00DE72D4 /* MenuTab.storyboard */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		697074FD28737DFA001A607F /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				69028BA52874673600373984 /* MenuCellCVC.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		697074FE28737E0E001A607F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				690AB5482875C1B200DE72D4 /* MenuDataModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		697074FF28737E55001A607F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				69028BAF2874A60E00373984 /* HeaderView.swift */,
+				69028BA72874675800373984 /* MenuView.swift */,
+				69028BA9287467F100373984 /* MenuDetailView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		E3F60CBC9B890A7FB4D4AAAF /* Pods */ = {
@@ -444,6 +504,7 @@
 		EBF66A91287227F500DE0ED1 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				697074FB28737D78001A607F /* MenuTabScene */,
 				EBF66A92287227F500DE0ED1 /* PostDetailScene */,
 			);
 			path = Home;
@@ -652,6 +713,7 @@
 				EBF66AD2287227F500DE0ED1 /* LaunchScreen.storyboard in Resources */,
 				EBF66AD1287227F500DE0ED1 /* NotoSansSC-Bold.otf in Resources */,
 				EBF66AE9287227F500DE0ED1 /* PostDetail.storyboard in Resources */,
+				690AB54B2876930D00DE72D4 /* MenuTab.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,6 +823,7 @@
 				EBF66B04287227F500DE0ED1 /* SignIn.swift in Sources */,
 				EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */,
 				EBF66AD5287227F500DE0ED1 /* ViewModelType.swift in Sources */,
+				69028BB02874A60E00373984 /* HeaderView.swift in Sources */,
 				EBF66ADA287227F500DE0ED1 /* controllerFromStoryBoard.swift in Sources */,
 				EBF66AEC287227F500DE0ED1 /* PostDetailCVLayout.swift in Sources */,
 				EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */,
@@ -769,22 +832,27 @@
 				EBF66AE3287227F500DE0ED1 /* NetworkResult.swift in Sources */,
 				EBF66AF5287227F500DE0ED1 /* Logger.swift in Sources */,
 				EBF66ACB287227F500DE0ED1 /* String+.swift in Sources */,
+				69028BA82874675800373984 /* MenuView.swift in Sources */,
 				EBF66AEA287227F500DE0ED1 /* PostContentCVC.swift in Sources */,
 				EBF66AF2287227F500DE0ED1 /* buttonPress.swift in Sources */,
 				EBF66ADF287227F500DE0ED1 /* AuthRouter.swift in Sources */,
 				EBF66ADC287227F500DE0ED1 /* AppDelegate.swift in Sources */,
+				690AB5492875C1B200DE72D4 /* MenuDataModel.swift in Sources */,
 				EBF66AE7287227F500DE0ED1 /* HomeService.swift in Sources */,
 				EBF66AC6287227F500DE0ED1 /* UIImage+.swift in Sources */,
+				69028BA62874673600373984 /* MenuCellCVC.swift in Sources */,
 				EBF66AFD287227F500DE0ED1 /* calculateTopInset.swift in Sources */,
 				EBF66ADE287227F500DE0ED1 /* HomeRouter.swift in Sources */,
 				EBF66ACF287227F500DE0ED1 /* Result+.swift in Sources */,
 				EBF66AD7287227F500DE0ED1 /* Presentable.swift in Sources */,
 				EBF66AED287227F500DE0ED1 /* PostDetailVC.swift in Sources */,
+				69028BAC2874681700373984 /* MenuTabVC.swift in Sources */,
 				EBF66AE0287227F500DE0ED1 /* EventLogger.swift in Sources */,
 				EBF66AC7287227F500DE0ED1 /* UITableView+.swift in Sources */,
 				EBF66ACC287227F500DE0ED1 /* BaseNotiList.swift in Sources */,
 				EBF66AD8287227F500DE0ED1 /* BaseControllable.swift in Sources */,
 				EBF66ABF287227F500DE0ED1 /* UITabBar+.swift in Sources */,
+				69028BAA287467F100373984 /* MenuDetailView.swift in Sources */,
 				EBF66AC0287227F500DE0ED1 /* UIView+.swift in Sources */,
 				EBF66B02287227F500DE0ED1 /* NoData.swift in Sources */,
 				EBF66AC9287227F500DE0ED1 /* UIColor+.swift in Sources */,

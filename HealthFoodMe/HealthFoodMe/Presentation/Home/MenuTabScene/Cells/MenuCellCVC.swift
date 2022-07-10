@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class MenuCellCVC: UICollectionViewCell, UICollectionViewRegisterable {
+final class MenuCellCVC: UICollectionViewCell, UICollectionViewRegisterable {
    
     // MARK: - Properties
     
@@ -25,6 +25,8 @@ class MenuCellCVC: UICollectionViewCell, UICollectionViewRegisterable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
+//        setCell(isMenu: true) // 메뉴
+        setCell(isMenu: false) // 영양정보
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,13 +38,21 @@ class MenuCellCVC: UICollectionViewCell, UICollectionViewRegisterable {
 
 extension MenuCellCVC {
     private func setLayout() {
-//        contentView.addSubview(menuView)
+        contentView.addSubview(menuView)
         contentView.addSubview(menuDetailView)
-//        menuView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
-//        }
+        menuView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         menuDetailView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+    }
+    
+    private func setCell(isMenu: Bool) {
+        if isMenu {
+            menuDetailView.isHidden = true
+        } else {
+            menuView.isHidden = true
         }
     }
     
