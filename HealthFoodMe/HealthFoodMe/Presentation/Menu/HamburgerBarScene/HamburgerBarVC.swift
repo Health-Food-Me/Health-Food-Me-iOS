@@ -12,7 +12,11 @@ class HamburgerBarVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        setUI()
     }
     
+    private func setUI() {
+        let blackColorWithAlpha: UIColor = UIColor(.black).withAlphaComponent(0.6)
+        view.backgroundColor = blackColorWithAlpha
+    }
 }
