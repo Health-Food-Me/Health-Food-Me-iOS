@@ -31,7 +31,9 @@ class HamburgerBarVC: UIViewController {
         setUI()
         setLayout()
     }
-    
+}
+
+extension HamburgerBarVC {
     private func setUI() {
         let blackColorWithAlpha: UIColor = UIColor(.black).withAlphaComponent(0.6)
         view.backgroundColor = blackColorWithAlpha
@@ -59,7 +61,7 @@ class HamburgerBarVC: UIViewController {
         reportStoreButton.setTitleColor(.helfmeBlack, for: .normal)
         repostCorrectionButton.setTitleColor(.helfmeBlack, for: .normal)
         settingButton.setTitleColor(.helfmeBlack, for: .normal)
-        logoutButton.setTitleColor(.helfmeBlack, for: .normal)
+        logoutButton.setTitleColor(.helfmeGray1, for: .normal)
         
         firstDividingLineView.backgroundColor = .helfmeLineGray
         secondDividingLineView.backgroundColor = .helfmeLineGray
