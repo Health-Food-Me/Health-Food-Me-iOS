@@ -97,7 +97,7 @@ extension MainDetailVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 300
+            return UITableView.automaticDimension
         } else {
             return UIScreen.main.bounds.height - 104
         }
@@ -150,12 +150,17 @@ extension MainDetailVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MainInfoTVC.className, for: indexPath) as? MainInfoTVC else { return UITableViewCell() }
+            cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
+                .drive(onNext: {
+                    self.mainTableView.reloadData()
+                }).disposed(by: disposeBag)
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTabTVC.className, for: indexPath) as? DetailTabTVC else { return UITableViewCell() }
             detailTabTVC = cell
             
             // TODO: - 멈추면 헤더 타이틀 선택 상태도 바뀌게
+            
             self.addChild(childVC)
             cell.receiveChildVC(childVC: childVC)
             cell.scrollRatio.asDriver(onErrorJustReturn: 0)

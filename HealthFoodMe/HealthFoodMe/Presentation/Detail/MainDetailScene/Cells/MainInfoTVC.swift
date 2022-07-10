@@ -8,13 +8,16 @@
 import UIKit
 
 import SnapKit
+import RxRelay
+import RxSwift
 
 final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
     
     // MARK: - Properties
     
     static var isFromNib: Bool = false
-    private var isOpennedFlag: Bool = false
+    private var isOpenned: Bool = false
+    let toggleButtonTapped = PublishRelay<Void>()
     
     // MARK: - UI Components
     
@@ -29,6 +32,7 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
         tv.clipsToBounds = true
         tv.sectionFooterHeight = 0
         tv.allowsSelection = false
+        tv.isScrollEnabled = false
         if #available(iOS 15, *) {
             tv.sectionHeaderTopPadding = 0
         }
@@ -90,7 +94,8 @@ extension MainInfoTVC {
             make.top.equalTo(detailSummaryView.snp.bottom)
             make.leading.equalToSuperview().offset(17.5)
             make.width.equalTo(250)
-            make.bottom.equalToSuperview().inset(10)
+            make.height.equalTo(29 * 3)
+            make.bottom.equalToSuperview().inset(9)
         }
         
         directionImageView.snp.makeConstraints { make in
@@ -131,7 +136,7 @@ extension MainInfoTVC: UITableViewDelegate {
 
 extension MainInfoTVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (section == 1) && isOpennedFlag {
+        if (section == 1) && isOpenned {
             return 7
         } else {
             return 1
@@ -144,7 +149,7 @@ extension MainInfoTVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ExpandableInfoTVC.className, for: indexPath) as? ExpandableInfoTVC else { return UITableViewCell() }
-        cell.setUIWithIndex(indexPath: indexPath, isOppend: !isOpennedFlag)
+        cell.setUIWithIndex(indexPath: indexPath, isOppend: !isOpenned)
         cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
             .drive { _ in
                 self.toggleCells()
@@ -154,8 +159,10 @@ extension MainInfoTVC: UITableViewDataSource {
     }
     
     private func toggleCells() {
-        self.isOpennedFlag.toggle()
-        if isOpennedFlag {
+        self.isOpenned.toggle()
+        self.remakeConstraintsForCells()
+        toggleButtonTapped.accept(())
+        if isOpenned {
             self.expandableTableView.insertRows(at: makeIndexPaths(), with: .none)
         } else {
             self.expandableTableView.deleteRows(at: makeIndexPaths(), with: .none)
@@ -170,5 +177,15 @@ extension MainInfoTVC: UITableViewDataSource {
         }
         
         return indexPath
+    }
+    
+    private func remakeConstraintsForCells() {
+        expandableTableView.snp.updateConstraints { make in
+            if isOpenned {
+                make.height.equalTo(29 * (3 + 6))
+            } else {
+                make.height.equalTo(29 * (3))
+            }
+        }
     }
 }
