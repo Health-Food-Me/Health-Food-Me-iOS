@@ -24,13 +24,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
         }
         
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        let rootViewController = PostDetailVC()
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = rootViewController
-        self.window = window
-        window.backgroundColor = .white
-        window.makeKeyAndVisible()
+//        guard let windowScene = (scene as? UIWindowScene) else { return }
+//        let rootViewController = MenuTabVC()
+//        let window = UIWindow(windowScene: windowScene)
+//        window.rootViewController = rootViewController
+//        self.window = window
+//        window.makeKeyAndVisible()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
