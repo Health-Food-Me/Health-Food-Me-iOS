@@ -16,6 +16,11 @@ struct I18N {
         static let myPlan = "마이 플랜"
     }
     
+    struct Auth {
+      static let kakaoLoginError = "카카오 로그인에 실패하였습니다."
+      static let appleLoginError = "애플 로그인에 실패하였습니다."
+    }
+    
     struct Alert {
         static let alarm = "알림"
         static let error = "오류"
@@ -36,6 +41,17 @@ struct I18N {
 ✔️  가본 사람만 알 수 있는 꿀팁
 ✔️  다음 장소로 이동할 때의 교통편
 """
+        }
+    }
+    
+    struct Detail {
+        struct Menu {
+            static let segmentTitle = ["메뉴", "영양정보"]
+            static let kcalUnit = "kcal"
+            static let standard = "1인분 (50g)"
+            static let carbohydrate = "탄수화물"
+            static let protein = "단백질"
+            static let fats = "지방"
         }
     }
 }

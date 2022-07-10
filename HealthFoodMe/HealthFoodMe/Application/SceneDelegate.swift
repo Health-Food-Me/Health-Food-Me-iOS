@@ -7,28 +7,38 @@
 
 import UIKit
 
+import KakaoSDKAuth
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+          if (AuthApi.isKakaoTalkLoginUrl(url)) {
+            _ = AuthController.handleOpenUrl(url: url)
+          }
+        }
+      }
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        if #available(iOS 15.0, *) {
-            let navigationBarAppearance = UINavigationBarAppearance()
-            navigationBarAppearance.configureWithOpaqueBackground()
-            navigationBarAppearance.backgroundColor = .white
-            navigationBarAppearance.shadowColor = .white
-            
-            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
-            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
-        }
-        
+//        if #available(iOS 15.0, *) {
+//            let navigationBarAppearance = UINavigationBarAppearance()
+//            navigationBarAppearance.configureWithOpaqueBackground()
+//            navigationBarAppearance.backgroundColor = .white
+//            navigationBarAppearance.shadowColor = .white
+//            
+//            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+//            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+//        }
+//        
 //        guard let windowScene = (scene as? UIWindowScene) else { return }
-//        let rootViewController = MenuTabVC()
+//        let rootViewController = PostDetailVC()
 //        let window = UIWindow(windowScene: windowScene)
 //        window.rootViewController = rootViewController
 //        self.window = window
+//        window.backgroundColor = .white
 //        window.makeKeyAndVisible()
     }
     

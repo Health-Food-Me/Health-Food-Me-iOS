@@ -12,7 +12,9 @@ import SnapKit
 final class MenuTabVC: UIViewController {
     
     // MARK: - Properties
-  
+    
+    var isMenu: Bool = true
+    
     // MARK: - UI Components
     
     private lazy var headerView = HeaderView()
@@ -28,7 +30,7 @@ final class MenuTabVC: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return cv
     }()
-
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -44,9 +46,10 @@ final class MenuTabVC: UIViewController {
 
 extension MenuTabVC {
     private func setDelegate() {
-            menuCV.delegate = self
-            menuCV.dataSource = self
-        }
+        menuCV.delegate = self
+        menuCV.dataSource = self
+        headerView.delegate = self
+    }
     
     private func setUI() {
         menuCV.showsVerticalScrollIndicator = false
@@ -81,8 +84,9 @@ extension MenuTabVC: UICollectionViewDataSource {
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = menuCV.dequeueReusableCell(withReuseIdentifier: MenuCellCVC.className, for: indexPath) as? MenuCellCVC
-            else { return UICollectionViewCell() }
+        else { return UICollectionViewCell() }
         cell.setData(menuData: MenuDataModel.sampleMenuData[indexPath.row])
+        cell.changeCustomView(isMenu: isMenu)
         return cell
     }
 }
@@ -109,5 +113,12 @@ extension MenuTabVC: UICollectionViewDelegateFlowLayout {
 // MARK: - Network
 
 extension MenuTabVC {
+    
+}
 
+extension MenuTabVC: MenuCVCDelegate {
+    func controlSegement() {
+        self.isMenu.toggle()
+        menuCV.reloadData()
+    }
 }

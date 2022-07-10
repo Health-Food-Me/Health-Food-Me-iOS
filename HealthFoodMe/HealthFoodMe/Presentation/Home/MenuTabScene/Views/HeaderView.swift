@@ -7,28 +7,31 @@
 
 import UIKit
 
+protocol MenuCVCDelegate: AnyObject {
+    func controlSegement()
+}
+
 final class HeaderView: UIView {
     
     // MARK: - Properties
-      
+    
+    weak var delegate: MenuCVCDelegate?
+
     // MARK: - UI Components
     
     lazy var segementcontrol: UISegmentedControl = {
-        let items = ["메뉴", "영양정보"]
+        let items = I18N.Detail.Menu.segmentTitle
         let sc = UISegmentedControl(items: items)
         sc.center = self.center
         sc.selectedSegmentIndex = 0
         sc.addTarget(self, action: #selector(indexChanged(_:)), for: .valueChanged)
-        sc.layer.cornerRadius = CGRectGetHeight(self.bounds) / 2
-        sc.backgroundColor = .lightGray
-        
-        return sc}()
+        return sc
+    }()
     
     // MARK: - View Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUI()
         setLayout()
     }
     
@@ -40,10 +43,6 @@ final class HeaderView: UIView {
 // MARK: - Methods
 
 extension HeaderView {
-    private func setUI() {
-
-    }
-    
     private func setLayout() {
         self.addSubview(segementcontrol)
         segementcontrol.snp.makeConstraints { make in
@@ -55,8 +54,10 @@ extension HeaderView {
         switch sender.selectedSegmentIndex {
         case 0:
             print("메뉴")
+            delegate?.controlSegement()
         case 1:
             print("영양정보")
+            delegate?.controlSegement()
         default:
             break
         }

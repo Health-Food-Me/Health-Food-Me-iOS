@@ -8,6 +8,7 @@
 import UIKit
 
 import SnapKit
+import MapKit
 
 final class MenuCellCVC: UICollectionViewCell, UICollectionViewRegisterable {
    
@@ -25,8 +26,6 @@ final class MenuCellCVC: UICollectionViewCell, UICollectionViewRegisterable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
-//        setCell(isMenu: true) // 메뉴
-        setCell(isMenu: false) // 영양정보
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,8 +37,7 @@ final class MenuCellCVC: UICollectionViewCell, UICollectionViewRegisterable {
 
 extension MenuCellCVC {
     private func setLayout() {
-        contentView.addSubview(menuView)
-        contentView.addSubview(menuDetailView)
+        contentView.addSubviews(menuView, menuDetailView)
         menuView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -48,10 +46,12 @@ extension MenuCellCVC {
         }
     }
     
-    private func setCell(isMenu: Bool) {
+    func changeCustomView(isMenu: Bool) {
         if isMenu {
             menuDetailView.isHidden = true
+            menuView.isHidden = false
         } else {
+            menuDetailView.isHidden = false
             menuView.isHidden = true
         }
     }
@@ -61,6 +61,8 @@ extension MenuCellCVC {
         menuView.titleLabel.text = menuData.menuName
         if menuData.isPick == true {
             menuView.pickImageView.image = UIImage(named: "icn_pick")
+        } else {
+            menuView.pickImageView.image = .none
         }
         menuView.priceLabel.text = "\(menuData.menuPrice)원"
         menuView.kcalLabel.text = "\(menuData.menuKcal)"
@@ -68,6 +70,8 @@ extension MenuCellCVC {
         menuDetailView.titleLabel.text = menuData.menuName
         if menuData.isPick == true {
             menuDetailView.pickImageView.image = UIImage(named: "icn_pick")
+        } else {
+            menuDetailView.pickImageView.image = .none
         }
         menuDetailView.cAmountLabel.text = "\(menuData.carbohydrates)g"
         menuDetailView.pAmountLabel.text = "\(menuData.protein)g"

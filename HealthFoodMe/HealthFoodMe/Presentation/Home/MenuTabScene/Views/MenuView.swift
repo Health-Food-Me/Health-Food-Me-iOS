@@ -11,22 +11,20 @@ import SnapKit
 
 final class MenuView: UIView {
     
-    // MARK: - Properties
-  
     // MARK: - UI Components
     
     let menuView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.borderWidth = 0.5
-        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderColor = UIColor.helfmeLineGray.cgColor
         view.roundCorners(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMinXMaxYCorner])
         return view
     }()
     
     let kcalView: UIView = {
         let view = UIView()
-        view.backgroundColor = .green
+        view.backgroundColor = UIColor.mainGreen
         view.roundCorners(cornerRadius: 15, maskedCorners: [.layerMaxXMinYCorner, .layerMaxXMaxYCorner])
         return view
     }()
@@ -47,14 +45,14 @@ final class MenuView: UIView {
     lazy var titleLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .black
-        lb.font = .systemFont(ofSize: 15)
+        lb.font = .NotoBold(size: 14)
         return lb
     }()
     
     lazy var priceLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .black
-        lb.font = .systemFont(ofSize: 12)
+        lb.font = .NotoRegular(size: 12)
         return lb
     }()
    
@@ -71,15 +69,15 @@ final class MenuView: UIView {
     lazy var kcalLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .white
-        lb.font = .systemFont(ofSize: 16)
+        lb.font = .NotoBold(size: 16)
         return lb
     }()
     
     lazy var unitLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "kcal"
+        lb.text = I18N.Detail.Menu.kcalUnit
         lb.textColor = .white
-        lb.font = .systemFont(ofSize: 10)
+        lb.font = .NotoRegular(size: 10)
         return lb
     }()
    
@@ -87,7 +85,7 @@ final class MenuView: UIView {
         let sv = UIStackView()
         sv.axis = .vertical
         sv.alignment = .center
-        sv.spacing = 3
+        sv.spacing = 0
         sv.addArrangedSubview(kcalLabel)
         sv.addArrangedSubview(unitLabel)
         return sv

@@ -17,14 +17,14 @@ final class MenuDetailView: UIView {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.borderWidth = 0.5
-        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderColor = UIColor.helfmeLineGray.cgColor
         view.roundCorners(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMinXMaxYCorner])
         return view
     }()
     
     private let kcalView: UIView = {
         let view = UIView()
-        view.backgroundColor = .green
+        view.backgroundColor = UIColor.mainGreen
         view.roundCorners(cornerRadius: 15, maskedCorners: [.layerMaxXMinYCorner, .layerMaxXMaxYCorner])
         return view
     }()
@@ -38,30 +38,30 @@ final class MenuDetailView: UIView {
     lazy var titleLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .black
-        lb.font = .systemFont(ofSize: 15)
+        lb.font = .NotoBold(size: 15)
         return lb
     }()
     
     private let standardLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "1인분 (50g)"
+        lb.text = I18N.Detail.Menu.standard
         lb.textColor = .lightGray
-        lb.font = .systemFont(ofSize: 8)
+        lb.font = .NotoRegular(size: 8)
         return lb
     }()
     
     lazy var cAmountLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .black
-        lb.font = .systemFont(ofSize: 14)
+        lb.font = .PretendardMedium(size: 14)
         return lb
     }()
     
     private let cTextLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "탄수화물"
+        lb.text = I18N.Detail.Menu.carbohydrate
         lb.textColor = .darkGray
-        lb.font = .systemFont(ofSize: 8)
+        lb.font = .NotoRegular(size: 9)
         return lb
     }()
     
@@ -78,15 +78,15 @@ final class MenuDetailView: UIView {
     lazy var pAmountLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .black
-        lb.font = .systemFont(ofSize: 14)
+        lb.font = .PretendardMedium(size: 14)
         return lb
     }()
     
     private let pTextLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "단백질"
+        lb.text = I18N.Detail.Menu.protein
         lb.textColor = .darkGray
-        lb.font = .systemFont(ofSize: 8)
+        lb.font = .NotoRegular(size: 9)
         return lb
     }()
     
@@ -103,15 +103,15 @@ final class MenuDetailView: UIView {
     lazy var fAmountLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .black
-        lb.font = .systemFont(ofSize: 14)
+        lb.font = .PretendardMedium(size: 14)
         return lb
     }()
     
     private let fTextLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "지방"
+        lb.text = I18N.Detail.Menu.fats
         lb.textColor = .darkGray
-        lb.font = .systemFont(ofSize: 8)
+        lb.font = .NotoRegular(size: 9)
         return lb
     }()
     
@@ -139,7 +139,7 @@ final class MenuDetailView: UIView {
     lazy var kcalLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .white
-        lb.font = .systemFont(ofSize: 16)
+        lb.font = .NotoBold(size: 16)
         return lb
     }()
     
@@ -147,7 +147,7 @@ final class MenuDetailView: UIView {
         let lb = UILabel()
         lb.text = "kcal"
         lb.textColor = .white
-        lb.font = .systemFont(ofSize: 10)
+        lb.font = .NotoRegular(size: 10)
         return lb
     }()
    
@@ -155,7 +155,7 @@ final class MenuDetailView: UIView {
         let sv = UIStackView()
         sv.axis = .vertical
         sv.alignment = .center
-        sv.spacing = 3
+        sv.spacing = 0
         sv.addArrangedSubview(kcalLabel)
         sv.addArrangedSubview(unitLabel)
         return sv
