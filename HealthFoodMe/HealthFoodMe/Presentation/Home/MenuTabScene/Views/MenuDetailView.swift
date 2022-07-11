@@ -9,8 +9,6 @@ import UIKit
 
 final class MenuDetailView: UIView {
     
-    // MARK: - Properties
-  
     // MARK: - UI Components
     
     private let menuView: UIView = {
@@ -50,14 +48,14 @@ final class MenuDetailView: UIView {
         return lb
     }()
     
-    lazy var cAmountLabel: UILabel = {
+    lazy var carbohydrateAmountLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
         lb.font = .PretendardMedium(size: 14)
         return lb
     }()
     
-    private let cTextLabel: UILabel = {
+    private let carbohydrateTextLabel: UILabel = {
         let lb = UILabel()
         lb.text = I18N.Detail.Menu.carbohydrate
         lb.textColor = .helfmeGray1
@@ -70,18 +68,18 @@ final class MenuDetailView: UIView {
         sv.axis = .vertical
         sv.alignment = .center
         sv.spacing = 4
-        sv.addArrangedSubviews(cAmountLabel, cTextLabel)
+        sv.addArrangedSubviews(carbohydrateAmountLabel, carbohydrateTextLabel)
         return sv
     }()
     
-    lazy var pAmountLabel: UILabel = {
+    lazy var proteinAmountLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
         lb.font = .PretendardMedium(size: 14)
         return lb
     }()
     
-    private let pTextLabel: UILabel = {
+    private let proteinTextLabel: UILabel = {
         let lb = UILabel()
         lb.text = I18N.Detail.Menu.protein
         lb.textColor = .helfmeGray1
@@ -94,18 +92,18 @@ final class MenuDetailView: UIView {
         sv.axis = .vertical
         sv.alignment = .center
         sv.spacing = 4
-        sv.addArrangedSubviews(pAmountLabel, pTextLabel)
+        sv.addArrangedSubviews(proteinAmountLabel, proteinTextLabel)
         return sv
     }()
     
-    lazy var fAmountLabel: UILabel = {
+    lazy var fatsAmountLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
         lb.font = .PretendardMedium(size: 14)
         return lb
     }()
     
-    private let fTextLabel: UILabel = {
+    private let fatsTextLabel: UILabel = {
         let lb = UILabel()
         lb.text = I18N.Detail.Menu.fats
         lb.textColor = .helfmeGray1
@@ -118,7 +116,7 @@ final class MenuDetailView: UIView {
         sv.axis = .vertical
         sv.alignment = .center
         sv.spacing = 4
-        sv.addArrangedSubviews(fAmountLabel, fTextLabel)
+        sv.addArrangedSubviews(fatsAmountLabel, fatsTextLabel)
         return sv
     }()
     
@@ -200,7 +198,6 @@ extension MenuDetailView {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(pickImageView.snp.bottom).offset(8)
             make.leading.equalToSuperview().offset(28)
-            
         }
         
         standardLabel.snp.makeConstraints { make in

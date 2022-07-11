@@ -47,35 +47,23 @@ extension MenuCellCVC {
     }
     
     func changeCustomView(isMenu: Bool) {
-        if isMenu {
-            menuDetailView.isHidden = true
-            menuView.isHidden = false
-        } else {
-            menuDetailView.isHidden = false
-            menuView.isHidden = true
-        }
+        menuDetailView.isHidden = isMenu
+        menuView.isHidden = !isMenu
     }
     
     func setData(menuData: MenuDataModel) {
         menuView.menuImageView.image = UIImage(named: "Image")
         menuView.titleLabel.text = menuData.menuName
-        if menuData.isPick == true {
-            menuView.pickImageView.image = UIImage(named: "icn_pick")
-        } else {
-            menuView.pickImageView.image = .none
-        }
+        menuView.pickImageView.image = menuData.isPick ? UIImage(named: "icn_pick") : .none
+        
         menuView.priceLabel.text = "\(menuData.menuPrice)원"
         menuView.kcalLabel.text = "\(menuData.menuKcal)"
         
         menuDetailView.titleLabel.text = menuData.menuName
-        if menuData.isPick == true {
-            menuDetailView.pickImageView.image = UIImage(named: "icn_pick")
-        } else {
-            menuDetailView.pickImageView.image = .none
-        }
-        menuDetailView.cAmountLabel.text = "\(menuData.carbohydrates)g"
-        menuDetailView.pAmountLabel.text = "\(menuData.protein)g"
-        menuDetailView.fAmountLabel.text = "\(menuData.fat)g"
+        menuDetailView.pickImageView.image = menuData.isPick ? UIImage(named: "icn_pick") : .none
+        menuDetailView.carbohydrateAmountLabel.text = "\(menuData.carbohydrates)g"
+        menuDetailView.proteinAmountLabel.text = "\(menuData.protein)g"
+        menuDetailView.fatsAmountLabel.text = "\(menuData.fat)g"
         menuDetailView.kcalLabel.text = "\(menuData.menuKcal)"
     }
 }
