@@ -17,7 +17,6 @@ class HamburgerBarVC: UIViewController {
     var hambergurBarViewVelocity = CGPoint(x: 0, y: 0)
     var name: String? = "배부른 현우는 행복해요"
     private let screenWidth = UIScreen.main.bounds.width
-    private lazy var hamburgerBarButton = UIButton()
     private var menuButtons: [UIButton] = []
     private let buttonTitles: [String] = ["스크랩한 식당", "내가 쓴 리뷰", "가게 제보하기",
                                           "수정사항 제보하기"]
@@ -124,14 +123,10 @@ extension HamburgerBarVC {
     private func setUI() {
         setButtons()
         setDivindingView()
+        self.view.backgroundColor = .clear
     }
     
     private func setButtons() {
-        hamburgerBarButton.setTitleColor(.helfmeBlack, for: .normal)
-        hamburgerBarButton.setTitle("햄버거바", for: .normal)
-        hamburgerBarButton.press { self.showHamburgerBarWithAnimation()
-        }
-        
         for buttonIndex in 0...3 {
             let button = UIButton()
             button.setTitle(buttonTitles[buttonIndex], for: .normal)
@@ -156,18 +151,13 @@ extension HamburgerBarVC {
     }
 
     private func setLayout() {
-        view.addSubviews(hamburgerBarButton, hamburgerBarView
-        )
+        view.addSubviews(hamburgerBarView
+    )
         
         hamburgerBarView.addSubviews(helloLabel,
                                      editNameButton, storeButtonStackView, reportButtonStackView,
                                      settingButton, logoutButton, dividingLineViews[0],
                                      dividingLineViews[1], dividingLineViews[2])
-        
-        hamburgerBarButton.snp.makeConstraints { make in
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(100)
-        }
         
         hamburgerBarView.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.71)
@@ -233,7 +223,7 @@ extension HamburgerBarVC {
         self.hamburgerBarView.snp.updateConstraints { make in
             make.trailing.equalToSuperview().inset(screenWidth - hamburgerViewWidth)
         }
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.3) {
             self.hamburgerBarView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.backgroundColor = .helfmeBlack.withAlphaComponent(0.4)
             self.view.layoutIfNeeded()
@@ -245,10 +235,11 @@ extension HamburgerBarVC {
         self.hamburgerBarView.snp.updateConstraints { make in
             make.trailing.equalToSuperview().inset(screenWidth)
         }
-        
-        UIView.animate(withDuration: 0.4) {
-            self.view.backgroundColor = .helfmeWhite
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+            self.view.backgroundColor = .clear
             self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.dismiss(animated: false)
         }
     }
     

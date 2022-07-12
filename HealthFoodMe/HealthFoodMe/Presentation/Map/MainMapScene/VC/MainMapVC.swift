@@ -35,8 +35,9 @@ class MainMapVC: UIViewController {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.menuIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            let nextVC = ModuleFactory.resolve().makeMainDetailVC()
-            self.navigationController?.pushViewController(nextVC, animated: true)
+            let nextVC = ModuleFactory.resolve().makeHamburgerBarVC()
+            nextVC.modalPresentationStyle = .overFullScreen
+            self.present(nextVC, animated: false)
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
         bt.clipsToBounds = true
@@ -56,7 +57,7 @@ class MainMapVC: UIViewController {
     
     private let searchLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "식당, 음식 검색"
+        lb.text = I18N.Map.Main.searchBar
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 15)
         return lb
@@ -153,14 +154,17 @@ extension MainMapVC {
         
         mapDetailSummaryView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().inset(500)
-            make.height.equalTo(500)
+            make.top.equalToSuperview().inset(600)
+            make.height.equalTo(UIScreen.main.bounds.height)
         }
     }
     
     private func setTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentSearchVC))
         searchBar.addGestureRecognizer(tapGesture)
+        
+        let tapBottomSheet = UITapGestureRecognizer(target: self, action: #selector(PushDetailVC))
+        mapDetailSummaryView.addGestureRecognizer(tapBottomSheet)
     }
     
     private func setDelegate() {
@@ -183,6 +187,12 @@ extension MainMapVC {
     
     @objc
     private func presentSearchVC() {
+        let nextVC = ModuleFactory.resolve().makeSearchVC()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+    
+    @objc
+    private func PushDetailVC() {
         let nextVC = ModuleFactory.resolve().makeMainDetailVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }

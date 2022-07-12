@@ -45,6 +45,10 @@ struct I18N {
     }
     
     struct Map {
+        struct Main {
+            static let searchBar = "식당, 음식 검색"
+        }
+        
         struct HamburgerBar {
             static let logout = "로그아웃"
             static let setting = "설정"
