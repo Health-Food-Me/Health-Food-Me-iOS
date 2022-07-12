@@ -22,7 +22,7 @@ class MainMapVC: UIViewController {
     private var locationManager = CLLocationManager()
     private var currentLatitude: Double?
     private var currentLongitude: Double?
-  
+    
     // MARK: - UI Components
     
     private lazy var mapView: NMFMapView = {
@@ -68,13 +68,31 @@ class MainMapVC: UIViewController {
         iv.image = ImageLiterals.Map.manifyingIcon
         return iv
     }()
-  
+    
+    private lazy var categoryCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = .zero
+        layout.minimumInteritemSpacing = 12
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        
+        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 32), collectionViewLayout: layout)
+        cv.showsHorizontalScrollIndicator = false
+        cv.backgroundColor = .clear
+        return cv
+    }()
+    
+    private var mapDetailSummaryView = MapDetailSummaryView()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setLayout()
+        setTapGesture()
+        setDelegate()
+        registerCell()
         self.bindViewModels()
     }
     
@@ -126,11 +144,18 @@ extension MainMapVC {
             make.width.height.equalTo(16)
             make.centerY.equalToSuperview()
         }
-    }
-  
-    private func bindViewModels() {
-        let input = MainMapViewModel.Input()
-        let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+        
+        categoryCollectionView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(hamburgerButton.snp.bottom).offset(12)
+            make.height.equalTo(32 + 10)
+        }
+        
+        mapDetailSummaryView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalToSuperview().inset(500)
+            make.height.equalTo(500)
+        }
     }
     
     private func setTapGesture() {
@@ -138,13 +163,51 @@ extension MainMapVC {
         searchBar.addGestureRecognizer(tapGesture)
     }
     
+    private func setDelegate() {
+        categoryCollectionView.delegate = self
+        categoryCollectionView.dataSource = self
+    }
+    
+    private func registerCell() {
+        MenuCategoryCVC.register(target: categoryCollectionView)
+    }
+    
+    private func bindViewModels() {
+        let input = MainMapViewModel.Input()
+        let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+    }
+    
     private func resetUI() {
         navigationController?.isNavigationBarHidden =  true
     }
+    
+    @objc
+    private func presentSearchVC() {
+        let nextVC = ModuleFactory.resolve().makeMainDetailVC()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
 }
 
-// MARK: - Network
+// MARK: - CollectionView Delegate
 
-extension MainMapVC {
+extension MainMapVC: UICollectionViewDelegate {
 
+}
+
+extension MainMapVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: MainMapCategory.categorySample[indexPath.row].menuName.size(withAttributes: [NSAttributedString.Key.font: UIFont.NotoRegular(size: 14)]).width + 50, height: 32)
+    }
+}
+
+extension MainMapVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return MainMapCategory.categorySample.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MenuCategoryCVC.className, for: indexPath) as? MenuCategoryCVC else { return UICollectionViewCell() }
+        cell.setData(data: MainMapCategory.categorySample[indexPath.row])
+        return cell
+    }
 }
