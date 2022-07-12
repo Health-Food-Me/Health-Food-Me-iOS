@@ -19,7 +19,7 @@ class MainDetailVC: UIViewController {
     var viewModel: MainDetailViewModel!
     private var detailTabTVC = DetailTabTVC()
     private var detailTabTitleHeader = DetailTabTitleHeader()
-    private var childVC = ModuleFactory.resolve().instantiateMainMapVC()
+    private var childVC = ModuleFactory.resolve().makeMainMapVC()
     
     // MARK: - UI Components
     
@@ -40,7 +40,6 @@ class MainDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUI()
         setLayout()
         registerCell()

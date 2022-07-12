@@ -15,10 +15,10 @@ extension UIView {
     }
     
     func addSubviewFromNib(view: UIView) {
-      let view = Bundle.main.loadNibNamed(view.className, owner: self, options: nil)?.first as! UIView
-      view.frame = bounds
-      view.clipsToBounds = true
-      addSubview(view)
+        let view = Bundle.main.loadNibNamed(view.className, owner: self, options: nil)?.first as! UIView
+        view.frame = bounds
+        view.clipsToBounds = true
+        addSubview(view)
     }
     
     func setGradient() {
@@ -30,16 +30,22 @@ extension UIView {
         gradient.endPoint = CGPoint(x: 1.0, y: 1)
         layer.insertSublayer(gradient, at: 0)
     }
+    
+    func roundCorners(cornerRadius: CGFloat, maskedCorners: CACornerMask) {
+        clipsToBounds = true
+        layer.cornerRadius = cornerRadius
+        layer.maskedCorners = CACornerMask(arrayLiteral: maskedCorners)
+    }
 }
 
 class XibView: UIView {
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    addSubviewFromNib(view: self)
-  }
-  
-  required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-    addSubviewFromNib(view: self)
-  }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubviewFromNib(view: self)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        addSubviewFromNib(view: self)
+    }
 }

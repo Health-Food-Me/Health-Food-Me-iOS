@@ -46,7 +46,6 @@ final class DetailTabTVC: UITableViewCell, UITableViewRegisterable {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        setUI()
         setLayout()
         setDelegate()
         registerCell()
@@ -68,10 +67,6 @@ extension DetailTabTVC {
     
     private func registerCell() {
         TabContainerCVC.register(target: containerCollectionView)
-    }
-    
-    private func setUI() {
-        
     }
     
     private func setLayout() {
