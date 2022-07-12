@@ -174,6 +174,7 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
 extension ReviewWriteVC {
     private func setDelegate() {
         scrollView.delegate = self
+        reviewTextVeiw.delegate = self
     }
     
     private func setNavigation() {
@@ -242,3 +243,32 @@ extension ReviewWriteVC {
 extension ReviewWriteVC {
     
 }
+
+extension ReviewWriteVC: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .helfmeGray2 {
+            textView.text = nil
+            textView.textColor = .helfmeBlack
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "리뷰를 작성해주세요 (최대 500자)"
+            textView.textColor = .helfmeGray2
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: view.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        textView.constraints.forEach { (constraint) in
+            if estimatedSize.height >= 277 {
+                if constraint.firstAttribute == .height {
+                    constraint.constant = estimatedSize.height
+                }
+            }
+        }
+    }
+}
+
