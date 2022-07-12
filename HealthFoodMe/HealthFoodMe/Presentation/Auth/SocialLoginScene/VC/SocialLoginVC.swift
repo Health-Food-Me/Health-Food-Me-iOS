@@ -28,15 +28,17 @@ class SocialLoginVC: UIViewController {
     
     private var subTitleLabel: UILabel = {
         let lb = UILabel()
+        let boldFont = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)!
         lb.text = I18N.Auth.subTitle
         lb.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 14)
         lb.textColor = .helfmeBlack
         lb.numberOfLines = 2
         lb.textAlignment = .center
-        //lb.colorChangeWithChaining(targetString: "샐러드", textColor: .mainGreen)
-//          .colorChangeWithChaining(targetString: "일반식", textColor: .mainRed)
-//        lb.partColorChange(targetString: "샐러드", textColor: .mainGreen)
-//        lb.partColorChange(targetString: "일반식", textColor: .mainRed)
+        lb.setAttributedText(targetFontList: ["샐러드": boldFont,
+                                              "일반식": boldFont],
+                             targetColorList: ["샐러드": .mainGreen,
+                                               "일반식": .mainRed])
+
         return lb
     }()
     
