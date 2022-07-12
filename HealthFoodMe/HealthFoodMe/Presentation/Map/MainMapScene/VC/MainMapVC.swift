@@ -31,16 +31,27 @@ class MainMapVC: UIViewController {
         return map
     }()
     
-    private lazy var tempDetailButton: UIButton =  {
+    private lazy var hamburgerButton: UIButton =  {
         let bt = UIButton()
-        bt.setTitle("디테일로 이동", for: .normal)
+        bt.setImage(ImageLiterals.Map.menuIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
             let nextVC = ModuleFactory.resolve().makeMainDetailVC()
-            nextVC.navigationController?.isNavigationBarHidden = false
             self.navigationController?.pushViewController(nextVC, animated: true)
         }), for: .touchUpInside)
-        bt.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        bt.backgroundColor = .helfmeWhite
+        bt.clipsToBounds = true
+        bt.layer.cornerRadius = 13
+        bt.layer.applyShadow(color: .helfmeBlack, alpha: 0.2, x: 0, y: 2, blur: 4, spread: 0)
         return bt
+    }()
+    
+    private var searchBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .helfmeWhite
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 13
+        view.layer.applyShadow(color: .helfmeBlack, alpha: 0.2, x: 0, y: 2, blur: 4, spread: 0)
+        return view
     }()
   
     // MARK: - View Life Cycle
