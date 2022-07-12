@@ -139,7 +139,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
-  - Firebase/Core
+  - Firebase/Core (= 9.2.0)
   - Firebase/Crashlytics
   - Firebase/RemoteConfig
   - KakaoSDKAuth
@@ -211,6 +211,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
 
-PODFILE CHECKSUM: 944d39a252f5c1d0db07beed7ed8d5f85cc28b18
+PODFILE CHECKSUM: 757d3007b47b7639bb530995e3cfd278cf3c68cb
 
 COCOAPODS: 1.11.3
