@@ -241,14 +241,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3B0B255A2876CEBA00950539 /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				3B18D8AA287AB7B6009AF9E7 /* HamburgerBarScene */,
-			);
-			path = Menu;
-			sourceTree = "<group>";
-		};
 		3B18D8AA287AB7B6009AF9E7 /* HamburgerBarScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -507,6 +499,7 @@
 		EB6A44E22873BAAE00749582 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				3B18D8AA287AB7B6009AF9E7 /* HamburgerBarScene */,
 				EB6A44E32873BABE00749582 /* MainMapScene */,
 			);
 			path = Map;
@@ -837,7 +830,6 @@
 		EBF66A90287227F500DE0ED1 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				3B0B255A2876CEBA00950539 /* Menu */,
 				A9325272287D24CD001EDF50 /* Search */,
 				3BCC441A28745FA900661A12 /* Auth */,
 				EBF66A9F287227F500DE0ED1 /* Common */,
