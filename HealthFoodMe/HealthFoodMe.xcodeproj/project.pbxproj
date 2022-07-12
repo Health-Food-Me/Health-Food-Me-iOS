@@ -119,6 +119,7 @@
 		EBF66B082872AF5B00DE0ED1 /* SampleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */; };
 		EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B092872B21F00DE0ED1 /* StringLiterals.swift */; };
 		EBF66B0C2872B4FE00DE0ED1 /* StoryboardLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B0B2872B4FE00DE0ED1 /* StoryboardLiterals.swift */; };
+		FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -239,6 +240,7 @@
 		EBF66B092872B21F00DE0ED1 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		EBF66B0B2872B4FE00DE0ED1 /* StoryboardLiterals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardLiterals.swift; sourceTree = "<group>"; };
 		FB08F925E37E9FAB6970F6A9 /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
+		FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegementControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -397,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				EB033E83287B5BE300C48FB9 /* StarRatingView.swift */,
+				FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */,
 			);
 			path = "UI Components";
 			sourceTree = "<group>";
@@ -1172,6 +1175,7 @@
 				EBF66AF1287227F500DE0ED1 /* ShowToast.swift in Sources */,
 				EBF66AC4287227F500DE0ED1 /* UIButton+.swift in Sources */,
 				695758B7287D7B6700E36789 /* Config.swift in Sources */,
+				FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */,
 				EBF66AF0287227F500DE0ED1 /* BaseVC.swift in Sources */,
 				EBF66B082872AF5B00DE0ED1 /* SampleEntity.swift in Sources */,
 				EBF66B03287227F500DE0ED1 /* SignUp.swift in Sources */,
