@@ -89,6 +89,7 @@ final class SearchVC: UIViewController {
         setUI()
         setLayout()
         setDelegate()
+        registerCell()
     }
 }
 

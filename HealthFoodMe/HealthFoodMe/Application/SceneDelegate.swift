@@ -23,23 +23,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-//        if #available(iOS 15.0, *) {
-//            let navigationBarAppearance = UINavigationBarAppearance()
-//            navigationBarAppearance.configureWithOpaqueBackground()
-//            navigationBarAppearance.backgroundColor = .white
-//            navigationBarAppearance.shadowColor = .white
-//            
-//            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
-//            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
-//        }
-//        
-//        guard let windowScene = (scene as? UIWindowScene) else { return }
-//        let rootViewController = PostDetailVC()
-//        let window = UIWindow(windowScene: windowScene)
-//        window.rootViewController = rootViewController
-//        self.window = window
-//        window.backgroundColor = .white
-//        window.makeKeyAndVisible()
+        if #available(iOS 15.0, *) {
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithTransparentBackground()
+            navigationBarAppearance.backgroundColor = .white
+            navigationBarAppearance.shadowColor = .helfmeGray1.withAlphaComponent(0.3)
+
+            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+        }
+
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        let rootViewController = ModuleFactory.resolve().makeSearchVC()
+        let navigation = UINavigationController(rootViewController: rootViewController)
+        let window = UIWindow(windowScene: windowScene)
+        window.rootViewController = navigation
+        self.window = window
+        window.backgroundColor = .white
+        window.makeKeyAndVisible()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
