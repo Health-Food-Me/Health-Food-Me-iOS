@@ -45,10 +45,10 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
         lb.text = "써브웨이 동대문역사문화공원역점"
-        //lb.setLineSpacing(lineSpacing: 2)
+        lb.setLineSpacingWithChaining(lineSpacing: 2)
+          .lineBreakStrategy = .hangulWordPriority
         lb.font = .NotoBold(size: 14)
-        lb.numberOfLines = 2
-        lb.lineBreakMode = .byWordWrapping
+        lb.numberOfLines = 0
         return lb
     }()
     
@@ -111,7 +111,7 @@ extension SearchResultTVC {
             $0.top.bottom.equalTo(safeAreaLayoutGuide).inset(6)
         }
         
-        storeView.addSubviews(storeImageView)
+        storeView.addSubviews(storeImageView, storeStackView)
         
         storeImageView.snp.makeConstraints {
             $0.leading.equalTo(storeView.snp.leading).inset(16)
@@ -119,15 +119,18 @@ extension SearchResultTVC {
             $0.top.bottom.equalTo(storeView).inset(12)
         }
         
-        storeView.addSubviews(storeStackView)
-        
         storeStackView.snp.makeConstraints {
             $0.leading.equalTo(storeImageView.snp.trailing).offset(20)
             $0.centerY.equalTo(storeView)
         }
         
+        starView.snp.makeConstraints {
+            $0.width.equalTo(91)
+            $0.height.equalTo(14)
+        }
+        
         storeNameLabel.snp.makeConstraints {
-            $0.width.equalTo(100)
+            $0.trailing.equalTo(storeView.snp.trailing).inset(35)
         }
     }
 }
