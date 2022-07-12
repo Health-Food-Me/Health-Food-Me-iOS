@@ -50,7 +50,7 @@ class HamburgerBarVC: UIViewController {
     
     private lazy var editNameButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "btn_edit"), for: .normal)
+        button.setImage(ImageLiterals.HamburgerBar.editNameBtn, for: .normal)
         
         return button
     }()
