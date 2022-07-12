@@ -28,9 +28,9 @@ class SocialLoginVC: UIViewController {
     
     private var subTitleLabel: UILabel = {
         let lb = UILabel()
-        let boldFont = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)!
+        let boldFont = UIFont(name: AppFontName.appleSDGothicNeoBold, size: 14)!
         lb.text = I18N.Auth.subTitle
-        lb.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 14)
+        lb.font = UIFont(name: AppFontName.appleSDGothicNeoMedium, size: 14)
         lb.textColor = .helfmeBlack
         lb.numberOfLines = 2
         lb.textAlignment = .center
