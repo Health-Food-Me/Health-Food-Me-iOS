@@ -5,7 +5,6 @@
 //  Created by Junho Lee on 2022/07/12.
 //
 
-import Foundation
 import UIKit
 
 import SnapKit
@@ -143,3 +142,48 @@ extension MapDetailSummaryView {
         }
     }
     
+    private func setStarStackView() {
+        for starNumber in 1...5 {
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 16, height: 16))
+            imageView.contentMode = .scaleAspectFill
+            if starNumber < 5 {
+                imageView.image = ImageLiterals.MainDetail.starIcon_filled
+            } else {
+                imageView.image = ImageLiterals.MainDetail.starIcon
+            }
+            imageView.tag = starNumber
+            starStackView.addArrangedSubviews(imageView)
+        }
+    }
+    
+    private func setDelegate() {
+        tagCollectionView.delegate = self
+        tagCollectionView.dataSource = self
+    }
+    
+    private func registerCell() {
+        TagSummaryCVC.register(target: tagCollectionView)
+    }
+}
+
+extension MapDetailSummaryView: UICollectionViewDelegate {
+
+}
+
+extension MapDetailSummaryView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: MainMapCategory.categorySample[indexPath.row].menuName.size(withAttributes: [NSAttributedString.Key.font: UIFont.NotoRegular(size: 10)]).width + 20, height: 18)
+    }
+}
+
+extension MapDetailSummaryView: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagSummaryCVC.className, for: indexPath) as? TagSummaryCVC else { return UICollectionViewCell() }
+        cell.setData(tag: MainMapCategory.categorySample[indexPath.row].menuName)
+        return cell
+    }
+}
