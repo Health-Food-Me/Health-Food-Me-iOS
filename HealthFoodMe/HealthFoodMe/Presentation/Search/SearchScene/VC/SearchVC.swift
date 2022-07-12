@@ -246,9 +246,11 @@ extension SearchVC: UITableViewDataSource {
 
 extension SearchVC: SearchRecentTVCDelegate {
     func searchRecentTVCDelete(index: Int) {
-        let savedSearchRecent = realm?.objects(SearchRecent.self)
         try? realm?.write {
-            realm?.delete(savedSearchRecent?[index] ?? SearchRecent())
+            if let savedSearchRecent =  realm?.objects(SearchRecent.self).filter("title == '\(searchRecentList[index])'") {
+                print(savedSearchRecent)
+                realm?.delete(savedSearchRecent)
+            }
         }
         searchRecentList.remove(at: index)
         searchTableView.reloadData()
