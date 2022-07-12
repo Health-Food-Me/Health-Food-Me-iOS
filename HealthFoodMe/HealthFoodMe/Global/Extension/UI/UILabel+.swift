@@ -61,24 +61,20 @@ extension UILabel {
         self.attributedText = attributedString
     }
     
-    func colorChangeWithChaining(targetString: String, textColors: [UIColor]) -> UILabel {
-        let label = self
-        let fullText = label.text ?? ""
-        let range = (fullText as NSString).range(of: targetString)
+    func setAttributedText(targetFontList: [String: UIFont],
+                           targetColorList: [String: UIColor]) {
+        let fullText = self.text ?? ""
         let attributedString = NSMutableAttributedString(string: fullText)
-        attributedString.addAttribute(.foregroundColor, value: textColor, range: range)
-        label.attributedText = attributedString
-        return label
-    }
-    
-    func setFontChangeWithChaining(targetString: String, font: UIFont) -> UILabel {
-        let label = self
-        let fullText = label.text ?? ""
-        let range = (fullText as NSString).range(of: targetString)
-        let attributedString = NSMutableAttributedString(string: fullText)
-        attributedString.addAttribute(.font, value: font, range: range)
+        for dic in targetFontList {
+            let range = (fullText as NSString).range(of: dic.key)
+            attributedString.addAttribute(.font, value: dic.value, range: range)
+        }
+        
+        for dic in targetColorList {
+            let range = (fullText as NSString).range(of: dic.key)
+            attributedString.addAttribute(.foregroundColor, value: dic.value, range: range)
+        }
         self.attributedText = attributedString
-        return label
     }
     
     /// 라벨 내의 특정 문자열의 CGRect 을 반환
