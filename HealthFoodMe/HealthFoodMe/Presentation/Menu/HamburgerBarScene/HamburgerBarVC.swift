@@ -11,7 +11,10 @@ import SnapKit
 
 class HamburgerBarVC: UIViewController {
     
+    var hambergurBarViewTranslation = CGPoint(x: 0, y: 0)
+    var hambergurBarViewVelocity = CGPoint(x: 0, y: 0)
     var name: String? = "배부른 현우는 행복해요"
+    private let screenWidth = UIScreen.main.bounds.width
     private lazy var hamburgerBarButton = UIButton()
     private var menuButtons: [UIButton] = []
     private let buttonTitles: [String] = ["스크랩한 식당", "내가 쓴 리뷰", "가게 제보하기",
@@ -88,25 +91,29 @@ class HamburgerBarVC: UIViewController {
         return st
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUI()
         setLayout()
+        addHamburgerBarGesture()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        showHamburgerBarWithAnimation()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first,
-           touch != hamburgerBarView {
+           touch.view != hamburgerBarView {
             dismissHamburgerBarWithAnimation()
-
         }
     }
 }
 
 extension HamburgerBarVC {
     private func setUI() {
-        
         setButtons()
         setDivindingView()
     }
@@ -114,7 +121,8 @@ extension HamburgerBarVC {
     private func setButtons() {
         hamburgerBarButton.setTitleColor(.helfmeBlack, for: .normal)
         hamburgerBarButton.setTitle("햄버거바", for: .normal)
-        hamburgerBarButton.addTarget(self, action: #selector(showHamburgerBarWithAnimation(_:)), for: .touchUpInside)
+        hamburgerBarButton.press { self.showHamburgerBarWithAnimation()
+        }
         
         for buttonIndex in 0...3 {
             let button = UIButton()
@@ -140,11 +148,13 @@ extension HamburgerBarVC {
     }
 
     private func setLayout() {
-        view.addSubviews(hamburgerBarButton, hamburgerBarView, helloLabel,
-                         editNameButton, storeButtonStackView, reportButtonStackView,
-                         settingButton, logoutButton, dividingLineViews[0],
-                         dividingLineViews[1], dividingLineViews[2]
+        view.addSubviews(hamburgerBarButton, hamburgerBarView
         )
+        
+        hamburgerBarView.addSubviews(helloLabel,
+                                     editNameButton, storeButtonStackView, reportButtonStackView,
+                                     settingButton, logoutButton, dividingLineViews[0],
+                                     dividingLineViews[1], dividingLineViews[2])
         
         hamburgerBarButton.snp.makeConstraints { make in
             make.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
@@ -154,8 +164,8 @@ extension HamburgerBarVC {
         hamburgerBarView.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.71)
             make.height.equalToSuperview()
-            make.top.equalTo(0)
-            make.leading.equalToSuperview().inset(-440)
+            make.top.equalToSuperview()
+            make.trailing.equalToSuperview().inset(screenWidth)
         }
         
         helloLabel.snp.makeConstraints { make in
@@ -210,32 +220,67 @@ extension HamburgerBarVC {
         }
     }
     
-    @objc func showHamburgerBarWithAnimation(_ button: UIButton) {
+    private func showHamburgerBarWithAnimation() {
+        let hamburgerViewWidth = screenWidth * 0.71
+        self.hamburgerBarView.snp.updateConstraints { make in
+            make.trailing.equalToSuperview().inset(screenWidth - hamburgerViewWidth)
+        }
         UIView.animate(withDuration: 0.4) {
+            self.hamburgerBarView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.backgroundColor = .helfmeBlack.withAlphaComponent(0.4)
-
-            self.hamburgerBarView.snp.updateConstraints { make in
-                make.leading.equalTo(0)
-                make.width.equalToSuperview().multipliedBy(0.71)
-                make.height.equalToSuperview()
-                make.top.equalTo(0)
-            }
             self.view.layoutIfNeeded()
         }
     }
     
     private func dismissHamburgerBarWithAnimation() {
+        
+        self.hamburgerBarView.snp.updateConstraints { make in
+            make.trailing.equalToSuperview().inset(screenWidth)
+        }
+        
         UIView.animate(withDuration: 0.4) {
             self.view.backgroundColor = .helfmeWhite
-            
-            self.hamburgerBarView.snp.updateConstraints { make in
-                make.width.equalToSuperview().multipliedBy(0.71)
-                make.height.equalToSuperview()
-                make.top.equalTo(0)
-                make.leading.equalToSuperview().inset(-440)
-            }
-            
             self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func addHamburgerBarGesture() {
+        self.hamburgerBarView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(moveHamburgerBarWithGesture(_:))))
+    }
+    
+    @objc func moveHamburgerBarWithGesture(_ sender: UIPanGestureRecognizer) {
+        
+        hambergurBarViewTranslation = sender.translation(in: hamburgerBarView)
+        hambergurBarViewVelocity = sender.velocity(in: hamburgerBarView)
+
+        switch sender.state {
+        case .changed:
+            if hambergurBarViewVelocity.x < 0 {
+                UIView.animate(withDuration: 0.1) {
+                    self.hamburgerBarView.transform = CGAffineTransform(translationX: self.hambergurBarViewTranslation.x, y: 0)
+                }
+            }
+        case .ended:
+            if hambergurBarViewTranslation.x > -80 {
+                let containerViewWidth = screenWidth * 0.71
+                self.hamburgerBarView.snp.updateConstraints { make in
+                    make.trailing.equalToSuperview().inset(screenWidth - containerViewWidth)
+                }
+
+                UIView.animate(withDuration: 0.4) {
+                    self.view.backgroundColor = .helfmeBlack.withAlphaComponent(0.4)
+                    self.hamburgerBarView.transform = CGAffineTransform(translationX: 0, y: 0)
+                    self.view.layoutIfNeeded()
+                }
+                
+                UIView.animate(withDuration: 0.1) {
+                    self.hamburgerBarView.transform = .identity
+                }
+            } else {
+                dismissHamburgerBarWithAnimation()
+            }
+        default:
+            break
         }
     }
 }
