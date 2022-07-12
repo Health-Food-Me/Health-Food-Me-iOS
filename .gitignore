@@ -126,6 +126,8 @@ iOSInjectionProject/
 
 ## Xcode 8 and earlier
 
+HealthFoodMe/HealthFoodMe/Data/Network/Environment/Config.swift
+
 ### Xcode Patch ###
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
