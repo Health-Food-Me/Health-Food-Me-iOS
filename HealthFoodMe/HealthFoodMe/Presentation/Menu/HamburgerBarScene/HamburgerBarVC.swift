@@ -11,6 +11,8 @@ import SnapKit
 
 class HamburgerBarVC: UIViewController {
     
+    // MARK: - Properties
+    
     var hambergurBarViewTranslation = CGPoint(x: 0, y: 0)
     var hambergurBarViewVelocity = CGPoint(x: 0, y: 0)
     var name: String? = "배부른 현우는 행복해요"
@@ -91,6 +93,7 @@ class HamburgerBarVC: UIViewController {
         return st
     }()
     
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,7 +115,12 @@ class HamburgerBarVC: UIViewController {
     }
 }
 
+// MARK: - Extension
+
 extension HamburgerBarVC {
+    
+    // MARK: - Methods
+    
     private func setUI() {
         setButtons()
         setDivindingView()
@@ -247,6 +255,8 @@ extension HamburgerBarVC {
     private func addHamburgerBarGesture() {
         self.hamburgerBarView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(moveHamburgerBarWithGesture(_:))))
     }
+    
+    // MARK: - @objc Methods
     
     @objc func moveHamburgerBarWithGesture(_ sender: UIPanGestureRecognizer) {
         
