@@ -65,12 +65,7 @@ final class MapDetailSummaryView: UIView {
     }()
     
     private lazy var tagCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 5
-        layout.minimumInteritemSpacing = 4
-        
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: TagCVCFlowLayout())
         cv.showsHorizontalScrollIndicator = false
         cv.backgroundColor = .clear
         cv.isScrollEnabled = false
@@ -133,7 +128,7 @@ extension MapDetailSummaryView {
         
         tagCollectionView.snp.makeConstraints { make in
             make.width.equalTo(200)
-            make.height.equalTo(30)
+            make.height.equalTo(23)
         }
         
         titleTagStackView.snp.makeConstraints { make in
@@ -173,6 +168,17 @@ extension MapDetailSummaryView: UICollectionViewDelegate {
 extension MapDetailSummaryView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: MainMapCategory.categorySample[indexPath.row].menuName.size(withAttributes: [NSAttributedString.Key.font: UIFont.NotoRegular(size: 10)]).width + 20, height: 18)
+    }
+    
+    
+    // TODO: - 태그 데이터 가져와서 컬렉션뷰 높이 조정해주기
+    
+    private func isDoubleLineHeight(tags: [String]) -> Bool {
+        var width: CGFloat = 0
+        tags.forEach { tag in
+            width += tag.size(withAttributes: [NSAttributedString.Key.font: UIFont.NotoRegular(size: 10)]).width
+        }
+        return width > 200
     }
 }
 
