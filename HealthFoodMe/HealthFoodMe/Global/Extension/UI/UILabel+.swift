@@ -61,6 +61,26 @@ extension UILabel {
         self.attributedText = attributedString
     }
     
+    func colorChangeWithChaining(targetString: String, textColors: [UIColor]) -> UILabel {
+        let label = self
+        let fullText = label.text ?? ""
+        let range = (fullText as NSString).range(of: targetString)
+        let attributedString = NSMutableAttributedString(string: fullText)
+        attributedString.addAttribute(.foregroundColor, value: textColor, range: range)
+        label.attributedText = attributedString
+        return label
+    }
+    
+    func setFontChangeWithChaining(targetString: String, font: UIFont) -> UILabel {
+        let label = self
+        let fullText = label.text ?? ""
+        let range = (fullText as NSString).range(of: targetString)
+        let attributedString = NSMutableAttributedString(string: fullText)
+        attributedString.addAttribute(.font, value: font, range: range)
+        self.attributedText = attributedString
+        return label
+    }
+    
     /// 라벨 내의 특정 문자열의 CGRect 을 반환
     /// - Parameter subText: CGRect 을 알고 싶은 특정 문자열.
     func rectFromString(with subText: String) -> CGRect? {

@@ -40,8 +40,19 @@ class SocialLoginVC: UIViewController {
         return lb
     }()
     
-    private lazy var kakaoLoginButton = UIButton()
-    private lazy var appleLoginButton = UIButton()
+    private lazy var kakaoLoginButton: UIButton = {
+       let button = UIButton()
+        button.setImage(ImageLiterals.Auth.kakaoLoginBtn, for: .normal)
+        
+        return button
+    }()
+    
+    private lazy var appleLoginButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageLiterals.Auth.appleLoginBtn, for: .normal)
+        
+        return button
+    }()
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -101,7 +112,7 @@ extension SocialLoginVC {
     }
 
     private func setLayout() {
-        view.addSubviews(titleLabel, subTitleLabel)
+        view.addSubviews(titleLabel, subTitleLabel, kakaoLoginButton, appleLoginButton)
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(163)
@@ -112,18 +123,16 @@ extension SocialLoginVC {
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
         }
-//        
-//        kakaoLoginButton.snp.makeConstraints { make in
-//            make.top.equalTo(subTitleLabel.snp.bottom).offset(100)
-//            make.leading.trailing.equalToSuperview().inset(50)
-//            make.centerX.equalToSuperview()
-//        }
-//        
-//        appleLoginButton.snp.makeConstraints {make in
-//            make.top.equalTo(kakaoLoginButton.snp.bottom).offset(9)
-//            make.leading.trailing.equalToSuperview().inset(50)
-//            make.centerX.equalToSuperview()
-//        }
+        
+        kakaoLoginButton.snp.makeConstraints { make in
+            make.top.equalTo(subTitleLabel.snp.bottom).offset(249)
+            make.centerX.equalToSuperview()
+        }
+        
+        appleLoginButton.snp.makeConstraints {make in
+            make.top.equalTo(kakaoLoginButton.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+        }
     }
     
     private func setAddTarget() {
