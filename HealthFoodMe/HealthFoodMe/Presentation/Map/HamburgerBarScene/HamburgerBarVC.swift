@@ -97,6 +97,7 @@ class HamburgerBarVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setUI()
         setLayout()
         addHamburgerBarGesture()
