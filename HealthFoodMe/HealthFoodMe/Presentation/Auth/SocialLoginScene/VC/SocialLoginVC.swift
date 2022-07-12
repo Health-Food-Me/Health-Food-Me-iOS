@@ -88,7 +88,6 @@ extension SocialLoginVC {
         
         appleLoginButton.setTitle("애플 아이디로 로그인", for: .normal)
         appleLoginButton.backgroundColor = UIColor.black
-//        appleLoginButton.backgroundColor = UIColor.carrotBlack
     }
 
     private func setLayout() {
