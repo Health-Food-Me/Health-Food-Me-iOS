@@ -9,6 +9,14 @@ import UIKit
 
 struct ImageLiterals {
     
+    struct Common {
+        static let starIcon = UIImage(named: "icn_star")
+        static let starIcon_25 = UIImage(named: "icn_star_25")
+        static let starIcon_50 = UIImage(named: "icn_star_50")
+        static let starIcon_75 = UIImage(named: "icn_star_75")
+        static let starIcon_filled = UIImage(named: "icn_star_filled")
+    }
+    
     struct MainDetail {
         static let scrapIcon = UIImage(named: "icn_scrap")
         static let scrapIcon_filled = UIImage(named: "icn_scrap_filled")
@@ -21,7 +29,7 @@ struct ImageLiterals {
         static let showdownIcon = UIImage(named: "icn_showdown")
         static let showupIcon = UIImage(named: "icn_showup")
         static let timeIcon = UIImage(named: "icn_time")
-        
+
         static let tempSalady = UIImage(named: "tempSalady")
         static let tempMuseum = UIImage(named: "tempMuseum")
     }

@@ -19,6 +19,7 @@ enum Storyboards: String {
     case mainMap = "MainMap"
     case mainDetail = "MainDetail"
     case search = "Search"
+    case menuTab = "MenuTab"
 }
 
 extension UIStoryboard {
