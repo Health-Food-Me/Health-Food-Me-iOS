@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "authTitle.png",
+      "filename" : "btn_edit.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "authTitle@2x.png",
+      "filename" : "btn_edit@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "authTitle@3x.png",
+      "filename" : "btn_edit@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

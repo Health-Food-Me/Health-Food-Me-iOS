@@ -37,4 +37,17 @@ struct I18N {
         static let copyComplete = "📑 주소가 복사되었습니다"
         static let notOpenTravelSpot = "추후 오픈될 예정입니다"
     }
+    
+    struct Map {
+        struct HamburgerBar {
+            static let logout = "로그아웃"
+            static let setting = "설정"
+            static let reposrtCorrection = "수정사항 제보하기"
+            static let reportStore = "가게 제보하기"
+            static let myReview = "내가 쓴 리뷰"
+            static let scrapList = "스크랩한 식당"
+            static let buttonTitles = ["스크랩한 식당", "내가 쓴 리뷰", "가게 제보하기",
+                                       "수정사항 제보하기"]
+        }
+    }
 }
