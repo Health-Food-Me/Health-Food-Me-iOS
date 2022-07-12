@@ -18,6 +18,7 @@ import UIKit
 enum Storyboards: String {
     case mainMap = "MainMap"
     case mainDetail = "MainDetail"
+    case search = "Search"
 }
 
 extension UIStoryboard {

@@ -25,4 +25,15 @@ struct ImageLiterals {
         static let tempSalady = UIImage(named: "tempSalady")
         static let tempMuseum = UIImage(named: "tempMuseum")
     }
+    
+    struct Search {
+        static let deleteBtn = UIImage(named: "btn_delete")
+        static let textDeleteBtn = UIImage(named: "btn_textdelete")
+        static let dietIcon = UIImage(named: "icn_diet")
+        static let normalIcon = UIImage(named: "icn_normal")
+        static let star1Icon = UIImage(named: "icn_star_01")
+        static let star2Icon = UIImage(named: "icn_star_02")
+        static let star3Icon = UIImage(named: "icn_star_03")
+        static let beforeIcon = UIImage(named: "icon_before")
+    }
 }

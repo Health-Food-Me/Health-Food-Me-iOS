@@ -14,6 +14,9 @@ protocol ModuleFactoryProtocol {
     
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
+    
+    // MARK: - Search
+    func makeSearchVC() -> SearchVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -43,6 +46,14 @@ class ModuleFactory: ModuleFactoryProtocol {
         
         return vc
     }
+    
+    // MARK: - Search
+    func makeSearchVC() -> SearchVC {
+        let vc = SearchVC.controllerFromStoryboard(.search)
+        
+        return vc
+    }
+    
     
     // MARK: - Plan
     
