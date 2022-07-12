@@ -16,8 +16,30 @@ import SnapKit
 class SocialLoginVC: UIViewController {
 
     // MARK: - Properties
-    private lazy var titleImageView = UIImageView()
-    private lazy var subtitleImageView = UIImageView()
+    
+    private var titleLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = I18N.Auth.title
+        lb.font = UIFont(name: AppFontName.GodoB, size: 58)
+        lb.textColor = .mainRed
+        
+        return lb
+    }()
+    
+    private var subTitleLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = I18N.Auth.subTitle
+        lb.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 14)
+        lb.textColor = .helfmeBlack
+        lb.numberOfLines = 2
+        lb.textAlignment = .center
+        //lb.colorChangeWithChaining(targetString: "샐러드", textColor: .mainGreen)
+//          .colorChangeWithChaining(targetString: "일반식", textColor: .mainRed)
+//        lb.partColorChange(targetString: "샐러드", textColor: .mainGreen)
+//        lb.partColorChange(targetString: "일반식", textColor: .mainRed)
+        return lb
+    }()
+    
     private lazy var kakaoLoginButton = UIButton()
     private lazy var appleLoginButton = UIButton()
     
@@ -25,7 +47,6 @@ class SocialLoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setUI()
         setLayout()
         setAddTarget()
     }
@@ -78,41 +99,31 @@ extension SocialLoginVC {
       authorizationController.presentationContextProvider = self
       authorizationController.performRequests()
     }
-    
-    private func setUI() {
-        titleImageView.image = UIImage(named: "authTitle")
-        subtitleImageView.image = UIImage(named: "authSubtitle")
-        
-        kakaoLoginButton.setTitle("카카오톡 아이디로 로그인", for: .normal)
-        kakaoLoginButton.setTitleColor(.black, for: .normal)
-        
-        appleLoginButton.setTitle("애플 아이디로 로그인", for: .normal)
-        appleLoginButton.backgroundColor = UIColor.black
-    }
 
     private func setLayout() {
-        view.addSubviews(titleImageView, subtitleImageView, kakaoLoginButton, appleLoginButton)
-        titleImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(270)
+        view.addSubviews(titleLabel, subTitleLabel)
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(163)
             make.centerX.equalToSuperview()
         }
         
-        subtitleImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleImageView.snp.bottom).offset(15)
+        subTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
         }
-        
-        kakaoLoginButton.snp.makeConstraints { make in
-            make.top.equalTo(subtitleImageView.snp.bottom).offset(100)
-            make.leading.trailing.equalToSuperview().inset(50)
-            make.centerX.equalToSuperview()
-        }
-        
-        appleLoginButton.snp.makeConstraints {make in
-            make.top.equalTo(kakaoLoginButton.snp.bottom).offset(9)
-            make.leading.trailing.equalToSuperview().inset(50)
-            make.centerX.equalToSuperview()
-        }
+//        
+//        kakaoLoginButton.snp.makeConstraints { make in
+//            make.top.equalTo(subTitleLabel.snp.bottom).offset(100)
+//            make.leading.trailing.equalToSuperview().inset(50)
+//            make.centerX.equalToSuperview()
+//        }
+//        
+//        appleLoginButton.snp.makeConstraints {make in
+//            make.top.equalTo(kakaoLoginButton.snp.bottom).offset(9)
+//            make.leading.trailing.equalToSuperview().inset(50)
+//            make.centerX.equalToSuperview()
+//        }
     }
     
     private func setAddTarget() {
