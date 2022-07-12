@@ -53,11 +53,27 @@ class MainMapVC: UIViewController {
         view.layer.applyShadow(color: .helfmeBlack, alpha: 0.2, x: 0, y: 2, blur: 4, spread: 0)
         return view
     }()
+    
+    private let searchLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = "식당, 음식 검색"
+        lb.textColor = .helfmeGray2
+        lb.font = .NotoRegular(size: 15)
+        return lb
+    }()
+    
+    private let manifyingImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .center
+        iv.image = ImageLiterals.Map.manifyingIcon
+        return iv
+    }()
   
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUI()
         setLayout()
         self.bindViewModels()
     }
@@ -77,21 +93,49 @@ extension MainMapVC {
     }
     
     private func setLayout() {
-        view.addSubviews(mapView, tempDetailButton)
+        view.addSubviews(mapView, hamburgerButton, searchBar,
+                         categoryCollectionView, mapDetailSummaryView)
         
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        tempDetailButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(100)
-            make.leading.equalToSuperview().inset(50)
+        hamburgerButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(12)
+            make.leading.equalToSuperview().inset(20)
+            make.width.equalTo(55)
+            make.height.equalTo(52)
+        }
+        
+        searchBar.snp.makeConstraints { make in
+            make.centerY.equalTo(hamburgerButton.snp.centerY)
+            make.trailing.equalToSuperview().inset(20)
+            make.leading.equalTo(hamburgerButton.snp.trailing).offset(10)
+            make.height.equalTo(52)
+        }
+        
+        searchBar.addSubviews(searchLabel, manifyingImageView)
+        
+        searchLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(20)
+            make.centerY.equalToSuperview()
+        }
+        
+        manifyingImageView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(15)
+            make.width.height.equalTo(16)
+            make.centerY.equalToSuperview()
         }
     }
   
     private func bindViewModels() {
         let input = MainMapViewModel.Input()
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+    }
+    
+    private func setTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentSearchVC))
+        searchBar.addGestureRecognizer(tapGesture)
     }
     
     private func resetUI() {
