@@ -16,6 +16,11 @@ struct AppFontName {
     static let notoBold = "NotoSansCJKkr-Bold"
     static let notoMedium = "NotoSansCJKkr-Medium"
     static let notoRegular = "NotoSansCJKkr-Regular"
+    
+    static let GodoB = "GodoB"
+    
+    static let appleSDGothicNeoBold = "AppleSDGothicNeo-Bold"
+    static let appleSDGothicNeoMedium = "AppleSDGothicNeo-Medium"
 }
 
 extension UIFontDescriptor.AttributeName {
@@ -67,6 +72,18 @@ extension UIFont {
 
     @objc class func myMediumSystemFont(ofSize size: CGFloat) -> UIFont {
         return UIFont(name: AppFontName.pretendardMedium, size: size)!
+    }
+    
+    @objc class func GodoB(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.GodoB, size: size)!
+    }
+    
+    @objc class func AppleSDGothicNeoBold(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.appleSDGothicNeoBold, size: size)!
+    }
+    
+    @objc class func AppleSDGothicNeoMedium(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.appleSDGothicNeoMedium, size: size)!
     }
 
     @objc convenience init(myCoder aDecoder: NSCoder) {
