@@ -20,6 +20,7 @@ enum Storyboards: String {
     case mainDetail = "MainDetail"
     case search = "Search"
     case menuTab = "MenuTab"
+    case reviewWrite = "ReviewWrite"
 }
 
 extension UIStoryboard {

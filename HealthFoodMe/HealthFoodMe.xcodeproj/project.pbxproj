@@ -24,6 +24,8 @@
 		690AB5492875C1B200DE72D4 /* MenuDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690AB5482875C1B200DE72D4 /* MenuDataModel.swift */; };
 		695758B7287D7B6700E36789 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758B6287D7B6700E36789 /* Config.swift */; };
 		695758B9287D7C0B00E36789 /* MenuTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758B8287D7C0B00E36789 /* MenuTab.storyboard */; };
+		695758BD287DA4CD00E36789 /* ReviewWrite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758BC287DA4CD00E36789 /* ReviewWrite.storyboard */; };
+		695758BF287DA50000E36789 /* ReviewWriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758BE287DA50000E36789 /* ReviewWriteVC.swift */; };
 		A938BB8E287D221200B8DE07 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A938BB8D287D221200B8DE07 /* Search.storyboard */; };
 		A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A938BB8F287D222800B8DE07 /* MainDetail.storyboard */; };
 		A9525F712873E1750065EB1D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9525F702873E1750065EB1D /* SearchVC.swift */; };
@@ -139,6 +141,8 @@
 		690AB5482875C1B200DE72D4 /* MenuDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDataModel.swift; sourceTree = "<group>"; };
 		695758B6287D7B6700E36789 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = ../../../../../../../../Downloads/Config.swift; sourceTree = "<group>"; };
 		695758B8287D7C0B00E36789 /* MenuTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MenuTab.storyboard; sourceTree = "<group>"; };
+		695758BC287DA4CD00E36789 /* ReviewWrite.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReviewWrite.storyboard; sourceTree = "<group>"; };
+		695758BE287DA50000E36789 /* ReviewWriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteVC.swift; sourceTree = "<group>"; };
 		A938BB8D287D221200B8DE07 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		A938BB8F287D222800B8DE07 /* MainDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainDetail.storyboard; sourceTree = "<group>"; };
 		A9525F702873E1750065EB1D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
@@ -272,6 +276,23 @@
 			children = (
 				3BCC441D28745FD800661A12 /* SocialLoginVC.swift */,
 				3BCC441F28745FE500661A12 /* SocialLogin.storyboard */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		695758BA287DA4A400E36789 /* ReviewWriteScene */ = {
+			isa = PBXGroup;
+			children = (
+				695758BB287DA4B700E36789 /* VC */,
+			);
+			path = ReviewWriteScene;
+			sourceTree = "<group>";
+		};
+		695758BB287DA4B700E36789 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				695758BC287DA4CD00E36789 /* ReviewWrite.storyboard */,
+				695758BE287DA50000E36789 /* ReviewWriteVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -428,6 +449,7 @@
 		EB6A44C828737BF700749582 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				695758BA287DA4A400E36789 /* ReviewWriteScene */,
 				697074FB28737D78001A607F /* MenuTabScene */,
 				EB6A44C928737C4600749582 /* MainDetailScene */,
 			);
@@ -1042,6 +1064,7 @@
 				695758B9287D7C0B00E36789 /* MenuTab.storyboard in Resources */,
 				3B0B25542876BBE400950539 /* NotoSansCJKkr-Regular.otf in Resources */,
 				A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */,
+				695758BD287DA4CD00E36789 /* ReviewWrite.storyboard in Resources */,
 				3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */,
 				3B0B25562876BBE400950539 /* Pretendard-Regular.otf in Resources */,
 				EBF66AD0287227F500DE0ED1 /* Assets.xcassets in Resources */,
@@ -1147,6 +1170,7 @@
 				EBF66B01287227F500DE0ED1 /* PostDetail.swift in Sources */,
 				EBF66ABC287227F500DE0ED1 /* UserDefaults+.swift in Sources */,
 				EBF66AC3287227F500DE0ED1 /* UILabel+.swift in Sources */,
+				695758BF287DA50000E36789 /* ReviewWriteVC.swift in Sources */,
 				EBF66AFE287227F500DE0ED1 /* makeVibrate.swift in Sources */,
 				EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */,
 				EB6A45172874276B00749582 /* DetailTabTitleHeader.swift in Sources */,
