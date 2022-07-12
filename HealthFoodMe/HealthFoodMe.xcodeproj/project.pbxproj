@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2EB23785D4711C41BE97BA3F /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DC488961BE98CD8C010993 /* Pods_HealthFoodMe.framework */; };
+		3B089C4A287D877B00DA80B9 /* GodoB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B089C49287D876F00DA80B9 /* GodoB.ttf */; };
+		3B089C4B287D877F00DA80B9 /* GodoB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B089C48287D876F00DA80B9 /* GodoB.otf */; };
 		3B0B25542876BBE400950539 /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B254E2876BBE300950539 /* NotoSansCJKkr-Regular.otf */; };
 		3B0B25552876BBE400950539 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B254F2876BBE300950539 /* Pretendard-Bold.otf */; };
 		3B0B25562876BBE400950539 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B25502876BBE300950539 /* Pretendard-Regular.otf */; };
@@ -124,6 +126,8 @@
 
 /* Begin PBXFileReference section */
 		14DC488961BE98CD8C010993 /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B089C48287D876F00DA80B9 /* GodoB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoB.otf; sourceTree = "<group>"; };
+		3B089C49287D876F00DA80B9 /* GodoB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoB.ttf; sourceTree = "<group>"; };
 		3B0B254D28757C7100950539 /* HealthFoodMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthFoodMe.entitlements; sourceTree = "<group>"; };
 		3B0B254E2876BBE300950539 /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
 		3B0B254F2876BBE300950539 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -753,6 +757,8 @@
 		EBF66A6A287227F500DE0ED1 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				3B089C48287D876F00DA80B9 /* GodoB.otf */,
+				3B089C49287D876F00DA80B9 /* GodoB.ttf */,
 				3B0B25522876BBE400950539 /* NotoSansCJKkr-Bold.otf */,
 				3B0B25532876BBE400950539 /* NotoSansCJKkr-Medium.otf */,
 				3B0B254E2876BBE300950539 /* NotoSansCJKkr-Regular.otf */,
@@ -1056,8 +1062,10 @@
 				A938BB8E287D221200B8DE07 /* Search.storyboard in Resources */,
 				695758B9287D7C0B00E36789 /* MenuTab.storyboard in Resources */,
 				3B0B25542876BBE400950539 /* NotoSansCJKkr-Regular.otf in Resources */,
+				3B089C4B287D877F00DA80B9 /* GodoB.otf in Resources */,
 				A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */,
 				3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */,
+				3B089C4A287D877B00DA80B9 /* GodoB.ttf in Resources */,
 				3B0B25562876BBE400950539 /* Pretendard-Regular.otf in Resources */,
 				EBF66AD0287227F500DE0ED1 /* Assets.xcassets in Resources */,
 				EBF66AD2287227F500DE0ED1 /* LaunchScreen.storyboard in Resources */,
