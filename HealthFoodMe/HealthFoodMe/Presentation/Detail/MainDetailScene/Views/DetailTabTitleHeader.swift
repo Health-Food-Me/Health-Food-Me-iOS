@@ -48,7 +48,6 @@ final class DetailTabTitleHeader: UITableViewHeaderFooterView, UITableViewHeader
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-
         setUI()
         setLayout()
         setAddTargets()

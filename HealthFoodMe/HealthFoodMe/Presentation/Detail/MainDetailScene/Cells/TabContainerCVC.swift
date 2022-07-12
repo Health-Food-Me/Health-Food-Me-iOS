@@ -28,7 +28,6 @@ final class TabContainerCVC: UICollectionViewCell, UICollectionViewRegisterable 
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setLayout()
     }
     

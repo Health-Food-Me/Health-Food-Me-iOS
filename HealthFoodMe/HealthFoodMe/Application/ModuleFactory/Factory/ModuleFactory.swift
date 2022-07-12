@@ -10,10 +10,10 @@ import Foundation
 protocol ModuleFactoryProtocol {
     
     // MARK: - Map
-    func instantiateMainMapVC() -> MainMapVC
+    func makeMainMapVC() -> MainMapVC
     
     // MARK: - Detail
-    func instantiateMainDetailVC() -> MainDetailVC
+    func makeMainDetailVC() -> MainDetailVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -23,7 +23,7 @@ class ModuleFactory: ModuleFactoryProtocol {
     }
     
     // MARK: - Map
-    func instantiateMainMapVC() -> MainMapVC {
+    func makeMainMapVC() -> MainMapVC {
         let repository = DefaultMainMapRepository()
         let useCase = DefaultMainMapUseCase(repository: repository)
         let viewModel = MainMapViewModel(useCase: useCase)
@@ -34,7 +34,7 @@ class ModuleFactory: ModuleFactoryProtocol {
     }
     
     // MARK: - Detail
-    func instantiateMainDetailVC() -> MainDetailVC {
+    func makeMainDetailVC() -> MainDetailVC {
         let repository = DefaultMainDetailRepository()
         let useCase = DefaultMainDetailUseCase(repository: repository)
         let viewModel = MainDetailViewModel(useCase: useCase)

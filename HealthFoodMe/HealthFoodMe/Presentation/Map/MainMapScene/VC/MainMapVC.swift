@@ -33,10 +33,9 @@ class MainMapVC: UIViewController {
     
     private lazy var tempDetailButton: UIButton =  {
         let bt = UIButton()
-        bt.setImage(ImageLiterals.PostDetail.homeIcon, for: .normal)
         bt.setTitle("디테일로 이동", for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            let nextVC = ModuleFactory.resolve().instantiateMainDetailVC()
+            let nextVC = ModuleFactory.resolve().makeMainDetailVC()
             nextVC.navigationController?.isNavigationBarHidden = false
             self.navigationController?.pushViewController(nextVC, animated: true)
         }), for: .touchUpInside)
@@ -54,7 +53,6 @@ class MainMapVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         resetUI()
     }
 }

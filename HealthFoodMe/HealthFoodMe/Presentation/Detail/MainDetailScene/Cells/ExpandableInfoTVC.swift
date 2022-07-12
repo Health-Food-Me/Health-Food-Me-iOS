@@ -54,7 +54,6 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setUI()
         setLayout()
     }
