@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2EB23785D4711C41BE97BA3F /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DC488961BE98CD8C010993 /* Pods_HealthFoodMe.framework */; };
+		3B089C4F287DDDAA00DA80B9 /* ReviewTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B089C4E287DDDAA00DA80B9 /* ReviewTab.storyboard */; };
+		3B089C54287DDF1A00DA80B9 /* ReviewTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B089C53287DDF1A00DA80B9 /* ReviewTabVC.swift */; };
 		3B0B25542876BBE400950539 /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B254E2876BBE300950539 /* NotoSansCJKkr-Regular.otf */; };
 		3B0B25552876BBE400950539 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B254F2876BBE300950539 /* Pretendard-Bold.otf */; };
 		3B0B25562876BBE400950539 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B25502876BBE300950539 /* Pretendard-Regular.otf */; };
@@ -125,6 +127,8 @@
 
 /* Begin PBXFileReference section */
 		14DC488961BE98CD8C010993 /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B089C4E287DDDAA00DA80B9 /* ReviewTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReviewTab.storyboard; sourceTree = "<group>"; };
+		3B089C53287DDF1A00DA80B9 /* ReviewTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTabVC.swift; sourceTree = "<group>"; };
 		3B0B254D28757C7100950539 /* HealthFoodMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthFoodMe.entitlements; sourceTree = "<group>"; };
 		3B0B254E2876BBE300950539 /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
 		3B0B254F2876BBE300950539 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -257,6 +261,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B089C4C287DDD8900DA80B9 /* ReviewTabScene */ = {
+			isa = PBXGroup;
+			children = (
+				3B089C4D287DDD9400DA80B9 /* VC */,
+				3B089C52287DDDE300DA80B9 /* ViewModel */,
+			);
+			path = ReviewTabScene;
+			sourceTree = "<group>";
+		};
+		3B089C4D287DDD9400DA80B9 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				3B089C53287DDF1A00DA80B9 /* ReviewTabVC.swift */,
+				3B089C4E287DDDAA00DA80B9 /* ReviewTab.storyboard */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		3B089C52287DDDE300DA80B9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		3B18D8AA287AB7B6009AF9E7 /* HamburgerBarScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -451,6 +480,7 @@
 		EB6A44C828737BF700749582 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				3B089C4C287DDD8900DA80B9 /* ReviewTabScene */,
 				697074FB28737D78001A607F /* MenuTabScene */,
 				EB6A44C928737C4600749582 /* MainDetailScene */,
 			);
@@ -1065,6 +1095,7 @@
 				3B0B25552876BBE400950539 /* Pretendard-Bold.otf in Resources */,
 				3B18D8AE287AB7D8009AF9E7 /* HamburgerBar.storyboard in Resources */,
 				A938BB8E287D221200B8DE07 /* Search.storyboard in Resources */,
+				3B089C4F287DDDAA00DA80B9 /* ReviewTab.storyboard in Resources */,
 				695758B9287D7C0B00E36789 /* MenuTab.storyboard in Resources */,
 				3B0B25542876BBE400950539 /* NotoSansCJKkr-Regular.otf in Resources */,
 				A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */,
@@ -1204,6 +1235,7 @@
 				EBF66AE3287227F500DE0ED1 /* NetworkResult.swift in Sources */,
 				EB6A45262875C3A000749582 /* TabContainerCVC.swift in Sources */,
 				EBF66AF5287227F500DE0ED1 /* Logger.swift in Sources */,
+				3B089C54287DDF1A00DA80B9 /* ReviewTabVC.swift in Sources */,
 				EB6A4528287664D600749582 /* ExpandableInfoTVC.swift in Sources */,
 				EBF66ACB287227F500DE0ED1 /* String+.swift in Sources */,
 				69028BA82874675800373984 /* MenuView.swift in Sources */,
