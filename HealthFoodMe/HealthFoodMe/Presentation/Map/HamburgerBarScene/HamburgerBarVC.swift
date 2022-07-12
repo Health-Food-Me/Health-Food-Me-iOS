@@ -57,7 +57,7 @@ class HamburgerBarVC: UIViewController {
     
     private var logoutButton: UIButton = {
         let button = UIButton()
-        button.setTitle(I18N.HamburgerBar.logout, for: .normal)
+        button.setTitle(I18N.Map.HamburgerBar.logout, for: .normal)
         button.setTitleColor(.helfmeGray1, for: .normal)
         button.titleLabel?.font = UIFont.PretendardRegular(size: 12)
         
@@ -66,7 +66,7 @@ class HamburgerBarVC: UIViewController {
     
     private var settingButton: UIButton = {
         let button = UIButton()
-        button.setTitle(I18N.HamburgerBar.setting, for: .normal)
+        button.setTitle(I18N.Map.HamburgerBar.setting, for: .normal)
         button.setTitleColor(.helfmeBlack, for: .normal)
         button.titleLabel?.font = UIFont.PretendardRegular(size: 16)
         
