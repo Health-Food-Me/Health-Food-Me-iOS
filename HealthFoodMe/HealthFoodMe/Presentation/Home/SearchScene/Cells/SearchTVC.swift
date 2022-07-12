@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class SearchTVC: UITableViewCell, UITableViewRegisterable {
+final class SearchTVC: UITableViewCell, UITableViewRegisterable {
     
     // MARK: - Properties
     

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol SearchRecentTVCDelegate: AnyObject {
-    func SearchRecentTVCDelete(index: Int)
+    func searchRecentTVCDelete(index: Int)
 }
 
 final class SearchRecentTVC: UITableViewCell, UITableViewRegisterable {
@@ -18,9 +18,7 @@ final class SearchRecentTVC: UITableViewCell, UITableViewRegisterable {
     // MARK: - Properties
     
     static var isFromNib: Bool = false
-    
     weak var delegate: SearchRecentTVCDelegate?
-
     var index: Int = 0
     
     private var searchLabel: UILabel = {
@@ -49,11 +47,13 @@ final class SearchRecentTVC: UITableViewCell, UITableViewRegisterable {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - @objc Methods
-    
+}
+
+// MARK: - @objc Methods
+
+extension SearchRecentTVC {
     @objc func deleteSearch() {
-        delegate?.SearchRecentTVCDelete(index: index)
+        delegate?.searchRecentTVCDelete(index: index)
     }
 }
 

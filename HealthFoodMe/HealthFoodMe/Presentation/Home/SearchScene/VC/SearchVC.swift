@@ -15,13 +15,11 @@ final class SearchVC: UIViewController {
     // MARK: - Properties
     
     let realm = try? Realm()
-    
-    var searchFlag: Bool = false {
+    var searchStarted: Bool = false {
         didSet {
             searchTableView.reloadData()
         }
     }
-    
     var searchRecentList: [String] = []
     
     private lazy var searchTextField: UITextField = {
@@ -92,9 +90,11 @@ final class SearchVC: UIViewController {
         setLayout()
         setDelegate()
     }
-    
-    // MARK: - @objc Methods
-    
+}
+
+// MARK: - @objc Methods
+
+extension SearchVC {
     @objc func didTapBackButton() {
         
     }
@@ -110,7 +110,7 @@ final class SearchVC: UIViewController {
         } else {
             searchTextField.rightViewMode = .always
             searchTableView.tableHeaderView = nil
-            searchFlag = true
+            searchStarted = true
         }
     }
 }
@@ -173,7 +173,9 @@ extension SearchVC {
         
         searchTableView.delegate = self
         searchTableView.dataSource = self
-        
+    }
+    
+    private func registerCell() {
         SearchRecentTVC.register(target: searchTableView)
         SearchTVC.register(target: searchTableView)
     }
@@ -191,7 +193,7 @@ extension SearchVC {
         searchTextField.rightViewMode = .never
         topLabel.text = "최근 검색어"
         searchTableView.tableHeaderView = topView
-        searchFlag = false
+        searchStarted = false
     }
 }
 
@@ -200,7 +202,9 @@ extension SearchVC {
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        addSearchRecent(title: textField.text ?? "")
+        if let text = textField.text {
+            addSearchRecent(title: text)
+        }
         return true
     }
 }
@@ -215,7 +219,7 @@ extension SearchVC: UITableViewDelegate {
 
 extension SearchVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchFlag {
+        if searchStarted {
             return searchRecentList.count
         } else {
             return searchRecentList.count
@@ -223,7 +227,7 @@ extension SearchVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if searchFlag {
+        if searchStarted {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTVC.className, for: indexPath) as? SearchTVC else { return UITableViewCell() }
             cell.setData(data: searchRecentList[indexPath.row])
             return cell
@@ -240,7 +244,7 @@ extension SearchVC: UITableViewDataSource {
 // MARK: - SearchTVCDelegate
 
 extension SearchVC: SearchRecentTVCDelegate {
-    func SearchRecentTVCDelete(index: Int) {
+    func searchRecentTVCDelete(index: Int) {
         let savedSearchRecent = realm?.objects(SearchRecent.self)
         try? realm?.write {
             realm?.delete(savedSearchRecent?[index] ?? SearchRecent())
