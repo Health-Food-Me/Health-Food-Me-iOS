@@ -10,8 +10,14 @@ import Foundation
 struct I18N {
     
     struct Auth {
-      static let kakaoLoginError = "카카오 로그인에 실패하였습니다."
-      static let appleLoginError = "애플 로그인에 실패하였습니다."
+        static let kakaoLoginError = "카카오 로그인에 실패하였습니다."
+        static let appleLoginError = "애플 로그인에 실패하였습니다."
+        static let title = "헬푸미"
+        static let subTitle =
+"""
+샐러드부터 일반식까지
+다이어터를 위한 식당 추천 지도앱
+"""
     }
     
     struct Detail {
