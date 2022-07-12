@@ -9,11 +9,16 @@ import UIKit
 
 import SnapKit
 
+protocol ScrollDeliveryDelegate: AnyObject {
+    func scrollStarted(velocity: CGFloat, scrollView: UIScrollView)
+}
+
 final class MenuTabVC: UIViewController {
     
     // MARK: - Properties
     
     var isMenu: Bool = true
+    weak var delegate: ScrollDeliveryDelegate?
     
     // MARK: - UI Components
     
@@ -27,6 +32,7 @@ final class MenuTabVC: UIViewController {
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.showsVerticalScrollIndicator = false
+        cv.backgroundColor = .helfmeWhite
         return cv
     }()
     
@@ -34,6 +40,7 @@ final class MenuTabVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUI()
         setLayout()
         setDelegate()
         registerCell()
@@ -47,6 +54,10 @@ extension MenuTabVC {
         menuCV.delegate = self
         menuCV.dataSource = self
         headerView.delegate = self
+    }
+    
+    private func setUI() {
+        view.backgroundColor = .helfmeWhite
     }
     
     private func setLayout() {
@@ -68,7 +79,10 @@ extension MenuTabVC {
 }
 
 extension MenuTabVC: UICollectionViewDelegate {
-    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yVelocity = scrollView.panGestureRecognizer .velocity(in: scrollView).y
+        delegate?.scrollStarted(velocity: yVelocity, scrollView: scrollView)
+    }
 }
 
 extension MenuTabVC: UICollectionViewDataSource {
@@ -96,7 +110,7 @@ extension MenuTabVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 20, bottom: 15, right: 20)
+        return UIEdgeInsets(top: 0, left: 20, bottom: 60, right: 20)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
