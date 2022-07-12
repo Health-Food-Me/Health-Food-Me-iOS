@@ -13,11 +13,28 @@ final class MapDetailSummaryView: UIView {
     
     // MARK: - UI Components
     
+    private let grabLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .helfmeGray1.withAlphaComponent(0.3)
+        view.layer.cornerRadius = 1.5
+        return view
+    }()
+    
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.image = ImageLiterals.MainDetail.tempMuseum
         return iv
+    }()
+    
+    private lazy var scrapButton: UIButton =  {
+        let bt = UIButton()
+        bt.setImage(ImageLiterals.MainDetail.scrapIcon, for: .normal)
+        bt.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
+        bt.addAction(UIAction(handler: { _ in
+            bt.isSelected.toggle()
+        }), for: .touchUpInside)
+        return bt
     }()
     
     private let titleTagStackView: UIStackView = {
@@ -103,15 +120,28 @@ extension MapDetailSummaryView {
     private func setLayout() {
         self.snp.makeConstraints { make in
             make.width.equalTo(UIScreen.main.bounds.width)
-            make.height.equalTo(140)
         }
         
-        self.addSubviews(logoImageView, titleTagStackView)
+        self.addSubviews(grabLineView, logoImageView, scrapButton,
+                         titleTagStackView)
+        
+        grabLineView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(8)
+            make.height.equalTo(3)
+            make.width.equalTo(70)
+        }
         
         logoImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
-            make.top.bottom.equalToSuperview().inset(15)
+            make.top.equalTo(grabLineView.snp.bottom).offset(28)
             make.width.height.equalTo(112)
+        }
+        
+        scrapButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(35)
+            make.trailing.equalToSuperview().inset(20)
+            make.width.height.equalTo(24)
         }
         
         titleTagStackView.addArrangedSubviews(restaurantNameLabel, starRateStackView, tagCollectionView)
@@ -169,7 +199,6 @@ extension MapDetailSummaryView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: MainMapCategory.categorySample[indexPath.row].menuName.size(withAttributes: [NSAttributedString.Key.font: UIFont.NotoRegular(size: 10)]).width + 20, height: 18)
     }
-    
     
     // TODO: - 태그 데이터 가져와서 컬렉션뷰 높이 조정해주기
     
