@@ -9,8 +9,14 @@ import Foundation
 
 protocol ModuleFactoryProtocol {
     
-    // MARK: - Auth
-    //    func instantiateLoginVC() -> PostDetailVC
+    // MARK: - Map
+    func makeMainMapVC() -> MainMapVC
+    
+    // MARK: - Detail
+    func makeMainDetailVC() -> MainDetailVC
+    
+    // MARK: - Search
+    func makeSearchVC() -> SearchVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -19,50 +25,46 @@ class ModuleFactory: ModuleFactoryProtocol {
         return ModuleFactory()
     }
     
-    // MARK: - Auth
-    //    func instantiateLoginVC() -> PostDetailVC {
-    //        return PostDetailVC.controllerFromStoryboard(.postDetail)
-    //    }
+    // MARK: - Map
+    func makeMainMapVC() -> MainMapVC {
+        let repository = DefaultMainMapRepository()
+        let useCase = DefaultMainMapUseCase(repository: repository)
+        let viewModel = MainMapViewModel(useCase: useCase)
+        let vc = MainMapVC.controllerFromStoryboard(.mainMap)
+        vc.viewModel = viewModel
+        
+        return vc
+    }
     
-    // MARK: - Base Tap
+    // MARK: - Detail
+    func makeMainDetailVC() -> MainDetailVC {
+        let repository = DefaultMainDetailRepository()
+        let useCase = DefaultMainDetailUseCase(repository: repository)
+        let viewModel = MainDetailViewModel(useCase: useCase)
+        let vc = MainDetailVC.controllerFromStoryboard(.mainDetail)
+        vc.viewModel = viewModel
+        
+        return vc
+    }
     
-    //  func instantiateBaseNC() -> BaseNC {
-    //    return BaseNC.controllerFromStoryboard(.base)
-    //  }
-    //
-    //  func instantiateBaseVC() -> BaseVC {
-    //    return BaseVC.controllerFromStoryboard(.base)
-    //  }
+    // MARK: - Search
+    func makeSearchVC() -> SearchVC {
+        let vc = SearchVC.controllerFromStoryboard(.search)
+        
+        return vc
+    }
     
-    // MARK: - Payment
-    
-    //  func instantiatePaymentSelectVC(paymentData: PaymentContentData) -> PaymentSelectVC {
-    //    let vc = PaymentSelectVC.controllerFromStoryboard(.payment)
-    //    vc.paymentData = paymentData
-    //    return vc
-    //  }
     
     // MARK: - Plan
     
-    //  func instantiatePlanPreviewVC(postID: Int) -> PlanPreviewVC {
-    //    let repository = DefaultPlanPreviewRepository(service: BaseService.default)
-    //    let useCase = DefaultPlanPreviewUseCase(repository: repository, postIdx: postID)
-    //    let viewModel = PlanPreviewViewModel(useCase: useCase)
-    //    let vc = PlanPreviewVC.controllerFromStoryboard(.planPreview)
-    //    vc.viewModel = viewModel
-    //
-    //    return vc
-    //  }
-    //
-    //  func instantiatePlanDetailVC(postID: Int,isPreviewPage: Bool = false) -> PlanDetailVC {
-    //
-    //    let repository = PlanDetailRepository(service: BaseService.default)
-    //    let viewModel = PlanDetailViewModel(postId: postID,
-    //                                        isPreviewPage: isPreviewPage,
-    //                                        repository: repository)
-    //    let vc = PlanDetailVC.controllerFromStoryboard(.planDetail)
-    //    vc.viewModel = viewModel
-    //    return vc
-    //  }
+//    func instantiatePlanPreviewVC(postID: Int) -> PlanPreviewVC {
+//        let repository = DefaultPlanPreviewRepository(service: BaseService.default)
+//        let useCase = DefaultPlanPreviewUseCase(repository: repository, postIdx: postID)
+//        let viewModel = PlanPreviewViewModel(useCase: useCase)
+//        let vc = PlanPreviewVC.controllerFromStoryboard(.planPreview)
+//        vc.viewModel = viewModel
+//
+//        return vc
+//    }
     
 }

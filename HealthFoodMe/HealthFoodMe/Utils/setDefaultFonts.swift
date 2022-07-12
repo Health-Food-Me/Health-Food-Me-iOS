@@ -20,7 +20,6 @@ struct AppFontName {
 
 extension UIFontDescriptor.AttributeName {
     static let nsctFontUIUsage = UIFontDescriptor.AttributeName(rawValue: "NSCTFontUIUsageAttribute")
-
 }
 
 extension UIFont {
@@ -43,6 +42,10 @@ extension UIFont {
     }
 
     @nonobjc class func PopExtraBold(size: CGFloat) -> UIFont {
+        return UIFont(name: AppFontName.notoMedium, size: size)!
+    }
+    
+    @nonobjc class func NotoMedium(size: CGFloat) -> UIFont {
         return UIFont(name: AppFontName.notoMedium, size: size)!
     }
 
