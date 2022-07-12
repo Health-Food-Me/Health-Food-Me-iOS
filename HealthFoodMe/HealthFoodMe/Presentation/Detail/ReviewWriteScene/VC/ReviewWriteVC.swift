@@ -189,7 +189,9 @@ extension ReviewWriteVC {
         
         scrollView.addSubview(contentView)
         contentView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.height.greaterThanOrEqualTo(view.snp.height).priority(.low)
+            make.width.equalTo(scrollView.snp.width)
         }
         
         contentView.addSubviews(restaurantTitleLabel, lineView, questionTasteLabel, tagTasteStackView, questionHelpfulLabel, tagHelpfulStackView, reviewStackView, reviewTextVeiw)
@@ -233,8 +235,10 @@ extension ReviewWriteVC {
         reviewTextVeiw.snp.makeConstraints { make in
             make.top.equalTo(reviewStackView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(800)
+            make.height.equalTo(277)
         }
+        
+        
     }
 }
 
@@ -271,4 +275,3 @@ extension ReviewWriteVC: UITextViewDelegate {
         }
     }
 }
-
