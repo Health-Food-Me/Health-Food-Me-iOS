@@ -94,12 +94,18 @@ class HamburgerBarVC: UIViewController {
         setUI()
         setLayout()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first,
+           touch != hamburgerBarView {
+            dismissHamburgerBarWithAnimation()
+
+        }
+    }
 }
 
 extension HamburgerBarVC {
     private func setUI() {
-//        let blackColorWithAlpha: UIColor = .blue.withAlphaComponent(0.6)
-//        view.backgroundColor = blackColorWithAlpha
         
         setButtons()
         setDivindingView()
@@ -149,8 +155,7 @@ extension HamburgerBarVC {
             make.width.equalToSuperview().multipliedBy(0.71)
             make.height.equalToSuperview()
             make.top.equalTo(0)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(-440)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.leading)
+            make.leading.equalToSuperview().inset(-440)
         }
         
         helloLabel.snp.makeConstraints { make in
@@ -209,9 +214,27 @@ extension HamburgerBarVC {
         UIView.animate(withDuration: 0.4) {
             self.view.backgroundColor = .helfmeBlack.withAlphaComponent(0.4)
 
-            self.hamburgerBarView.snp.makeConstraints { make in
+            self.hamburgerBarView.snp.updateConstraints { make in
                 make.leading.equalTo(0)
+                make.width.equalToSuperview().multipliedBy(0.71)
+                make.height.equalToSuperview()
+                make.top.equalTo(0)
             }
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func dismissHamburgerBarWithAnimation() {
+        UIView.animate(withDuration: 0.4) {
+            self.view.backgroundColor = .helfmeWhite
+            
+            self.hamburgerBarView.snp.updateConstraints { make in
+                make.width.equalToSuperview().multipliedBy(0.71)
+                make.height.equalToSuperview()
+                make.top.equalTo(0)
+                make.leading.equalToSuperview().inset(-440)
+            }
+            
             self.view.layoutIfNeeded()
         }
     }
