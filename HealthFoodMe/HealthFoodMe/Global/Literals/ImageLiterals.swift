@@ -35,5 +35,7 @@ struct ImageLiterals {
         static let star2Icon = UIImage(named: "icn_star_02")
         static let star3Icon = UIImage(named: "icn_star_03")
         static let beforeIcon = UIImage(named: "icon_before")
+        static let xIcon = UIImage(named: "icn_x")
+        static let viewMapBtn = UIImage(named: "btn_viewmap")
     }
 }
