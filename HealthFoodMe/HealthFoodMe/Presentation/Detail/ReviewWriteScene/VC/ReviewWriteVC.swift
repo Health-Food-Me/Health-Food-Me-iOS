@@ -51,6 +51,23 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         return lb
     }()
     
+    private let questionTasteSubLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = "필수 한 개 선택해주세요! "
+        lb.textColor = .helfmeGray2
+        lb.font = .NotoRegular(size: 12)
+        return lb
+    }()
+    
+    private lazy var questionTasteStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.alignment = .leading
+        sv.spacing = 4
+        sv.addArrangedSubviews(questionTasteLabel, questionTasteSubLabel)
+        return sv
+    }()
+    
     private lazy var tagGood: UIButton = {
         let btn = UIButton()
         btn.setTitle("맛최고", for: .normal)
@@ -84,12 +101,29 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         return sv
     }()
 
-    private let questionHelpfulLabel: UILabel = {
+    private let questionFeelingLabel: UILabel = {
         let lb = UILabel()
         lb.text = "어떤 점이 좋았나요?"
         lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 14)
         return lb
+    }()
+    
+    private let questionFeelingSubLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = "식당을 방문하신 후 좋았던 부분에 체크해주세요! (중복가능)"
+        lb.textColor = .helfmeGray2
+        lb.font = .NotoRegular(size: 12)
+        return lb
+    }()
+    
+    private lazy var questionFeelingStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.alignment = .leading
+        sv.spacing = 4
+        sv.addArrangedSubviews(questionFeelingLabel, questionFeelingSubLabel)
+        return sv
     }()
     
     private lazy var tagDiet: UIButton = {
@@ -137,7 +171,7 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         let lb = UILabel()
         lb.text = "식당 이용 후기, 메뉴추천, 꿀팁 등 자유롭게 작성해주세요!"
         lb.textColor = .helfmeGray2
-        lb.font = .NotoRegular(size: 10)
+        lb.font = .NotoRegular(size: 12)
         return lb
     }()
     
@@ -145,7 +179,7 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         let sv = UIStackView()
         sv.axis = .vertical
         sv.alignment = .leading
-        sv.spacing = 6
+        sv.spacing = 4
         sv.addArrangedSubviews(reviewLabel, reviewSubLabel)
         return sv
     }()
@@ -157,6 +191,42 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         tv.backgroundColor = .helfmeBgGray
         tv.layer.cornerRadius = 8
         return tv
+    }()
+    
+    private let pictureLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = "사진을 올려주세요"
+        lb.textColor = .helfmeBlack
+        lb.font = .NotoBold(size: 14)
+        return lb
+    }()
+    
+    private let pictureOptionLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = "(선택)"
+        lb.textColor = .helfmeGray2
+        lb.font = .NotoRegular(size: 10)
+        return lb
+    }()
+    
+    private lazy var pictureStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .horizontal
+        sv.alignment = .center
+        sv.spacing = 6
+        sv.addArrangedSubviews(pictureLabel, pictureOptionLabel)
+        return sv
+    }()
+    
+    private lazy var photoCV: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = .zero
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.showsVerticalScrollIndicator = false
+        return cv
     }()
     
     // MARK: - View Life Cycle
@@ -194,7 +264,7 @@ extension ReviewWriteVC {
             make.width.equalTo(scrollView.snp.width)
         }
         
-        contentView.addSubviews(restaurantTitleLabel, lineView, questionTasteLabel, tagTasteStackView, questionHelpfulLabel, tagHelpfulStackView, reviewStackView, reviewTextVeiw)
+        contentView.addSubviews(restaurantTitleLabel, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewTextVeiw, pictureStackView)
         
         restaurantTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
@@ -207,23 +277,23 @@ extension ReviewWriteVC {
             make.height.equalTo(1)
         }
         
-        questionTasteLabel.snp.makeConstraints { make in
+        questionTasteStackView.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom).offset(24)
             make.leading.equalToSuperview().inset(20)
         }
         
         tagTasteStackView.snp.makeConstraints { make in
-            make.top.equalTo(questionTasteLabel.snp.bottom).offset(10)
+            make.top.equalTo(questionTasteStackView.snp.bottom).offset(10)
             make.leading.equalToSuperview().inset(20)
         }
         
-        questionHelpfulLabel.snp.makeConstraints { make in
-            make.top.equalTo(tagTasteStackView.snp.bottom).offset(24)
+        questionFeelingStackView.snp.makeConstraints { make in
+            make.top.equalTo(tagTasteStackView.snp.bottom).offset(28)
             make.leading.equalToSuperview().inset(20)
         }
         
         tagHelpfulStackView.snp.makeConstraints { make in
-            make.top.equalTo(questionHelpfulLabel.snp.bottom).offset(10)
+            make.top.equalTo(questionFeelingStackView.snp.bottom).offset(10)
             make.leading.equalToSuperview().inset(20)
         }
         
@@ -238,7 +308,10 @@ extension ReviewWriteVC {
             make.height.equalTo(277)
         }
         
-        
+        pictureStackView.snp.makeConstraints { make in
+            make.top.equalTo(reviewTextVeiw.snp.bottom).offset(24)
+            make.leading.equalToSuperview().inset(20)
+        }
     }
 }
 
@@ -247,6 +320,60 @@ extension ReviewWriteVC {
 extension ReviewWriteVC {
     
 }
+//extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource{
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return photoModel.userSelectedImages.count + 1
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let addPhotoIdentifier = AddPhotoCVC.identifier
+//        let listPhotoIdentifer = ListPhotoCVC.identifier
+//
+//        switch indexPath.item {
+//        case Cell.addCell.rawValue:
+//            guard let addPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: addPhotoIdentifier, for: indexPath) as? AddPhotoCVC else { fatalError("Failed to dequeue cell for AddPhotoCVC") }
+//            addPhotoCell.delegate = self
+//            addPhotoCell.countLabel.textColor =  photoModel.userSelectedImages.count == 0 ? UIColor(named: "carrot_linegray") : UIColor(named: "carrot_text_orange")
+//            addPhotoCell.countLabel.text = "\(photoModel.userSelectedImages.count)"
+//            return addPhotoCell
+//        default:
+//            guard let listPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: listPhotoIdentifer, for: indexPath) as? ListPhotoCVC else { fatalError("Failed to dequeue cell for ListPhotoCVC") }
+//            listPhotoCell.delegate = self
+//            listPhotoCell.indexPath = indexPath.item
+//
+//            if photoModel.userSelectedImages.count > 0 {
+//                listPhotoCell.photoImageView.image = photoModel.userSelectedImages[indexPath.item - 1]
+//            }
+//            return listPhotoCell
+//        }
+//    }
+//}
+//
+//extension ReviewWriteVC: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(width: 80, height: 80)
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 5
+//    }
+//}
+//
+//extension ReviewWriteVC: AddImageDelegate {
+//    func didPickImagesToUpload(images: [UIImage]) {
+//        photoModel.userSelectedImages = images
+//    }
+//}
+//
+//extension ReviewWriteVC: ListPhotoCVCDelegate {
+//    func didPressDeleteBtn(at index: Int) {
+//        photoModel.userSelectedImages.remove(at: index - 1)
+//    }
+//}
 
 extension ReviewWriteVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
