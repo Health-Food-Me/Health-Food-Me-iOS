@@ -20,6 +20,7 @@
 		3B0B25592876BBE400950539 /* NotoSansCJKkr-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B25532876BBE400950539 /* NotoSansCJKkr-Medium.otf */; };
 		3B18D8AC287AB7CD009AF9E7 /* HamburgerBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B18D8AB287AB7CD009AF9E7 /* HamburgerBarVC.swift */; };
 		3B18D8AE287AB7D8009AF9E7 /* HamburgerBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B18D8AD287AB7D8009AF9E7 /* HamburgerBar.storyboard */; };
+		3BC01F7B287E89D2006C2181 /* ReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */; };
 		3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC441D28745FD800661A12 /* SocialLoginVC.swift */; };
 		3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC441F28745FE500661A12 /* SocialLogin.storyboard */; };
 		69028BA62874673600373984 /* MenuCellCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BA52874673600373984 /* MenuCellCVC.swift */; };
@@ -129,10 +130,10 @@
 
 /* Begin PBXFileReference section */
 		14DC488961BE98CD8C010993 /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B089C4E287DDDAA00DA80B9 /* ReviewTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReviewTab.storyboard; sourceTree = "<group>"; };
-		3B089C53287DDF1A00DA80B9 /* ReviewTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTabVC.swift; sourceTree = "<group>"; };
 		3B089C48287D876F00DA80B9 /* GodoB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoB.otf; sourceTree = "<group>"; };
 		3B089C49287D876F00DA80B9 /* GodoB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoB.ttf; sourceTree = "<group>"; };
+		3B089C4E287DDDAA00DA80B9 /* ReviewTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReviewTab.storyboard; sourceTree = "<group>"; };
+		3B089C53287DDF1A00DA80B9 /* ReviewTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTabVC.swift; sourceTree = "<group>"; };
 		3B0B254D28757C7100950539 /* HealthFoodMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthFoodMe.entitlements; sourceTree = "<group>"; };
 		3B0B254E2876BBE300950539 /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
 		3B0B254F2876BBE300950539 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -142,6 +143,7 @@
 		3B0B25532876BBE400950539 /* NotoSansCJKkr-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Medium.otf"; sourceTree = "<group>"; };
 		3B18D8AB287AB7CD009AF9E7 /* HamburgerBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerBarVC.swift; sourceTree = "<group>"; };
 		3B18D8AD287AB7D8009AF9E7 /* HamburgerBar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HamburgerBar.storyboard; sourceTree = "<group>"; };
+		3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCVC.swift; sourceTree = "<group>"; };
 		3BCC441D28745FD800661A12 /* SocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginVC.swift; sourceTree = "<group>"; };
 		3BCC441F28745FE500661A12 /* SocialLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SocialLogin.storyboard; sourceTree = "<group>"; };
 		69028BA52874673600373984 /* MenuCellCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellCVC.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 			children = (
 				3B089C4D287DDD9400DA80B9 /* VC */,
 				3B089C52287DDDE300DA80B9 /* ViewModel */,
+				3BC01F79287E8917006C2181 /* Cells */,
 			);
 			path = ReviewTabScene;
 			sourceTree = "<group>";
@@ -297,6 +300,14 @@
 				3B18D8AD287AB7D8009AF9E7 /* HamburgerBar.storyboard */,
 			);
 			path = HamburgerBarScene;
+			sourceTree = "<group>";
+		};
+		3BC01F79287E8917006C2181 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		3BCC441A28745FA900661A12 /* Auth */ = {
@@ -1238,6 +1249,7 @@
 				EBF66ADA287227F500DE0ED1 /* controllerFromStoryBoard.swift in Sources */,
 				3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */,
 				EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */,
+				3BC01F7B287E89D2006C2181 /* ReviewCVC.swift in Sources */,
 				EBF66AE1287227F500DE0ED1 /* BaseService.swift in Sources */,
 				EBF66AE2287227F500DE0ED1 /* BaseRouter.swift in Sources */,
 				EBF66AE3287227F500DE0ED1 /* NetworkResult.swift in Sources */,
