@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleIdentifier</key>
+	<string></string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>UIAppFonts</key>
@@ -28,8 +30,10 @@
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>kakaomap</string>
 		<string>kakaokompassauth</string>
 		<string>kakaolink</string>
+		<string>nmap</string>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
