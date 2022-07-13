@@ -79,10 +79,6 @@ extension DetailTabTVC {
     
     // MARK: - Initializer
     
-    func initCell() {
-        
-    }
-    
     func scrollToSelectedIndex(index: Int) {
         containerCollectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
     }
@@ -124,10 +120,10 @@ extension DetailTabTVC: UICollectionViewDataSource {
            childControllers.count > 0 {
             cell.addSubview(childControllers[indexPath.item].view)
             childControllers[indexPath.item].view.frame = cell.bounds
-        } else if (indexPath.item == 1 && childControllers.count > 1) {
+        } else if indexPath.item == 1 && childControllers.count > 1 {
             cell.addSubview(childControllers[indexPath.item].view)
             childControllers[indexPath.item].view.frame = cell.bounds
-        } else if (indexPath.item == 2 && childControllers.count > 2) {
+        } else if indexPath.item == 2 && childControllers.count > 2 {
             cell.addSubview(childControllers[indexPath.item].view)
             childControllers[indexPath.item].view.frame = cell.bounds
         }

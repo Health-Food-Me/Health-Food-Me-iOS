@@ -11,16 +11,18 @@ protocol ModuleFactoryProtocol {
     
     // MARK: - Map
     func makeMainMapVC() -> MainMapVC
+    func makeHamburgerBarVC() -> HamburgerBarVC
     
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
+    func makeMenuTabVC() -> MenuTabVC
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
-    
+
     static func resolve() -> ModuleFactory {
         return ModuleFactory()
     }
@@ -36,6 +38,12 @@ class ModuleFactory: ModuleFactoryProtocol {
         return vc
     }
     
+    func makeHamburgerBarVC() -> HamburgerBarVC {
+        let vc = HamburgerBarVC.controllerFromStoryboard(.hamburgerBar)
+        
+        return vc
+    }
+    
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC {
         let repository = DefaultMainDetailRepository()
@@ -47,13 +55,18 @@ class ModuleFactory: ModuleFactoryProtocol {
         return vc
     }
     
+    func makeMenuTabVC() -> MenuTabVC {
+        let vc = MenuTabVC.controllerFromStoryboard(.menuTab)
+        
+        return vc
+    }
+    
     // MARK: - Search
     func makeSearchVC() -> SearchVC {
         let vc = SearchVC.controllerFromStoryboard(.search)
         
         return vc
     }
-    
     
     // MARK: - Plan
     
