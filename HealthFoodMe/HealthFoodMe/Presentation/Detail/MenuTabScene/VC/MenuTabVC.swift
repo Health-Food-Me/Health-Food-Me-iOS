@@ -79,9 +79,12 @@ extension MenuTabVC {
 }
 
 extension MenuTabVC: UICollectionViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         let yVelocity = scrollView.panGestureRecognizer .velocity(in: scrollView).y
         delegate?.scrollStarted(velocity: yVelocity, scrollView: scrollView)
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
     }
 }
 

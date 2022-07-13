@@ -94,6 +94,7 @@ class MainMapVC: UIViewController {
         setTapGesture()
         setDelegate()
         registerCell()
+        setPanGesture()
         self.bindViewModels()
     }
     
@@ -154,8 +155,8 @@ extension MainMapVC {
         
         mapDetailSummaryView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().inset(600)
-            make.height.equalTo(UIScreen.main.bounds.height)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height - 189)
+            make.height.equalTo(UIScreen.main.bounds.height + 300)
         }
     }
     
@@ -174,6 +175,44 @@ extension MainMapVC {
     
     private func registerCell() {
         MenuCategoryCVC.register(target: categoryCollectionView)
+    }
+    
+    private func setPanGesture() {
+        let panGesture = UIPanGestureRecognizer()
+        mapDetailSummaryView.addGestureRecognizer(panGesture)
+        panGesture.rx.event.asDriver { _ in .never() }
+            .drive(onNext: { [weak self] sender in
+                let summaryViewTranslation = sender.translation(in: self?.mapDetailSummaryView)
+                print(self?.mapDetailSummaryView.frame.origin.y ?? 0)
+                switch sender.state {
+                case .changed:
+                    UIView.animate(withDuration: 0.1) {
+                        self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: summaryViewTranslation.y)
+                    }
+                case .ended:
+                    if summaryViewTranslation.y < -90
+                        || (self?.mapDetailSummaryView.frame.origin.y ?? 40 < 30) {
+                        self?.mapDetailSummaryView.snp.updateConstraints { make in
+                            make.top.equalToSuperview().inset(44)
+                        }
+                        UIView.animate(withDuration: 0.4) {
+                            self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+                            self?.view.layoutIfNeeded()
+                        }
+                    } else {
+                        let summaryViewHeight: CGFloat = 189
+                        self?.mapDetailSummaryView.snp.updateConstraints { make in
+                            make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
+                        }
+                        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+                            self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+                            self?.view.layoutIfNeeded()
+                        }
+                    }
+                default:
+                    break
+                }
+            }).disposed(by: disposeBag)
     }
     
     private func bindViewModels() {
@@ -201,7 +240,7 @@ extension MainMapVC {
 // MARK: - CollectionView Delegate
 
 extension MainMapVC: UICollectionViewDelegate {
-
+    
 }
 
 extension MainMapVC: UICollectionViewDelegateFlowLayout {
