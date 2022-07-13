@@ -45,6 +45,10 @@ struct I18N {
     }
     
     struct Map {
+        struct Main {
+            static let searchBar = "식당, 음식 검색"
+        }
+        
         struct HamburgerBar {
             static let logout = "로그아웃"
             static let setting = "설정"
@@ -55,5 +59,10 @@ struct I18N {
             static let buttonTitles = ["스크랩한 식당", "내가 쓴 리뷰", "가게 제보하기",
                                        "수정사항 제보하기"]
         }
+    }
+    
+    struct Search {
+        static let searchEmpty = "해당되는 검색 결과가 없습니다"
+        static let searchAnother = "다른 식당 또는 음식명을 입력해주세요!"
     }
 }
