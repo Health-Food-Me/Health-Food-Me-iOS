@@ -97,7 +97,7 @@ final class SearchVC: UIViewController {
 
 extension SearchVC {
     @objc func didTapBackButton() {
-        
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func didTapClearButton() {

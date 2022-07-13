@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Bold.otf</string>
@@ -10,6 +12,8 @@
 		<string>NotoSansCJKkr-Bold.otf</string>
 		<string>NotoSansCJKkr-Medium.otf</string>
 		<string>NotoSansCJKkr-Regular.otf</string>
+		<string>GodoB.otf</string>
+		<string>GodoB.ttf</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>

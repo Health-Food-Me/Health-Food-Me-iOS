@@ -19,7 +19,7 @@ class MainDetailVC: UIViewController {
     var viewModel: MainDetailViewModel!
     private var detailTabTVC = DetailTabTVC()
     private var detailTabTitleHeader = DetailTabTitleHeader()
-    private var childVC = ModuleFactory.resolve().makeMainMapVC()
+    private var childVC = ModuleFactory.resolve().makeMenuTabVC()
     
     // MARK: - UI Components
     
@@ -171,6 +171,11 @@ extension MainDetailVC: UITableViewDataSource {
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTabTVC.className, for: indexPath) as? DetailTabTVC else { return UITableViewCell() }
             detailTabTVC = cell
+            
+            if childVC is MenuTabVC {
+                childVC.delegate = self
+            }
+            
             self.addChild(childVC)
             cell.receiveChildVC(childVC: childVC)
             cell.scrollRatio.asDriver(onErrorJustReturn: 0)
@@ -182,6 +187,20 @@ extension MainDetailVC: UITableViewDataSource {
                     self.detailTabTitleHeader.setSelectedButton(buttonIndex: pageIndex)
                 }.disposed(by: cell.disposeBag)
             return cell
+        }
+    }
+}
+
+extension MainDetailVC: ScrollDeliveryDelegate {
+    
+    // TODO: - 이 부분 touchesBegan으로 해보자
+    
+    func scrollStarted(velocity: CGFloat, scrollView: UIScrollView) {
+        if velocity < 0 {
+            self.mainTableView.setContentOffset(CGPoint(x: 0, y: 240), animated: true)
+            if mainTableView.contentOffset.y < 230 {
+                scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            }
         }
     }
 }
