@@ -199,7 +199,7 @@ extension SearchResultVC: UITableViewDataSource {
 
 extension SearchResultVC: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y == 0 && isBottom) {
+        if scrollView.contentOffset.y == 0 && isBottom {
             self.searchResultTableView.isScrollEnabled = false
             UIView.animate(withDuration: 0.2, animations: {
                 self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 0)
