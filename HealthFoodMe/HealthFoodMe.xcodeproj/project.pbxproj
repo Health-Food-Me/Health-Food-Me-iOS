@@ -19,6 +19,7 @@
 		3B18D8AE287AB7D8009AF9E7 /* HamburgerBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B18D8AD287AB7D8009AF9E7 /* HamburgerBar.storyboard */; };
 		3BC01F7F287E9225006C2181 /* BlogReviewTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F7E287E9225006C2181 /* BlogReviewTabVC.swift */; };
 		3BC01F81287E923E006C2181 /* BlogReviewTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BC01F80287E923E006C2181 /* BlogReviewTab.storyboard */; };
+		3BC01F84287EAE48006C2181 /* BlogReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */; };
 		3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC441D28745FD800661A12 /* SocialLoginVC.swift */; };
 		3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC441F28745FE500661A12 /* SocialLogin.storyboard */; };
 		5886D49E10282855ADBDE143 /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 142C37AC02B7DBB941359F4B /* Pods_HealthFoodMe.framework */; };
@@ -151,6 +152,7 @@
 		3B18D8AD287AB7D8009AF9E7 /* HamburgerBar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HamburgerBar.storyboard; sourceTree = "<group>"; };
 		3BC01F7E287E9225006C2181 /* BlogReviewTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewTabVC.swift; sourceTree = "<group>"; };
 		3BC01F80287E923E006C2181 /* BlogReviewTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BlogReviewTab.storyboard; sourceTree = "<group>"; };
+		3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewCVC.swift; sourceTree = "<group>"; };
 		3BCC441D28745FD800661A12 /* SocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginVC.swift; sourceTree = "<group>"; };
 		3BCC441F28745FE500661A12 /* SocialLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SocialLogin.storyboard; sourceTree = "<group>"; };
 		489A65A68E12AA2585E17522 /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -266,7 +268,6 @@
 		FD582918287DC39A00CE62E8 /* mapContainerView + Reactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "mapContainerView + Reactive.swift"; sourceTree = "<group>"; };
 		FD582919287DC39A00CE62E8 /* mapContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerView.swift; sourceTree = "<group>"; };
 		FD89904E287DC4F400144E07 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		FB08F925E37E9FAB6970F6A9 /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
 		FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegementControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -312,6 +313,7 @@
 		3BC01F82287E9245006C2181 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1272,7 +1274,6 @@
 				EBF66AF1287227F500DE0ED1 /* ShowToast.swift in Sources */,
 				EBF66AC4287227F500DE0ED1 /* UIButton+.swift in Sources */,
 				FD58291B287DC39A00CE62E8 /* mapContainerView + Reactive.swift in Sources */,
-				695758B7287D7B6700E36789 /* Config.swift in Sources */,
 				FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */,
 				EBF66AF0287227F500DE0ED1 /* BaseVC.swift in Sources */,
 				EBF66B082872AF5B00DE0ED1 /* SampleEntity.swift in Sources */,
@@ -1284,6 +1285,7 @@
 				69028BB02874A60E00373984 /* HeaderView.swift in Sources */,
 				EBF66ADA287227F500DE0ED1 /* controllerFromStoryBoard.swift in Sources */,
 				3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */,
+				3BC01F84287EAE48006C2181 /* BlogReviewCVC.swift in Sources */,
 				EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */,
 				EBF66AE1287227F500DE0ED1 /* BaseService.swift in Sources */,
 				EBF66AE2287227F500DE0ED1 /* BaseRouter.swift in Sources */,

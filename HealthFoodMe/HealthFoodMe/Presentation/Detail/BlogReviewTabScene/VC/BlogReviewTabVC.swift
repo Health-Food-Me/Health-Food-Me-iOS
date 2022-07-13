@@ -15,14 +15,6 @@ class BlogReviewTabVC: UIViewController {
         
         return view
     }()
-    
-    private var testLabel: UILabel = {
-        let lb = UILabel()
-        lb.text = "이게마자?"
-        lb.textColor = .helfmeBlack
-        
-        return lb
-    }()
 
     private lazy var blogReviewCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -51,7 +43,7 @@ extension BlogReviewTabVC {
     }
     
     private func setLayout() {
-        view.addSubviews(reviewHeaderView, blogReviewCV, testLabel)
+        view.addSubviews(reviewHeaderView, blogReviewCV)
         
         reviewHeaderView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(18)
