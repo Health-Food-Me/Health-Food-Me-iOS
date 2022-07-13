@@ -56,11 +56,14 @@ final class SearchResultVC: UIViewController {
     
     private lazy var searchResultHeaderButton: UIButton = {
         let btn = UIButton()
+        btn.setImage(ImageLiterals.Search.viewMapBtn, for: .normal)
         btn.setTitle("지도 뷰로 보기", for: .normal)
         btn.setTitleColor(UIColor.helfmeGray1, for: .normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.isHidden = true
         btn.addTarget(self, action: #selector(moveSearchResultView), for: .touchUpInside)
+        btn.semanticContentAttribute = .forceLeftToRight
+        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 10)
         return btn
     }()
     
@@ -72,7 +75,7 @@ final class SearchResultVC: UIViewController {
         tv.backgroundColor = .helfmeWhite
         tv.keyboardDismissMode = .onDrag
         tv.tableHeaderView = searchResultHeaderView
-        tv.tableHeaderView?.frame.size.height = 56
+        tv.tableHeaderView?.frame.size.height = 48
         return tv
     }()
     
@@ -147,6 +150,8 @@ extension SearchResultVC {
         searchResultHeaderButton.snp.makeConstraints {
             $0.trailing.equalTo(searchResultHeaderView.snp.trailing).inset(20)
             $0.centerY.equalTo(searchResultHeaderView)
+            $0.width.equalTo(105)
+            $0.height.equalTo(20)
         }
         
         searchResultTableView.snp.makeConstraints {

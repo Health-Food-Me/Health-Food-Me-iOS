@@ -83,11 +83,14 @@ final class SearchVC: UIViewController {
     
     private lazy var resultHeaderButton: UIButton = {
         let btn = UIButton()
+        btn.setImage(ImageLiterals.Search.viewMapBtn, for: .normal)
         btn.setTitle("지도 뷰로 보기", for: .normal)
         btn.setTitleColor(UIColor.helfmeGray1, for: .normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.isHidden = true
         btn.addTarget(self, action: #selector(pushToSearchResultVC), for: .touchUpInside)
+        btn.semanticContentAttribute = .forceLeftToRight
+        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 10)
         return btn
     }()
     
@@ -218,6 +221,8 @@ extension SearchVC {
         resultHeaderButton.snp.makeConstraints {
             $0.trailing.equalTo(searchHeaderView.snp.trailing).inset(20)
             $0.centerY.equalTo(searchHeaderView)
+            $0.width.equalTo(105)
+            $0.height.equalTo(20)
         }
         
         searchView.snp.makeConstraints {
