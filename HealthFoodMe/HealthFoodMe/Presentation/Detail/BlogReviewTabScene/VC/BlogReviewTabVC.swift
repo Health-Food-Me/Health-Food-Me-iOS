@@ -54,15 +54,11 @@ extension BlogReviewTabVC {
         view.addSubviews(reviewHeaderView, blogReviewCV, testLabel)
         
         reviewHeaderView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(18)
             make.centerX.equalToSuperview()
             make.width.equalTo(226)
             make.height.equalTo(40)
         }
-        
-//        testLabel.snp.makeConstraints { make in
-//            make.centerX.centerY.equalToSuperview()
-//        }
         
         blogReviewCV.snp.makeConstraints { make in
             make.top.equalTo(reviewHeaderView.snp.bottom)
