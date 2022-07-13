@@ -45,8 +45,12 @@ struct ImageLiterals {
         static let beforeIcon = UIImage(named: "icon_before")
         static let xIcon = UIImage(named: "icn_x")
         static let viewMapBtn = UIImage(named: "btn_viewmap")
-        
         static let imageSearch = UIImage(named: "img_search")
+    }
+    
+    struct Scrap {
+        static let beforeIcon = UIImage(named: "icon_before")
+        static let bookmarkIcon = UIImage(named: "icon_bookmark")
     }
     
     struct HamburgerBar {
