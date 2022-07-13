@@ -14,7 +14,10 @@ final class CustomSegmentControl: UIView {
     internal var areaClickEvent: ((Int) -> Void)?
     internal var containerColor: UIColor = .init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
     internal var selectColor: UIColor = .white
-    internal var titleList: [String] = ["첫번째","두번째"]
+    internal var titleList: [String] = [] { didSet {
+//        setStackView()
+//        setUI()
+    }}
     internal var width: CGFloat = 226
     private lazy var selectedView = UIView()
     private lazy var containerStackView = UIStackView()
@@ -30,6 +33,13 @@ final class CustomSegmentControl: UIView {
         setUI()
         setStackView()
     }
+    
+    convenience init(titleList: [String]) {
+        self.init()
+        self.titleList = titleList
+        setUI()
+        setStackView()
+    }
 }
 
 extension CustomSegmentControl {
@@ -41,7 +51,7 @@ extension CustomSegmentControl {
             let buttonContainerView = UIView()
             let button = UIButton()
             let titleLabel = UILabel()
-            
+
             titleLabel.textAlignment = .center
             titleLabel.text = titleList[index]
             titleLabel.textColor = UIColor.init(red: 34/255,
@@ -51,16 +61,16 @@ extension CustomSegmentControl {
             titleLabel.font = UIFont.systemFont(ofSize: 12)
             buttonContainerView.addSubview(button)
             buttonContainerView.addSubview(titleLabel)
-            
+
             button.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
-            
+
             titleLabel.snp.makeConstraints { make in
                 make.centerX.centerY.equalToSuperview()
                 make.leading.trailing.equalToSuperview()
             }
-            
+
             button.backgroundColor = .clear
             button.tag = index
             button.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
@@ -69,6 +79,7 @@ extension CustomSegmentControl {
     }
     
     private func setUI() {
+        guard titleList.count > 0 else { return }
         backgroundColor = containerColor
         layer.cornerRadius = 16
         selectedView.backgroundColor = selectColor
