@@ -68,10 +68,10 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
     
     private lazy var storeStackView: UIStackView = {
         let sv = UIStackView()
-        sv.addArrangedSubviews(foodLabel)
-        sv.addArrangedSubviews(storeNameLabel)
-        sv.addArrangedSubviews(starView)
-        sv.addArrangedSubviews(distanceLabel)
+        sv.addArrangedSubviews(foodLabel,
+                               storeNameLabel,
+                               starView,
+                               distanceLabel)
         sv.alignment = .leading
         sv.axis = .vertical
         sv.spacing = 2
@@ -82,7 +82,6 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setUI()
         setLayout()
     }
@@ -101,6 +100,7 @@ extension SearchResultTVC {
     
     private func setUI() {
         backgroundColor = .helfmeWhite
+        selectionStyle = .none
     }
     
     private func setLayout() {

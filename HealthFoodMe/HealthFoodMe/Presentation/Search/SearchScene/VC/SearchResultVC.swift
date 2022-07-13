@@ -122,7 +122,10 @@ extension SearchResultVC {
     }
     
     private func setLayout() {
-        view.addSubviews(searchTextField, lineView, mapView, searchResultTableView)
+        view.addSubviews(searchTextField,
+                         lineView,
+                         mapView,
+                         searchResultTableView)
         
         searchTextField.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)

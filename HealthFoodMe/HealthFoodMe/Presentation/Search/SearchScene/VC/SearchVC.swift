@@ -342,16 +342,13 @@ extension SearchVC: UITableViewDataSource {
             cell.setData(data: searchRecentList[indexPath.row])
             cell.index = indexPath.row
             cell.delegate = self
-            cell.selectionStyle = .none
             return cell
         case .search:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTVC.className, for: indexPath) as? SearchTVC else { return UITableViewCell() }
             cell.setData(data: searchRecentList[indexPath.row])
-            cell.selectionStyle = .none
             return cell
         case .searchResult:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTVC.className, for: indexPath) as? SearchResultTVC else { return UITableViewCell() }
-            cell.selectionStyle = .none
             return cell
         }
     }
