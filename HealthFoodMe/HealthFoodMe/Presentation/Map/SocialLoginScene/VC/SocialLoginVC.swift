@@ -38,7 +38,7 @@ extension SocialLoginVC {
         if UserApi.isKakaoTalkLoginAvailable() {
             // 카카오톡 로그인. api 호출 결과를 클로저로 전달.
             UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
-                if let _ = error { self.showKakaoLoginFailMessage() } else {
+                if error != nil { self.showKakaoLoginFailMessage() } else {
                     if let accessToken = oauthToken?.accessToken {
                         // 엑세스 토큰 받아와서 서버에게 넘겨주는 로직 작성
 
@@ -49,7 +49,7 @@ extension SocialLoginVC {
             }
         } else { // 웹으로 로그인해도 똑같이 처리되도록
             UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
-                if let _ = error { self.showKakaoLoginFailMessage() } else {
+                if error != nil { self.showKakaoLoginFailMessage() } else {
                     if let accessToken = oauthToken?.accessToken {
                         print("TOKEN", accessToken)
                         self.postSocialLoginData(socialToken: accessToken, socialType: "KAKAO")

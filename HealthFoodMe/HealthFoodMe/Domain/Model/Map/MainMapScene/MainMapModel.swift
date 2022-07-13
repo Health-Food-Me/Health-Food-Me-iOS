@@ -7,8 +7,15 @@
 
 import UIKit
 
-struct MainMapModel {
+struct MapPointDataModel {
+  let latitude: Double
+  let longtitude: Double
+  let type: PointerType
+}
 
+enum PointerType {
+  case normalFood
+  case healthFood
 }
 
 struct MainMapCategory {
