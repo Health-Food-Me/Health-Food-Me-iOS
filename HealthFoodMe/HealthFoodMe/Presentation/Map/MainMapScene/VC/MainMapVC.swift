@@ -83,6 +83,33 @@ class MainMapVC: UIViewController {
         return cv
     }()
     
+    private let scrapButton: UIButton = {
+        let bt = UIButton()
+        bt.setImage(ImageLiterals.Map.scrapIcon, for: .normal)
+        bt.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
+        bt.addAction(UIAction(handler: { _ in
+            bt.isSelected.toggle()
+        }), for: .touchUpInside)
+        bt.backgroundColor = .helfmeWhite
+        bt.clipsToBounds = true
+        bt.layer.cornerRadius = 28
+        bt.layer.applyShadow(color: .helfmeBlack, alpha: 0.2, x: 0, y: 2, blur: 4, spread: 0)
+        return bt
+    }()
+    
+    private let myLocationButton: UIButton = {
+        let bt = UIButton()
+        bt.setImage(ImageLiterals.Map.mylocationIcon, for: .normal)
+        bt.addAction(UIAction(handler: { _ in
+            
+        }), for: .touchUpInside)
+        bt.backgroundColor = .helfmeWhite
+        bt.clipsToBounds = true
+        bt.layer.cornerRadius = 28
+        bt.layer.applyShadow(color: .helfmeBlack, alpha: 0.2, x: 0, y: 2, blur: 4, spread: 0)
+        return bt
+    }()
+    
     private var mapDetailSummaryView = MapDetailSummaryView()
     
     // MARK: - View Life Cycle
@@ -114,7 +141,8 @@ extension MainMapVC {
     
     private func setLayout() {
         view.addSubviews(mapView, hamburgerButton, searchBar,
-                         categoryCollectionView, mapDetailSummaryView)
+                         categoryCollectionView, mapDetailSummaryView, scrapButton,
+                         myLocationButton)
         
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -157,6 +185,18 @@ extension MainMapVC {
             make.leading.trailing.equalToSuperview()
             make.top.equalToSuperview().inset(UIScreen.main.bounds.height - 189)
             make.height.equalTo(UIScreen.main.bounds.height + 300)
+        }
+        
+        scrapButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(20)
+            make.bottom.equalTo(myLocationButton.snp.top).offset(-12)
+            make.width.height.equalTo(56)
+        }
+        
+        myLocationButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(20)
+            make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-12)
+            make.width.height.equalTo(56)
         }
     }
     

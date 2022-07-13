@@ -64,7 +64,7 @@ struct ImageLiterals {
         static let mappinIcon_diet = UIImage(named: "icn_mappin_diet")
         static let mappinIcon_normal = UIImage(named: "icn_mappin_normal")
         static let menuIcon = UIImage(named: "icn_menu")
-        static let mylocationIcon = UIImage(named: "icn_myLocation")
+        static let mylocationIcon = UIImage(named: "icn_mylocation")
         
         static let bossamIcon = UIImage(named: "icn_bossam")
         static let dupbapIcon = UIImage(named: "icn_dupbap")
