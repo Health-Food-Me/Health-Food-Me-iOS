@@ -167,6 +167,10 @@ extension MainDetailVC: UITableViewDataSource {
                 .drive(onNext: {
                     self.mainTableView.reloadData()
                 }).disposed(by: disposeBag)
+            cell.directionButtonTapped.asDriver(onErrorJustReturn: ())
+                .drive(onNext: {
+                    self.presentFindDirectionSheet()
+                }).disposed(by: disposeBag)
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTabTVC.className, for: indexPath) as? DetailTabTVC else { return UITableViewCell() }
@@ -188,6 +192,26 @@ extension MainDetailVC: UITableViewDataSource {
                 }.disposed(by: cell.disposeBag)
             return cell
         }
+    }
+    
+    private func presentFindDirectionSheet() {
+        let actionSheet = UIAlertController(title: "길 찾기", message: nil, preferredStyle: .actionSheet)
+        
+        let kakaoAction = UIAlertAction(title: "카카오맵", style: UIAlertAction.Style.default, handler: { _ in
+            URLSchemeManager.shared.loadKakaoMapApp(myLocation: NameLocation(latitude: "37.4640070", longtitude: "126.9522394", name: "서울대학교"), destination: NameLocation(latitude: "37.5209436", longtitude: "127.1230074", name: "올림픽공원"))
+        })
+        
+        let naverAction = UIAlertAction(title: "네이버지도", style: UIAlertAction.Style.default, handler: { _ in
+            URLSchemeManager.shared.loadNaverMapApp(myLocation: NameLocation(latitude: "37.4640070", longtitude: "126.9522394", name: "서울대학교"), destination: NameLocation(latitude: "37.5209436", longtitude: "127.1230074", name: "올림픽공원"))
+        })
+        
+        let cancelAction = UIAlertAction(title: "취소", style: UIAlertAction.Style.cancel, handler: nil)
+        
+        actionSheet.addAction(kakaoAction)
+        actionSheet.addAction(naverAction)
+        actionSheet.addAction(cancelAction)
+        
+        self.present(actionSheet, animated: true)
     }
 }
 
