@@ -7,7 +7,9 @@
 
 import UIKit
 
+import BSImagePicker
 import SnapKit
+import Photos
 
 protocol AddImageDelegate: AnyObject {
     func didPickImagesToUpload(images: [UIImage])
@@ -20,7 +22,7 @@ final class AddPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
     static var isFromNib = false
     weak var delegate: AddImageDelegate?
     
-//    var selectedAssets: [PHAsset] = [PHAsset]()
+    var selectedAssets: [PHAsset] = [PHAsset]()
     var userSelectedImages: [UIImage] = [UIImage]()
     
     // MARK: - UI Components

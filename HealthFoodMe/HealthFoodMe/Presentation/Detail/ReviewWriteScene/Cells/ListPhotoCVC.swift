@@ -24,12 +24,14 @@ final class ListPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
     lazy var photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = ImageLiterals.ReviewWrite.addPhotoIcon
+        imageView.layer.cornerRadius = 8
         return imageView
     }()
     
     private lazy var deleteBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.ReviewWrite.deletePhotoBtn, for: .normal)
+        btn.addTarget(self, action: #selector(deleteBtnDidTap), for: .touchUpInside)
         return btn
     }()
     
@@ -61,8 +63,12 @@ extension ListPhotoCVC {
         }
         
         deleteBtn.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().offset(7)
-            make.width.height.equalTo(16)
+            make.top.trailing.equalToSuperview().inset(0)
+            make.width.height.equalTo(24)
         }
+    }
+    
+    @objc func deleteBtnDidTap(_ sender: Any) {
+        delegate?.didPressDeleteBtn(at: indexPath)
     }
 }

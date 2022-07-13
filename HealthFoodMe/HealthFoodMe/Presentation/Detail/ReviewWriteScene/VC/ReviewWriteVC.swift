@@ -7,7 +7,9 @@
 
 import UIKit
 
+import BSImagePicker
 import SnapKit
+import Photos
 
 enum Cell: Int {
     case addCell = 0, photoCell
@@ -20,6 +22,8 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
             photoCollectionView.reloadData()
         }
     }
+    var selectedAssets: [PHAsset] = [PHAsset]()
+    var userSelectedImages: [UIImage] = [UIImage]()
     
     // MARK: - UI Components
     
@@ -272,7 +276,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         layout.sectionInset = .zero
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.showsVerticalScrollIndicator = false
+        cv.showsHorizontalScrollIndicator = false
         return cv
     }()
     
@@ -420,6 +424,71 @@ extension ReviewWriteVC {
         AddPhotoCVC.register(target: photoCollectionView)
         ListPhotoCVC.register(target: photoCollectionView)
     }
+    
+    @objc func showStatusActionSheet(_ sender: UITapGestureRecognizer) {
+        let actionSheet = UIAlertController(title: "선택", message: nil, preferredStyle: .actionSheet)
+        
+        let takePictureAction = UIAlertAction(title: "사진 찍기", style: .default) {_ in
+            
+        }
+        let albumAction = UIAlertAction(title: "사진 보관함", style: .default) {_ in
+            self.addCellDidTap()
+        }
+        let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(takePictureAction)
+        actionSheet.addAction(albumAction)
+        actionSheet.addAction(cancelAction)
+        
+        self.present(actionSheet, animated: true)
+    }
+    
+    func addCellDidTap() {
+        selectedAssets.removeAll()
+        userSelectedImages.removeAll()
+        
+        let imagePicker = ImagePickerController()
+        imagePicker.settings.selection.max = 5
+        imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
+        
+        self.presentImagePicker(imagePicker, select: { (asset) in
+            
+        }, deselect: { (asset) in
+            
+        }, cancel: { (assets) in
+            
+        }, finish: { (assets) in
+            
+            for i in 0..<assets.count {
+                self.selectedAssets.append(assets[i])
+            }
+            
+            self.convertAssetToImages()
+            self.didPickImagesToUpload(images: self.userSelectedImages)
+        })
+    }
+    
+    func convertAssetToImages() {
+        if selectedAssets.count != 0 {
+            for i in 0..<selectedAssets.count {
+                
+                let imageManager = PHImageManager.default()
+                let option = PHImageRequestOptions()
+                option.isSynchronous = true
+                var thumbnail = UIImage()
+                
+                imageManager.requestImage(for: selectedAssets[i],
+                                          targetSize: CGSize(width: 200, height: 200),
+                                          contentMode: .aspectFit,
+                                          options: option) { (result, info) in thumbnail = result! }
+                
+                let data = thumbnail.jpegData(compressionQuality: 0.7)
+                let newImage = UIImage(data: data!)
+                
+                self.userSelectedImages.append(newImage! as UIImage)
+            }
+        }
+    }
 }
 
 // MARK: - Network
@@ -440,6 +509,7 @@ extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
             guard let addPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCVC.className, for: indexPath) as? AddPhotoCVC else { fatalError("Failed to dequeue cell for AddPhotoCVC") }
             addPhotoCell.delegate = self
             addPhotoCell.photoCountLabel.text = "\(photoModel.userSelectedImages.count)/5"
+            addPhotoCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showStatusActionSheet(_:))))
             return addPhotoCell
         default:
             guard let listPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: ListPhotoCVC.className, for: indexPath) as? ListPhotoCVC else { fatalError("Failed to dequeue cell for ListPhotoCVC") }
