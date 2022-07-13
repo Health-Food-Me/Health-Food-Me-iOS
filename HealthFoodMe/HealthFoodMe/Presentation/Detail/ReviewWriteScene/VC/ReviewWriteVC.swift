@@ -70,25 +70,37 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagGood: UIButton = {
         let btn = UIButton()
-        btn.setTitle("맛최고", for: .normal)
-        btn.tintColor = .helfmeBlack
-        btn.backgroundColor = .helfmeLineGray
+        btn.setTitle("# 맛 최고", for: .normal)
+        btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
+        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.backgroundColor = .helfmeWhite
+        btn.layer.borderColor = UIColor.helfmeGray2.cgColor
+        btn.layer.borderWidth = 0.5
+        btn.layer.cornerRadius = 14
         return btn
     }()
     
     private lazy var tagSoso: UIButton = {
         let btn = UIButton()
-        btn.setTitle("맛그럭저럭", for: .normal)
-        btn.tintColor = .helfmeBlack
-        btn.backgroundColor = .helfmeLineGray
+        btn.setTitle("#맛 그럭저럭", for: .normal)
+        btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
+        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.backgroundColor = .helfmeWhite
+        btn.layer.borderColor = UIColor.helfmeGray2.cgColor
+        btn.layer.borderWidth = 0.5
+        btn.layer.cornerRadius = 14
         return btn
     }()
     
     private lazy var tagBad: UIButton = {
         let btn = UIButton()
-        btn.setTitle("맛 별로", for: .normal)
-        btn.tintColor = .helfmeBlack
-        btn.backgroundColor = .helfmeLineGray
+        btn.setTitle("#맛 별로에요", for: .normal)
+        btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
+        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.backgroundColor = .helfmeWhite
+        btn.layer.borderColor = UIColor.helfmeGray2.cgColor
+        btn.layer.borderWidth = 0.5
+        btn.layer.cornerRadius = 14
         return btn
     }()
     
@@ -126,36 +138,48 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         return sv
     }()
     
-    private lazy var tagDiet: UIButton = {
+    private lazy var tagNoBurden: UIButton = {
         let btn = UIButton()
-        btn.setTitle("다이어트용", for: .normal)
-        btn.tintColor = .helfmeBlack
-        btn.backgroundColor = .helfmeLineGray
+        btn.setTitle("# 약속 시 부담 없는", for: .normal)
+        btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
+        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.backgroundColor = .helfmeWhite
+        btn.layer.borderColor = UIColor.helfmeGray2.cgColor
+        btn.layer.borderWidth = 0.5
+        btn.layer.cornerRadius = 14
         return btn
     }()
     
-    private lazy var tagHealthFood: UIButton = {
+    private lazy var tagEasy: UIButton = {
         let btn = UIButton()
-        btn.setTitle("건강식", for: .normal)
-        btn.tintColor = .helfmeBlack
-        btn.backgroundColor = .helfmeLineGray
+        btn.setTitle("# 양 조절 쉬운", for: .normal)
+        btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
+        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.backgroundColor = .helfmeWhite
+        btn.layer.borderColor = UIColor.helfmeGray2.cgColor
+        btn.layer.borderWidth = 0.5
+        btn.layer.cornerRadius = 14
         return btn
     }()
     
-    private lazy var tagCheet: UIButton = {
+    private lazy var tagStrong: UIButton = {
         let btn = UIButton()
-        btn.setTitle("치팅데이용", for: .normal)
-        btn.tintColor = .helfmeBlack
-        btn.backgroundColor = .helfmeLineGray
+        btn.setTitle("# 든든한", for: .normal)
+        btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
+        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.backgroundColor = .helfmeWhite
+        btn.layer.borderColor = UIColor.helfmeGray2.cgColor
+        btn.layer.borderWidth = 0.5
+        btn.layer.cornerRadius = 14
         return btn
     }()
-    
+
     private lazy var tagHelpfulStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
         sv.alignment = .center
         sv.spacing = 6
-        sv.addArrangedSubviews(tagDiet, tagHealthFood, tagCheet)
+        sv.addArrangedSubviews(tagNoBurden, tagEasy, tagStrong)
         return sv
     }()
     
@@ -184,13 +208,28 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         return sv
     }()
     
-    private lazy var reviewTextVeiw: UITextView = {
+    private let reviewView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .helfmeBgGray
+        view.layer.cornerRadius = 8
+        return view
+    }()
+  
+    private lazy var reviewTextView: UITextView = {
         let tv = UITextView()
         tv.text = "리뷰를 작성해주세요 (최대 500자)"
+        tv.font = .NotoRegular(size: 12)
         tv.textColor = .helfmeGray2
         tv.backgroundColor = .helfmeBgGray
-        tv.layer.cornerRadius = 8
         return tv
+    }()
+    
+    private lazy var textCountLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = "0/500자"
+        lb.textColor = .helfmeGray2
+        lb.font = .NotoRegular(size: 12)
+        return lb
     }()
     
     private let pictureLabel: UILabel = {
@@ -244,7 +283,7 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
 extension ReviewWriteVC {
     private func setDelegate() {
         scrollView.delegate = self
-        reviewTextVeiw.delegate = self
+        reviewTextView.delegate = self
     }
     
     private func setNavigation() {
@@ -264,7 +303,7 @@ extension ReviewWriteVC {
             make.width.equalTo(scrollView.snp.width)
         }
         
-        contentView.addSubviews(restaurantTitleLabel, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewTextVeiw, pictureStackView)
+        contentView.addSubviews(restaurantTitleLabel, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView)
         
         restaurantTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
@@ -282,9 +321,22 @@ extension ReviewWriteVC {
             make.leading.equalToSuperview().inset(20)
         }
         
+        tagGood.snp.makeConstraints { make in
+            make.width.equalTo(73)
+        }
+        
+        tagSoso.snp.makeConstraints { make in
+            make.width.equalTo(99)
+        }
+        
+        tagBad.snp.makeConstraints { make in
+            make.width.equalTo(99)
+        }
+        
         tagTasteStackView.snp.makeConstraints { make in
             make.top.equalTo(questionTasteStackView.snp.bottom).offset(10)
             make.leading.equalToSuperview().inset(20)
+            make.height.equalTo(28)
         }
         
         questionFeelingStackView.snp.makeConstraints { make in
@@ -292,25 +344,57 @@ extension ReviewWriteVC {
             make.leading.equalToSuperview().inset(20)
         }
         
+        tagNoBurden.snp.makeConstraints { make in
+            make.width.equalTo(131)
+        }
+        
+        tagEasy.snp.makeConstraints { make in
+            make.width.equalTo(102)
+        }
+        
+        tagStrong.snp.makeConstraints { make in
+            make.width.equalTo(70)
+        }
+        
         tagHelpfulStackView.snp.makeConstraints { make in
             make.top.equalTo(questionFeelingStackView.snp.bottom).offset(10)
             make.leading.equalToSuperview().inset(20)
+            make.height.equalTo(28)
         }
         
         reviewStackView.snp.makeConstraints { make in
-            make.top.equalTo(tagHelpfulStackView.snp.bottom).offset(24)
+            make.top.equalTo(tagHelpfulStackView.snp.bottom).offset(27)
             make.leading.equalToSuperview().inset(20)
         }
         
-        reviewTextVeiw.snp.makeConstraints { make in
+        reviewView.addSubviews(reviewTextView, textCountLabel)
+        
+        reviewView.snp.makeConstraints { make in
             make.top.equalTo(reviewStackView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(277)
+            make.height.equalTo(297)
         }
         
+        reviewTextView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(10)
+            make.leading.equalToSuperview().inset(14)
+            make.trailing.equalToSuperview().inset(30)
+        }
+        
+        textCountLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(10)
+            make.trailing.equalToSuperview().inset(14)
+        }
+    
         pictureStackView.snp.makeConstraints { make in
-            make.top.equalTo(reviewTextVeiw.snp.bottom).offset(24)
+            make.top.equalTo(reviewTextView.snp.bottom).offset(24)
             make.leading.equalToSuperview().inset(20)
+        }
+    }
+    
+    func checkMaxLength(_ textView: UITextView) {
+        if (textView.text.count) > 500 {
+            textView.deleteBackward()
         }
     }
 }
@@ -320,6 +404,7 @@ extension ReviewWriteVC {
 extension ReviewWriteVC {
     
 }
+
 //extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource{
 //    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        return photoModel.userSelectedImages.count + 1
@@ -400,5 +485,9 @@ extension ReviewWriteVC: UITextViewDelegate {
                 }
             }
         }
+        checkMaxLength(textView)
+        let count = textView.text.count
+        textCountLabel.text = "\(count)/500자"
     }
 }
+
