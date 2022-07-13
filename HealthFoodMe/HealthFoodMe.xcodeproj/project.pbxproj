@@ -571,7 +571,6 @@
 		EB6A44E32873BABE00749582 /* MainMapScene */ = {
 			isa = PBXGroup;
 			children = (
-				FD582916287DC2C500CE62E8 /* Views */,
 				EB6A44E42873BACA00749582 /* VC */,
 				EB6A44E52873BACD00749582 /* ViewModel */,
 			);
@@ -581,6 +580,9 @@
 		EB6A44E42873BACA00749582 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				FD582919287DC39A00CE62E8 /* mapContainerView.swift */,
+				FD582917287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift */,
+				FD582918287DC39A00CE62E8 /* mapContainerView + Reactive.swift */,
 				EB6A44EB2873BED500749582 /* MainMapVC.swift */,
 				EB6A44FC2873BF8800749582 /* MainMap.storyboard */,
 			);
@@ -989,16 +991,6 @@
 				EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */,
 			);
 			path = Entity;
-			sourceTree = "<group>";
-		};
-		FD582916287DC2C500CE62E8 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				FD582919287DC39A00CE62E8 /* mapContainerView.swift */,
-				FD582917287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift */,
-				FD582918287DC39A00CE62E8 /* mapContainerView + Reactive.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
