@@ -16,16 +16,50 @@ import SnapKit
 class SocialLoginVC: UIViewController {
 
     // MARK: - Properties
-    private lazy var titleImageView = UIImageView()
-    private lazy var subtitleImageView = UIImageView()
-    private lazy var kakaoLoginButton = UIButton()
-    private lazy var appleLoginButton = UIButton()
+    
+    private var titleLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = I18N.Auth.title
+        lb.font = UIFont(name: AppFontName.GodoB, size: 58)
+        lb.textColor = .mainRed
+        
+        return lb
+    }()
+    
+    private var subTitleLabel: UILabel = {
+        let lb = UILabel()
+        let boldFont = UIFont(name: AppFontName.appleSDGothicNeoBold, size: 14)!
+        lb.text = I18N.Auth.subTitle
+        lb.font = UIFont(name: AppFontName.appleSDGothicNeoMedium, size: 14)
+        lb.textColor = .helfmeBlack
+        lb.numberOfLines = 2
+        lb.textAlignment = .center
+        lb.setAttributedText(targetFontList: ["샐러드": boldFont,
+                                              "일반식": boldFont],
+                             targetColorList: ["샐러드": .mainGreen,
+                                               "일반식": .mainRed])
+
+        return lb
+    }()
+    
+    private lazy var kakaoLoginButton: UIButton = {
+       let button = UIButton()
+        button.setImage(ImageLiterals.Auth.kakaoLoginBtn, for: .normal)
+        
+        return button
+    }()
+    
+    private lazy var appleLoginButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageLiterals.Auth.appleLoginBtn, for: .normal)
+        
+        return button
+    }()
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setUI()
         setLayout()
         setAddTarget()
     }
@@ -38,7 +72,7 @@ extension SocialLoginVC {
         if UserApi.isKakaoTalkLoginAvailable() {
             // 카카오톡 로그인. api 호출 결과를 클로저로 전달.
             UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
-                if let _ = error { self.showKakaoLoginFailMessage() } else {
+                if error != nil { self.showKakaoLoginFailMessage() } else {
                     if let accessToken = oauthToken?.accessToken {
                         // 엑세스 토큰 받아와서 서버에게 넘겨주는 로직 작성
 
@@ -49,7 +83,7 @@ extension SocialLoginVC {
             }
         } else { // 웹으로 로그인해도 똑같이 처리되도록
             UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
-                if let _ = error { self.showKakaoLoginFailMessage() } else {
+                if error != nil { self.showKakaoLoginFailMessage() } else {
                     if let accessToken = oauthToken?.accessToken {
                         print("TOKEN", accessToken)
                         self.postSocialLoginData(socialToken: accessToken, socialType: "KAKAO")
@@ -78,39 +112,27 @@ extension SocialLoginVC {
       authorizationController.presentationContextProvider = self
       authorizationController.performRequests()
     }
-    
-    private func setUI() {
-        titleImageView.image = UIImage(named: "authTitle")
-        subtitleImageView.image = UIImage(named: "authSubtitle")
-        
-        kakaoLoginButton.setTitle("카카오톡 아이디로 로그인", for: .normal)
-        kakaoLoginButton.setTitleColor(.black, for: .normal)
-        
-        appleLoginButton.setTitle("애플 아이디로 로그인", for: .normal)
-//        appleLoginButton.backgroundColor = UIColor.carrotBlack
-    }
 
     private func setLayout() {
-        view.addSubviews(titleImageView, subtitleImageView, kakaoLoginButton, appleLoginButton)
-        titleImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(270)
+        view.addSubviews(titleLabel, subTitleLabel, kakaoLoginButton, appleLoginButton)
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(163)
             make.centerX.equalToSuperview()
         }
         
-        subtitleImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleImageView.snp.bottom).offset(15)
+        subTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
         }
         
         kakaoLoginButton.snp.makeConstraints { make in
-            make.top.equalTo(subtitleImageView.snp.bottom).offset(100)
-            make.leading.trailing.equalToSuperview().inset(50)
+            make.top.equalTo(subTitleLabel.snp.bottom).offset(249)
             make.centerX.equalToSuperview()
         }
         
         appleLoginButton.snp.makeConstraints {make in
-            make.top.equalTo(kakaoLoginButton.snp.bottom).offset(9)
-            make.leading.trailing.equalToSuperview().inset(50)
+            make.top.equalTo(kakaoLoginButton.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
         }
     }

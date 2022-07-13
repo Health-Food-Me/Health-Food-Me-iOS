@@ -74,6 +74,22 @@ extension UILabel {
         self.attributedText = attributedString
     }
     
+    func setAttributedText(targetFontList: [String: UIFont],
+                           targetColorList: [String: UIColor]) {
+        let fullText = self.text ?? ""
+        let attributedString = NSMutableAttributedString(string: fullText)
+        for dic in targetFontList {
+            let range = (fullText as NSString).range(of: dic.key)
+            attributedString.addAttribute(.font, value: dic.value, range: range)
+        }
+        
+        for dic in targetColorList {
+            let range = (fullText as NSString).range(of: dic.key)
+            attributedString.addAttribute(.foregroundColor, value: dic.value, range: range)
+        }
+        self.attributedText = attributedString
+    }
+    
     /// 라벨 내의 특정 문자열의 CGRect 을 반환
     /// - Parameter subText: CGRect 을 알고 싶은 특정 문자열.
     func rectFromString(with subText: String) -> CGRect? {

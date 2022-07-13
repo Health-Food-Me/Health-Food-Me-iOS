@@ -11,9 +11,11 @@ protocol ModuleFactoryProtocol {
     
     // MARK: - Map
     func makeMainMapVC() -> MainMapVC
+    func makeHamburgerBarVC() -> HamburgerBarVC
     
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
+    func makeMenuTabVC() -> MenuTabVC
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC
@@ -21,7 +23,7 @@ protocol ModuleFactoryProtocol {
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
-    
+
     static func resolve() -> ModuleFactory {
         return ModuleFactory()
     }
@@ -37,6 +39,12 @@ class ModuleFactory: ModuleFactoryProtocol {
         return vc
     }
     
+    func makeHamburgerBarVC() -> HamburgerBarVC {
+        let vc = HamburgerBarVC.controllerFromStoryboard(.hamburgerBar)
+        
+        return vc
+    }
+    
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC {
         let repository = DefaultMainDetailRepository()
@@ -44,6 +52,12 @@ class ModuleFactory: ModuleFactoryProtocol {
         let viewModel = MainDetailViewModel(useCase: useCase)
         let vc = MainDetailVC.controllerFromStoryboard(.mainDetail)
         vc.viewModel = viewModel
+        
+        return vc
+    }
+    
+    func makeMenuTabVC() -> MenuTabVC {
+        let vc = MenuTabVC.controllerFromStoryboard(.menuTab)
         
         return vc
     }

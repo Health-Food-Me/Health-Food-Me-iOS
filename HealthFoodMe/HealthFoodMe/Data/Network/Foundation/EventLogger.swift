@@ -30,9 +30,9 @@ class APIEventLogger: EventMonitor {
         
         switch response.result {
             
-        case .success(_):
+        case .success:
             print("3️⃣ 서버 연결 성공")
-        case .failure(_):
+        case .failure:
             print("3️⃣ 서버 연결 실패")
             print("올바른 URL인지 확인해보세요.")
         }
