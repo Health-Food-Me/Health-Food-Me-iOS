@@ -28,6 +28,8 @@ final class SearchVC: UIViewController {
     }
     var searchDataModel: [SearchResultModel] = []
     var searchRecentList: [String] = []
+    private var isEmpty: Bool = true
+    private var searchEmptyView = SearchEmptyView()
     
     private let searchView: UIView = {
         let view = UIView()
@@ -194,10 +196,14 @@ extension SearchVC {
         dismissKeyboard()
         self.navigationController?.isNavigationBarHidden = true
         searchTextField.text?.removeAll()
+        searchEmptyView.isHidden = true
     }
     
     private func setLayout() {
-        view.addSubviews(searchTextField, lineView, searchView)
+        view.addSubviews(searchTextField,
+                         lineView,
+                         searchView,
+                         searchEmptyView)
         
         searchTextField.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -249,6 +255,11 @@ extension SearchVC {
         searchTableView.snp.makeConstraints {
             $0.edges.equalTo(searchView)
         }
+        
+        searchEmptyView.snp.makeConstraints {
+            $0.top.equalTo(lineView.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     
     private func setDelegate() {
@@ -279,12 +290,14 @@ extension SearchVC {
         searchTableView.tableHeaderView?.frame.size.height = 56
         recentHeaderLabel.isHidden = false
         resultHeaderButton.isHidden = true
+        searchEmptyView.isHidden = true
         searchType = .recent
     }
     
     private func isSearch() {
         searchTextField.becomeFirstResponder()
         searchTableView.tableHeaderView = nil
+        searchEmptyView.isHidden = true
         searchType = .search
     }
     
@@ -300,6 +313,14 @@ extension SearchVC {
         resultHeaderButton.isHidden = false
         searchType = .searchResult
     }
+    
+    private func isSearchEmpty() {
+        if isEmpty {
+            searchEmptyView.isHidden = false
+        } else {
+            searchEmptyView.isHidden = true
+        }
+    }
 }
 
 // MARK: - UITextFieldDelegate
@@ -307,6 +328,7 @@ extension SearchVC {
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         isSearchResult()
+        isSearchEmpty()
         return true
     }
     
