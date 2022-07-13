@@ -9,9 +9,17 @@ import UIKit
 
 import SnapKit
 
-class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
+enum Cell: Int {
+    case addCell = 0, photoCell
+}
+
+final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
-    // MARK: - Properties
+    private var photoModel: PhotoDataModel = PhotoDataModel() {
+        didSet {
+            photoCollectionView.reloadData()
+        }
+    }
     
     // MARK: - UI Components
     
@@ -112,7 +120,7 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         sv.addArrangedSubviews(tagGood, tagSoso, tagBad)
         return sv
     }()
-
+    
     private let questionFeelingLabel: UILabel = {
         let lb = UILabel()
         lb.text = "어떤 점이 좋았나요?"
@@ -173,7 +181,7 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.cornerRadius = 14
         return btn
     }()
-
+    
     private lazy var tagHelpfulStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
@@ -214,7 +222,7 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         view.layer.cornerRadius = 8
         return view
     }()
-  
+    
     private lazy var reviewTextView: UITextView = {
         let tv = UITextView()
         tv.text = "리뷰를 작성해주세요 (최대 500자)"
@@ -257,7 +265,7 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         return sv
     }()
     
-    private lazy var photoCV: UICollectionView = {
+    private lazy var photoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .horizontal
@@ -275,6 +283,7 @@ class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         setDelegate()
         setNavigation()
         setLayout()
+        registerCell()
     }
 }
 
@@ -284,6 +293,8 @@ extension ReviewWriteVC {
     private func setDelegate() {
         scrollView.delegate = self
         reviewTextView.delegate = self
+        photoCollectionView.delegate = self
+        photoCollectionView.dataSource = self
     }
     
     private func setNavigation() {
@@ -303,7 +314,7 @@ extension ReviewWriteVC {
             make.width.equalTo(scrollView.snp.width)
         }
         
-        contentView.addSubviews(restaurantTitleLabel, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView)
+        contentView.addSubviews(restaurantTitleLabel, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView)
         
         restaurantTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
@@ -385,10 +396,17 @@ extension ReviewWriteVC {
             make.bottom.equalToSuperview().inset(10)
             make.trailing.equalToSuperview().inset(14)
         }
-    
+        
         pictureStackView.snp.makeConstraints { make in
-            make.top.equalTo(reviewTextView.snp.bottom).offset(24)
+            make.top.equalTo(reviewTextView.snp.bottom).offset(28)
             make.leading.equalToSuperview().inset(20)
+        }
+        
+        photoCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(pictureStackView.snp.bottom).offset(12)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(105)
+            make.bottom.equalToSuperview().inset(10)
         }
     }
     
@@ -396,6 +414,11 @@ extension ReviewWriteVC {
         if (textView.text.count) > 500 {
             textView.deleteBackward()
         }
+    }
+    
+    private func registerCell() {
+        AddPhotoCVC.register(target: photoCollectionView)
+        ListPhotoCVC.register(target: photoCollectionView)
     }
 }
 
@@ -405,60 +428,67 @@ extension ReviewWriteVC {
     
 }
 
-//extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource{
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return photoModel.userSelectedImages.count + 1
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let addPhotoIdentifier = AddPhotoCVC.identifier
-//        let listPhotoIdentifer = ListPhotoCVC.identifier
-//
-//        switch indexPath.item {
-//        case Cell.addCell.rawValue:
-//            guard let addPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: addPhotoIdentifier, for: indexPath) as? AddPhotoCVC else { fatalError("Failed to dequeue cell for AddPhotoCVC") }
-//            addPhotoCell.delegate = self
-//            addPhotoCell.countLabel.textColor =  photoModel.userSelectedImages.count == 0 ? UIColor(named: "carrot_linegray") : UIColor(named: "carrot_text_orange")
-//            addPhotoCell.countLabel.text = "\(photoModel.userSelectedImages.count)"
-//            return addPhotoCell
-//        default:
-//            guard let listPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: listPhotoIdentifer, for: indexPath) as? ListPhotoCVC else { fatalError("Failed to dequeue cell for ListPhotoCVC") }
-//            listPhotoCell.delegate = self
-//            listPhotoCell.indexPath = indexPath.item
-//
-//            if photoModel.userSelectedImages.count > 0 {
-//                listPhotoCell.photoImageView.image = photoModel.userSelectedImages[indexPath.item - 1]
-//            }
-//            return listPhotoCell
-//        }
-//    }
-//}
-//
-//extension ReviewWriteVC: UICollectionViewDelegateFlowLayout {
+extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photoModel.userSelectedImages.count + 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        switch indexPath.item {
+        case Cell.addCell.rawValue:
+            guard let addPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCVC.className, for: indexPath) as? AddPhotoCVC else { fatalError("Failed to dequeue cell for AddPhotoCVC") }
+            addPhotoCell.delegate = self
+            addPhotoCell.photoCountLabel.text = "\(photoModel.userSelectedImages.count)/5"
+            return addPhotoCell
+        default:
+            guard let listPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: ListPhotoCVC.className, for: indexPath) as? ListPhotoCVC else { fatalError("Failed to dequeue cell for ListPhotoCVC") }
+            listPhotoCell.delegate = self
+            listPhotoCell.indexPath = indexPath.item
+
+            if photoModel.userSelectedImages.count > 0 {
+                listPhotoCell.photoImageView.image = photoModel.userSelectedImages[indexPath.item - 1]
+            }
+            return listPhotoCell
+        }
+    }
+}
+
+extension ReviewWriteVC: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = UIScreen.main.bounds.width
+        
+        let cellWidth = width * (105/375)
+        let cellHeight = cellWidth * (105/105)
+        
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: 80, height: 80)
+//        return CGSize(width: 105, height: 105)
 //    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 5
-//    }
-//}
-//
-//extension ReviewWriteVC: AddImageDelegate {
-//    func didPickImagesToUpload(images: [UIImage]) {
-//        photoModel.userSelectedImages = images
-//    }
-//}
-//
-//extension ReviewWriteVC: ListPhotoCVCDelegate {
-//    func didPressDeleteBtn(at index: Int) {
-//        photoModel.userSelectedImages.remove(at: index - 1)
-//    }
-//}
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+}
+
+extension ReviewWriteVC: AddImageDelegate {
+    func didPickImagesToUpload(images: [UIImage]) {
+        photoModel.userSelectedImages = images
+    }
+}
+
+extension ReviewWriteVC: ListPhotoCVCDelegate {
+    func didPressDeleteBtn(at index: Int) {
+        photoModel.userSelectedImages.remove(at: index - 1)
+    }
+}
 
 extension ReviewWriteVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -490,4 +520,3 @@ extension ReviewWriteVC: UITextViewDelegate {
         textCountLabel.text = "\(count)/500자"
     }
 }
-

@@ -26,6 +26,9 @@
 		695758B9287D7C0B00E36789 /* MenuTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758B8287D7C0B00E36789 /* MenuTab.storyboard */; };
 		695758BD287DA4CD00E36789 /* ReviewWrite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758BC287DA4CD00E36789 /* ReviewWrite.storyboard */; };
 		695758BF287DA50000E36789 /* ReviewWriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758BE287DA50000E36789 /* ReviewWriteVC.swift */; };
+		695758C3287DF04400E36789 /* AddPhotoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758C2287DF04400E36789 /* AddPhotoCVC.swift */; };
+		695758C5287DF08800E36789 /* ListPhotoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758C4287DF08800E36789 /* ListPhotoCVC.swift */; };
+		695758C8287F1DCF00E36789 /* PhotoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758C7287F1DCF00E36789 /* PhotoDataModel.swift */; };
 		A938BB8E287D221200B8DE07 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A938BB8D287D221200B8DE07 /* Search.storyboard */; };
 		A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A938BB8F287D222800B8DE07 /* MainDetail.storyboard */; };
 		A9525F712873E1750065EB1D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9525F702873E1750065EB1D /* SearchVC.swift */; };
@@ -143,6 +146,9 @@
 		695758B8287D7C0B00E36789 /* MenuTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MenuTab.storyboard; sourceTree = "<group>"; };
 		695758BC287DA4CD00E36789 /* ReviewWrite.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReviewWrite.storyboard; sourceTree = "<group>"; };
 		695758BE287DA50000E36789 /* ReviewWriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteVC.swift; sourceTree = "<group>"; };
+		695758C2287DF04400E36789 /* AddPhotoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCVC.swift; sourceTree = "<group>"; };
+		695758C4287DF08800E36789 /* ListPhotoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPhotoCVC.swift; sourceTree = "<group>"; };
+		695758C7287F1DCF00E36789 /* PhotoDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDataModel.swift; sourceTree = "<group>"; };
 		A938BB8D287D221200B8DE07 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		A938BB8F287D222800B8DE07 /* MainDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainDetail.storyboard; sourceTree = "<group>"; };
 		A9525F702873E1750065EB1D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
@@ -283,7 +289,9 @@
 		695758BA287DA4A400E36789 /* ReviewWriteScene */ = {
 			isa = PBXGroup;
 			children = (
+				695758C6287F1DB400E36789 /* ViewModel */,
 				695758BB287DA4B700E36789 /* VC */,
+				695758C1287DEFFA00E36789 /* Cells */,
 			);
 			path = ReviewWriteScene;
 			sourceTree = "<group>";
@@ -295,6 +303,23 @@
 				695758BE287DA50000E36789 /* ReviewWriteVC.swift */,
 			);
 			path = VC;
+			sourceTree = "<group>";
+		};
+		695758C1287DEFFA00E36789 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				695758C2287DF04400E36789 /* AddPhotoCVC.swift */,
+				695758C4287DF08800E36789 /* ListPhotoCVC.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		695758C6287F1DB400E36789 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				695758C7287F1DCF00E36789 /* PhotoDataModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		697074FB28737D78001A607F /* MenuTabScene */ = {
@@ -1169,6 +1194,7 @@
 				EBF66ADB287227F500DE0ED1 /* LaunchInstructor.swift in Sources */,
 				EBF66B01287227F500DE0ED1 /* PostDetail.swift in Sources */,
 				EBF66ABC287227F500DE0ED1 /* UserDefaults+.swift in Sources */,
+				695758C3287DF04400E36789 /* AddPhotoCVC.swift in Sources */,
 				EBF66AC3287227F500DE0ED1 /* UILabel+.swift in Sources */,
 				695758BF287DA50000E36789 /* ReviewWriteVC.swift in Sources */,
 				EBF66AFE287227F500DE0ED1 /* makeVibrate.swift in Sources */,
@@ -1203,6 +1229,7 @@
 				EBF66AF5287227F500DE0ED1 /* Logger.swift in Sources */,
 				EB6A4528287664D600749582 /* ExpandableInfoTVC.swift in Sources */,
 				EBF66ACB287227F500DE0ED1 /* String+.swift in Sources */,
+				695758C8287F1DCF00E36789 /* PhotoDataModel.swift in Sources */,
 				69028BA82874675800373984 /* MenuView.swift in Sources */,
 				A9E593C72874266200B0F8B5 /* SearchRecent.swift in Sources */,
 				EBF66AF2287227F500DE0ED1 /* buttonPress.swift in Sources */,
@@ -1220,6 +1247,7 @@
 				EB6A451128740CFF00749582 /* MainInfoTVC.swift in Sources */,
 				EB6A44F22873BED500749582 /* MainMapViewModel.swift in Sources */,
 				69028BAC2874681700373984 /* MenuTabVC.swift in Sources */,
+				695758C5287DF08800E36789 /* ListPhotoCVC.swift in Sources */,
 				EBF66AE0287227F500DE0ED1 /* EventLogger.swift in Sources */,
 				EBF66AC7287227F500DE0ED1 /* UITableView+.swift in Sources */,
 				A9525F712873E1750065EB1D /* SearchVC.swift in Sources */,
