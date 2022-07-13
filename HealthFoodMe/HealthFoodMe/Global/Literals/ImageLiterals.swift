@@ -36,4 +36,9 @@ struct ImageLiterals {
         static let star3Icon = UIImage(named: "icn_star_03")
         static let beforeIcon = UIImage(named: "icon_before")
     }
+    
+    struct ReviewWrite {
+        static let addPhotoIcon = UIImage(named: "icn_photoAdd")
+        static let deletePhotoBtn = UIImage(named: "btn_delete")
+    }
 }
