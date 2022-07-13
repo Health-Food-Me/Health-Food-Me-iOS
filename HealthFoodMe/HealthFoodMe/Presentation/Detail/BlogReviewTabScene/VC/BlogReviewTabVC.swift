@@ -10,17 +10,6 @@ import UIKit
 class BlogReviewTabVC: UIViewController {
     
     // MARK: - UI Components
-    
-//    private var reviewHeaderView: UIView = {
-//        let view = UIView()
-//        
-//        return view
-//    }()
-    
-    private let reviewSegmentControl: CustomSegmentControl = {
-        let sc = CustomSegmentControl(titleList: ["리뷰", "블로그 리뷰"])
-        return sc
-    }()
 
     private lazy var blogReviewCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -60,74 +49,57 @@ extension BlogReviewTabVC {
     
     private func registerCell() {
         BlogReviewCVC.register(target: blogReviewCV)
+        ReviewHeaderCVC.register(target: blogReviewCV)
     }
     
     private func setLayout() {
-        view.addSubviews(reviewSegmentControl, blogReviewCV)
-        
-        reviewSegmentControl.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(18)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(226)
-            make.height.equalTo(40)
-        }
+        view.addSubviews(blogReviewCV)
         
         blogReviewCV.snp.makeConstraints { make in
-            make.top.equalTo(reviewSegmentControl.snp.bottom)
+            make.top.bottom.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview()
         }
     }
 }
 
 extension BlogReviewTabVC: UICollectionViewDelegate {
-    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
 }
 
 extension BlogReviewTabVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return BlogReviewDataModel.sampleData.count
-//        switch section{
-//        case 0:
-//            return 1
-//        case 1:
-//            return BlogReviewDataModel.sampleData.count
-//        default:
-//            return 0
-//        }
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return BlogReviewDataModel.sampleData.count
+        default:
+            return 0
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BlogReviewCVC.className, for: indexPath) as? BlogReviewCVC
-                    else { return UICollectionViewCell() }
-        
-                    if indexPath.item == 0 {
-                        cell.blogReviewSeperatorView.isHidden = true
-                    } else {
-                        cell.blogReviewSeperatorView.isHidden = false
-                    }
-                    cell.setData(blogReviewData: BlogReviewDataModel.sampleData[indexPath.row])
-                    cell.setLayout()
-                    return cell
-//        switch indexPath.section {
-//        case 0:
-//            let view = reviewSegmentControl
-//            return view
-//        case 1:
-//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BlogReviewCVC.className, for: indexPath) as? BlogReviewCVC
-//            else { return UICollectionViewCell() }
-//
-//            if indexPath.item == 0 {
-//                cell.blogReviewSeperatorView.isHidden = true
-//            } else {
-//                cell.blogReviewSeperatorView.isHidden = false
-//            }
-//            cell.setData(blogReviewData: BlogReviewDataModel.sampleData[indexPath.row])
-//            cell.setLayout()
-//            return cell
-//        default:
-//            return UICollectionViewCell()
-//        }
+        switch indexPath.section {
+        case 0:
+            let header = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewHeaderCVC.className, for: indexPath)
+            return header
+        case 1:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BlogReviewCVC.className, for: indexPath) as? BlogReviewCVC
+            else { return UICollectionViewCell() }
+
+            if indexPath.item == 0 {
+                cell.blogReviewSeperatorView.isHidden = true
+            } else {
+                cell.blogReviewSeperatorView.isHidden = false
+            }
+            cell.setData(blogReviewData: BlogReviewDataModel.sampleData[indexPath.row])
+            cell.setLayout()
+            return cell
+        default:
+            return UICollectionViewCell()
+        }
         
     }
     
@@ -136,11 +108,21 @@ extension BlogReviewTabVC: UICollectionViewDataSource {
 extension BlogReviewTabVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = UIScreen.main.bounds.width
+        switch indexPath.section {
+        case 0:
+            let cellWidth = width * 226/375
+            let cellHeight = cellWidth * 40/335
+            return CGSize(width: cellWidth, height: cellHeight)
+        case 1:
+            
+            let cellWidth = width * 335/375
+            let cellHeight = cellWidth * 158/335
+            return CGSize(width: cellWidth, height: cellHeight)
+        default:
+            return CGSize(width: 0, height: 0)
+            
+        }
         
-        let cellWidth = width * 335/375
-        let cellHeight = cellWidth * 158/335
-        
-        return CGSize(width: cellWidth, height: cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
