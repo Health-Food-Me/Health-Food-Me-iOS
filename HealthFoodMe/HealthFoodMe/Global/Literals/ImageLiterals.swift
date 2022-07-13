@@ -53,4 +53,13 @@ struct ImageLiterals {
         static let appleLoginBtn = UIImage(named: "btn_login_apple")
         static let kakaoLoginBtn = UIImage(named: "btn_login_kakao")
     }
+    
+    struct Map {
+        static let scrapIcon = UIImage(named: "icn_scrap")
+        static let manifyingIcon = UIImage(named: "icn_manifying")
+        static let mappinIcon_diet = UIImage(named: "icn_mappin_diet")
+        static let mappinIcon_normal = UIImage(named: "icn_mappin_normal")
+        static let menuIcon = UIImage(named: "icn_menu")
+        static let mylocationIcon = UIImage(named: "icn_myLocation")
+    }
 }
