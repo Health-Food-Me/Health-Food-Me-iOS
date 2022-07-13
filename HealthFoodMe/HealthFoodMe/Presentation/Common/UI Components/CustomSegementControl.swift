@@ -15,8 +15,6 @@ final class CustomSegmentControl: UIView {
     internal var containerColor: UIColor = .init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
     internal var selectColor: UIColor = .white
     internal var titleList: [String] = [] { didSet {
-//        setStackView()
-//        setUI()
     }}
     internal var width: CGFloat = 226
     private lazy var selectedView = UIView()

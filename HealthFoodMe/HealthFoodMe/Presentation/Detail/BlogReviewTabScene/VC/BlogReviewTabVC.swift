@@ -89,11 +89,7 @@ extension BlogReviewTabVC: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BlogReviewCVC.className, for: indexPath) as? BlogReviewCVC
             else { return UICollectionViewCell() }
 
-            if indexPath.item == 0 {
-                cell.blogReviewSeperatorView.isHidden = true
-            } else {
-                cell.blogReviewSeperatorView.isHidden = false
-            }
+            cell.blogReviewSeperatorView.isHidden = indexPath.item == 0
             cell.setData(blogReviewData: BlogReviewDataModel.sampleData[indexPath.row])
             cell.setLayout()
             return cell
@@ -114,7 +110,6 @@ extension BlogReviewTabVC: UICollectionViewDelegateFlowLayout {
             let cellHeight = cellWidth * 40/335
             return CGSize(width: cellWidth, height: cellHeight)
         case 1:
-            
             let cellWidth = width * 335/375
             let cellHeight = cellWidth * 158/335
             return CGSize(width: cellWidth, height: cellHeight)

@@ -22,7 +22,7 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         return lb
     }()
     
-    private lazy var blogReviewImageView: UIImageView? = {
+    private lazy var blogReviewImageView: UIImageView = {
         let iv = UIImageView()
         return iv
     }()
@@ -74,15 +74,14 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
 
 extension BlogReviewCVC {
     func setLayout() {
-        if blogReviewImageView?.image != nil {
-            blogReviewStackView.addArrangedSubviews(blogReviewTitleLabel, blogReviewContentsLabel)
-            blogReviewImageView?.snp.makeConstraints({ make in
+        blogReviewStackView.addArrangedSubviews(blogReviewTitleLabel, blogReviewContentsLabel)
+        if blogReviewImageView.image != nil {
+            blogReviewImageView.snp.makeConstraints({ make in
                 make.width.height.equalTo(100)
             })
-            blogReviewWithImageStackView.addArrangedSubviews(blogReviewStackView, blogReviewImageView!)
+            blogReviewWithImageStackView.addArrangedSubviews(blogReviewStackView, blogReviewImageView)
             setLayoutWithImage()
         } else {
-            blogReviewStackView.addArrangedSubviews(blogReviewTitleLabel, blogReviewContentsLabel)
             setLayoutWithoutImage()
         }
 
@@ -92,14 +91,12 @@ extension BlogReviewCVC {
         contentView.addSubviews(blogReviewSeperatorView, blogReviewWithImageStackView)
         
         blogReviewSeperatorView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.top.equalToSuperview()
             make.height.equalTo(1)
-            make.top.equalToSuperview()
         }
         
         blogReviewWithImageStackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.centerY.equalToSuperview()
+            make.leading.trailing.centerY.equalToSuperview()
         }
     }
     
@@ -107,20 +104,18 @@ extension BlogReviewCVC {
         contentView.addSubviews(blogReviewSeperatorView, blogReviewStackView)
         
         blogReviewSeperatorView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.top.equalToSuperview()
             make.height.equalTo(1)
-            make.top.equalToSuperview()
         }
         
         blogReviewStackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.centerY.equalToSuperview()
+            make.leading.trailing.centerY.equalToSuperview()
         }
     }
     
     func setData(blogReviewData: BlogReviewDataModel) {
         blogReviewTitleLabel.text = blogReviewData.blogReviewTitle
         blogReviewContentsLabel.text = blogReviewData.blogReviewContents
-        blogReviewImageView?.image = UIImage(named: blogReviewData.blogReviewImage ?? "")
+        blogReviewImageView.image = UIImage(named: blogReviewData.blogReviewImageURL ?? "")
     }
 }
