@@ -192,6 +192,9 @@ extension MainDetailVC: UITableViewDataSource {
 }
 
 extension MainDetailVC: ScrollDeliveryDelegate {
+    
+    // TODO: - 이 부분 touchesBegan으로 해보자
+    
     func scrollStarted(velocity: CGFloat, scrollView: UIScrollView) {
         if velocity < 0 {
             self.mainTableView.setContentOffset(CGPoint(x: 0, y: 240), animated: true)
