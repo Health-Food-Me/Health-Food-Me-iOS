@@ -1,5 +1,5 @@
 //
-//  SearchResult.swift
+//  SearchResultModel.swift
 //  HealthFoodMe
 //
 //  Created by 김영인 on 2022/07/12.
@@ -7,18 +7,18 @@
 
 import Foundation
 
-protocol SearchResult { }
+protocol SearchResultModel { }
 
-struct SearchRecentDataModel: SearchResult {
+struct SearchRecentDataModel: SearchResultModel {
     let searchContent: String
 }
 
-struct SearchDataModel: SearchResult {
+struct SearchDataModel: SearchResultModel {
     let isDiet: Bool
     let title: String
 }
 
-struct SearchResultDataModel: SearchResult {
+struct SearchResultDataModel: SearchResultModel {
     let food: String
     let title: String
 }

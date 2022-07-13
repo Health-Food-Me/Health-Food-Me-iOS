@@ -26,7 +26,7 @@ final class SearchVC: UIViewController {
             searchTableView.reloadData()
         }
     }
-    var searchDataModel: [SearchResult] = []
+    var searchDataModel: [SearchResultModel] = []
     var searchRecentList: [String] = []
     
     private let searchView: UIView = {
