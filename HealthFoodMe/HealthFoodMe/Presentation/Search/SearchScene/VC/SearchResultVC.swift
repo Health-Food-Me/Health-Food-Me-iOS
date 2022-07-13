@@ -75,7 +75,7 @@ final class SearchResultVC: UIViewController {
         tv.backgroundColor = .helfmeWhite
         tv.keyboardDismissMode = .onDrag
         tv.tableHeaderView = searchResultHeaderView
-        tv.tableHeaderView?.frame.size.height = 48
+        tv.tableHeaderView?.frame.size.height = 42
         return tv
     }()
     

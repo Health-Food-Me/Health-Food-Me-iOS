@@ -65,6 +65,13 @@ final class SearchVC: UIViewController {
         return btn
     }()
     
+    private lazy var resultCloseButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(ImageLiterals.Search.xIcon, for: .normal)
+        btn.addTarget(self, action: #selector(popToMainMapVC), for: .touchUpInside)
+        return btn
+    }()
+    
     private let lineView: UIView = {
         let view = UIView()
         view.backgroundColor = .helfmeLineGray
@@ -129,27 +136,26 @@ extension SearchVC {
     @objc func didTapBackButton() {
         switch searchType {
         case .recent:
-            print("화면 전환")
+            navigationController?.popViewController(animated: false)
         case .search:
-            print("화면 전환")
+            navigationController?.popViewController(animated: false)
         case .searchResult:
-            isEmptyTextField()
+            isSearchRecent()
             initTextField()
         }
     }
     
     @objc func didTapClearButton() {
         searchTextField.text?.removeAll()
-        isEmptyTextField()
+        isSearchRecent()
     }
     
     @objc func editingChanged(_ textField: UITextField) {
         if searchTextField.isEmpty {
-            isEmptyTextField()
+            isSearchRecent()
         } else {
             searchTextField.rightViewMode = .always
-            searchTableView.tableHeaderView = nil
-            searchType = .search
+            isSearch()
         }
     }
     
@@ -160,6 +166,10 @@ extension SearchVC {
             searchResultVC.searchContent = searchText
         }
         navigationController?.pushViewController(searchResultVC, animated: false)
+    }
+    
+    @objc func popToMainMapVC() {
+        navigationController?.popViewController(animated: false)
     }
 }
 
@@ -202,6 +212,10 @@ extension SearchVC {
         }
         
         clearButton.snp.makeConstraints {
+            $0.height.width.equalTo(24)
+        }
+        
+        resultCloseButton.snp.makeConstraints {
             $0.height.width.equalTo(24)
         }
         
@@ -259,12 +273,32 @@ extension SearchVC {
         searchRecentList.insert(title, at: 0)
     }
     
-    private func isEmptyTextField() {
+    private func isSearchRecent() {
         searchTextField.rightViewMode = .never
         searchTableView.tableHeaderView = searchHeaderView
-        resultHeaderButton.isHidden = true
+        searchTableView.tableHeaderView?.frame.size.height = 56
         recentHeaderLabel.isHidden = false
+        resultHeaderButton.isHidden = true
         searchType = .recent
+    }
+    
+    private func isSearch() {
+        searchTextField.becomeFirstResponder()
+        searchTableView.tableHeaderView = nil
+        searchType = .search
+    }
+    
+    private func isSearchResult() {
+        searchTextField.resignFirstResponder()
+        if let text = searchTextField.text {
+            addSearchRecent(title: text)
+        }
+        searchTableView.tableHeaderView = searchHeaderView
+        searchTableView.tableHeaderView?.frame.size.height = 42
+        clearButton.isHidden = true
+        recentHeaderLabel.isHidden = true
+        resultHeaderButton.isHidden = false
+        searchType = .searchResult
     }
 }
 
@@ -272,23 +306,12 @@ extension SearchVC {
 
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        if let text = textField.text {
-            addSearchRecent(title: text)
-        }
-        searchType = .searchResult
-        clearButton.isHidden = true
-        recentHeaderLabel.isHidden = true
-        resultHeaderButton.isHidden = false
-        searchTableView.tableHeaderView = searchHeaderView
+        isSearchResult()
         return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        clearButton.isHidden = false
-        searchType = .search
-        searchTextField.becomeFirstResponder()
-        searchTableView.tableHeaderView = nil
+        isSearch()
     }
 }
 
@@ -329,9 +352,6 @@ extension SearchVC: UITableViewDataSource {
         case .searchResult:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTVC.className, for: indexPath) as? SearchResultTVC else { return UITableViewCell() }
             cell.selectionStyle = .none
-            //            cell.setData(data: searchRecentList[indexPath.row])
-            //            cell.index = indexPath.row
-            //            cell.delegate = self
             return cell
         }
     }
@@ -370,7 +390,7 @@ extension SearchVC: SearchResultVCDelegate {
         if type == .search {
             searchTextField.becomeFirstResponder()
         } else {
-            isEmptyTextField()
+            isSearchRecent()
         }
     }
 }
