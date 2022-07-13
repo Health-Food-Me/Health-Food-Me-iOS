@@ -79,10 +79,6 @@ extension DetailTabTVC {
     
     // MARK: - Initializer
     
-    func initCell() {
-        
-    }
-    
     func scrollToSelectedIndex(index: Int) {
         containerCollectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
     }

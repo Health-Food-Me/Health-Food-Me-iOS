@@ -35,8 +35,9 @@ class MainMapVC: UIViewController {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.menuIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            let nextVC = ModuleFactory.resolve().makeMainDetailVC()
-            self.navigationController?.pushViewController(nextVC, animated: true)
+            let nextVC = ModuleFactory.resolve().makeHamburgerBarVC()
+            nextVC.modalPresentationStyle = .overFullScreen
+            self.present(nextVC, animated: false)
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
         bt.clipsToBounds = true
@@ -56,7 +57,7 @@ class MainMapVC: UIViewController {
     
     private let searchLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "식당, 음식 검색"
+        lb.text = I18N.Map.Main.searchBar
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 15)
         return lb
@@ -93,6 +94,7 @@ class MainMapVC: UIViewController {
         setTapGesture()
         setDelegate()
         registerCell()
+        setPanGesture()
         self.bindViewModels()
     }
     
@@ -153,14 +155,17 @@ extension MainMapVC {
         
         mapDetailSummaryView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().inset(500)
-            make.height.equalTo(500)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height - 189)
+            make.height.equalTo(UIScreen.main.bounds.height + 300)
         }
     }
     
     private func setTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentSearchVC))
         searchBar.addGestureRecognizer(tapGesture)
+        
+        let tapBottomSheet = UITapGestureRecognizer(target: self, action: #selector(PushDetailVC))
+        mapDetailSummaryView.addGestureRecognizer(tapBottomSheet)
     }
     
     private func setDelegate() {
@@ -170,6 +175,44 @@ extension MainMapVC {
     
     private func registerCell() {
         MenuCategoryCVC.register(target: categoryCollectionView)
+    }
+    
+    private func setPanGesture() {
+        let panGesture = UIPanGestureRecognizer()
+        mapDetailSummaryView.addGestureRecognizer(panGesture)
+        panGesture.rx.event.asDriver { _ in .never() }
+            .drive(onNext: { [weak self] sender in
+                let summaryViewTranslation = sender.translation(in: self?.mapDetailSummaryView)
+                print(self?.mapDetailSummaryView.frame.origin.y ?? 0)
+                switch sender.state {
+                case .changed:
+                    UIView.animate(withDuration: 0.1) {
+                        self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: summaryViewTranslation.y)
+                    }
+                case .ended:
+                    if summaryViewTranslation.y < -90
+                        || (self?.mapDetailSummaryView.frame.origin.y ?? 40 < 30) {
+                        self?.mapDetailSummaryView.snp.updateConstraints { make in
+                            make.top.equalToSuperview().inset(44)
+                        }
+                        UIView.animate(withDuration: 0.4) {
+                            self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+                            self?.view.layoutIfNeeded()
+                        }
+                    } else {
+                        let summaryViewHeight: CGFloat = 189
+                        self?.mapDetailSummaryView.snp.updateConstraints { make in
+                            make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
+                        }
+                        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+                            self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+                            self?.view.layoutIfNeeded()
+                        }
+                    }
+                default:
+                    break
+                }
+            }).disposed(by: disposeBag)
     }
     
     private func bindViewModels() {
@@ -183,6 +226,12 @@ extension MainMapVC {
     
     @objc
     private func presentSearchVC() {
+        let nextVC = ModuleFactory.resolve().makeSearchVC()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+    
+    @objc
+    private func PushDetailVC() {
         let nextVC = ModuleFactory.resolve().makeMainDetailVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -191,7 +240,7 @@ extension MainMapVC {
 // MARK: - CollectionView Delegate
 
 extension MainMapVC: UICollectionViewDelegate {
-
+    
 }
 
 extension MainMapVC: UICollectionViewDelegateFlowLayout {
