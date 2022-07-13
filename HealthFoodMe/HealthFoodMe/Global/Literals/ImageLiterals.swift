@@ -54,7 +54,7 @@ struct ImageLiterals {
         static let bookmarkInactiveIcon = UIImage(named: "btn_bookmark_inactive")
         static let scrapBtn = UIImage(named: "btn_scrap")
         
-        static let tempFood = UIImage(named: "Image")
+        static let tempBurger = UIImage(named: "tempBurger")
     }
     
     struct HamburgerBar {
