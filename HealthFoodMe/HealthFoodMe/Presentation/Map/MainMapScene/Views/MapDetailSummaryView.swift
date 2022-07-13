@@ -67,7 +67,6 @@ final class MapDetailSummaryView: UIView {
     
     private let starRateView: StarRatingView = {
         let st = StarRatingView(starScale: 14)
-        st.spacing = 4
         st.rate = 4.3
         return st
     }()
