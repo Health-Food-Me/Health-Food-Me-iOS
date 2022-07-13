@@ -17,8 +17,8 @@ final class URLSchemeManager: NSObject {
     
     private override init() {}
     
-    func loadTelephoneApp(phoneNumber: Int) {
-        let number: Int = phoneNumber
+    func loadTelephoneApp(phoneNumber: String) {
+        let number: String = phoneNumber.trimmingCharacters(in: ["!"])
         if let url = NSURL(string: "tel://" + "\(number)"),
            UIApplication.shared.canOpenURL(url as URL) {
             UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)

@@ -19,6 +19,7 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
     private var isOpenned: Bool = false
     let toggleButtonTapped = PublishRelay<Void>()
     let directionButtonTapped = PublishRelay<Void>()
+    let telePhoneLabelTapped = PublishRelay<String>()
     
     // MARK: - UI Components
     
@@ -172,6 +173,10 @@ extension MainInfoTVC: UITableViewDataSource {
                 self.toggleCells()
             }
             .disposed(by: cell.disposeBag)
+        cell.telePhoneLabelTapped.asDriver(onErrorJustReturn: "")
+            .drive { phoneNumber in
+                self.telePhoneLabelTapped.accept(phoneNumber)
+            }.disposed(by: cell.disposeBag)
         return cell
     }
     

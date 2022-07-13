@@ -171,6 +171,10 @@ extension MainDetailVC: UITableViewDataSource {
                 .drive(onNext: {
                     self.presentFindDirectionSheet()
                 }).disposed(by: disposeBag)
+            cell.telePhoneLabelTapped.asDriver(onErrorJustReturn: "")
+                .drive { phoneNumber in
+                    URLSchemeManager.shared.loadTelephoneApp(phoneNumber: phoneNumber)
+                }.disposed(by: disposeBag)
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTabTVC.className, for: indexPath) as? DetailTabTVC else { return UITableViewCell() }
