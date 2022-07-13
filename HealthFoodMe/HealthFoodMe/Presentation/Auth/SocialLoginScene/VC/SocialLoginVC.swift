@@ -22,6 +22,7 @@ class SocialLoginVC: UIViewController {
         lb.text = I18N.Auth.title
         lb.font = UIFont(name: AppFontName.GodoB, size: 58)
         lb.textColor = .mainRed
+        lb.textAlignment = .center
         
         return lb
     }()
@@ -31,13 +32,9 @@ class SocialLoginVC: UIViewController {
         let boldFont = UIFont(name: AppFontName.appleSDGothicNeoBold, size: 14)!
         lb.text = I18N.Auth.subTitle
         lb.font = UIFont(name: AppFontName.appleSDGothicNeoMedium, size: 14)
-        lb.textColor = .helfmeBlack
+        lb.textColor = .helfmeGray1
         lb.numberOfLines = 2
         lb.textAlignment = .center
-        lb.setAttributedText(targetFontList: ["샐러드": boldFont,
-                                              "일반식": boldFont],
-                             targetColorList: ["샐러드": .mainGreen,
-                                               "일반식": .mainRed])
 
         return lb
     }()
@@ -59,7 +56,6 @@ class SocialLoginVC: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setLayout()
         setAddTarget()
     }
