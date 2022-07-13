@@ -51,6 +51,10 @@ struct ImageLiterals {
     struct Scrap {
         static let beforeIcon = UIImage(named: "icon_before")
         static let bookmarkIcon = UIImage(named: "icon_bookmark")
+        static let bookmarkInactiveIcon = UIImage(named: "btn_bookmark_inactive")
+        static let scrapBtn = UIImage(named: "btn_scrap")
+        
+        static let tempFood = UIImage(named: "Image")
     }
     
     struct HamburgerBar {
