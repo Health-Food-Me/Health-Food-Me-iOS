@@ -65,4 +65,10 @@ extension BlogReviewCVC {
             make.leading.equalTo(blogReviewTitleLabel.snp.trailing).offset(16)
         }
     }
+    
+    private func setData(blogReviewData: BlogReviewDataModel) {
+        blogReviewTitleLabel.text = blogReviewData.blogReviewTitle
+        blogReviewContentsLabel.text = blogReviewData.blogReviewContents
+        blogReviewImageView.image = UIImage(named: blogReviewData.blogReviewImage ?? "")
+    }
 }
