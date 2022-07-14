@@ -10,9 +10,11 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-final class ChangeNickNameVC: UIViewController {
+final class ChangeNicknameVC: UIViewController {
   // MARK: - Vars & Lets Part
   private let disposeBag = DisposeBag()
+  private var confirmButtonClicked = PublishRelay<String?>()
+  private let nicknameMaxLength = 12
   var viewModel: ChangeNicknameViewModel!
   
   // MARK: - UI Component Part
@@ -20,7 +22,7 @@ final class ChangeNickNameVC: UIViewController {
   private var topTitleLabel: UILabel = {
     let label = UILabel()
     label.font = .NotoBold(size: 16)
-    label.text = "프로필 편집"
+    label.text = I18N.Auth.ChangeNickname.headerTitle
     label.textColor = UIColor.helfmeBlack
     return label
   }()
@@ -59,19 +61,24 @@ final class ChangeNickNameVC: UIViewController {
     label.font = .NotoRegular(size: 12)
     label.textColor = UIColor.helfmeGray2
     label.numberOfLines = 0
-    label.text = "* 특수문자, 이모티콘은 사용 불가합니다\n* 띄어쓰기 포함 최대 12글자"
+    label.text = I18N.Auth.ChangeNickname.conditionText
     return label
   }()
   
   private var changeCTAButton: CTAButton = {
-    let button = CTAButton(enableState: false, title: "수정 완료")
+    let button = CTAButton(enableState: false, title: I18N.Auth.ChangeNickname.ctaButtonTitle)
     button.isEnabled = false
-    button.press { }
     return button
   }()
   
-  private lazy var toastView: UpperToastView = {
-    let toastView = UpperToastView(title: "닉네임 설정 기준에 적합하지 않습니다")
+  private lazy var nicknameFormatErrorToastview: UpperToastView = {
+    let toastView = UpperToastView(title: I18N.Auth.ChangeNickname.formatErrMessage)
+    toastView.layer.cornerRadius = 77
+    return toastView
+  }()
+  
+  private lazy var nicknameDuplicatedToastView: UpperToastView = {
+    let toastView = UpperToastView(title: I18N.Auth.ChangeNickname.duplicatedErrMessage)
     toastView.layer.cornerRadius = 77
     return toastView
   }()
@@ -79,15 +86,17 @@ final class ChangeNickNameVC: UIViewController {
   // MARK: - Life Cycle Part
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.bindViewModels()
+    setUI()
+    bindViewModels()
+    addButtonAction()
   }
 }
 
-extension ChangeNickNameVC {
+extension ChangeNicknameVC {
   private func setUI() {
     view.addSubviews(topTitleLabel, backButton, headerDividerView,
                      topGuideLabel, nickNameTextField, conditionDescriptionLabel,
-                     changeCTAButton, toastView)
+                     changeCTAButton, nicknameFormatErrorToastview, nicknameDuplicatedToastView)
     
     topTitleLabel.snp.makeConstraints { make in
       make.top.equalTo(view.safeAreaLayoutGuide).offset(14)
@@ -133,28 +142,107 @@ extension ChangeNickNameVC {
       make.height.equalTo(44)
     }
     
-    toastView.snp.makeConstraints { make in
-      make.leading.equalToSuperview().offset(38)
-      make.trailing.equalToSuperview().offset(-38)
+    nicknameFormatErrorToastview.snp.makeConstraints { make in
+      make.width.equalTo(300)
       make.height.equalTo(40)
       make.top.equalTo(-40)
+      make.centerX.equalToSuperview()
+    }
+    
+    nicknameDuplicatedToastView.snp.makeConstraints { make in
+      make.width.equalTo(208)
+      make.height.equalTo(40)
+      make.top.equalTo(-40)
+      make.centerX.equalToSuperview()
+    }
+  }
+  
+  private func addButtonAction() {
+    changeCTAButton.press {
+      self.confirmButtonClicked.accept(self.nickNameTextField.text)
     }
   }
 }
 
-extension ChangeNickNameVC {
+extension ChangeNicknameVC {
   
   // MARK: - Custom Method Part
   private func bindViewModels() {
-    let input = ChangeNicknameViewModel.Input(nicknameText: nickNameTextField.rx.text.asObservable(),
-                                              ctaButtonClickEvent: changeCTAButton.rx.tap.asObservable())
+    let input = ChangeNicknameViewModel.Input(ctaButtonClickEvent: confirmButtonClicked.asObservable())
     let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
     
-    output.nicknameChangeSuccess
-      .subscribe(onNext: { [weak self] in
+    output.currentNicknameStatus
+      .subscribe(onNext: { [weak self] status in
         guard let self = self else { return }
-        
-        
+        if status != .normal {
+          self.showUpperToast(status)
+        } else {
+          self.hideUpperToast()
+        }
       }).disposed(by: self.disposeBag)
+  }
+  
+  private func bindTextField() {
+    nickNameTextField.rx.text
+      .subscribe(onNext: { [weak self] text in
+        guard let nicknameText = text else {
+          self?.changeCTAButton.isEnabled = false
+          return
+        }
+        self?.changeCTAButton.isEnabled = !nicknameText.isEmpty
+      }).disposed(by: self.disposeBag)
+    
+    nickNameTextField.rx.text
+      .orEmpty
+      .distinctUntilChanged()
+      .subscribe { _ in
+        self.hideUpperToast()
+      }.disposed(by: self.disposeBag)
+  }
+                 
+  private func cutMaxLabel() {
+    if let text = nickNameTextField.text {
+      if text.count > nicknameMaxLength {
+        let maxIndex = text.index(text.startIndex, offsetBy: nicknameMaxLength)
+        let newString = String(text[text.startIndex..<maxIndex])
+        nickNameTextField.text = newString
+      }
+    }
+  }
+}
+
+extension ChangeNicknameVC {
+  private func showUpperToast(_ status: NicknameStatus) {
+    guard status != .normal else { return }
+    
+    if status == .containsSpecialCharacter {
+      nicknameFormatErrorToastview.snp.updateConstraints { make in
+        make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
+      }
+    } else {
+      nicknameDuplicatedToastView.snp.updateConstraints { make in
+        make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
+      }
+    }
+    UIView.animate(withDuration: 0.5, delay: 0) {
+      self.view.layoutIfNeeded()
+    } completion: { _ in
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        self.hideUpperToast()
+      }
+    }
+  }
+  
+  private func hideUpperToast() {
+    self.nicknameFormatErrorToastview.snp.updateConstraints { make in
+      make.top.equalTo(-40)
+    }
+    self.nicknameDuplicatedToastView.snp.updateConstraints { make in
+      make.top.equalTo(-40)
+    }
+    
+    UIView.animate(withDuration: 0.5, delay: 0) {
+      self.view.layoutIfNeeded()
+    }
   }
 }
