@@ -276,12 +276,38 @@ extension MainMapVC {
         locationManager?.add(self)
     }
     
+    private func bindMapView() {
+        mapView.rx.mapViewClicked
+            .subscribe(onNext: { _ in
+                self.mapView.disableSelectPoint.accept(())
+                self.mapDetailSummaryView.snp.updateConstraints { make in
+                    make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
+                }
+                UIView.animate(withDuration: 0.3, delay: 0) {
+                    self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+                    self.view.layoutIfNeeded()
+                }
+            }).disposed(by: self.disposeBag)
         
-        UIView.animate(withDuration: 0.3, delay: 0) {
-            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            self.transitionAndPresentMainDetailVC()
+        mapView.setSelectPoint
+            .subscribe(onNext: { [weak self] dataModel in
+                let summaryViewHeight: CGFloat = 189
+                self?.mapDetailSummaryView.snp.updateConstraints { make in
+                    make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
+                }
+                UIView.animate(withDuration: 0.3, delay: 0) {
+                    self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+                    self?.view.layoutIfNeeded()
+                }
+            }).disposed(by: self.disposeBag)
+    }
+    
+    private func sampleViewInputEvent() {
+        makeDummyPoints()
+            .bind(to: mapView.rx.pointList)
+            .disposed(by: self.disposeBag)
+    }
+    
         }
     }
     
@@ -312,6 +338,28 @@ extension MainMapVC {
             self.hamburgerButton.isHidden = true
             self.searchBar.isHidden = true
             self.categoryCollectionView.isHidden = true
+        }
+    }
+    
+    @objc
+    private func presentSearchVC() {
+        let nextVC = ModuleFactory.resolve().makeSearchVC()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+    
+    @objc
+    private func presentDetailVC() {
+        self.scrapButton.isHidden = true
+        self.myLocationButton.isHidden = true
+        self.mapDetailSummaryView.snp.updateConstraints { make in
+            make.top.equalToSuperview().inset(44)
+        }
+        
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.transitionAndPresentMainDetailVC()
         }
     }
 }
