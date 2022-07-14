@@ -127,6 +127,8 @@ extension ScrapVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrapCVC.className, for: indexPath) as? ScrapCVC else { return UICollectionViewCell() }
         cell.setData(data: ScrapDataModel.sampleScrapData[indexPath.row])
+        cell.index = indexPath.row
+        cell.delegate = self
         return cell
     }
 }
@@ -147,6 +149,12 @@ extension ScrapVC: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
+    }
+}
+
+extension ScrapVC: ScrapCVCDelegate {
+    func ScrapCVCButtonDidTap(index: Int, isSelected: Bool) {
+        print("\(index) 번 스크랩 \(isSelected) 상태")
     }
 }
 

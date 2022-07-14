@@ -9,26 +9,34 @@ import UIKit
 
 import SnapKit
 
+protocol ScrapCVCDelegate: AnyObject {
+    func ScrapCVCButtonDidTap(index: Int, isSelected: Bool)
+}
+
 class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     // MARK: - Properties
     
     static var isFromNib: Bool = false
+    var index: Int = 0
+    weak var delegate: ScrapCVCDelegate?
   
     // MARK: - UI Components
     
-    private let storeImageView: UIImageView = {
+    private var storeImageView: UIImageView = {
         let iv = UIImageView()
         return iv
     }()
     
-    private let scrapButton: UIButton = {
+    private lazy var scrapButton: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Scrap.bookmarkInactiveIcon, for: .normal)
+        btn.setImage(ImageLiterals.Scrap.bookmarkIcon, for: .selected)
+        btn.addTarget(self, action: #selector(didTapScrapButton(_:)), for: .touchUpInside)
         return btn
     }()
     
-    private let storeNameLabel: UILabel = {
+    private var storeNameLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .black
         lb.font = .NotoMedium(size: 14)
@@ -54,6 +62,15 @@ class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - @objc Methods
+
+extension ScrapCVC {
+    @objc func didTapScrapButton(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        delegate?.ScrapCVCButtonDidTap(index: index, isSelected: sender.isSelected)
     }
 }
 

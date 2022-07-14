@@ -17,12 +17,12 @@ struct ScrapDataModel: Codable {
 extension ScrapDataModel {
     static var sampleScrapData: [ScrapDataModel] = [
         ScrapDataModel(scrapimageUrl: "tempBurger", storeName: "써브웨이 동대문역사문화공원역점", storeLocation: "서울시 용산구"),
-        ScrapDataModel(scrapimageUrl: "", storeName: "진짜 맛있는 건강 버거", storeLocation: "서울시 용산구"),
-        ScrapDataModel(scrapimageUrl: "", storeName: "써브웨이 동대문역사문화공원역점", storeLocation: "서울시 용산구"),
-        ScrapDataModel(scrapimageUrl: "", storeName: "진짜 맛있는 건강 버거", storeLocation: "서울시 용산구"),
-        ScrapDataModel(scrapimageUrl: "", storeName: "써브웨이 동대문역사문화공원역점", storeLocation: "서울시 용산구"),
-        ScrapDataModel(scrapimageUrl: "", storeName: "진짜 맛있는 건강 버거", storeLocation: "서울시 용산구"),
-        ScrapDataModel(scrapimageUrl: "", storeName: "써브웨이 동대문역사문화공원역점", storeLocation: "서울시 용산구"),
-        ScrapDataModel(scrapimageUrl: "", storeName: "진짜 맛있는 건강 버거", storeLocation: "서울시 용산구")
+        ScrapDataModel(scrapimageUrl: "tempBurger", storeName: "진짜 맛있는 건강 버거", storeLocation: "서울시 용산구"),
+        ScrapDataModel(scrapimageUrl: "tempBurger", storeName: "써브웨이 동대문역사문화공원역점", storeLocation: "서울시 용산구"),
+        ScrapDataModel(scrapimageUrl: "tempBurger", storeName: "진짜 맛있는 건강 버거", storeLocation: "서울시 용산구"),
+        ScrapDataModel(scrapimageUrl: "tempBurger", storeName: "써브웨이 동대문역사문화공원역점", storeLocation: "서울시 용산구"),
+        ScrapDataModel(scrapimageUrl: "tempBurger", storeName: "진짜 맛있는 건강 버거", storeLocation: "서울시 용산구"),
+        ScrapDataModel(scrapimageUrl: "tempBurger", storeName: "써브웨이 동대문역사문화공원역점", storeLocation: "서울시 용산구"),
+        ScrapDataModel(scrapimageUrl: "tempBurger", storeName: "진짜 맛있는 건강 버거", storeLocation: "서울시 용산구")
     ]
 }
