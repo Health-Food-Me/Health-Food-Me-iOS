@@ -37,7 +37,7 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     lazy var blogReviewSeperatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 239.0 / 255.0, green: 239.0 / 255.0, blue: 239.0 / 255.0, alpha: 1.0)
+        view.backgroundColor = UIColor.helfmeCardlineGray
         return view
     }()
     
