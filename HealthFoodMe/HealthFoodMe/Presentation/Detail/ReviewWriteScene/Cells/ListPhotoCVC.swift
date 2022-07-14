@@ -23,8 +23,9 @@ final class ListPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     lazy var photoImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageLiterals.ReviewWrite.addPhotoIcon
-        imageView.layer.cornerRadius = 8
+//        imageView.image = ImageLiterals.ReviewWrite.addPhotoIcon
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     
@@ -45,20 +46,28 @@ final class ListPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 // MARK: - Methods
 
 extension ListPhotoCVC {
+    
+    func setImage(_ image: UIImage) {
+        photoImageView.image = image
+    }
+    
     func setLayout() {
         contentView.addSubviews(photoImageView, deleteBtn)
         
         photoImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
+        photoImageView.layer.cornerRadius = 8
+        photoImageView.layer.masksToBounds = true
         deleteBtn.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().inset(0)
+            make.top.equalToSuperview().offset(3)
+            make.trailing.equalToSuperview().inset(2)
             make.width.height.equalTo(24)
         }
     }

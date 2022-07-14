@@ -6,10 +6,10 @@
 //
 
 import UIKit
+import Photos
 
 import BSImagePicker
 import SnapKit
-import Photos
 
 protocol AddImageDelegate: AnyObject {
     func didPickImagesToUpload(images: [UIImage])
@@ -85,7 +85,7 @@ extension AddPhotoCVC {
         
         addPhotoView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.width.height.equalTo(105)
+//            make.width.height.equalTo(105)
         }
         
         addPhotoImageView.snp.makeConstraints { make in

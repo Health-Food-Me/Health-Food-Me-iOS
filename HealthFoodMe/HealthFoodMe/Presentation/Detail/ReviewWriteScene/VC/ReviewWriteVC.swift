@@ -546,6 +546,15 @@ extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
             addPhotoCell.delegate = self
             addPhotoCell.photoCountLabel.text = "\(photoModel.userSelectedImages.count)/5"
             addPhotoCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showStatusActionSheet(_:))))
+            
+            let borderLayer = CAShapeLayer()
+            borderLayer.strokeColor = UIColor.helfmeTagGray.cgColor
+            borderLayer.lineDashPattern = [4, 4]
+            borderLayer.fillColor = nil
+            borderLayer.path = UIBezierPath(roundedRect: addPhotoCell.contentView.bounds,
+                                            cornerRadius: 8).cgPath
+            addPhotoCell.layer.addSublayer(borderLayer)
+            
             return addPhotoCell
         default:
             guard let listPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: ListPhotoCVC.className, for: indexPath) as? ListPhotoCVC else { fatalError("Failed to dequeue cell for ListPhotoCVC") }
@@ -553,8 +562,11 @@ extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
             listPhotoCell.indexPath = indexPath.item
             
             if photoModel.userSelectedImages.count > 0 {
-                listPhotoCell.photoImageView.image = photoModel.userSelectedImages[indexPath.item - 1]
+                listPhotoCell.setImage(photoModel.userSelectedImages[indexPath.item - 1])
             }
+            listPhotoCell.layer.cornerRadius = 8
+            listPhotoCell.layer.masksToBounds = true
+            listPhotoCell.contentView.clipsToBounds = true
             return listPhotoCell
         }
     }
@@ -563,11 +575,8 @@ extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
 extension ReviewWriteVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = UIScreen.main.bounds.width
-        
-        let cellWidth = width * (105/375)
-        let cellHeight = cellWidth * (105/105)
-        
+        let cellWidth = 105
+        let cellHeight = 105
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
