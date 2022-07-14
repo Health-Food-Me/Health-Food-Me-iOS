@@ -12,21 +12,20 @@ import NMapsMap
 import RxSwift
 import SnapKit
 
-class MainMapVC: UIViewController {
+class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
     // MARK: - Properties
     
     private let disposeBag = DisposeBag()
-    private var locationManager = CLLocationManager()
+    private let locationManager = NMFLocationManager.sharedInstance()
     private var currentLatitude: Double?
     private var currentLongitude: Double?
     var viewModel: MainMapViewModel!
     
     // MARK: - UI Components
     
-    private lazy var mapView: NMFMapView = {
-        let map = NMFMapView()
-        map.locationOverlay.hidden = false
+    private lazy var mapView: NaverMapContainerView = {
+        let map = NaverMapContainerView()
         return map
     }()
     
@@ -96,11 +95,12 @@ class MainMapVC: UIViewController {
         return bt
     }()
     
-    private let myLocationButton: UIButton = {
+    private lazy var myLocationButton: UIButton = {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.mylocationIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            
+            let NMGPosition = self.locationManager?.currentLatLng()
+            self.mapView.moveCameraPosition(NMGPosition ?? NMGLatLng(lat: 37.5666805, lng: 126.9784147))
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
         bt.clipsToBounds = true
@@ -272,19 +272,10 @@ extension MainMapVC {
         navigationController?.isNavigationBarHidden =  true
     }
     
-    @objc
-    private func presentSearchVC() {
-        let nextVC = ModuleFactory.resolve().makeSearchVC()
-        self.navigationController?.pushViewController(nextVC, animated: true)
+    private func setMapView() {
+        locationManager?.add(self)
     }
     
-    @objc
-    private func presentDetailVC() {
-        self.scrapButton.isHidden = true
-        self.myLocationButton.isHidden = true
-        self.mapDetailSummaryView.snp.updateConstraints { make in
-            make.top.equalToSuperview().inset(44)
-        }
         
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
