@@ -18,7 +18,7 @@ final class URLSchemeManager: NSObject {
     private override init() {}
     
     func loadTelephoneApp(phoneNumber: String) {
-        let number: String = phoneNumber.trimmingCharacters(in: ["!"])
+        let number: String = phoneNumber.trimmingCharacters(in: ["-"])
         if let url = NSURL(string: "tel://" + "\(number)"),
            UIApplication.shared.canOpenURL(url as URL) {
             UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
@@ -33,7 +33,7 @@ final class URLSchemeManager: NSObject {
                            + "&dlat=\(destination.latitude)"
                            + "&dlng=\(destination.longtitude)"
                            + "&dname=\(destination.name)"
-                           + "&appname=com.healthFoodMe.release"),
+                                   + "&appname=\(String(describing: Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String))"),
            UIApplication.shared.canOpenURL(url as URL) {
             UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
         } else {

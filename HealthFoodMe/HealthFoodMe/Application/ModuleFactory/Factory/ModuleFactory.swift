@@ -20,6 +20,9 @@ protocol ModuleFactoryProtocol {
     // MARK: - Search
     func makeSearchVC() -> SearchVC
     func makeSearchResultVC() -> SearchResultVC
+    
+    // MARK: - Scrap
+    func makeScrapVC() -> ScrapVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -71,6 +74,13 @@ class ModuleFactory: ModuleFactoryProtocol {
     
     func makeSearchResultVC() -> SearchResultVC {
         let vc = SearchResultVC.controllerFromStoryboard(.searchResult)
+        
+        return vc
+    }
+    
+    // MARK: - Scrap
+    func makeScrapVC() -> ScrapVC {
+        let vc = ScrapVC.controllerFromStoryboard(.scrap)
         
         return vc
     }
