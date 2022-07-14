@@ -49,13 +49,17 @@ extension NicknameChangeViewModel {
     let hasSpecialCharacter = useCase.nicknameHasCharacter
     let isDuplicatedNickname = useCase.nicknameDuplicated
     
-    Observable.combineLatest(hasSpecialCharacter, isDuplicatedNickname,
+    Observable.zip(hasSpecialCharacter, isDuplicatedNickname,
                              resultSelector: { characterState, duplicatedState -> NicknameStatus in
-      if characterState { return NicknameStatus.containsSpecialCharacter }
-      else if duplicatedState { return NicknameStatus.duplicated }
-      else { return NicknameStatus.normal}
+      if characterState {
+        return NicknameStatus.containsSpecialCharacter
+      } else if duplicatedState {
+        return NicknameStatus.duplicated
+      } else {
+        return NicknameStatus.normal
+      }
     })
-    .subscribe(onNext: { [weak self] nicknameState in
+    .subscribe(onNext: { nicknameState in
       output.currentNicknameStatus.accept(nicknameState)
     }).disposed(by: self.disposeBag)
   }
