@@ -326,7 +326,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         toastView.layer.cornerRadius = 20
         toastView.alpha = 0
         return toastView
-      }()
+    }()
     
     // MARK: - View Life Cycle
     
@@ -354,11 +354,10 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
 // MARK: - Methods
 
 extension ReviewWriteVC {
-        
     private func setTextView() {
         addToolBar(textView: reviewTextView)
     }
-        
+    
     private func setDelegate() {
         scrollView.delegate = self
         reviewTextView.delegate = self
@@ -510,7 +509,7 @@ extension ReviewWriteVC {
         }
     }
     
-    @objc func didTapTasteTag(_ sender: UIButton) {
+    @objc private func didTapTasteTag(_ sender: UIButton) {
         self.selectedButton = sender.tag
         tasteTagButton.forEach { button in
             guard let tagTitle = button.titleLabel?.text else { return }
@@ -527,7 +526,7 @@ extension ReviewWriteVC {
         print(tasteSet)
     }
     
-    @objc func didTapFeelingTag(_ sender: UIButton) {
+    @objc private func didTapFeelingTag(_ sender: UIButton) {
         sender.isSelected.toggle()
         feelingArray[sender.tag].toggle()
         if sender.isSelected {
@@ -540,7 +539,7 @@ extension ReviewWriteVC {
         print(feelingArray)
     }
     
-    func checkMaxLength(_ textView: UITextView) {
+    private func checkMaxLength(_ textView: UITextView) {
         if (textView.text.count) > 500 {
             textView.deleteBackward()
         }
@@ -551,7 +550,7 @@ extension ReviewWriteVC {
         ListPhotoCVC.register(target: photoCollectionView)
     }
     
-    @objc func showStatusActionSheet(_ sender: UITapGestureRecognizer) {
+    @objc private func showStatusActionSheet(_ sender: UITapGestureRecognizer) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let takePictureAction = UIAlertAction(title: "사진 찍기", style: .default) {_ in
@@ -575,7 +574,7 @@ extension ReviewWriteVC {
         self.present(actionSheet, animated: true)
     }
     
-    func didTapimageAlbum() {
+    private func didTapimageAlbum() {
         selectedAssets.removeAll()
         userSelectedImages.removeAll()
         
@@ -597,7 +596,7 @@ extension ReviewWriteVC {
         })
     }
     
-    func convertAssetToImages() {
+    private func convertAssetToImages() {
         if selectedAssets.count != 0 {
             for i in 0..<selectedAssets.count {
                 
@@ -646,7 +645,7 @@ extension ReviewWriteVC {
             let safeareaHeight = self.view.safeAreaInsets.bottom
             UIView.animate(withDuration: 1) {
                 self.contentView.transform =
-                                    CGAffineTransform(translationX: 0, y: -(keyboardHeight - safeareaHeight))
+                CGAffineTransform(translationX: 0, y: -(keyboardHeight - safeareaHeight))
             }
         }
     }
@@ -658,42 +657,39 @@ extension ReviewWriteVC {
 }
 
 extension ReviewWriteVC {
-    
     private func showToast() {
-      makeVibrate()
+        makeVibrate()
         checkReviewToastView.snp.remakeConstraints { make in
             make.leading.equalToSuperview().offset(63)
             make.trailing.equalToSuperview().offset(-63)
             make.bottom.equalTo(writeReviewButton.snp.top).offset(-10)
             make.height.equalTo(40)
         }
-
-      UIView.animate(withDuration: 0.5, delay: 0) {
-        self.view.layoutIfNeeded()
-          self.checkReviewToastView.alpha = 1
-              
-      } completion: { _ in
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-          self.hideToast()
+        
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.view.layoutIfNeeded()
+            self.checkReviewToastView.alpha = 1
+            
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.hideToast()
+            }
         }
-      }
     }
     
     private func hideToast() {
-
-       checkReviewToastView.snp.remakeConstraints { make in
-           make.leading.equalToSuperview().offset(63)
-           make.trailing.equalToSuperview().offset(-63)
-           make.bottom.equalToSuperview().offset(40)
-           make.height.equalTo(40)
+        checkReviewToastView.snp.remakeConstraints { make in
+            make.leading.equalToSuperview().offset(63)
+            make.trailing.equalToSuperview().offset(-63)
+            make.bottom.equalToSuperview().offset(40)
+            make.height.equalTo(40)
         }
-      
-      UIView.animate(withDuration: 0.5, delay: 0) {
-          self.checkReviewToastView.alpha = 0
-        self.view.layoutIfNeeded()
-      }
+        
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.checkReviewToastView.alpha = 0
+            self.view.layoutIfNeeded()
+        }
     }
-
 }
 
 // MARK: - Network
@@ -703,7 +699,6 @@ extension ReviewWriteVC {
 }
 
 extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photoModel.userSelectedImages.count + 1
     }
@@ -742,7 +737,6 @@ extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
 }
 
 extension ReviewWriteVC: UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWidth = 105
         let cellHeight = 105
@@ -759,7 +753,6 @@ extension ReviewWriteVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension ReviewWriteVC: AddImageDelegate {
-    
     func didPickImagesToUpload(images: [UIImage]) {
         photoModel.userSelectedImages += images
     }
@@ -776,7 +769,6 @@ extension ReviewWriteVC: ListPhotoCVCDelegate {
 }
 
 extension ReviewWriteVC: UITextViewDelegate {
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == .helfmeGray2 {
             textView.text = nil
@@ -812,8 +804,7 @@ extension ReviewWriteVC: UITextViewDelegate {
 }
 
 extension ReviewWriteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
             var images = [UIImage]()
             images.append(image)
@@ -836,16 +827,16 @@ extension UIViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(UIViewController.keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification,
-                                               object:nil)
+                                               object: nil)
     }
     
     func removeKeyboardObserver() {
         NotificationCenter.default.removeObserver(self,
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: nil)
         NotificationCenter.default.removeObserver(self,
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: nil)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -857,7 +848,7 @@ extension UIViewController {
             }
         }
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.window?.frame.origin.y != 0 {
             if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
