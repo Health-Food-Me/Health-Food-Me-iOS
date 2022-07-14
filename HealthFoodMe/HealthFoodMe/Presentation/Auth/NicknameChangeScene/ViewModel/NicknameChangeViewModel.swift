@@ -8,9 +8,9 @@
 import RxSwift
 import RxRelay
 
-final class ChangeNicknameViewModel: ViewModelType {
+final class NicknameChangeViewModel: ViewModelType {
 
-  private let useCase: ChangeNicknameUseCase
+  private let useCase: NicknameChangeUseCase
   private let disposeBag = DisposeBag()
   
   // MARK: - Inputs
@@ -23,12 +23,12 @@ final class ChangeNicknameViewModel: ViewModelType {
     let currentNicknameStatus = PublishRelay<NicknameStatus>()
   }
   
-  init(useCase: ChangeNicknameUseCase) {
+  init(useCase: NicknameChangeUseCase) {
     self.useCase = useCase
   }
 }
 
-extension ChangeNicknameViewModel {
+extension NicknameChangeViewModel {
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
     let output = Output()
     self.bindOutput(output: output, disposeBag: disposeBag)
