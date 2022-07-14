@@ -662,10 +662,10 @@
 		EB6A44C828737BF700749582 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				EB6A44C928737C4600749582 /* MainDetailScene */,
 				3BC01F7C287E91F7006C2181 /* BlogReviewTabScene */,
 				695758BA287DA4A400E36789 /* ReviewWriteScene */,
 				697074FB28737D78001A607F /* MenuTabScene */,
-				EB6A44C928737C4600749582 /* MainDetailScene */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
