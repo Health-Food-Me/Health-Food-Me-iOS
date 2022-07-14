@@ -13,6 +13,9 @@ class ScrapVC: UIViewController {
     
     // MARK: - Properties
     
+    private let scrapEmptyView = ScrapEmptyView()
+    private var isEmpty: Bool = true
+    
     private let scrapTopView: UIView = {
         let view = UIView()
         view.backgroundColor = .helfmeWhite
@@ -52,6 +55,7 @@ class ScrapVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        isScrapEmpty()
         setUI()
         setLayout()
         setDelegate()
@@ -62,6 +66,14 @@ class ScrapVC: UIViewController {
 // MARK: - Methods
 
 extension ScrapVC {
+    private func isScrapEmpty() {
+        if isEmpty {
+            scrapEmptyView.isHidden = false
+        } else {
+            scrapEmptyView.isHidden = true
+        }
+    }
+    
     private func setUI() {
         self.navigationController?.navigationBar.isHidden = true
     }
@@ -69,7 +81,8 @@ extension ScrapVC {
     private func setLayout() {
         view.addSubviews(scrapTopView,
                          lineView,
-                         scrapCollectionView)
+                         scrapCollectionView,
+                         scrapEmptyView)
         
         scrapTopView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -96,6 +109,11 @@ extension ScrapVC {
         }
         
         scrapCollectionView.snp.makeConstraints {
+            $0.top.equalTo(lineView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        scrapEmptyView.snp.makeConstraints {
             $0.top.equalTo(lineView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
@@ -133,20 +151,22 @@ extension ScrapVC: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+
 extension ScrapVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = UIScreen.main.bounds.width
-
+        
         let cellWidth = width * (160/375)
         let cellHeight = cellWidth * (232/160)
-
+        
         return CGSize(width: cellWidth, height: cellHeight)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 20, left: 20, bottom: 15, right: 20)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
     }
