@@ -7,11 +7,19 @@
 
 import UIKit
 
-class LogoutAlertView: UIView {
+import SnapKit
+
+protocol AlertDelegate: AnyObject {
+    func alertDidTap()
+    func alertDismiss()
+}
+
+final class LogoutAlertView: UIView {
     
     // MARK: - Properties
     
     let width = UIScreen.main.bounds.width
+    weak var delegate: AlertDelegate?
     
     // MARK: - UI Components
     
@@ -31,16 +39,17 @@ class LogoutAlertView: UIView {
         return lb
     }()
     
-    private var firstButton: UIButton = {
+    private lazy var firstButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .mainRed
         btn.setTitleColor(UIColor.helfmeWhite, for: .normal)
         btn.titleLabel?.font = .NotoBold(size: 15)
         btn.layer.cornerRadius = 8
+        btn.addTarget(self, action: #selector(didTapLogout), for: .touchUpInside)
         return btn
     }()
     
-    private var secondButton: UIButton = {
+    private lazy var secondButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .helfmeWhite
         btn.setTitleColor(UIColor.helfmeGray1, for: .normal)
@@ -48,6 +57,7 @@ class LogoutAlertView: UIView {
         btn.titleLabel?.font = .NotoBold(size: 15)
         btn.layer.cornerRadius = 8
         btn.layer.borderColor = UIColor.helfmeLineGray.cgColor
+        btn.addTarget(self, action: #selector(didTapClose), for: .touchUpInside)
         btn.layer.borderWidth = 1
         return btn
     }()
@@ -56,7 +66,6 @@ class LogoutAlertView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setData()
         setUI()
         setLayout()
     }
@@ -66,14 +75,29 @@ class LogoutAlertView: UIView {
     }
 }
 
+// MARK: - @objc Methods
+
+extension LogoutAlertView {
+    @objc func didTapLogout() {
+        delegate?.alertDidTap()
+    }
+    
+    @objc func didTapClose() {
+        delegate?.alertDismiss()
+    }
+}
+
 // MARK: - Methods
 
 extension LogoutAlertView {
-    private func setData() {
-        titleLabel.text = I18N.HelfmeAlert.logout
-        subtitleLabel.text = I18N.HelfmeAlert.logoutContent
-        firstButton.setTitle(I18N.HelfmeAlert.yes, for: .normal)
-        secondButton.setTitle(I18N.HelfmeAlert.no, for: .normal)
+    func setData(title: String,
+                 subtitle: String,
+                 firstBtn: String,
+                 secondBtn: String) {
+        titleLabel.text = title
+        subtitleLabel.text = subtitle
+        firstButton.setTitle(firstBtn, for: .normal)
+        secondButton.setTitle(secondBtn, for: .normal)
     }
     
     private func setUI() {

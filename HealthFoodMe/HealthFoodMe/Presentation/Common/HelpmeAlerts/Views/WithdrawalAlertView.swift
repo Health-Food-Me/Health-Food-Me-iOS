@@ -7,11 +7,14 @@
 
 import UIKit
 
+import SnapKit
+
 class WithdrawalAlertView: UIView {
     
     // MARK: - Properties
     
     let width = UIScreen.main.bounds.width
+    weak var delegate: AlertDelegate?
     
     // MARK: - UI Components
     
@@ -31,20 +34,22 @@ class WithdrawalAlertView: UIView {
         return lb
     }()
     
-    private var firstButton: UIButton = {
+    private lazy var firstButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .mainRed
         btn.setTitleColor(UIColor.helfmeWhite, for: .normal)
         btn.titleLabel?.font = .NotoBold(size: 15)
         btn.layer.cornerRadius = 8
+        btn.addTarget(self, action: #selector(didTapWithdrawalClose), for: .touchUpInside)
         return btn
     }()
     
-    private var secondButton: UIButton = {
+    private lazy var secondButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .helfmeWhite
         btn.setTitleColor(UIColor.helfmeGray2, for: .normal)
         btn.titleLabel?.font = .NotoRegular(size: 12)
+        btn.addTarget(self, action: #selector(didTapWithdrawal), for: .touchUpInside)
         return btn
     }()
     
@@ -58,7 +63,6 @@ class WithdrawalAlertView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setData()
         setUI()
         setLayout()
     }
@@ -68,14 +72,29 @@ class WithdrawalAlertView: UIView {
     }
 }
 
+// MARK: - @objc Methods
+
+extension WithdrawalAlertView {
+    @objc func didTapWithdrawal() {
+        delegate?.alertDidTap()
+    }
+    
+    @objc func didTapWithdrawalClose() {
+        delegate?.alertDismiss()
+    }
+}
+
 // MARK: - Methods
 
 extension WithdrawalAlertView {
-    private func setData() {
-        titleLabel.text = I18N.HelfmeAlert.withdrawal
-        subtitleLabel.text = I18N.HelfmeAlert.withdrawalContent
-        firstButton.setTitle(I18N.HelfmeAlert.no, for: .normal)
-        secondButton.setTitle(I18N.HelfmeAlert.withdrawalYes, for: .normal)
+    func setData(title: String,
+                 subtitle: String,
+                 firstBtn: String,
+                 secondBtn: String) {
+        titleLabel.text = title
+        subtitleLabel.text = subtitle
+        firstButton.setTitle(firstBtn, for: .normal)
+        secondButton.setTitle(secondBtn, for: .normal)
     }
     
     private func setUI() {

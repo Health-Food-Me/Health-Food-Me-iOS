@@ -7,11 +7,14 @@
 
 import UIKit
 
+import SnapKit
+
 class ReviewDeleteAlertView: UIView {
     
     // MARK: - Properties
     
     let width = UIScreen.main.bounds.width
+    weak var delegate: AlertDelegate?
     
     // MARK: - UI Components
     
@@ -24,16 +27,17 @@ class ReviewDeleteAlertView: UIView {
         return lb
     }()
     
-    private var firstButton: UIButton = {
+    private lazy var firstButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .mainRed
         btn.setTitleColor(UIColor.helfmeWhite, for: .normal)
         btn.titleLabel?.font = .NotoBold(size: 15)
         btn.layer.cornerRadius = 8
+        btn.addTarget(self, action: #selector(didTapReviewDelete), for: .touchUpInside)
         return btn
     }()
     
-    private var secondButton: UIButton = {
+    private lazy var secondButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .helfmeWhite
         btn.setTitleColor(UIColor.helfmeGray1, for: .normal)
@@ -42,6 +46,7 @@ class ReviewDeleteAlertView: UIView {
         btn.layer.cornerRadius = 8
         btn.layer.borderColor = UIColor.helfmeLineGray.cgColor
         btn.layer.borderWidth = 1
+        btn.addTarget(self, action: #selector(didTapReviewDeleteClose), for: .touchUpInside)
         return btn
     }()
     
@@ -49,7 +54,6 @@ class ReviewDeleteAlertView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setData()
         setUI()
         setLayout()
     }
@@ -59,13 +63,27 @@ class ReviewDeleteAlertView: UIView {
     }
 }
 
+// MARK: - @objc Methods
+
+extension ReviewDeleteAlertView {
+    @objc func didTapReviewDelete() {
+        delegate?.alertDidTap()
+    }
+    
+    @objc func didTapReviewDeleteClose() {
+        delegate?.alertDismiss()
+    }
+}
+
 // MARK: - Methods
 
 extension ReviewDeleteAlertView {
-    private func setData() {
-        titleLabel.text = I18N.HelfmeAlert.reviewDelete
-        firstButton.setTitle(I18N.HelfmeAlert.yes, for: .normal)
-        secondButton.setTitle(I18N.HelfmeAlert.no, for: .normal)
+    func setData(title: String,
+                 firstBtn: String,
+                 secondBtn: String) {
+        titleLabel.text = title
+        firstButton.setTitle(firstBtn, for: .normal)
+        secondButton.setTitle(secondBtn, for: .normal)
     }
     
     private func setUI() {
