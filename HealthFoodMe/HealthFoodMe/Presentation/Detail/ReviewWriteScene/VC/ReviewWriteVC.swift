@@ -24,6 +24,8 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     }
     var selectedAssets: [PHAsset] = [PHAsset]()
     var userSelectedImages: [UIImage] = [UIImage]()
+    var tasteSet = Set<String>()
+    var feelingSet = Set<String>()
     
     // MARK: - UI Components
     
@@ -82,6 +84,9 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         return sv
     }()
     
+    private var selectedButton: Int = 0
+    private var tasteTagButton: [UIButton] = []
+    
     private lazy var tagGood: UIButton = {
         let btn = UIButton()
         btn.setTitle("# 맛 최고", for: .normal)
@@ -91,30 +96,39 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.tag = 0
+        //        btn.addTarget(self, action: #selector(didTapTasteTag), for: .touchUpInside)
+        tasteTagButton.append(btn)
         return btn
     }()
     
     private lazy var tagSoso: UIButton = {
         let btn = UIButton()
-        btn.setTitle("#맛 그럭저럭", for: .normal)
+        btn.setTitle("# 맛 그럭저럭", for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.tag = 1
+        //        btn.addTarget(self, action: #selector(didTapTasteTag), for: .touchUpInside)
+        tasteTagButton.append(btn)
         return btn
     }()
     
     private lazy var tagBad: UIButton = {
         let btn = UIButton()
-        btn.setTitle("#맛 별로에요", for: .normal)
+        btn.setTitle("# 맛 별로에요", for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.tag = 2
+        //        btn.addTarget(self, action: #selector(didTapTasteTag), for: .touchUpInside)
+        tasteTagButton.append(btn)
         return btn
     }()
     
@@ -161,6 +175,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.addTarget(self, action: #selector(didTapFeelingTag), for: .touchUpInside)
         return btn
     }()
     
@@ -173,6 +188,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.addTarget(self, action: #selector(didTapFeelingTag), for: .touchUpInside)
         return btn
     }()
     
@@ -185,6 +201,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.addTarget(self, action: #selector(didTapFeelingTag), for: .touchUpInside)
         return btn
     }()
     
@@ -309,6 +326,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         setNavigation()
         setLayout()
         registerCell()
+        setAddTargets()
     }
 }
 
@@ -453,6 +471,45 @@ extension ReviewWriteVC {
         }
     }
     
+    private func setAddTargets() {
+        tasteTagButton.forEach { button in
+            button.addTarget(self, action: #selector(didTapTasteTag), for: .touchUpInside)
+        }
+    }
+    
+    @objc func didTapTasteTag(_ sender: UIButton) {
+        self.selectedButton = sender.tag
+        tasteTagButton.forEach { button in
+            guard let tagTitle = button.titleLabel?.text else { return }
+            button.isSelected = sender == button
+            if button.isSelected {
+                button.layer.borderColor = UIColor.mainRed.cgColor
+                button.setTitleColor(UIColor.mainRed, for: UIControl.State.normal)
+                tasteSet.insert(tagTitle)
+            } else {
+                button.layer.borderColor = UIColor.helfmeGray2.cgColor
+                button.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
+                tasteSet.remove(tagTitle)
+            }
+        }
+        print(tasteSet)
+    }
+    
+    @objc func didTapFeelingTag(_ sender: UIButton) {
+        guard let tagTitle = sender.titleLabel?.text else { return }
+        sender.isSelected.toggle()
+        if sender.isSelected {
+            sender.layer.borderColor = UIColor.mainRed.cgColor
+            sender.setTitleColor(UIColor.mainRed, for: UIControl.State.normal)
+            feelingSet.insert(tagTitle)
+        } else {
+            sender.layer.borderColor = UIColor.helfmeGray2.cgColor
+            sender.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
+            feelingSet.remove(tagTitle)
+        }
+        print(feelingSet)
+    }
+    
     func checkMaxLength(_ textView: UITextView) {
         if (textView.text.count) > 500 {
             textView.deleteBackward()
@@ -497,11 +554,8 @@ extension ReviewWriteVC {
         imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
         
         self.presentImagePicker(imagePicker, select: { (asset) in
-            
         }, deselect: { (asset) in
-            
         }, cancel: { (assets) in
-            
         }, finish: { (assets) in
             
             for i in 0..<assets.count {
