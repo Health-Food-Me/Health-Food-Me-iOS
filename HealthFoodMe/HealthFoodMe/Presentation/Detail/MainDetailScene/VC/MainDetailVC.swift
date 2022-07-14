@@ -16,6 +16,7 @@ class MainDetailVC: UIViewController {
     // MARK: - Properties
     
     private let disposeBag = DisposeBag()
+    private var mainInfoTVC = MainInfoTVC()
     private var detailTabTVC = DetailTabTVC()
     private var detailTabTitleHeader = DetailTabTitleHeader()
     private var childVC = ModuleFactory.resolve().makeMenuTabVC()
@@ -51,6 +52,11 @@ class MainDetailVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setPanGesture()
     }
 }
 
@@ -107,6 +113,39 @@ extension MainDetailVC {
     private func bindViewModels() {
         let input = MainDetailViewModel.Input()
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+    }
+    
+    private func setPanGesture() {
+        let panGesture = UIPanGestureRecognizer()
+        mainInfoTVC.addGestureRecognizer(panGesture)
+        panGesture.rx.event.asDriver { _ in .never() }
+            .drive(onNext: { [weak self] sender in
+                let windowTranslation = sender.translation(in: self?.view)
+                print(windowTranslation)
+                switch sender.state {
+                case .changed:
+                    self?.view.backgroundColor = .clear
+                    UIView.animate(withDuration: 0.1) {
+                        self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
+                    }
+                case .ended:
+                    if windowTranslation.y > 130 {
+                        self?.dismiss(animated: false) {
+                            self?.translationClosure?()
+                        }
+                    } else {
+                        self?.view.snp.updateConstraints { make in
+                            make.edges.equalToSuperview()
+                        }
+                        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                            self?.view.transform = CGAffineTransform(translationX: 0, y: 0)
+                            self?.view.layoutIfNeeded()
+                        }
+                    }
+                default:
+                    break
+                }
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -179,6 +218,7 @@ extension MainDetailVC: UITableViewDataSource {
                 .drive { phoneNumber in
                     URLSchemeManager.shared.loadTelephoneApp(phoneNumber: phoneNumber)
                 }.disposed(by: disposeBag)
+            mainInfoTVC = cell
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTabTVC.className, for: indexPath) as? DetailTabTVC else { return UITableViewCell() }

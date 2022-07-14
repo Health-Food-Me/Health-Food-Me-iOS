@@ -308,13 +308,19 @@ extension MainMapVC {
             } completion: { _ in
                 self.scrapButton.isHidden = false
                 self.myLocationButton.isHidden = false
+                self.hamburgerButton.isHidden = false
+                self.searchBar.isHidden = false
+                self.categoryCollectionView.isHidden = false
             }
         }
         let nav = UINavigationController(rootViewController: nextVC)
-        nav.modalPresentationStyle = .currentContext
+        nav.modalPresentationStyle = .overCurrentContext
         nav.modalTransitionStyle = .crossDissolve
         self.present(nav, animated: true) {
             self.mapDetailSummaryView.isHidden = true
+            self.hamburgerButton.isHidden = true
+            self.searchBar.isHidden = true
+            self.categoryCollectionView.isHidden = true
         }
     }
 }
