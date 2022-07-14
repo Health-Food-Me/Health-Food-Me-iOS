@@ -79,6 +79,13 @@ final class SearchResultVC: UIViewController {
         return tv
     }()
     
+    private let searchResultLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .helfmeLineGray
+        view.layer.cornerRadius = 1.5
+        return view
+    }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -113,6 +120,8 @@ extension SearchResultVC {
             self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 500)
         })
         searchResultHeaderButton.isHidden = true
+        searchResultLineView.isHidden = false
+        searchResultTableView.layer.cornerRadius = 15
         isBottom = true
     }
     
@@ -160,6 +169,15 @@ extension SearchResultVC {
         searchResultTableView.snp.makeConstraints {
             $0.top.equalTo(lineView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        searchResultTableView.addSubviews(searchResultLineView)
+        
+        searchResultLineView.snp.makeConstraints {
+            $0.top.equalTo(searchResultTableView.snp.top).inset(8)
+            $0.width.equalTo(70)
+            $0.height.equalTo(3)
+            $0.centerX.equalTo(searchResultTableView)
         }
     }
     
@@ -215,7 +233,9 @@ extension SearchResultVC: UIScrollViewDelegate {
             })
         }
         isBottom = false
-        self.searchResultTableView.isScrollEnabled = true
+        searchResultTableView.layer.cornerRadius = 0
+        searchResultLineView.isHidden = true
+        searchResultTableView.isScrollEnabled = true
     }
 }
 

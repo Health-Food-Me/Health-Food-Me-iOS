@@ -28,7 +28,7 @@ final class SearchVC: UIViewController {
     }
     var searchDataModel: [SearchResultModel] = []
     var searchRecentList: [String] = []
-    private var isEmpty: Bool = true
+    private var isEmpty: Bool = false
     private var searchEmptyView = SearchEmptyView()
     
     private let searchView: UIView = {
