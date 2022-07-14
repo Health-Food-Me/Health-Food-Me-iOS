@@ -22,6 +22,7 @@ class SocialLoginVC: UIViewController {
         lb.text = I18N.Auth.title
         lb.font = UIFont(name: AppFontName.GodoB, size: 58)
         lb.textColor = .mainRed
+        lb.textAlignment = .center
         
         return lb
     }()
@@ -31,35 +32,28 @@ class SocialLoginVC: UIViewController {
         let boldFont = UIFont(name: AppFontName.appleSDGothicNeoBold, size: 14)!
         lb.text = I18N.Auth.subTitle
         lb.font = UIFont(name: AppFontName.appleSDGothicNeoMedium, size: 14)
-        lb.textColor = .helfmeBlack
+        lb.textColor = .helfmeGray1
         lb.numberOfLines = 2
         lb.textAlignment = .center
-        lb.setAttributedText(targetFontList: ["샐러드": boldFont,
-                                              "일반식": boldFont],
-                             targetColorList: ["샐러드": .mainGreen,
-                                               "일반식": .mainRed])
 
         return lb
     }()
     
     private lazy var kakaoLoginButton: UIButton = {
        let button = UIButton()
-        button.setImage(ImageLiterals.Auth.kakaoLoginBtn, for: .normal)
-        
+        button.setBackgroundImage(ImageLiterals.Auth.kakaoLoginBtn, for: .normal)
         return button
     }()
     
     private lazy var appleLoginButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.Auth.appleLoginBtn, for: .normal)
-        
+        button.setBackgroundImage(ImageLiterals.Auth.appleLoginBtn, for: .normal)
         return button
     }()
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setLayout()
         setAddTarget()
     }
@@ -126,14 +120,17 @@ extension SocialLoginVC {
             make.centerX.equalToSuperview()
         }
         
-        kakaoLoginButton.snp.makeConstraints { make in
-            make.top.equalTo(subTitleLabel.snp.bottom).offset(249)
-            make.centerX.equalToSuperview()
+        let loginButtonWidth = UIScreen.main.bounds.width - 100
+        appleLoginButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(120)
+            make.leading.trailing.equalToSuperview().inset(50)
+            make.height.equalTo(loginButtonWidth * 41/275)
         }
         
-        appleLoginButton.snp.makeConstraints {make in
-            make.top.equalTo(kakaoLoginButton.snp.bottom).offset(10)
-            make.centerX.equalToSuperview()
+        kakaoLoginButton.snp.makeConstraints { make in
+            make.bottom.equalTo(appleLoginButton.snp.top).offset(-10)
+            make.leading.trailing.equalToSuperview().inset(50)
+            make.height.equalTo(loginButtonWidth * 41/275)
         }
     }
     
