@@ -14,7 +14,9 @@ class ScrapVC: UIViewController {
     // MARK: - Properties
     
     private let scrapEmptyView = ScrapEmptyView()
-    private var isEmpty: Bool = true
+    private var isEmpty: Bool = false
+    
+    // MARK: - UI Components
     
     private let scrapTopView: UIView = {
         let view = UIView()
@@ -67,11 +69,7 @@ class ScrapVC: UIViewController {
 
 extension ScrapVC {
     private func isScrapEmpty() {
-        if isEmpty {
-            scrapEmptyView.isHidden = false
-        } else {
-            scrapEmptyView.isHidden = true
-        }
+        scrapEmptyView.isHidden = !isEmpty
     }
     
     private func setUI() {
@@ -173,7 +171,7 @@ extension ScrapVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension ScrapVC: ScrapCVCDelegate {
-    func ScrapCVCButtonDidTap(index: Int, isSelected: Bool) {
+    func scrapCVCButtonDidTap(index: Int, isSelected: Bool) {
         print("\(index) 번 스크랩 \(isSelected) 상태")
     }
 }

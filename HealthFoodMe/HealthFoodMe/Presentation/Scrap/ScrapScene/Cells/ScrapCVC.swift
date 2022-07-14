@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol ScrapCVCDelegate: AnyObject {
-    func ScrapCVCButtonDidTap(index: Int, isSelected: Bool)
+    func scrapCVCButtonDidTap(index: Int, isSelected: Bool)
 }
 
 class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
@@ -70,7 +70,7 @@ class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
 extension ScrapCVC {
     @objc func didTapScrapButton(_ sender: UIButton) {
         sender.isSelected.toggle()
-        delegate?.ScrapCVCButtonDidTap(index: index, isSelected: sender.isSelected)
+        delegate?.scrapCVCButtonDidTap(index: index, isSelected: sender.isSelected)
     }
 }
 
