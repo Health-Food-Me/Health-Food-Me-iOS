@@ -72,4 +72,28 @@ struct I18N {
         static let dietStore = "다이어터도 즐길 수 있는 식당"
         static let goScrap = "스크랩하러 가기"
     }
+    
+    struct HelfmeAlert {
+        static let logout = "정말 로그아웃 하시겠어요?"
+        static let logoutContent =
+        """
+        로그아웃 시 헬푸미의 업데이트 내용을
+        보실 수 없습니다.
+        """
+        static let yes = "네"
+        static let no = "아니요"
+        
+        static let reviewDelete =
+        """
+        작성한 리뷰를
+        삭제하실 건가요?
+        """
+        
+        static let withdrawal = "정말로 탈퇴하실건가요?"
+        static let withdrawalContent =
+        """
+        탈퇴 시 헬푸미의 새로운 정보를
+        얻을 수 없습니다.
+        """
+    }
 }
