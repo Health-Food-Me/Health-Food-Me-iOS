@@ -74,4 +74,9 @@ struct ImageLiterals {
         static let menuIcon = UIImage(named: "icn_menu")
         static let mylocationIcon = UIImage(named: "icn_myLocation")
     }
+    
+    struct ReviewWrite {
+        static let addPhotoIcon = UIImage(named: "icn_photoAdd")
+        static let deletePhotoBtn = UIImage(named: "btn_delete")
+    }
 }

@@ -4,6 +4,10 @@
 <dict>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>NSCameraUsageDescription</key>
+	<string>리뷰 사진 촬영을 위해 시스템 카메라에 접근합니다</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>리뷰를 작성하기 위해 사용자의 갤러리에 접근합니다</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Bold.otf</string>

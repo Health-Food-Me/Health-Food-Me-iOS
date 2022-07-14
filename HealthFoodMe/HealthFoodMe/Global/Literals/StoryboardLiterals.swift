@@ -23,6 +23,7 @@ enum Storyboards: String {
     case scrap = "Scrap"
 
     case menuTab = "MenuTab"
+    case reviewWrite = "ReviewWrite"
     case socialLogin = "SocialLogin"
     case hamburgerBar = "HamburgerBar"
     case blogReviewTab = "BlogReviewTab"
