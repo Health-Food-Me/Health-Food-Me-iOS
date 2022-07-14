@@ -60,4 +60,9 @@ struct I18N {
                                        "수정사항 제보하기"]
         }
     }
+    
+    struct Search {
+        static let searchEmpty = "해당되는 검색 결과가 없습니다"
+        static let searchAnother = "다른 식당 또는 음식명을 입력해주세요!"
+    }
 }

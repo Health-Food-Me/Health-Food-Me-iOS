@@ -55,7 +55,7 @@ extension CustomSegmentControl {
                                                 green: 34/255,
                                                 blue: 34/255,
                                                 alpha: 1)
-            titleLabel.font = UIFont.systemFont(ofSize: 12)
+            titleLabel.font = UIFont.NotoMedium(size: 12)
             buttonContainerView.addSubview(button)
             buttonContainerView.addSubview(titleLabel)
 

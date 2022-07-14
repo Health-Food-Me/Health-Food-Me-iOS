@@ -19,6 +19,7 @@ protocol ModuleFactoryProtocol {
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC
+    func makeSearchResultVC() -> SearchResultVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -68,6 +69,12 @@ class ModuleFactory: ModuleFactoryProtocol {
         return vc
     }
     
+    func makeSearchResultVC() -> SearchResultVC {
+        let vc = SearchResultVC.controllerFromStoryboard(.searchResult)
+        
+        return vc
+    }
+
     // MARK: - Plan
     
 //    func instantiatePlanPreviewVC(postID: Int) -> PlanPreviewVC {

@@ -33,7 +33,6 @@ final class SearchTVC: UITableViewCell, UITableViewRegisterable {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setUI()
         setLayout()
     }
@@ -52,6 +51,7 @@ extension SearchTVC {
     
     private func setUI() {
         backgroundColor = .helfmeWhite
+        selectionStyle = .none
     }
     
     private func setLayout() {
