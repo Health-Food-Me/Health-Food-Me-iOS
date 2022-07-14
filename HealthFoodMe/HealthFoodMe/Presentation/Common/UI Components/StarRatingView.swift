@@ -6,19 +6,12 @@
 //
 
 import UIKit
-
 import SnapKit
 
 final class StarRatingView: UIView {
     
     // MARK: - Properties
-    
-    var spacing: CGFloat = 2 {
-        didSet {
-            starStackView.spacing = self.spacing
-        }
-    }
-    
+    private var spacing: CGFloat = 0
     var rate: CGFloat = 0 {
         didSet {
             paintStars()
@@ -26,7 +19,6 @@ final class StarRatingView: UIView {
     }
     
     private var starImageViews: [UIImageView] = []
-    
     private var starScale: CGFloat = 16
     
     // MARK: - UI Components
@@ -34,19 +26,20 @@ final class StarRatingView: UIView {
     private lazy var starStackView: UIStackView = {
         let st = UIStackView()
         st.axis = .horizontal
-        st.spacing = self.spacing
-        st.distribution = .fillProportionally
+        st.distribution = .fillEqually
         return st
     }()
     
     // MARK: View Life Cycle
     
-    convenience init(starScale: CGFloat) {
+    convenience init(starScale: CGFloat, spacing: CGFloat = 0) {
         self.init()
         
         self.starScale = starScale
+        self.spacing = spacing
         setUI()
         setLayout()
+        setStarStackView()
     }
     
     private override init(frame: CGRect) {
@@ -68,14 +61,13 @@ extension StarRatingView {
     
     private func setLayout() {
         self.addSubviews(starStackView)
-        
-        setStarStackView()
         starStackView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+          make.center.equalToSuperview()
         }
     }
     
     private func setStarStackView() {
+      print(starStackView.frame.width)
         for starNumber in 0...4 {
             let imageView = UIImageView()
             imageView.snp.makeConstraints { make in

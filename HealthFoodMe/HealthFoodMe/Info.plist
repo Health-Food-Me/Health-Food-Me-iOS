@@ -50,7 +50,7 @@
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
 					<key>UISceneStoryboardFile</key>
-					<string>MenuTab</string>
+					<string>BlogReviewTab</string>
 				</dict>
 			</array>
 		</dict>

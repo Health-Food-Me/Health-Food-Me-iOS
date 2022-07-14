@@ -10,17 +10,32 @@ import UIKit
 import RealmSwift
 import SnapKit
 
+enum SearchType {
+    case recent
+    case search
+    case searchResult
+}
+
 final class SearchVC: UIViewController {
     
     // MARK: - Properties
     
     let realm = try? Realm()
-    var searchStarted: Bool = false {
+    var searchType: SearchType = SearchType.recent {
         didSet {
             searchTableView.reloadData()
         }
     }
+    var searchDataModel: [SearchResultModel] = []
     var searchRecentList: [String] = []
+    private var isEmpty: Bool = true
+    private var searchEmptyView = SearchEmptyView()
+    
+    private let searchView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .mainRed
+        return view
+    }()
     
     private lazy var searchTextField: UITextField = {
         let tf = UITextField()
@@ -52,20 +67,40 @@ final class SearchVC: UIViewController {
         return btn
     }()
     
+    private lazy var resultCloseButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(ImageLiterals.Search.xIcon, for: .normal)
+        btn.addTarget(self, action: #selector(popToMainMapVC), for: .touchUpInside)
+        return btn
+    }()
+    
     private let lineView: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .helfmeLineGray
         return view
     }()
     
-    private let topView: UIView = UIView()
+    private let searchHeaderView: UIView = UIView()
     
-    private let topLabel: UILabel = {
+    private let recentHeaderLabel: UILabel = {
         let lb = UILabel()
         lb.text = "최근 검색어"
         lb.textColor = .helfmeGray1
         lb.font = .NotoRegular(size: 14)
         return lb
+    }()
+    
+    private lazy var resultHeaderButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(ImageLiterals.Search.viewMapBtn, for: .normal)
+        btn.setTitle("지도 뷰로 보기", for: .normal)
+        btn.setTitleColor(UIColor.helfmeGray1, for: .normal)
+        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.isHidden = true
+        btn.addTarget(self, action: #selector(pushToSearchResultVC), for: .touchUpInside)
+        btn.semanticContentAttribute = .forceLeftToRight
+        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 10)
+        return btn
     }()
     
     private lazy var searchTableView: UITableView = {
@@ -75,12 +110,16 @@ final class SearchVC: UIViewController {
         tv.rowHeight = 56
         tv.backgroundColor = .helfmeWhite
         tv.keyboardDismissMode = .onDrag
-        tv.tableHeaderView = topView
+        tv.tableHeaderView = searchHeaderView
         tv.tableHeaderView?.frame.size.height = 56
         return tv
     }()
     
     // MARK: - View Life Cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        initTextField()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,28 +136,54 @@ final class SearchVC: UIViewController {
 
 extension SearchVC {
     @objc func didTapBackButton() {
-        self.navigationController?.popViewController(animated: true)
+        switch searchType {
+        case .recent:
+            navigationController?.popViewController(animated: false)
+        case .search:
+            navigationController?.popViewController(animated: false)
+        case .searchResult:
+            isSearchRecent()
+            initTextField()
+        }
     }
     
     @objc func didTapClearButton() {
         searchTextField.text?.removeAll()
-        isEmptyTextField()
+        isSearchRecent()
     }
     
     @objc func editingChanged(_ textField: UITextField) {
         if searchTextField.isEmpty {
-            isEmptyTextField()
+            isSearchRecent()
         } else {
             searchTextField.rightViewMode = .always
-            searchTableView.tableHeaderView = nil
-            searchStarted = true
+            isSearch()
         }
+    }
+    
+    @objc func pushToSearchResultVC() {
+        let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
+        searchResultVC.delegate = self
+        if let searchText = searchTextField.text {
+            searchResultVC.searchContent = searchText
+        }
+        navigationController?.pushViewController(searchResultVC, animated: false)
+    }
+    
+    @objc func popToMainMapVC() {
+        navigationController?.popViewController(animated: false)
     }
 }
 
 // MARK: - Methods
 
 extension SearchVC {
+    private func initTextField() {
+        if searchType == .recent {
+            searchTextField.text?.removeAll()
+        }
+    }
+    
     private func setData() {
         let savedSearchRecent = realm?.objects(SearchRecent.self)
         savedSearchRecent?.forEach { object in
@@ -129,10 +194,16 @@ extension SearchVC {
     private func setUI() {
         view.backgroundColor = .helfmeWhite
         dismissKeyboard()
+        self.navigationController?.isNavigationBarHidden = true
+        searchTextField.text?.removeAll()
+        searchEmptyView.isHidden = true
     }
     
     private func setLayout() {
-        view.addSubviews(searchTextField, lineView, searchTableView)
+        view.addSubviews(searchTextField,
+                         lineView,
+                         searchView,
+                         searchEmptyView)
         
         searchTextField.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -150,22 +221,44 @@ extension SearchVC {
             $0.height.width.equalTo(24)
         }
         
+        resultCloseButton.snp.makeConstraints {
+            $0.height.width.equalTo(24)
+        }
+        
         lineView.snp.makeConstraints {
             $0.top.equalTo(searchTextField.snp.bottom)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(1)
         }
         
-        topView.addSubviews(topLabel)
+        searchHeaderView.addSubviews(recentHeaderLabel, resultHeaderButton)
         
-        topLabel.snp.makeConstraints {
-            $0.top.equalTo(topView.snp.top).offset(20)
-            $0.leading.equalTo(topView.snp.leading).inset(20)
+        recentHeaderLabel.snp.makeConstraints {
+            $0.top.equalTo(searchHeaderView.snp.top).offset(20)
+            $0.leading.equalTo(searchHeaderView.snp.leading).inset(20)
         }
         
-        searchTableView.snp.makeConstraints {
+        resultHeaderButton.snp.makeConstraints {
+            $0.trailing.equalTo(searchHeaderView.snp.trailing).inset(20)
+            $0.centerY.equalTo(searchHeaderView)
+            $0.width.equalTo(105)
+            $0.height.equalTo(20)
+        }
+        
+        searchView.snp.makeConstraints {
             $0.top.equalTo(lineView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        searchView.addSubviews(searchTableView)
+        
+        searchTableView.snp.makeConstraints {
+            $0.edges.equalTo(searchView)
+        }
+        
+        searchEmptyView.snp.makeConstraints {
+            $0.top.equalTo(lineView.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
@@ -179,6 +272,7 @@ extension SearchVC {
     private func registerCell() {
         SearchRecentTVC.register(target: searchTableView)
         SearchTVC.register(target: searchTableView)
+        SearchResultTVC.register(target: searchTableView)
     }
     
     func addSearchRecent(title: String) {
@@ -190,11 +284,42 @@ extension SearchVC {
         searchRecentList.insert(title, at: 0)
     }
     
-    private func isEmptyTextField() {
+    private func isSearchRecent() {
         searchTextField.rightViewMode = .never
-        topLabel.text = "최근 검색어"
-        searchTableView.tableHeaderView = topView
-        searchStarted = false
+        searchTableView.tableHeaderView = searchHeaderView
+        searchTableView.tableHeaderView?.frame.size.height = 56
+        recentHeaderLabel.isHidden = false
+        resultHeaderButton.isHidden = true
+        searchEmptyView.isHidden = true
+        searchType = .recent
+    }
+    
+    private func isSearch() {
+        searchTextField.becomeFirstResponder()
+        searchTableView.tableHeaderView = nil
+        searchEmptyView.isHidden = true
+        searchType = .search
+    }
+    
+    private func isSearchResult() {
+        searchTextField.resignFirstResponder()
+        if let text = searchTextField.text {
+            addSearchRecent(title: text)
+        }
+        searchTableView.tableHeaderView = searchHeaderView
+        searchTableView.tableHeaderView?.frame.size.height = 42
+        clearButton.isHidden = true
+        recentHeaderLabel.isHidden = true
+        resultHeaderButton.isHidden = false
+        searchType = .searchResult
+    }
+    
+    private func isSearchEmpty() {
+        if isEmpty {
+            searchEmptyView.isHidden = false
+        } else {
+            searchEmptyView.isHidden = true
+        }
     }
 }
 
@@ -202,11 +327,13 @@ extension SearchVC {
 
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        if let text = textField.text {
-            addSearchRecent(title: text)
-        }
+        isSearchResult()
+        isSearchEmpty()
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        isSearch()
     }
 }
 
@@ -220,24 +347,42 @@ extension SearchVC: UITableViewDelegate {
 
 extension SearchVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchStarted {
+        switch searchType {
+        case .recent:
             return searchRecentList.count
-        } else {
+        case .search:
+            return searchRecentList.count
+        case .searchResult:
             return searchRecentList.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if searchStarted {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTVC.className, for: indexPath) as? SearchTVC else { return UITableViewCell() }
-            cell.setData(data: searchRecentList[indexPath.row])
-            return cell
-        } else {
+        switch searchType {
+        case .recent:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchRecentTVC.className, for: indexPath) as? SearchRecentTVC else { return UITableViewCell() }
             cell.setData(data: searchRecentList[indexPath.row])
             cell.index = indexPath.row
             cell.delegate = self
             return cell
+        case .search:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTVC.className, for: indexPath) as? SearchTVC else { return UITableViewCell() }
+            cell.setData(data: searchRecentList[indexPath.row])
+            return cell
+        case .searchResult:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTVC.className, for: indexPath) as? SearchResultTVC else { return UITableViewCell() }
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch searchType {
+        case .recent:
+            return 56
+        case .search:
+            return 56
+        case .searchResult:
+            return 127
         }
     }
 }
@@ -246,12 +391,26 @@ extension SearchVC: UITableViewDataSource {
 
 extension SearchVC: SearchRecentTVCDelegate {
     func searchRecentTVCDelete(index: Int) {
-        let savedSearchRecent = realm?.objects(SearchRecent.self)
         try? realm?.write {
-            realm?.delete(savedSearchRecent?[index] ?? SearchRecent())
+            if let savedSearchRecent =  realm?.objects(SearchRecent.self).filter("title == '\(searchRecentList[index])'") {
+                realm?.delete(savedSearchRecent)
+            }
         }
         searchRecentList.remove(at: index)
         searchTableView.reloadData()
+    }
+}
+
+// MARK: - SearchResultVCDelegate
+
+extension SearchVC: SearchResultVCDelegate {
+    func searchResultVCSearchType(type: SearchType) {
+        searchType = type
+        if type == .search {
+            searchTextField.becomeFirstResponder()
+        } else {
+            isSearchRecent()
+        }
     }
 }
 

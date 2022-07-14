@@ -10,11 +10,11 @@ import UIKit
 struct ImageLiterals {
     
     struct Common {
-        static let starIcon = UIImage(named: "icn_star")
-        static let starIcon_25 = UIImage(named: "icn_star_25")
-        static let starIcon_50 = UIImage(named: "icn_star_50")
-        static let starIcon_75 = UIImage(named: "icn_star_75")
-        static let starIcon_filled = UIImage(named: "icn_star_filled")
+        static let starIcon = UIImage(named: "btn_star_01")
+        static let starIcon_25 = UIImage(named: "btn_star_02")
+        static let starIcon_50 = UIImage(named: "btn_star_03")
+        static let starIcon_75 = UIImage(named: "btn_star_04")
+        static let starIcon_filled = UIImage(named: "btn_star_05")
     }
     
     struct MainDetail {
@@ -43,6 +43,10 @@ struct ImageLiterals {
         static let star2Icon = UIImage(named: "icn_star_02")
         static let star3Icon = UIImage(named: "icn_star_03")
         static let beforeIcon = UIImage(named: "icon_before")
+        static let xIcon = UIImage(named: "icn_x")
+        static let viewMapBtn = UIImage(named: "btn_viewmap")
+        
+        static let imageSearch = UIImage(named: "img_search")
     }
     
     struct HamburgerBar {
