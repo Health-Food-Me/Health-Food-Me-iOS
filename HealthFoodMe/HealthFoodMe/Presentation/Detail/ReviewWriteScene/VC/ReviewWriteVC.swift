@@ -6,10 +6,10 @@
 //
 
 import UIKit
+import Photos
 
 import BSImagePicker
 import SnapKit
-import Photos
 
 enum Cell: Int {
     case addCell = 0, photoCell
@@ -25,7 +25,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     var selectedAssets: [PHAsset] = [PHAsset]()
     var userSelectedImages: [UIImage] = [UIImage]()
     var tasteSet = Set<String>()
-    var feelingArray : [Bool] = [false, false, false]
+    var feelingArray: [Bool] = [false, false, false]
     
     // MARK: - UI Components
     
@@ -97,7 +97,6 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
         btn.tag = 0
-        //        btn.addTarget(self, action: #selector(didTapTasteTag), for: .touchUpInside)
         tasteTagButton.append(btn)
         return btn
     }()
@@ -112,7 +111,6 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
         btn.tag = 1
-        //        btn.addTarget(self, action: #selector(didTapTasteTag), for: .touchUpInside)
         tasteTagButton.append(btn)
         return btn
     }()
@@ -127,7 +125,6 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
         btn.tag = 2
-        //        btn.addTarget(self, action: #selector(didTapTasteTag), for: .touchUpInside)
         tasteTagButton.append(btn)
         return btn
     }()
@@ -318,6 +315,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.titleLabel?.font = .NotoBold(size: 14)
         btn.backgroundColor = .mainRed
         btn.layer.cornerRadius = 22
+        btn.addTarget(self, action: #selector(didTapWriteReview), for: .touchUpInside)
         return btn
     }()
     
@@ -330,12 +328,27 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         setLayout()
         registerCell()
         setAddTargets()
+        setTextView()
+        addTapGesture()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setKeyboardObserver()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        removeKeyboardObserver()
     }
 }
 
 // MARK: - Methods
 
 extension ReviewWriteVC {
+    
+    private func setTextView() {
+        addToolBar(textView: reviewTextView)
+    }
+        
     private func setDelegate() {
         scrollView.delegate = self
         reviewTextView.delegate = self
@@ -589,6 +602,31 @@ extension ReviewWriteVC {
             }
         }
     }
+    
+    func checkReview(_ textView: UITextView) {
+        
+    }
+    
+    @objc func didTapWriteReview(_ sender: UIButton) {
+//        checkReview(<#T##textView: UITextView##UITextView#>)
+        //내가 쓴 리뷰로 이동?
+    }
+    
+    @objc override func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            let safeareaHeight = self.view.safeAreaInsets.bottom
+            UIView.animate(withDuration: 1) {
+                self.contentView.transform =
+                                    CGAffineTransform(translationX: 0, y: -(keyboardHeight - safeareaHeight))
+            }
+        }
+    }
+    
+    @objc override func keyboardWillHide(notification: NSNotification) {
+        self.contentView
+            .transform = .identity
+    }
 }
 
 // MARK: - Network
@@ -671,6 +709,7 @@ extension ReviewWriteVC: ListPhotoCVCDelegate {
 }
 
 extension ReviewWriteVC: UITextViewDelegate {
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == .helfmeGray2 {
             textView.text = nil
@@ -699,6 +738,10 @@ extension ReviewWriteVC: UITextViewDelegate {
         let count = textView.text.count
         textCountLabel.text = "\(count)/500자"
     }
+    
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        return true
+    }
 }
 
 extension ReviewWriteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -716,3 +759,48 @@ extension ReviewWriteVC: UIImagePickerControllerDelegate, UINavigationController
         picker.dismiss(animated: true, completion: nil)
     }
 }
+
+extension UIViewController {
+    func setKeyboardObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(UIViewController.keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(UIViewController.keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object:nil)
+    }
+    
+    func removeKeyboardObserver() {
+        NotificationCenter.default.removeObserver(self,
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            UIView.animate(withDuration: 1) {
+                self.view.window?.frame.origin.y -= keyboardHeight
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.window?.frame.origin.y != 0 {
+            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardRectangle = keyboardFrame.cgRectValue
+                let keyboardHeight = keyboardRectangle.height
+                UIView.animate(withDuration: 1) {
+                    self.view.window?.frame.origin.y += keyboardHeight
+                }
+            }
+        }
+    }
+}
+
