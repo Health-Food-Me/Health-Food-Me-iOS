@@ -66,12 +66,12 @@ extension MenuCategoryCVC {
         menuImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.width.height.equalTo(24)
-            make.leading.equalToSuperview().inset(4)
+            make.leading.equalToSuperview().inset(8)
         }
         
         menuNameLabel.snp.makeConstraints { make in
             make.centerY.equalTo(menuImageView.snp.centerY)
-            make.leading.equalTo(menuImageView.snp.trailing).offset(8)
+            make.leading.equalTo(menuImageView.snp.trailing).offset(5)
             make.trailing.equalToSuperview().inset(12)
         }
     }

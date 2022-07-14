@@ -82,4 +82,11 @@ struct I18N {
         static let searchEmpty = "해당되는 검색 결과가 없습니다"
         static let searchAnother = "다른 식당 또는 음식명을 입력해주세요!"
     }
+    
+    struct Scrap {
+        static let scrapTitle = "스크랩한 식당"
+        static let withHelfme = "헬푸미와 외식 걱정을 날려보세요!"
+        static let dietStore = "다이어터도 즐길 수 있는 식당"
+        static let goScrap = "스크랩하러 가기"
+    }
 }

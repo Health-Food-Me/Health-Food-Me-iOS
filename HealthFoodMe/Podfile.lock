@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.6.1)
+  - BSImagePicker (3.3.1)
   - Firebase/Core (9.2.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (~> 9.2.0)
@@ -139,6 +140,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - BSImagePicker (~> 3.1)
   - Firebase/Core (= 9.2.0)
   - Firebase/Crashlytics
   - Firebase/RemoteConfig
@@ -155,6 +157,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - BSImagePicker
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -184,6 +187,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 87bd8c952f9a4454320fce00d9cc3de57bcadaf5
+  BSImagePicker: 0fe04b574d4d6b81093785d2af6c26227efc8428
   Firebase: 4ba896cb8e5105d4b9e247e1c1b6222b548df55a
   FirebaseABTesting: cd1ec762a0078b46a7ce91dfe5b7b8991c2dff8f
   FirebaseAnalytics: af5a03a8dff7648c7b8486f6a78b1368e0268dd3
@@ -211,6 +215,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
 
-PODFILE CHECKSUM: 757d3007b47b7639bb530995e3cfd278cf3c68cb
+PODFILE CHECKSUM: 328889e8eb35a650f9e8953209d54dc43875ba27
 
 COCOAPODS: 1.11.3
