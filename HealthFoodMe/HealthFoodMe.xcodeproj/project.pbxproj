@@ -35,6 +35,8 @@
 		A93252B1287F2AF9001EDF50 /* ScrapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252B0287F2AF9001EDF50 /* ScrapVC.swift */; };
 		A93252B5287F2CA6001EDF50 /* ScrapCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252B4287F2CA6001EDF50 /* ScrapCVC.swift */; };
 		A93252B7287F3272001EDF50 /* Scrap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A93252B6287F3272001EDF50 /* Scrap.storyboard */; };
+		A93252BA287F3E73001EDF50 /* ScrapEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252B9287F3E73001EDF50 /* ScrapEmptyView.swift */; };
+		A93252BD287F52E4001EDF50 /* ScrapDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252BC287F52E4001EDF50 /* ScrapDataModel.swift */; };
 		A938BB8E287D221200B8DE07 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A938BB8D287D221200B8DE07 /* Search.storyboard */; };
 		A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A938BB8F287D222800B8DE07 /* MainDetail.storyboard */; };
 		A9525F712873E1750065EB1D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9525F702873E1750065EB1D /* SearchVC.swift */; };
@@ -173,6 +175,8 @@
 		A93252B0287F2AF9001EDF50 /* ScrapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapVC.swift; sourceTree = "<group>"; };
 		A93252B4287F2CA6001EDF50 /* ScrapCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapCVC.swift; sourceTree = "<group>"; };
 		A93252B6287F3272001EDF50 /* Scrap.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Scrap.storyboard; sourceTree = "<group>"; };
+		A93252B9287F3E73001EDF50 /* ScrapEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapEmptyView.swift; sourceTree = "<group>"; };
+		A93252BC287F52E4001EDF50 /* ScrapDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapDataModel.swift; sourceTree = "<group>"; };
 		A938BB8D287D221200B8DE07 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		A938BB8F287D222800B8DE07 /* MainDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainDetail.storyboard; sourceTree = "<group>"; };
 		A9525F702873E1750065EB1D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
@@ -416,8 +420,10 @@
 		A93252AF287F2ADB001EDF50 /* ScrapScene */ = {
 			isa = PBXGroup;
 			children = (
+				A93252BB287F52B0001EDF50 /* Model */,
 				A93252B2287F2AFE001EDF50 /* VC */,
 				A93252B3287F2B36001EDF50 /* Cells */,
+				A93252B8287F3E4D001EDF50 /* View */,
 			);
 			path = ScrapScene;
 			sourceTree = "<group>";
@@ -437,6 +443,22 @@
 				A93252B4287F2CA6001EDF50 /* ScrapCVC.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		A93252B8287F3E4D001EDF50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A93252B9287F3E73001EDF50 /* ScrapEmptyView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A93252BB287F52B0001EDF50 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A93252BC287F52E4001EDF50 /* ScrapDataModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A9525F6A2873DCD30065EB1D /* SearchScene */ = {
@@ -1294,7 +1316,9 @@
 				EBD19262287DBC1800EA053E /* MapDetailSummaryView.swift in Sources */,
 				EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */,
 				EB6A45172874276B00749582 /* DetailTabTitleHeader.swift in Sources */,
+				A93252BD287F52E4001EDF50 /* ScrapDataModel.swift in Sources */,
 				EB6A451B2875365B00749582 /* TabIndicator.swift in Sources */,
+				A93252BA287F3E73001EDF50 /* ScrapEmptyView.swift in Sources */,
 				A9325274287D3065001EDF50 /* SearchResultTVC.swift in Sources */,
 				EB6A44D528737CC400749582 /* MainDetailViewModel.swift in Sources */,
 				3B18D8AC287AB7CD009AF9E7 /* HamburgerBarVC.swift in Sources */,
