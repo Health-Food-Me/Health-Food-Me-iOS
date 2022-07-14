@@ -49,6 +49,8 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         return lb
     }()
     
+    let sliderView = StarRatingSlider(starWidth: 37)
+    
     private lazy var lineView: UIView = {
         let view = UIView()
         view.backgroundColor = .helfmeLineGray
@@ -337,15 +339,22 @@ extension ReviewWriteVC {
             make.width.equalTo(scrollView.snp.width)
         }
         
-        contentView.addSubviews(restaurantTitleLabel, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView, photoSubLabel, writeReviewButton)
+        contentView.addSubviews(restaurantTitleLabel, sliderView, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView, photoSubLabel, writeReviewButton)
         
         restaurantTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
             make.centerX.equalToSuperview()
         }
         
+        sliderView.snp.makeConstraints { make in
+            make.top.equalTo(restaurantTitleLabel.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(185)
+            make.height.equalTo(37)
+        }
+        
         lineView.snp.makeConstraints { make in
-            make.top.equalTo(restaurantTitleLabel.snp.bottom).offset(67)
+            make.top.equalTo(sliderView.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(1)
         }
