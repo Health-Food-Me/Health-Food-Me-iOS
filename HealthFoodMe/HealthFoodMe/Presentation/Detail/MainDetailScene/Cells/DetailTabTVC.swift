@@ -37,6 +37,7 @@ final class DetailTabTVC: UITableViewCell, UITableViewRegisterable {
         cv.showsHorizontalScrollIndicator = false
         cv.isPagingEnabled = true
         cv.backgroundColor = .white
+        cv.bounces = false
         
         return cv
     }()

@@ -33,6 +33,7 @@ final class MenuTabVC: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.showsVerticalScrollIndicator = false
         cv.backgroundColor = .helfmeWhite
+        cv.bounces = false
         return cv
     }()
     
