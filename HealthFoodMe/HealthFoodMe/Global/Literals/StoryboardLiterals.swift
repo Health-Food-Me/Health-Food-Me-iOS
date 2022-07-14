@@ -20,6 +20,7 @@ enum Storyboards: String {
     case mainDetail = "MainDetail"
     case search = "Search"
     case searchResult = "SearchResult"
+    case scrap = "Scrap"
 
     case menuTab = "MenuTab"
     case socialLogin = "SocialLogin"
