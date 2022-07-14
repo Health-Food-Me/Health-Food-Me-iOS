@@ -28,7 +28,7 @@ final class SearchVC: UIViewController {
     }
     var searchDataModel: [SearchResultModel] = []
     var searchRecentList: [String] = []
-    private var isEmpty: Bool = false
+    private var isEmpty: Bool = true
     private var searchEmptyView = SearchEmptyView()
     
     private let searchView: UIView = {
@@ -258,7 +258,7 @@ extension SearchVC {
         
         searchEmptyView.snp.makeConstraints {
             $0.top.equalTo(lineView.snp.bottom)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
