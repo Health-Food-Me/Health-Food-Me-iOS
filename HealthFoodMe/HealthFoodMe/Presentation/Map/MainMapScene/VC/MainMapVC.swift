@@ -121,6 +121,9 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         setDelegate()
         registerCell()
         setPanGesture()
+        setMapView()
+        bindMapView()
+        sampleViewInputEvent()
         self.bindViewModels()
     }
     
@@ -182,7 +185,7 @@ extension MainMapVC {
         
         mapDetailSummaryView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().inset(UIScreen.main.bounds.height - 189)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
             make.height.equalTo(UIScreen.main.bounds.height + 300)
         }
         
@@ -243,7 +246,7 @@ extension MainMapVC {
                         } completion: { _ in
                             self?.transitionAndPresentMainDetailVC()
                         }
-
+                        
                     } else {
                         let summaryViewHeight: CGFloat = 189
                         self?.mapDetailSummaryView.snp.updateConstraints { make in
@@ -264,7 +267,7 @@ extension MainMapVC {
     }
     
     private func bindViewModels() {
-        let input = MainMapViewModel.Input()
+        let input = MainMapViewModel.Input(myLocationButtonTapped: myLocationButton.rx.tap.asObservable(), scrapButtonTapped: scrapButton.rx.tap.asObservable())
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
     }
     
@@ -308,6 +311,20 @@ extension MainMapVC {
             .disposed(by: self.disposeBag)
     }
     
+    private func makeDummyPoints() -> Observable<[MapPointDataModel]> {
+        return .create { observer in
+            let pointList: [MapPointDataModel] = .init([
+                MapPointDataModel.init(latitude: 37.5666805, longtitude: 126.9784147, type: .normalFood),
+                MapPointDataModel.init(latitude: 37.567, longtitude: 126.9784147, type: .healthFood),
+                MapPointDataModel.init(latitude: 37.568, longtitude: 126.9784147, type: .normalFood),
+                MapPointDataModel.init(latitude: 37.569, longtitude: 126.9784147, type: .normalFood),
+                MapPointDataModel.init(latitude: 37.557, longtitude: 126.9784147, type: .healthFood),
+                MapPointDataModel.init(latitude: 37.571, longtitude: 126.9784147, type: .normalFood),
+                MapPointDataModel.init(latitude: 37.572, longtitude: 126.9784147, type: .normalFood),
+                MapPointDataModel.init(latitude: 37.010, longtitude: 126.9784147, type: .normalFood)
+            ])
+            observer.onNext(pointList)
+            return Disposables.create()
         }
     }
     
