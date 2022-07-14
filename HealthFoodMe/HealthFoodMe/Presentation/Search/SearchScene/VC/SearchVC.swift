@@ -28,7 +28,7 @@ final class SearchVC: UIViewController {
     }
     var searchDataModel: [SearchResultModel] = []
     var searchRecentList: [String] = []
-    private var isEmpty: Bool = true
+    private var isEmpty: Bool = false
     private var searchEmptyView = SearchEmptyView()
     
     private let searchView: UIView = {
@@ -295,6 +295,7 @@ extension SearchVC {
     }
     
     private func isSearch() {
+        clearButton.isHidden = false
         searchTextField.becomeFirstResponder()
         searchTableView.tableHeaderView = nil
         searchEmptyView.isHidden = true
@@ -405,8 +406,8 @@ extension SearchVC: SearchRecentTVCDelegate {
 
 extension SearchVC: SearchResultVCDelegate {
     func searchResultVCSearchType(type: SearchType) {
-        searchType = type
         if type == .search {
+            clearButton.isHidden = false
             searchTextField.becomeFirstResponder()
         } else {
             isSearchRecent()
