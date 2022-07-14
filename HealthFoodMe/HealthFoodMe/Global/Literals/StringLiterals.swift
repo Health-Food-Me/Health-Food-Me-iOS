@@ -95,5 +95,6 @@ struct I18N {
         탈퇴 시 헬푸미의 새로운 정보를
         얻을 수 없습니다.
         """
+        static let withdrawalYes = "네 탈퇴할게요"
     }
 }
