@@ -30,8 +30,8 @@ class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     private lazy var scrapButton: UIButton = {
         let btn = UIButton()
-        btn.setImage(ImageLiterals.Scrap.bookmarkInactiveIcon, for: .normal)
-        btn.setImage(ImageLiterals.Scrap.bookmarkIcon, for: .selected)
+        btn.setImage(ImageLiterals.Scrap.bookmarkIcon, for: .normal)
+        btn.setImage(ImageLiterals.Scrap.bookmarkInactiveIcon, for: .selected)
         btn.addTarget(self, action: #selector(didTapScrapButton(_:)), for: .touchUpInside)
         return btn
     }()
