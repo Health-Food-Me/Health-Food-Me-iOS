@@ -29,7 +29,7 @@ final class NicknameChangeVC: UIViewController {
   
   private lazy var backButton: UIButton = {
     let button = UIButton()
-    button.setBackgroundImage(ImageLiterals.Common.beforeIcon, for: .normal)
+    button.setBackgroundImage(ImageLiterals.MainDetail.beforeIcon, for: .normal)
     button.press { self.navigationController?.popViewController(animated: true) }
     return button
   }()
