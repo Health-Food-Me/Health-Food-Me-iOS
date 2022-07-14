@@ -17,11 +17,10 @@ class MainMapVC: UIViewController {
     // MARK: - Properties
     
     private let disposeBag = DisposeBag()
-    var viewModel: MainMapViewModel!
-    
     private var locationManager = CLLocationManager()
     private var currentLatitude: Double?
     private var currentLongitude: Double?
+    var viewModel: MainMapViewModel!
     
     // MARK: - UI Components
     
@@ -204,7 +203,7 @@ extension MainMapVC {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentSearchVC))
         searchBar.addGestureRecognizer(tapGesture)
         
-        let tapBottomSheet = UITapGestureRecognizer(target: self, action: #selector(PushDetailVC))
+        let tapBottomSheet = UITapGestureRecognizer(target: self, action: #selector(presentDetailVC))
         mapDetailSummaryView.addGestureRecognizer(tapBottomSheet)
     }
     
@@ -226,6 +225,8 @@ extension MainMapVC {
                 print(self?.mapDetailSummaryView.frame.origin.y ?? 0)
                 switch sender.state {
                 case .changed:
+                    self?.scrapButton.isHidden = true
+                    self?.myLocationButton.isHidden = true
                     UIView.animate(withDuration: 0.1) {
                         self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: summaryViewTranslation.y)
                     }
@@ -235,18 +236,25 @@ extension MainMapVC {
                         self?.mapDetailSummaryView.snp.updateConstraints { make in
                             make.top.equalToSuperview().inset(44)
                         }
-                        UIView.animate(withDuration: 0.4) {
+                        
+                        UIView.animate(withDuration: 0.3, delay: 0) {
                             self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                             self?.view.layoutIfNeeded()
+                        } completion: { _ in
+                            self?.transitionAndPresentMainDetailVC()
                         }
+
                     } else {
                         let summaryViewHeight: CGFloat = 189
                         self?.mapDetailSummaryView.snp.updateConstraints { make in
                             make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
                         }
-                        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+                        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
                             self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                             self?.view.layoutIfNeeded()
+                        } completion: { _ in
+                            self?.scrapButton.isHidden = false
+                            self?.myLocationButton.isHidden = false
                         }
                     }
                 default:
@@ -271,9 +279,43 @@ extension MainMapVC {
     }
     
     @objc
-    private func PushDetailVC() {
+    private func presentDetailVC() {
+        self.scrapButton.isHidden = true
+        self.myLocationButton.isHidden = true
+        self.mapDetailSummaryView.snp.updateConstraints { make in
+            make.top.equalToSuperview().inset(44)
+        }
+        
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.transitionAndPresentMainDetailVC()
+        }
+    }
+    
+    private func transitionAndPresentMainDetailVC() {
         let nextVC = ModuleFactory.resolve().makeMainDetailVC()
-        self.navigationController?.pushViewController(nextVC, animated: true)
+        nextVC.translationClosure = {
+            self.mapDetailSummaryView.isHidden = false
+            let summaryViewHeight: CGFloat = 189
+            self.mapDetailSummaryView.snp.updateConstraints { make in
+                make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
+            }
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+                self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+                self.view.layoutIfNeeded()
+            } completion: { _ in
+                self.scrapButton.isHidden = false
+                self.myLocationButton.isHidden = false
+            }
+        }
+        let nav = UINavigationController(rootViewController: nextVC)
+        nav.modalPresentationStyle = .currentContext
+        nav.modalTransitionStyle = .crossDissolve
+        self.present(nav, animated: true) {
+            self.mapDetailSummaryView.isHidden = true
+        }
     }
 }
 

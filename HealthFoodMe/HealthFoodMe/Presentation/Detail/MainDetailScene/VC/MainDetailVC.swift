@@ -16,10 +16,11 @@ class MainDetailVC: UIViewController {
     // MARK: - Properties
     
     private let disposeBag = DisposeBag()
-    var viewModel: MainDetailViewModel!
     private var detailTabTVC = DetailTabTVC()
     private var detailTabTitleHeader = DetailTabTitleHeader()
     private var childVC = ModuleFactory.resolve().makeMenuTabVC()
+    var viewModel: MainDetailViewModel!
+    var translationClosure: (() -> Void)?
     
     // MARK: - UI Components
     
@@ -30,6 +31,7 @@ class MainDetailVC: UIViewController {
         tv.clipsToBounds = true
         tv.sectionFooterHeight = 0
         tv.allowsSelection = false
+        tv.bounces = false
         if #available(iOS 15, *) {
             tv.sectionHeaderTopPadding = 0
         }
@@ -66,7 +68,9 @@ extension MainDetailVC {
         backButton.setImage(ImageLiterals.MainDetail.beforeIcon, for: .normal)
         backButton.tintColor = .helfmeBlack
         backButton.addAction(UIAction(handler: { _ in
-            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: false) {
+                self.translationClosure?()
+            }
         }), for: .touchUpInside)
         
         let scrapButton = UIButton()
