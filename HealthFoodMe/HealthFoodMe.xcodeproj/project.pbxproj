@@ -152,9 +152,14 @@
 		FD58291A287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582917287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift */; };
 		FD58291B287DC39A00CE62E8 /* mapContainerView + Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582918287DC39A00CE62E8 /* mapContainerView + Reactive.swift */; };
 		FD58291C287DC39A00CE62E8 /* mapContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582919287DC39A00CE62E8 /* mapContainerView.swift */; };
-		FD89904F287DC4F400144E07 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD89904E287DC4F400144E07 /* Config.swift */; };
 		FD924376288007ED0034876B /* NicknameChange.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD924375288007ED0034876B /* NicknameChange.storyboard */; };
 		FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */; };
+		FDC102872880B0FE001F0125 /* NicknameChangeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E202287F27860007D4F9 /* NicknameChangeVC.swift */; };
+		FDC102882880B101001F0125 /* NicknameChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E203287F27860007D4F9 /* NicknameChangeViewModel.swift */; };
+		FDC102892880B10A001F0125 /* NicknameChangeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20E287F5D080007D4F9 /* NicknameChangeUseCase.swift */; };
+		FDC1028A2880B115001F0125 /* NicknameChangeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20F287F5D080007D4F9 /* NicknameChangeRepository.swift */; };
+		FDC1028B2880B133001F0125 /* CTAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E208287F30770007D4F9 /* CTAButton.swift */; };
+		FDC1028C2880B13D001F0125 /* UpperToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20A287F3C360007D4F9 /* UpperToastView.swift */; };
 		FDF2E1FA287EFA5B0007D4F9 /* SampleStarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E1F9287EFA5B0007D4F9 /* SampleStarVC.swift */; };
 		FDF2E1FC287EFC710007D4F9 /* StarRatingSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E1FB287EFC710007D4F9 /* StarRatingSlider.swift */; };
 		FDF2E1FE287F08010007D4F9 /* TouchableSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E1FD287F08010007D4F9 /* TouchableSlider.swift */; };
@@ -311,9 +316,11 @@
 		FD582917287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerViewDelegateProxy.swift; sourceTree = "<group>"; };
 		FD582918287DC39A00CE62E8 /* mapContainerView + Reactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "mapContainerView + Reactive.swift"; sourceTree = "<group>"; };
 		FD582919287DC39A00CE62E8 /* mapContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerView.swift; sourceTree = "<group>"; };
-		FD89904E287DC4F400144E07 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		FD924375288007ED0034876B /* NicknameChange.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NicknameChange.storyboard; sourceTree = "<group>"; };
 		FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegementControl.swift; sourceTree = "<group>"; };
+		FDF2E1F9287EFA5B0007D4F9 /* SampleStarVC.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = SampleStarVC.swift; sourceTree = "<group>"; tabWidth = 4; };
+		FDF2E1FB287EFC710007D4F9 /* StarRatingSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingSlider.swift; sourceTree = "<group>"; };
+		FDF2E1FD287F08010007D4F9 /* TouchableSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchableSlider.swift; sourceTree = "<group>"; };
 		FDF2E202287F27860007D4F9 /* NicknameChangeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameChangeVC.swift; sourceTree = "<group>"; };
 		FDF2E203287F27860007D4F9 /* NicknameChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameChangeViewModel.swift; sourceTree = "<group>"; };
 		FDF2E206287F2CAA0007D4F9 /* addTextFieldPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addTextFieldPadding.swift; sourceTree = "<group>"; };
@@ -322,9 +329,6 @@
 		FDF2E20E287F5D080007D4F9 /* NicknameChangeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameChangeUseCase.swift; sourceTree = "<group>"; };
 		FDF2E20F287F5D080007D4F9 /* NicknameChangeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameChangeRepository.swift; sourceTree = "<group>"; };
 		FDF2E213287F5D080007D4F9 /* ChangeNicknameEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNicknameEntity.swift; sourceTree = "<group>"; };
-		FDF2E1F9287EFA5B0007D4F9 /* SampleStarVC.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = SampleStarVC.swift; sourceTree = "<group>"; tabWidth = 4; };
-		FDF2E1FB287EFC710007D4F9 /* StarRatingSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingSlider.swift; sourceTree = "<group>"; };
-		FDF2E1FD287F08010007D4F9 /* TouchableSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchableSlider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1502,9 +1506,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDC102872880B0FE001F0125 /* NicknameChangeVC.swift in Sources */,
 				EBF66AFF287227F500DE0ED1 /* makeAlert.swift in Sources */,
 				EBF66AF3287227F500DE0ED1 /* applyShadow.swift in Sources */,
-				FDF2E209287F30770007D4F9 /* CTAButton.swift in Sources */,
 				EB6A44D628737CC400749582 /* MainDetailEntity.swift in Sources */,
 				EB6A4515287425F900749582 /* DetailTabTVC.swift in Sources */,
 				EBF66AE5287227F500DE0ED1 /* NetworkConstants.swift in Sources */,
@@ -1513,6 +1517,7 @@
 				EBF66AF4287227F500DE0ED1 /* calculatePastTime.swift in Sources */,
 				EBF66AD9287227F500DE0ED1 /* ModuleFactory.swift in Sources */,
 				3BC01F87287EBB8E006C2181 /* BlogReviewDataModel.swift in Sources */,
+				FDC102892880B10A001F0125 /* NicknameChangeUseCase.swift in Sources */,
 				EBF66AF9287227F500DE0ED1 /* setDefaultFonts.swift in Sources */,
 				EBF66ADD287227F500DE0ED1 /* SceneDelegate.swift in Sources */,
 				EBF66AC2287227F500DE0ED1 /* UIViewController+.swift in Sources */,
@@ -1551,7 +1556,7 @@
 				3B18D8AC287AB7CD009AF9E7 /* HamburgerBarVC.swift in Sources */,
 				EBF66ACA287227F500DE0ED1 /* Reactive+.swift in Sources */,
 				EB6A44D228737CC400749582 /* MainDetailRepository.swift in Sources */,
-				FDF2E214287F5D080007D4F9 /* NicknameChangeUseCase.swift in Sources */,
+				FDC1028B2880B133001F0125 /* CTAButton.swift in Sources */,
 				EBF66B0C2872B4FE00DE0ED1 /* StoryboardLiterals.swift in Sources */,
 				EBF66AF7287227F500DE0ED1 /* manageObserverAction.swift in Sources */,
 				EBF66B05287227F500DE0ED1 /* GeneralResponse.swift in Sources */,
@@ -1560,7 +1565,6 @@
 				EBF66AC4287227F500DE0ED1 /* UIButton+.swift in Sources */,
 				FD58291B287DC39A00CE62E8 /* mapContainerView + Reactive.swift in Sources */,
 				FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */,
-				FDF2E204287F27860007D4F9 /* NicknameChangeVC.swift in Sources */,
 				EBF66AF0287227F500DE0ED1 /* BaseVC.swift in Sources */,
 				EBF66B082872AF5B00DE0ED1 /* SampleEntity.swift in Sources */,
 				EBF66B03287227F500DE0ED1 /* SignUp.swift in Sources */,
@@ -1574,7 +1578,6 @@
 				3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */,
 				3BC01F84287EAE48006C2181 /* BlogReviewCVC.swift in Sources */,
 				EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */,
-				FDF2E219287F5D080007D4F9 /* ChangeNicknameEntity.swift in Sources */,
 				EBF66AE1287227F500DE0ED1 /* BaseService.swift in Sources */,
 				EBF66AE2287227F500DE0ED1 /* BaseRouter.swift in Sources */,
 				EBF66AE3287227F500DE0ED1 /* NetworkResult.swift in Sources */,
@@ -1587,16 +1590,15 @@
 				69028BA82874675800373984 /* MenuView.swift in Sources */,
 				3BC01F7F287E9225006C2181 /* BlogReviewTabVC.swift in Sources */,
 				A9E593C72874266200B0F8B5 /* SearchRecent.swift in Sources */,
+				FDC1028C2880B13D001F0125 /* UpperToastView.swift in Sources */,
 				EBF66AF2287227F500DE0ED1 /* buttonPress.swift in Sources */,
 				EBF66ADF287227F500DE0ED1 /* AuthRouter.swift in Sources */,
 				EBF66ADC287227F500DE0ED1 /* AppDelegate.swift in Sources */,
 				690AB5492875C1B200DE72D4 /* MenuDataModel.swift in Sources */,
-				FDF2E215287F5D080007D4F9 /* NicknameChangeRepository.swift in Sources */,
 				EBF66AE7287227F500DE0ED1 /* HomeService.swift in Sources */,
 				A9E593D1287818E900B0F8B5 /* SearchTVC.swift in Sources */,
 				EBF66AC6287227F500DE0ED1 /* UIImage+.swift in Sources */,
 				69028BA62874673600373984 /* MenuCellCVC.swift in Sources */,
-				FDF2E207287F2CAA0007D4F9 /* addTextFieldPadding.swift in Sources */,
 				EBF66AFD287227F500DE0ED1 /* calculateTopInset.swift in Sources */,
 				EBF66ADE287227F500DE0ED1 /* HomeRouter.swift in Sources */,
 				EBF66ACF287227F500DE0ED1 /* Result+.swift in Sources */,
@@ -1605,7 +1607,6 @@
 				EBD19275287F256000EA053E /* EncodeURLKorean.swift in Sources */,
 				EB033E84287B5BE300C48FB9 /* StarRatingView.swift in Sources */,
 				EB6A451128740CFF00749582 /* MainInfoTVC.swift in Sources */,
-				FDF2E20B287F3C360007D4F9 /* UpperToastView.swift in Sources */,
 				EB6A44F22873BED500749582 /* MainMapViewModel.swift in Sources */,
 				69028BAC2874681700373984 /* MenuTabVC.swift in Sources */,
 				EBD19265287DC33900EA053E /* TagCVCFlowLayout.swift in Sources */,
@@ -1616,13 +1617,14 @@
 				EBD1925F287DBBFC00EA053E /* TagSummaryCVC.swift in Sources */,
 				A9525F712873E1750065EB1D /* SearchVC.swift in Sources */,
 				EB6A450C2873D6C500749582 /* DetailSummaryView.swift in Sources */,
+				FDC1028A2880B115001F0125 /* NicknameChangeRepository.swift in Sources */,
 				A93252AD287F09D0001EDF50 /* SearchEmptyView.swift in Sources */,
 				EBF66ACC287227F500DE0ED1 /* BaseNotiList.swift in Sources */,
 				EBF66AD8287227F500DE0ED1 /* BaseControllable.swift in Sources */,
 				EBF66ABF287227F500DE0ED1 /* UITabBar+.swift in Sources */,
-				FDF2E205287F27860007D4F9 /* NicknameChangeViewModel.swift in Sources */,
 				69028BAA287467F100373984 /* MenuDetailView.swift in Sources */,
 				FDF2E1FA287EFA5B0007D4F9 /* SampleStarVC.swift in Sources */,
+				FDC102882880B101001F0125 /* NicknameChangeViewModel.swift in Sources */,
 				EB6A44F12873BED500749582 /* MainMapVC.swift in Sources */,
 				EB6A44EE2873BED500749582 /* MainMapUseCase.swift in Sources */,
 				A9325277287D4F10001EDF50 /* SearchResultModel.swift in Sources */,
