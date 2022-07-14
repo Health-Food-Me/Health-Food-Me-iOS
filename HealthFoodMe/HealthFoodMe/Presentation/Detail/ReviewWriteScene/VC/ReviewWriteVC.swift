@@ -280,6 +280,25 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         return cv
     }()
     
+    private lazy var photoSubLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = "해당 가게와 무관한 사진을 첨부하면 노출 제한 처리될 수 있습니다. \n사진첨부 시 개인정보가 노출되지 않도록 유의해주세요."
+        lb.numberOfLines = 2
+        lb.textColor = .helfmeGray2
+        lb.font = .NotoRegular(size: 10)
+        return lb
+    }()
+    
+    private lazy var writeReviewButton: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("리뷰 쓰기", for: .normal)
+        btn.setTitleColor(UIColor.helfmeWhite, for: UIControl.State.normal)
+        btn.titleLabel?.font = .NotoBold(size: 14)
+        btn.backgroundColor = .mainRed
+        btn.layer.cornerRadius = 22
+        return btn
+    }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -318,7 +337,7 @@ extension ReviewWriteVC {
             make.width.equalTo(scrollView.snp.width)
         }
         
-        contentView.addSubviews(restaurantTitleLabel, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView)
+        contentView.addSubviews(restaurantTitleLabel, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView, photoSubLabel, writeReviewButton)
         
         restaurantTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
@@ -410,6 +429,17 @@ extension ReviewWriteVC {
             make.top.equalTo(pictureStackView.snp.bottom).offset(12)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(105)
+        }
+        
+        photoSubLabel.snp.makeConstraints { make in
+            make.top.equalTo(photoCollectionView.snp.bottom).offset(8)
+            make.leading.equalToSuperview().inset(20)
+        }
+        
+        writeReviewButton.snp.makeConstraints { make in
+            make.top.equalTo(photoSubLabel.snp.bottom).offset(24)
+            make.leading.trailing.equalToSuperview().inset(22)
+            make.height.equalTo(44)
             make.bottom.equalToSuperview().inset(10)
         }
     }
