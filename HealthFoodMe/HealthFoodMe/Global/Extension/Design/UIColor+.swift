@@ -37,6 +37,10 @@ extension UIColor {
         return UIColor(red: 227.0 / 255.0, green: 227.0 / 255.0, blue: 227.0 / 255.0, alpha: 1.0)
     }
     
+    @nonobjc class var helfmeCardlineGray: UIColor {
+        return UIColor(red: 239.0 / 255.0, green: 239.0 / 255.0, blue: 239.0 / 255.0, alpha: 1.0)
+    }
+    
     @nonobjc class var helfmeInactiveGray: UIColor {
         return UIColor(red: 242.0 / 255.0, green: 242.0 / 255.0, blue: 242.0 / 255.0, alpha: 1.0)
     }
@@ -47,5 +51,17 @@ extension UIColor {
     
     @nonobjc class var helfmeWhite: UIColor {
         return UIColor(red: 255.0 / 255.0, green: 255.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
+    }
+    
+    @nonobjc class var helfmeRedSub: UIColor {
+        return UIColor(red: 255.0 / 255.0, green: 102.0 / 255.0, blue: 102.0 / 255.0, alpha: 1.0)
+    }
+    
+    @nonobjc class var helfmeGreenSubLight: UIColor {
+        return UIColor(red: 178.0 / 255.0, green: 222.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
+    }
+    
+    @nonobjc class var helfmeGreenSubDark: UIColor {
+        return UIColor(red: 156.0 / 255.0, green: 195.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
     }
 }

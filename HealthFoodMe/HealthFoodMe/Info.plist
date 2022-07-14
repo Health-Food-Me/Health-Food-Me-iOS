@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 	<key>NSCameraUsageDescription</key>
 	<string>리뷰 사진 촬영을 위해 시스템 카메라에 접근합니다</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -14,6 +16,8 @@
 		<string>NotoSansCJKkr-Bold.otf</string>
 		<string>NotoSansCJKkr-Medium.otf</string>
 		<string>NotoSansCJKkr-Regular.otf</string>
+		<string>GodoB.otf</string>
+		<string>GodoB.ttf</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
@@ -50,7 +54,7 @@
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
 					<key>UISceneStoryboardFile</key>
-					<string>MenuTab</string>
+					<string>BlogReviewTab</string>
 				</dict>
 			</array>
 		</dict>

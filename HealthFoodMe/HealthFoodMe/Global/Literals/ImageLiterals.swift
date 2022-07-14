@@ -9,6 +9,14 @@ import UIKit
 
 struct ImageLiterals {
     
+    struct Common {
+        static let starIcon = UIImage(named: "icn_star")
+        static let starIcon_25 = UIImage(named: "icn_star_25")
+        static let starIcon_50 = UIImage(named: "icn_star_50")
+        static let starIcon_75 = UIImage(named: "icn_star_75")
+        static let starIcon_filled = UIImage(named: "icn_star_filled")
+    }
+    
     struct MainDetail {
         static let scrapIcon = UIImage(named: "icn_scrap")
         static let scrapIcon_filled = UIImage(named: "icn_scrap_filled")
@@ -21,7 +29,7 @@ struct ImageLiterals {
         static let showdownIcon = UIImage(named: "icn_showdown")
         static let showupIcon = UIImage(named: "icn_showup")
         static let timeIcon = UIImage(named: "icn_time")
-        
+
         static let tempSalady = UIImage(named: "tempSalady")
         static let tempMuseum = UIImage(named: "tempMuseum")
     }
@@ -35,6 +43,28 @@ struct ImageLiterals {
         static let star2Icon = UIImage(named: "icn_star_02")
         static let star3Icon = UIImage(named: "icn_star_03")
         static let beforeIcon = UIImage(named: "icon_before")
+        static let xIcon = UIImage(named: "icn_x")
+        static let viewMapBtn = UIImage(named: "btn_viewmap")
+        
+        static let imageSearch = UIImage(named: "img_search")
+    }
+    
+    struct HamburgerBar {
+        static let editNameBtn = UIImage(named: "btn_edit")
+    }
+    
+    struct Auth {
+        static let appleLoginBtn = UIImage(named: "btn_login_apple")
+        static let kakaoLoginBtn = UIImage(named: "btn_login_kakao")
+    }
+    
+    struct Map {
+        static let scrapIcon = UIImage(named: "icn_scrap")
+        static let manifyingIcon = UIImage(named: "icn_manifying")
+        static let mappinIcon_diet = UIImage(named: "icn_mappin_diet")
+        static let mappinIcon_normal = UIImage(named: "icn_mappin_normal")
+        static let menuIcon = UIImage(named: "icn_menu")
+        static let mylocationIcon = UIImage(named: "icn_myLocation")
     }
     
     struct ReviewWrite {

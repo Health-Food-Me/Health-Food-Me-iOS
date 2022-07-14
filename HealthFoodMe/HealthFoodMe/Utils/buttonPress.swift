@@ -26,7 +26,7 @@ extension UIButton {
     
     func press(vibrate: Bool = false, for controlEvents: UIControl.Event = .touchUpInside, _ closure: @escaping() -> Void) {
         if #available(iOS 14.0, *) {
-            self.addAction(UIAction { (action: UIAction) in closure()
+            self.addAction(UIAction { _ in closure()
                 self.clickedAnimation(vibrate: vibrate)
             }, for: controlEvents)
         } else {
@@ -50,7 +50,7 @@ extension UIButton {
     func clickedAnimation(vibrate: Bool) {
         if vibrate { makeVibrate(degree: .light) }
         UIView.animate(withDuration: 0.1, animations: {
-            self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95) }, completion: { (finish: Bool) in
+            self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95) }, completion: { _ in
                 UIView.animate(withDuration: 0.1, animations: {
                     self.transform = CGAffineTransform.identity
                 })
