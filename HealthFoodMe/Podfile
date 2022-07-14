@@ -19,5 +19,6 @@ target 'HealthFoodMe' do
   pod 'Firebase/Crashlytics'
   pod 'Kingfisher', '~> 7.0'
   pod 'SwiftLint'
+  pod 'BSImagePicker', '~> 3.1' 
   
 end
