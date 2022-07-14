@@ -18,6 +18,8 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
     static var isFromNib: Bool = false
     private var isOpenned: Bool = false
     let toggleButtonTapped = PublishRelay<Void>()
+    let directionButtonTapped = PublishRelay<Void>()
+    let telePhoneLabelTapped = PublishRelay<String>()
     
     // MARK: - UI Components
     
@@ -46,6 +48,7 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
         iv.contentMode = .scaleAspectFill
         iv.image = ImageLiterals.MainDetail.directionIcon
         iv.clipsToBounds = true
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
@@ -65,6 +68,7 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
         setLayout()
         registerCell()
         setDelegate()
+        setTapGesture()
     }
     
     required init?(coder: NSCoder) {
@@ -82,7 +86,7 @@ extension MainInfoTVC {
     
     private func setLayout() {
         self.contentView.addSubviews(detailSummaryView, expandableTableView, directionImageView,
-                         distanceLabel)
+                                     distanceLabel)
         
         detailSummaryView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -117,6 +121,16 @@ extension MainInfoTVC {
     private func setDelegate() {
         expandableTableView.delegate = self
         expandableTableView.dataSource = self
+    }
+    
+    private func setTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentActionSheet))
+        directionImageView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc
+    private func presentActionSheet() {
+        directionButtonTapped.accept(())
     }
 }
 
@@ -159,6 +173,10 @@ extension MainInfoTVC: UITableViewDataSource {
                 self.toggleCells()
             }
             .disposed(by: cell.disposeBag)
+        cell.telePhoneLabelTapped.asDriver(onErrorJustReturn: "")
+            .drive { phoneNumber in
+                self.telePhoneLabelTapped.accept(phoneNumber)
+            }.disposed(by: cell.disposeBag)
         return cell
     }
     
