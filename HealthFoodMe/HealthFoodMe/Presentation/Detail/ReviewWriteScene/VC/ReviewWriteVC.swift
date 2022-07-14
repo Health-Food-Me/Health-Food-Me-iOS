@@ -24,8 +24,9 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     }
     var selectedAssets: [PHAsset] = [PHAsset]()
     var userSelectedImages: [UIImage] = [UIImage]()
-    var tasteSet = Set<String>()
+    var tasteSet = ""
     var feelingArray: [Bool] = [false, false, false]
+    private var currentRate: Double = 0
     
     // MARK: - UI Components
     
@@ -252,6 +253,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         tv.font = .NotoRegular(size: 12)
         tv.textColor = .helfmeGray2
         tv.backgroundColor = .helfmeBgGray
+        tv.showsHorizontalScrollIndicator = false
         return tv
     }()
     
@@ -319,6 +321,13 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         return btn
     }()
     
+    private lazy var checkReviewToastView: UpperToastView = {
+        let toastView = UpperToastView(title: "별점과 맛 평가는 필수입니다.")
+        toastView.layer.cornerRadius = 20
+        toastView.alpha = 0
+        return toastView
+      }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -330,6 +339,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         setAddTargets()
         setTextView()
         addTapGesture()
+        bindSlider()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -344,7 +354,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
 // MARK: - Methods
 
 extension ReviewWriteVC {
-    
+        
     private func setTextView() {
         addToolBar(textView: reviewTextView)
     }
@@ -373,7 +383,7 @@ extension ReviewWriteVC {
             make.width.equalTo(scrollView.snp.width)
         }
         
-        contentView.addSubviews(restaurantTitleLabel, sliderView, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView, photoSubLabel, writeReviewButton)
+        contentView.addSubviews(restaurantTitleLabel, sliderView, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView, photoSubLabel, writeReviewButton, checkReviewToastView)
         
         restaurantTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
@@ -485,6 +495,13 @@ extension ReviewWriteVC {
             make.height.equalTo(44)
             make.bottom.equalToSuperview().inset(10)
         }
+        
+        checkReviewToastView.snp.updateConstraints { make in
+            make.leading.equalToSuperview().offset(63)
+            make.trailing.equalToSuperview().offset(-63)
+            make.bottom.equalToSuperview().offset(40)
+            make.height.equalTo(40)
+        }
     }
     
     private func setAddTargets() {
@@ -501,11 +518,10 @@ extension ReviewWriteVC {
             if button.isSelected {
                 button.layer.borderColor = UIColor.mainRed.cgColor
                 button.setTitleColor(UIColor.mainRed, for: UIControl.State.normal)
-                tasteSet.insert(tagTitle)
+                tasteSet = tagTitle
             } else {
                 button.layer.borderColor = UIColor.helfmeGray2.cgColor
                 button.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
-                tasteSet.remove(tagTitle)
             }
         }
         print(tasteSet)
@@ -594,7 +610,6 @@ extension ReviewWriteVC {
                                           targetSize: CGSize(width: 200, height: 200),
                                           contentMode: .aspectFit,
                                           options: option) { (result, info) in thumbnail = result! }
-                
                 let data = thumbnail.jpegData(compressionQuality: 0.7)
                 let newImage = UIImage(data: data!)
                 
@@ -603,13 +618,26 @@ extension ReviewWriteVC {
         }
     }
     
-    func checkReview(_ textView: UITextView) {
-        
+    private func bindSlider() {
+        sliderView.sliderValue = { rate in
+            self.currentRate = rate
+        }
     }
     
-    @objc func didTapWriteReview(_ sender: UIButton) {
-//        checkReview(<#T##textView: UITextView##UITextView#>)
-        //내가 쓴 리뷰로 이동?
+    private func checkReview() -> Bool {
+        if self.currentRate > 0 && !tasteSet.isEmpty {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    @objc private func didTapWriteReview(_ sender: UIButton) {
+        if !checkReview() {
+            showToast()
+        } else {
+            makeAlert(title: "알림", message: "작성완료!")
+        }
     }
     
     @objc override func keyboardWillShow(notification: NSNotification) {
@@ -627,6 +655,45 @@ extension ReviewWriteVC {
         self.contentView
             .transform = .identity
     }
+}
+
+extension ReviewWriteVC {
+    
+    private func showToast() {
+      makeVibrate()
+        checkReviewToastView.snp.remakeConstraints { make in
+            make.leading.equalToSuperview().offset(63)
+            make.trailing.equalToSuperview().offset(-63)
+            make.bottom.equalTo(writeReviewButton.snp.top).offset(-10)
+            make.height.equalTo(40)
+        }
+
+      UIView.animate(withDuration: 0.5, delay: 0) {
+        self.view.layoutIfNeeded()
+          self.checkReviewToastView.alpha = 1
+              
+      } completion: { _ in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+          self.hideToast()
+        }
+      }
+    }
+    
+    private func hideToast() {
+
+       checkReviewToastView.snp.remakeConstraints { make in
+           make.leading.equalToSuperview().offset(63)
+           make.trailing.equalToSuperview().offset(-63)
+           make.bottom.equalToSuperview().offset(40)
+           make.height.equalTo(40)
+        }
+      
+      UIView.animate(withDuration: 0.5, delay: 0) {
+          self.checkReviewToastView.alpha = 0
+        self.view.layoutIfNeeded()
+      }
+    }
+
 }
 
 // MARK: - Network
@@ -803,4 +870,3 @@ extension UIViewController {
         }
     }
 }
-
