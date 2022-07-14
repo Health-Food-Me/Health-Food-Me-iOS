@@ -36,7 +36,7 @@ class TagCVC: UICollectionViewCell, UICollectionViewRegisterable {
     }
 }
 
-//MARK: - Extension
+// MARK: - Extension
 
 extension TagCVC {
     private func setLayout() {
