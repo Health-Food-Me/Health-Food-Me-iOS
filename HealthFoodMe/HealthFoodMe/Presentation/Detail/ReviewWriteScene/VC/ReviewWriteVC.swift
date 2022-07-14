@@ -25,7 +25,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     var selectedAssets: [PHAsset] = [PHAsset]()
     var userSelectedImages: [UIImage] = [UIImage]()
     var tasteSet = Set<String>()
-    var feelingSet = Set<String>()
+    var feelingArray : [Bool] = [false, false, false]
     
     // MARK: - UI Components
     
@@ -175,6 +175,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.tag = 0
         btn.addTarget(self, action: #selector(didTapFeelingTag), for: .touchUpInside)
         return btn
     }()
@@ -188,6 +189,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.tag = 1
         btn.addTarget(self, action: #selector(didTapFeelingTag), for: .touchUpInside)
         return btn
     }()
@@ -201,6 +203,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.tag = 2
         btn.addTarget(self, action: #selector(didTapFeelingTag), for: .touchUpInside)
         return btn
     }()
@@ -496,18 +499,16 @@ extension ReviewWriteVC {
     }
     
     @objc func didTapFeelingTag(_ sender: UIButton) {
-        guard let tagTitle = sender.titleLabel?.text else { return }
         sender.isSelected.toggle()
+        feelingArray[sender.tag].toggle()
         if sender.isSelected {
             sender.layer.borderColor = UIColor.mainRed.cgColor
             sender.setTitleColor(UIColor.mainRed, for: UIControl.State.normal)
-            feelingSet.insert(tagTitle)
         } else {
             sender.layer.borderColor = UIColor.helfmeGray2.cgColor
             sender.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
-            feelingSet.remove(tagTitle)
         }
-        print(feelingSet)
+        print(feelingArray)
     }
     
     func checkMaxLength(_ textView: UITextView) {
