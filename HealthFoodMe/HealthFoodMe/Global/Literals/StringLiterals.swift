@@ -81,4 +81,14 @@ struct I18N {
         static let dietStore = "다이어터도 즐길 수 있는 식당"
         static let goScrap = "스크랩하러 가기"
     }
+  
+    struct Setting {
+        static let customerServiceTitle = "고객지원"
+        static let askButtonTitle = "문의하기"
+        static let userWithdrawalTitle = "회원탈퇴"
+        static let termsTitle = "약관 및 정책"
+        static let openSourceButtonTitle = "오픈 소스 정보"
+        static let naverMapTerms = "네이버 지도 법적 공지"
+        static let naverMapLicense = "네이버 지도 오픈 소스 라이선스"
+    }
 }

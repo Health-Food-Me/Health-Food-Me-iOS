@@ -149,6 +149,8 @@
 		EBF66B082872AF5B00DE0ED1 /* SampleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */; };
 		EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B092872B21F00DE0ED1 /* StringLiterals.swift */; };
 		EBF66B0C2872B4FE00DE0ED1 /* StoryboardLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B0B2872B4FE00DE0ED1 /* StoryboardLiterals.swift */; };
+		FD39FAD62880C63E00A01CDA /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD39FAD52880C63E00A01CDA /* Setting.storyboard */; };
+		FD39FAD82880C69400A01CDA /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD39FAD72880C69400A01CDA /* SettingVC.swift */; };
 		FD58291A287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582917287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift */; };
 		FD58291B287DC39A00CE62E8 /* mapContainerView + Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582918287DC39A00CE62E8 /* mapContainerView + Reactive.swift */; };
 		FD58291C287DC39A00CE62E8 /* mapContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582919287DC39A00CE62E8 /* mapContainerView.swift */; };
@@ -313,6 +315,8 @@
 		EBF66B092872B21F00DE0ED1 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		EBF66B0B2872B4FE00DE0ED1 /* StoryboardLiterals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardLiterals.swift; sourceTree = "<group>"; };
 		F3FFC8B608A27EA9662A18AB /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
+		FD39FAD52880C63E00A01CDA /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
+		FD39FAD72880C69400A01CDA /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		FD582917287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerViewDelegateProxy.swift; sourceTree = "<group>"; };
 		FD582918287DC39A00CE62E8 /* mapContainerView + Reactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "mapContainerView + Reactive.swift"; sourceTree = "<group>"; };
 		FD582919287DC39A00CE62E8 /* mapContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerView.swift; sourceTree = "<group>"; };
@@ -1169,6 +1173,7 @@
 		EBF66A90287227F500DE0ED1 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				FD39FAD22880C62600A01CDA /* Setting */,
 				A93252AE287F2AD7001EDF50 /* Scrap */,
 				A9325272287D24CD001EDF50 /* Search */,
 				3BCC441A28745FA900661A12 /* Auth */,
@@ -1268,6 +1273,31 @@
 				EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		FD39FAD22880C62600A01CDA /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				FD39FAD42880C63100A01CDA /* VC */,
+				FD39FAD32880C62E00A01CDA /* Views */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		FD39FAD32880C62E00A01CDA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FD39FAD52880C63E00A01CDA /* Setting.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FD39FAD42880C63100A01CDA /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				FD39FAD72880C69400A01CDA /* SettingVC.swift */,
+			);
+			path = VC;
 			sourceTree = "<group>";
 		};
 		FD924374288007E00034876B /* Views */ = {
@@ -1425,6 +1455,7 @@
 				695758B9287D7C0B00E36789 /* MenuTab.storyboard in Resources */,
 				3B0B25542876BBE400950539 /* NotoSansCJKkr-Regular.otf in Resources */,
 				3B089C4B287D877F00DA80B9 /* GodoB.otf in Resources */,
+				FD39FAD62880C63E00A01CDA /* Setting.storyboard in Resources */,
 				A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */,
 				695758BD287DA4CD00E36789 /* ReviewWrite.storyboard in Resources */,
 				3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */,
@@ -1579,6 +1610,7 @@
 				3BC01F84287EAE48006C2181 /* BlogReviewCVC.swift in Sources */,
 				EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */,
 				EBF66AE1287227F500DE0ED1 /* BaseService.swift in Sources */,
+				FD39FAD82880C69400A01CDA /* SettingVC.swift in Sources */,
 				EBF66AE2287227F500DE0ED1 /* BaseRouter.swift in Sources */,
 				EBF66AE3287227F500DE0ED1 /* NetworkResult.swift in Sources */,
 				EB6A45262875C3A000749582 /* TabContainerCVC.swift in Sources */,

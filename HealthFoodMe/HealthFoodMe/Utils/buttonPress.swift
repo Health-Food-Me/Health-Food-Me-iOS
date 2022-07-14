@@ -24,10 +24,12 @@ extension UIButton {
      iOS13까지는 NSObject형태로 등록해서 처리하는 방식으로 분기처리합니다.
      */
     
-    func press(vibrate: Bool = false, for controlEvents: UIControl.Event = .touchUpInside, _ closure: @escaping() -> Void) {
+    func press(vibrate: Bool = false,
+               animated: Bool = true,
+               for controlEvents: UIControl.Event = .touchUpInside, _ closure: @escaping() -> Void) {
         if #available(iOS 14.0, *) {
             self.addAction(UIAction { _ in closure()
-                self.clickedAnimation(vibrate: vibrate)
+              if animated { self.clickedAnimation(vibrate: vibrate) }
             }, for: controlEvents)
         } else {
             @objc class ClosureSleeve: NSObject {

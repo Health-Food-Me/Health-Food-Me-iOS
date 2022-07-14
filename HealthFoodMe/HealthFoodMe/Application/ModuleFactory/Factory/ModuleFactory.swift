@@ -26,6 +26,9 @@ protocol ModuleFactoryProtocol {
     
     // MARK: - Scrap
     func makeScrapVC() -> ScrapVC
+    
+    // MARK: - Setting
+    func makeSettingVC() -> SettingVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -99,6 +102,12 @@ class ModuleFactory: ModuleFactoryProtocol {
         
         return vc
     }
+    
+    // MARK: - Setting
+    func makeSettingVC() -> SettingVC {
+        return SettingVC.controllerFromStoryboard(.setting)
+    }
+
 
     // MARK: - Plan
     
