@@ -426,13 +426,19 @@ extension ReviewWriteVC {
     }
     
     @objc func showStatusActionSheet(_ sender: UITapGestureRecognizer) {
-        let actionSheet = UIAlertController(title: "선택", message: nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let takePictureAction = UIAlertAction(title: "사진 찍기", style: .default) {_ in
-            
+            let camera = UIImagePickerController()
+            camera.sourceType = .camera
+            camera.allowsEditing = true
+            camera.cameraDevice = .rear
+            camera.cameraCaptureMode = .photo
+            camera.delegate = self
+            self.present(camera, animated: true, completion: nil)
         }
         let albumAction = UIAlertAction(title: "사진 보관함", style: .default) {_ in
-            self.addCellDidTap()
+            self.didTapimageAlbum()
         }
         let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: nil)
         
@@ -443,7 +449,7 @@ extension ReviewWriteVC {
         self.present(actionSheet, animated: true)
     }
     
-    func addCellDidTap() {
+    func didTapimageAlbum() {
         selectedAssets.removeAll()
         userSelectedImages.removeAll()
         
@@ -498,12 +504,12 @@ extension ReviewWriteVC {
 }
 
 extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photoModel.userSelectedImages.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         switch indexPath.item {
         case Cell.addCell.rawValue:
             guard let addPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCVC.className, for: indexPath) as? AddPhotoCVC else { fatalError("Failed to dequeue cell for AddPhotoCVC") }
@@ -515,7 +521,7 @@ extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
             guard let listPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: ListPhotoCVC.className, for: indexPath) as? ListPhotoCVC else { fatalError("Failed to dequeue cell for ListPhotoCVC") }
             listPhotoCell.delegate = self
             listPhotoCell.indexPath = indexPath.item
-
+            
             if photoModel.userSelectedImages.count > 0 {
                 listPhotoCell.photoImageView.image = photoModel.userSelectedImages[indexPath.item - 1]
             }
@@ -535,10 +541,6 @@ extension ReviewWriteVC: UICollectionViewDelegateFlowLayout {
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: 105, height: 105)
-//    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     }
@@ -549,8 +551,13 @@ extension ReviewWriteVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension ReviewWriteVC: AddImageDelegate {
+    
     func didPickImagesToUpload(images: [UIImage]) {
-        photoModel.userSelectedImages = images
+        photoModel.userSelectedImages += images
+    }
+    
+    func didTakeImagesToUpload(image: UIImage) {
+        photoModel.userSelectedImages.append(image)
     }
 }
 
@@ -588,5 +595,21 @@ extension ReviewWriteVC: UITextViewDelegate {
         checkMaxLength(textView)
         let count = textView.text.count
         textCountLabel.text = "\(count)/500자"
+    }
+}
+
+extension ReviewWriteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
+            var images = [UIImage]()
+            images.append(image)
+            didPickImagesToUpload(images: images)
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
 }

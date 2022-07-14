@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>리뷰 사진 촬영을 위해 시스템 카메라에 접근합니다</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>리뷰를 작성하기 위해 사용자의 갤러리에 접근합니다</string>
 	<key>UIAppFonts</key>

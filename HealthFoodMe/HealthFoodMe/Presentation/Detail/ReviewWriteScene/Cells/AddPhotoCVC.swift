@@ -26,6 +26,7 @@ final class AddPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
     var userSelectedImages: [UIImage] = [UIImage]()
     
     // MARK: - UI Components
+    
     let addPhotoView: UIView = {
         let view = UIView()
         view.backgroundColor = .helfmeWhite

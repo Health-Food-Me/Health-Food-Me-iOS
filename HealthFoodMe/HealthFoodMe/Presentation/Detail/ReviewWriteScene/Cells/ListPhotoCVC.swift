@@ -31,7 +31,7 @@ final class ListPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
     private lazy var deleteBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.ReviewWrite.deletePhotoBtn, for: .normal)
-        btn.addTarget(self, action: #selector(deleteBtnDidTap), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(didTapDeleteButton), for: .touchUpInside)
         return btn
     }()
     
@@ -39,7 +39,6 @@ final class ListPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUI()
         setLayout()
     }
     
@@ -51,10 +50,6 @@ final class ListPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
 // MARK: - Methods
 
 extension ListPhotoCVC {
-    func setUI() {
-        
-    }
-    
     func setLayout() {
         contentView.addSubviews(photoImageView, deleteBtn)
         
@@ -68,7 +63,7 @@ extension ListPhotoCVC {
         }
     }
     
-    @objc func deleteBtnDidTap(_ sender: Any) {
+    @objc func didTapDeleteButton(_ sender: Any) {
         delegate?.didPressDeleteBtn(at: indexPath)
     }
 }
