@@ -25,6 +25,7 @@ enum Storyboards: String {
     case socialLogin = "SocialLogin"
     case hamburgerBar = "HamburgerBar"
     case blogReviewTab = "BlogReviewTab"
+    case reviewTab = "ReviewTab"
 }
 
 extension UIStoryboard {

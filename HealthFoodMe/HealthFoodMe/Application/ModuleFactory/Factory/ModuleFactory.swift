@@ -16,6 +16,8 @@ protocol ModuleFactoryProtocol {
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
     func makeMenuTabVC() -> MenuTabVC
+    func makeReviewTabVC() -> ReviewTabVC
+    func makeBlogReviewTabVC() -> BlogReviewTabVC
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC
@@ -58,6 +60,18 @@ class ModuleFactory: ModuleFactoryProtocol {
     
     func makeMenuTabVC() -> MenuTabVC {
         let vc = MenuTabVC.controllerFromStoryboard(.menuTab)
+        
+        return vc
+    }
+    
+    func makeReviewTabVC() -> ReviewTabVC {
+        let vc = ReviewTabVC.controllerFromStoryboard(.reviewTab)
+        
+        return vc
+    }
+    
+    func makeBlogReviewTabVC() -> BlogReviewTabVC {
+        let vc = BlogReviewTabVC.controllerFromStoryboard(.blogReviewTab)
         
         return vc
     }
