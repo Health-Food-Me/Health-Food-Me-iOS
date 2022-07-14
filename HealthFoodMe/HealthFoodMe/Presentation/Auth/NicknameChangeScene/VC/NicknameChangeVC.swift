@@ -10,12 +10,12 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-final class ChangeNicknameVC: UIViewController {
+final class NicknameChangeVC: UIViewController {
   // MARK: - Vars & Lets Part
   private let disposeBag = DisposeBag()
   private var confirmButtonClicked = PublishRelay<String?>()
   private let nicknameMaxLength = 12
-  var viewModel: ChangeNicknameViewModel!
+  var viewModel: NicknameChangeViewModel!
   
   // MARK: - UI Component Part
   
@@ -44,15 +44,23 @@ final class ChangeNicknameVC: UIViewController {
     let label = UILabel()
     label.font = .NotoRegular(size: 14)
     label.textColor = UIColor.helfmeBlack
+    label.text = I18N.Auth.ChangeNickname.guideText
     return label
+  }()
+  
+  private var nicknameTextFieldContainerView: UIView = {
+    let view = UIView()
+    view.layer.borderColor = UIColor.helfmeLineGray.cgColor
+    view.layer.borderWidth = 1
+    view.layer.cornerRadius = 8
+    return view
   }()
   
   private var nickNameTextField: UITextField = {
     let textField = UITextField()
-    textField.addLeftPadding(width: 16)
     textField.textColor = .helfmeBlack
     textField.font = UIFont.NotoMedium(size: 16)
-    textField.clearButtonMode = .unlessEditing
+    textField.clearButtonMode = .whileEditing
     return textField
   }()
   
@@ -73,30 +81,48 @@ final class ChangeNicknameVC: UIViewController {
   
   private lazy var nicknameFormatErrorToastview: UpperToastView = {
     let toastView = UpperToastView(title: I18N.Auth.ChangeNickname.formatErrMessage)
-    toastView.layer.cornerRadius = 77
+    toastView.layer.cornerRadius = 20
     return toastView
   }()
   
   private lazy var nicknameDuplicatedToastView: UpperToastView = {
     let toastView = UpperToastView(title: I18N.Auth.ChangeNickname.duplicatedErrMessage)
-    toastView.layer.cornerRadius = 77
+    toastView.layer.cornerRadius = 20
     return toastView
   }()
   
   // MARK: - Life Cycle Part
   override func viewDidLoad() {
     super.viewDidLoad()
-    setUI()
+    setLayout()
+    setUIProperty()
     bindViewModels()
+    bindTextField()
     addButtonAction()
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    registerForKeyboardNotifications()
+  }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    unregisterForKeyboardNotifications()
   }
 }
 
-extension ChangeNicknameVC {
-  private func setUI() {
+extension NicknameChangeVC {
+  private func setLayout() {
     view.addSubviews(topTitleLabel, backButton, headerDividerView,
-                     topGuideLabel, nickNameTextField, conditionDescriptionLabel,
+                     topGuideLabel, nicknameTextFieldContainerView,
+                     conditionDescriptionLabel,
                      changeCTAButton, nicknameFormatErrorToastview, nicknameDuplicatedToastView)
+    nicknameTextFieldContainerView.addSubview(nickNameTextField)
+    
+    nickNameTextField.snp.makeConstraints { make in
+      make.top.bottom.equalToSuperview()
+      make.leading.equalToSuperview().offset(16)
+      make.trailing.equalToSuperview().offset(-16)
+    }
     
     topTitleLabel.snp.makeConstraints { make in
       make.top.equalTo(view.safeAreaLayoutGuide).offset(14)
@@ -117,13 +143,13 @@ extension ChangeNicknameVC {
     }
     
     topGuideLabel.snp.makeConstraints { make in
-      make.top.equalToSuperview().offset(20)
+      make.top.equalTo(headerDividerView.snp.bottom).offset(20)
       make.leading.equalToSuperview().offset(20)
       make.trailing.equalToSuperview().inset(20)
       make.height.equalTo(20)
     }
     
-    nickNameTextField.snp.makeConstraints { make in
+    nicknameTextFieldContainerView.snp.makeConstraints { make in
       make.top.equalTo(topGuideLabel.snp.bottom).offset(16)
       make.leading.equalToSuperview().offset(20)
       make.trailing.equalToSuperview().inset(20)
@@ -131,15 +157,17 @@ extension ChangeNicknameVC {
     }
     
     conditionDescriptionLabel.snp.makeConstraints { make in
-      make.top.equalToSuperview().offset(16)
+      make.top.equalTo(nickNameTextField.snp.bottom).offset(16)
       make.leading.equalToSuperview().offset(20)
-      make.height.equalTo(34)
+      make.trailing.equalToSuperview().offset(-20)
+      make.height.equalTo(40)
     }
     
     changeCTAButton.snp.makeConstraints { make in
       make.leading.equalToSuperview().offset(20)
       make.trailing.equalToSuperview().inset(20)
       make.height.equalTo(44)
+      make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-8)
     }
     
     nicknameFormatErrorToastview.snp.makeConstraints { make in
@@ -157,6 +185,12 @@ extension ChangeNicknameVC {
     }
   }
   
+  private func setUIProperty() {
+    self.navigationController?.navigationBar.isHidden = true
+    nickNameTextField.layer.cornerRadius = 5
+    changeCTAButton.layer.cornerRadius = 22
+  }
+  
   private func addButtonAction() {
     changeCTAButton.press {
       self.confirmButtonClicked.accept(self.nickNameTextField.text)
@@ -164,21 +198,20 @@ extension ChangeNicknameVC {
   }
 }
 
-extension ChangeNicknameVC {
+extension NicknameChangeVC {
   
   // MARK: - Custom Method Part
   private func bindViewModels() {
-    let input = ChangeNicknameViewModel.Input(ctaButtonClickEvent: confirmButtonClicked.asObservable())
+    let input = NicknameChangeViewModel.Input(ctaButtonClickEvent: confirmButtonClicked.asObservable())
     let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
     
     output.currentNicknameStatus
       .subscribe(onNext: { [weak self] status in
         guard let self = self else { return }
-        if status != .normal {
-          self.showUpperToast(status)
-        } else {
-          self.hideUpperToast()
-        }
+        
+        self.showUpperToast(status)
+        if status == .normal { self.hideUpperToast() }
+
       }).disposed(by: self.disposeBag)
   }
   
@@ -193,9 +226,11 @@ extension ChangeNicknameVC {
       }).disposed(by: self.disposeBag)
     
     nickNameTextField.rx.text
-      .orEmpty
+      .filter { $0 != nil}
+      .filter { !$0!.isEmpty }
       .distinctUntilChanged()
       .subscribe { _ in
+        self.cutMaxLabel()
         self.hideUpperToast()
       }.disposed(by: self.disposeBag)
   }
@@ -211,19 +246,25 @@ extension ChangeNicknameVC {
   }
 }
 
-extension ChangeNicknameVC {
+extension NicknameChangeVC {
   private func showUpperToast(_ status: NicknameStatus) {
-    guard status != .normal else { return }
+    guard status != .normal else {
+      // FIXME: - 이후에 Custom Alert 생성되면 바꿀 예정
+      makeAlert(title: "알림", message: "닉네임 변경 성공! ^_^")
+      return }
     
+    makeVibrate()
+    let topInset = calculateTopInset() * (-1)
     if status == .containsSpecialCharacter {
       nicknameFormatErrorToastview.snp.updateConstraints { make in
-        make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
+        make.top.equalTo(topInset + 12)
       }
     } else {
       nicknameDuplicatedToastView.snp.updateConstraints { make in
-        make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
+        make.top.equalTo(topInset + 12)
       }
     }
+    
     UIView.animate(withDuration: 0.5, delay: 0) {
       self.view.layoutIfNeeded()
     } completion: { _ in
@@ -242,6 +283,48 @@ extension ChangeNicknameVC {
     }
     
     UIView.animate(withDuration: 0.5, delay: 0) {
+      self.view.layoutIfNeeded()
+    }
+  }
+}
+
+// MARK: - Keyboard Actions
+
+extension NicknameChangeVC {
+  private func registerForKeyboardNotifications() {
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+  }
+  
+  private func unregisterForKeyboardNotifications() {
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+  }
+  
+  @objc private func keyboardWillShow(_ notification: Notification) {
+    let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
+    if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+      let keyboardRectangle = keyboardFrame.cgRectValue
+      let keyboardHeight = keyboardRectangle.height
+      
+      let bottomContraint = (keyboardHeight) * (-1)
+      changeCTAButton.snp.updateConstraints { make in
+        make.bottom.equalTo(view.safeAreaLayoutGuide).offset(bottomContraint)
+      }
+    }
+    
+    UIView.animate(withDuration: duration, delay: 0) {
+      self.view.layoutIfNeeded()
+    }
+  }
+  
+  @objc private func keyboardWillHide(_ notification: Notification) {
+    let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
+    let curve = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as! UInt
+    changeCTAButton.snp.updateConstraints { make in
+      make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-8)
+    }
+    UIView.animate(withDuration: duration, delay: 0, options: .init(rawValue: curve)) {
       self.view.layoutIfNeeded()
     }
   }
