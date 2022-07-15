@@ -15,6 +15,8 @@ class ReviewTabVC: UIViewController {
     private let withImage = 1
     private let withContents = 2
     private let withoutImageAndContents = 3
+    
+    private var reviewData: [ReviewCellViewModel] = []
 
     // MARK: - UI Components
     
@@ -78,6 +80,26 @@ extension ReviewTabVC {
             }
         }
     }
+    
+    private func processViewModel(_ dataList: [ReviewDataModel]) {
+        var result: [ReviewCellViewModel] = []
+        for data in dataList {
+            let height = calculateReviewHeight(data.reviewContents ?? "")
+            result.append(ReviewCellViewModel.init(data: data,
+                                                   foldRequired: height > 55))
+        }
+        self.reviewData = result
+    }
+    
+    private func calculateReviewHeight(_ text: String) -> CGFloat {
+        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 40, height: 0))
+        textView.textContainer.lineFragmentPadding = .zero
+        textView.textContainerInset = .zero
+        textView.font = .NotoRegular(size: 12)
+        textView.text = text
+        textView.sizeToFit()
+        return textView.frame.height
+    }
 }
 
 extension ReviewTabVC: UICollectionViewDelegate {
@@ -92,7 +114,7 @@ extension ReviewTabVC: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            return ReviewDataModel.sampleData.count
+            return reviewData.count
         default:
             return 0
         }
@@ -105,6 +127,7 @@ extension ReviewTabVC: UICollectionViewDataSource {
             return header
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCVC.className, for: indexPath) as? ReviewCVC else { return UICollectionViewCell() }
+            cell.blogReviewSeperatorView.isHidden = indexPath.item == 0
             cell.setData(reviewData: ReviewDataModel.sampleData[indexPath.row])
             cell.setEnumValue = setEnumValue(data: ReviewDataModel.sampleData[indexPath.row])
             cell.setLayout()
@@ -164,16 +187,6 @@ extension ReviewTabVC: UICollectionViewDelegateFlowLayout {
         }
         
         return cellHeight
-    }
-    
-    private func calculateReviewHeight(_ text: String) -> CGFloat {
-        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 40, height: 0))
-        textView.textContainer.lineFragmentPadding = .zero
-        textView.textContainerInset = .zero
-        textView.font = .NotoRegular(size: 12)
-        textView.text = text
-        textView.sizeToFit()
-        return textView.frame.height
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

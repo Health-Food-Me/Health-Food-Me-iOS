@@ -9,6 +9,9 @@ import Foundation
 
 protocol ModuleFactoryProtocol {
     
+    // MARK: - Auth
+    func makeNicknameChangeVC() -> NicknameChangeVC
+    
     // MARK: - Map
     func makeMainMapVC() -> MainMapVC
     func makeHamburgerBarVC() -> HamburgerBarVC
@@ -22,6 +25,9 @@ protocol ModuleFactoryProtocol {
     // MARK: - Search
     func makeSearchVC() -> SearchVC
     func makeSearchResultVC() -> SearchResultVC
+    
+    // MARK: - Scrap
+    func makeScrapVC() -> ScrapVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -29,6 +35,18 @@ class ModuleFactory: ModuleFactoryProtocol {
     static func resolve() -> ModuleFactory {
         return ModuleFactory()
     }
+  
+    // MARK: - Auth
+    func makeNicknameChangeVC() -> NicknameChangeVC {
+        let repository = DefaultNicknameChangeRepository()
+        let useCase = DefaultNicknameChangeUseCase(repository: repository)
+        let viewModel = NicknameChangeViewModel(useCase: useCase)
+        let vc = NicknameChangeVC.controllerFromStoryboard(.nicknameChange)
+        vc.viewModel = viewModel
+        
+        return vc
+    }
+
     
     // MARK: - Map
     func makeMainMapVC() -> MainMapVC {
@@ -85,6 +103,20 @@ class ModuleFactory: ModuleFactoryProtocol {
     
     func makeSearchResultVC() -> SearchResultVC {
         let vc = SearchResultVC.controllerFromStoryboard(.searchResult)
+        
+        return vc
+    }
+    
+    // MARK: - Scrap
+    func makeScrapVC() -> ScrapVC {
+        let vc = ScrapVC.controllerFromStoryboard(.scrap)
+        
+        return vc
+    }
+    
+    // MARK: - HelfmeAlert
+    func makeHelfmeAlertVC() -> HelfmeAlertVC {
+        let vc = HelfmeAlertVC.controllerFromStoryboard(.helfmeAlert)
         
         return vc
     }
