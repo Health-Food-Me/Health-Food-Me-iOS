@@ -132,7 +132,7 @@ extension ReviewCVC {
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
+            make.leading.equalTo(20)
             make.top.equalTo(reviewSeperatorView.snp.bottom).offset(28)
             make.height.equalTo(nameLabel.font.lineHeight)
         }
@@ -160,7 +160,7 @@ extension ReviewCVC {
         
         reviewContents.snp.makeConstraints { make in
             make.top.equalTo(reviewPhotoCV.snp.bottom).offset(12)
-            make.leading.equalToSuperview()
+            make.leading.equalTo(20)
             make.trailing.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-28)
             make.width.equalTo(width - 40)
@@ -205,7 +205,7 @@ extension ReviewCVC {
         
         reviewContents.snp.remakeConstraints { make in
             make.top.equalTo(tagCV.snp.bottom).offset(10)
-            make.leading.equalToSuperview()
+            make.leading.equalTo(20)
             make.trailing.equalToSuperview().offset(-20)
             make.bottom.equalToSuperview().offset(-28)
             make.width.equalTo(width - 40)
@@ -244,7 +244,7 @@ extension ReviewCVC {
         
         reviewContents.snp.remakeConstraints { make in
             make.top.equalTo(reviewPhotoCV.snp.bottom).offset(12)
-            make.leading.equalToSuperview()
+            make.leading.equalTo(20)
             make.trailing.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-28)
             make.width.equalTo(width - 40)
@@ -301,6 +301,17 @@ extension ReviewCVC: UICollectionViewDataSource {
 }
 
 extension ReviewCVC: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        switch collectionView {
+        case tagCV:
+            return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        case reviewPhotoCV:
+            return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        default:
+            return .zero
+        }
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         switch collectionView {
         case tagCV:

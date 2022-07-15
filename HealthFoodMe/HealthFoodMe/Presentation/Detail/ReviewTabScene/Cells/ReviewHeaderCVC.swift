@@ -17,8 +17,6 @@ class ReviewHeaderCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     static var isFromNib = false
     weak var delegate: ReviewHeaderDelegate?
-    //var selectedSegmentControlValue = 0
-    // var listIndex = 0
     
     // MARK: - UI Components
     

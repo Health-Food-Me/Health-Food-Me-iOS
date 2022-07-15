@@ -56,8 +56,7 @@ extension ReviewDetailVC {
         view.addSubviews(reviewCV)
         
         reviewCV.snp.makeConstraints { make in
-            make.top.trailing.bottom.equalToSuperview()
-            make.leading.equalTo(20)
+            make.top.trailing.bottom.leading.equalToSuperview()
         }
     }
     
@@ -172,7 +171,7 @@ extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
             return CGSize(width: cellWidth, height: cellHeight)
         case 1:
             if selectedCustomSegment == 0 {
-                let cellWidth = width * 355/375
+                let cellWidth = width
                 let cellHeight = calculateReviewCellHeight(containsPhoto: ReviewDataModel.sampleData[indexPath.row].reviewImageURLList?.count != 0,
                                                            reviewText: ReviewDataModel.sampleData[indexPath.row].reviewContents)
                 return CGSize(width: cellWidth, height: cellHeight)
