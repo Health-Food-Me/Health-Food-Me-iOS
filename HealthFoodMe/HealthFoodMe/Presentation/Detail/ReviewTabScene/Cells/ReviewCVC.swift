@@ -36,7 +36,6 @@ class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     private var starView: StarRatingView = {
         let st = StarRatingView(starScale: 18)
-        st.spacing = 2
         return st
     }()
     
