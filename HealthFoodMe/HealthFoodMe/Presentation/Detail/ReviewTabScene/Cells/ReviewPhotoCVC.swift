@@ -43,7 +43,11 @@ extension ReviewPhotoCVC {
         
         reviewImageView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
-            make.width.height.equalTo(width * 100/375)
+            make.width.height.equalTo(width * 105/375)
         }
+    }
+    
+    func setData(photoData: String) {
+        reviewImageView.image = UIImage(named: photoData)
     }
 }

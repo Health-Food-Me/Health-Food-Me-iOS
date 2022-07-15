@@ -15,13 +15,15 @@ class TagCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     // MARK: - UI Components
     
-    private lazy var tagLabel: UILabel = {
-        let lb = UILabel()
-        lb.textColor = .mainRed
-        lb.layer.cornerRadius = 11
-        lb.layer.borderColor = UIColor.mainRed.cgColor
-        lb.layer.borderWidth = 1.0
-        return lb
+    private lazy var tagTextView: UITextView = {
+        let tv = UITextView()
+        tv.textColor = .mainRed
+        tv.font = UIFont.NotoRegular(size: 10)
+        tv.isEditable = false
+        tv.isScrollEnabled = false
+        tv.textContainerInset = .zero
+        tv.textContainer.lineFragmentPadding = .zero
+        return tv
     }()
     
     // MARK: - Life Cycle Part
@@ -40,10 +42,18 @@ class TagCVC: UICollectionViewCell, UICollectionViewRegisterable {
 
 extension TagCVC {
     private func setLayout() {
-        contentView.addSubviews(tagLabel)
+        contentView.addSubviews(tagTextView)
         
-        tagLabel.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview()
+        tagTextView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(3)
+            make.leading.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview().offset(-4)
+            make.trailing.equalToSuperview().offset(-10)
+
         }
+    }
+    
+    func setData(tagData: String) {
+        tagTextView.text = tagData
     }
 }
