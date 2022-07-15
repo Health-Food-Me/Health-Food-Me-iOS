@@ -16,7 +16,9 @@ extension UIViewController {
         let alertVC = ModuleFactory.resolve().makeHelfmeAlertVC()
         
         alertVC.alertType = alertType
-        alertVC.title = title
+        if let title = title {
+            alertVC.alertTitle = title
+        }
         if let subtitle = subtitle {
             alertVC.alertContent = subtitle
         }

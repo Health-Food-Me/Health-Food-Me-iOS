@@ -21,10 +21,10 @@ final class HelfmeAlertVC: UIViewController {
     
     let width = UIScreen.main.bounds.width
     var alertType: AlertType = .logoutAlert
-    var alertTitle: String? = nil
-    var alertContent: String? = nil
-    var okAction: (() -> Void)? = nil
-  
+    var alertTitle: String?
+    var alertContent: String?
+    var okAction: (() -> Void)?
+    
     // MARK: - UI Components
     
     private let logoutAlertView: LogoutAlertView = {
@@ -44,7 +44,7 @@ final class HelfmeAlertVC: UIViewController {
         view.layer.cornerRadius = 15
         return view
     }()
-  
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -54,6 +54,13 @@ final class HelfmeAlertVC: UIViewController {
         setLayout()
         setDelegate()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        if let touch = touches.first, touch.view == self.view {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
 }
 
 // MARK: - Methods
@@ -62,21 +69,13 @@ extension HelfmeAlertVC {
     private func setAlert() {
         switch alertType {
         case .logoutAlert:
-            logoutAlertView.setData(title: I18N.HelfmeAlert.logout,
-                                    subtitle: I18N.HelfmeAlert.logoutContent,
-                                    firstBtn: I18N.HelfmeAlert.yes,
-                                    secondBtn: I18N.HelfmeAlert.no)
+            logoutAlertView.setData(title: alertTitle, subtitle: alertContent)
             setAlertView(false, true, true)
         case .deleteReviewAlert:
-            reviewDeleteAlertView.setData(title: I18N.HelfmeAlert.reviewDelete,
-                                          firstBtn: I18N.HelfmeAlert.yes,
-                                          secondBtn: I18N.HelfmeAlert.no)
+            reviewDeleteAlertView.setData(title: alertTitle)
             setAlertView(true, false, true)
         case .withdrawalAlert:
-            withdrawalAlertView.setData(title: I18N.HelfmeAlert.withdrawal,
-                                        subtitle: I18N.HelfmeAlert.withdrawalContent,
-                                        firstBtn: I18N.HelfmeAlert.no,
-                                        secondBtn: I18N.HelfmeAlert.withdrawalYes)
+            withdrawalAlertView.setData(title: alertTitle, subtitle: alertContent)
             setAlertView(true, true, false)
         }
     }
@@ -88,7 +87,7 @@ extension HelfmeAlertVC {
     }
     
     private func setUI() {
-        view.backgroundColor = .black.withAlphaComponent(0.5)
+        view.backgroundColor = .black.withAlphaComponent(0.4)
     }
     
     private func setLayout() {
@@ -104,7 +103,7 @@ extension HelfmeAlertVC {
             $0.width.equalTo(logoutWidth)
             $0.height.equalTo(logoutWidth * (241/288))
         }
-
+        
         reviewDeleteAlertView.snp.makeConstraints {
             let reviewDeleteWidth = width * (288/375)
             $0.center.equalToSuperview()
@@ -141,6 +140,6 @@ extension HelfmeAlertVC: AlertDelegate {
     }
     
     func alertDismiss() {
-        dismiss(animated: false)
+        dismiss(animated: true)
     }
 }

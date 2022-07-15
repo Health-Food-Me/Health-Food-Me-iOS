@@ -38,6 +38,7 @@ class WithdrawalAlertView: UIView {
         let btn = UIButton()
         btn.backgroundColor = .mainRed
         btn.setTitleColor(UIColor.helfmeWhite, for: .normal)
+        btn.setTitle(I18N.HelfmeAlert.no, for: .normal)
         btn.titleLabel?.font = .NotoBold(size: 15)
         btn.layer.cornerRadius = 8
         btn.addTarget(self, action: #selector(didTapWithdrawalClose), for: .touchUpInside)
@@ -48,6 +49,7 @@ class WithdrawalAlertView: UIView {
         let btn = UIButton()
         btn.backgroundColor = .helfmeWhite
         btn.setTitleColor(UIColor.helfmeGray2, for: .normal)
+        btn.setTitle(I18N.HelfmeAlert.withdrawalYes, for: .normal)
         btn.titleLabel?.font = .NotoRegular(size: 12)
         btn.addTarget(self, action: #selector(didTapWithdrawal), for: .touchUpInside)
         return btn
@@ -87,14 +89,9 @@ extension WithdrawalAlertView {
 // MARK: - Methods
 
 extension WithdrawalAlertView {
-    func setData(title: String,
-                 subtitle: String,
-                 firstBtn: String,
-                 secondBtn: String) {
+    func setData(title: String?, subtitle: String?) {
         titleLabel.text = title
         subtitleLabel.text = subtitle
-        firstButton.setTitle(firstBtn, for: .normal)
-        secondButton.setTitle(secondBtn, for: .normal)
     }
     
     private func setUI() {
