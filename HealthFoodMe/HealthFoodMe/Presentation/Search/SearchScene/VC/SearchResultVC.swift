@@ -20,6 +20,7 @@ final class SearchResultVC: UIViewController {
     var searchContent: String = ""
     weak var delegate: SearchResultVCDelegate?
     private var isBottom: Bool = true
+    var searchResultList: [SearchResultDataModel] = []
     
     // MARK: - UI Components
     
@@ -255,12 +256,12 @@ extension SearchResultVC: UITableViewDelegate {
 
 extension SearchResultVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SearchResultDataModel.sampleSearchResultData.count
+        return searchResultList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTVC.className, for: indexPath) as? SearchResultTVC else { return UITableViewCell() }
-        cell.setData(data: SearchResultDataModel.sampleSearchResultData[indexPath.row])
+        cell.setData(data: searchResultList[indexPath.row])
         return cell
     }
 }

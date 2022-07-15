@@ -172,6 +172,7 @@ extension SearchVC {
         searchResultVC.delegate = self
         if let searchText = searchTextField.text {
             searchResultVC.searchContent = searchText
+            searchResultVC.searchResultList = searchResultList
         }
         navigationController?.pushViewController(searchResultVC, animated: false)
     }
