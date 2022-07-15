@@ -7,11 +7,16 @@
 
 import UIKit
 
+protocol ReviewHeaderDelegate: AnyObject {
+    func segmentIndexClicked(idx: Int)
+}
+
 class ReviewHeaderCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     // MARK: - Properties
     
     static var isFromNib = false
+    weak var delegate: ReviewHeaderDelegate?
     
     // MARK: - UI Components
     
@@ -25,6 +30,7 @@ class ReviewHeaderCVC: UICollectionViewCell, UICollectionViewRegisterable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
+        setSegmentControlValue()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,9 +45,16 @@ extension ReviewHeaderCVC {
         contentView.addSubviews(reviewSegmentControl)
         
         reviewSegmentControl.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview()
+            make.centerX.equalToSuperview()
             make.width.equalTo(226)
             make.height.equalTo(40)
         }
     }
+    
+    private func setSegmentControlValue() {
+        reviewSegmentControl.areaClickEvent = { clickedIdx in
+            self.delegate?.segmentIndexClicked(idx: clickedIdx)
+        }
+    }
+
 }

@@ -12,6 +12,7 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     // MARK: - Properties
     
     static var isFromNib = false
+    private var imageData: UIImage?
     
     // MARK: - UI Components
     
@@ -35,9 +36,9 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         return lb
     }()
     
-    lazy var blogReviewSeperatorView: UIView = {
+    lazy var reviewSeperatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 239.0 / 255.0, green: 239.0 / 255.0, blue: 239.0 / 255.0, alpha: 1.0)
+        view.backgroundColor = UIColor.helfmeCardlineGray
         return view
     }()
     
@@ -63,54 +64,69 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setInitialLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        blogReviewWithImageStackView.removeFromSuperview()
+        blogReviewStackView.removeFromSuperview()
     }
 }
 
 // MARK: - Extension
 
 extension BlogReviewCVC {
-    func setLayout() {
+    
+    private func setInitialLayout() {
+        contentView.addSubviews(reviewSeperatorView)
+        blogReviewImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(100)
+        }
         blogReviewStackView.addArrangedSubviews(blogReviewTitleLabel, blogReviewContentsLabel)
-        if blogReviewImageView.image != nil {
-            blogReviewImageView.snp.makeConstraints({ make in
-                make.width.height.equalTo(100)
-            })
+        blogReviewWithImageStackView.addArrangedSubviews(blogReviewStackView, blogReviewImageView)
+    }
+    func setLayout(hasImage: Bool) {
+        
+        if hasImage {
+            
+            contentView.addSubview(blogReviewStackView)
             blogReviewWithImageStackView.addArrangedSubviews(blogReviewStackView, blogReviewImageView)
-            setLayoutWithImage()
+            contentView.addSubview(blogReviewWithImageStackView)
         } else {
+            contentView.addSubview(blogReviewStackView)
             setLayoutWithoutImage()
         }
 
     }
     
     private func setLayoutWithImage() {
-        contentView.addSubviews(blogReviewSeperatorView, blogReviewWithImageStackView)
-        
-        blogReviewSeperatorView.snp.makeConstraints { make in
+        reviewSeperatorView.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
             make.height.equalTo(1)
         }
         
         blogReviewWithImageStackView.snp.makeConstraints { make in
-            make.leading.trailing.centerY.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(reviewSeperatorView.snp.top).offset(28)
         }
+        contentView.layoutIfNeeded()
     }
     
-    func setLayoutWithoutImage() {
-        contentView.addSubviews(blogReviewSeperatorView, blogReviewStackView)
-        
-        blogReviewSeperatorView.snp.makeConstraints { make in
+    private func setLayoutWithoutImage() {
+        reviewSeperatorView.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
             make.height.equalTo(1)
         }
         
         blogReviewStackView.snp.makeConstraints { make in
-            make.leading.trailing.centerY.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(reviewSeperatorView.snp.top).offset(28)
         }
+        contentView.layoutIfNeeded()
     }
     
     func setData(blogReviewData: BlogReviewDataModel) {
