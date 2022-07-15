@@ -77,7 +77,7 @@ class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         return lb
     }()
     
-    lazy var blogReviewSeperatorView: UIView = {
+    lazy var reviewSeperatorView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.helfmeCardlineGray
         return view
@@ -121,11 +121,11 @@ extension ReviewCVC {
     
     func setDefaultLayout() {
         contentView.addSubviews(nameLabel, starView, tagCV,
-                                reviewPhotoCV, reviewContents, blogReviewSeperatorView)
+                                reviewPhotoCV, reviewContents, reviewSeperatorView)
         
         let width = UIScreen.main.bounds.width
         
-        blogReviewSeperatorView.snp.makeConstraints { make in
+        reviewSeperatorView.snp.makeConstraints { make in
             make.leading.top.equalToSuperview()
             make.height.equalTo(1)
             make.width.equalTo(width - 40)
@@ -133,7 +133,7 @@ extension ReviewCVC {
         
         nameLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview()
-            make.top.equalTo(blogReviewSeperatorView.snp.bottom).offset(28)
+            make.top.equalTo(reviewSeperatorView.snp.bottom).offset(28)
             make.height.equalTo(nameLabel.font.lineHeight)
         }
         
