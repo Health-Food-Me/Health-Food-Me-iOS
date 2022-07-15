@@ -235,11 +235,12 @@ extension SearchResultVC: UITableViewDelegate {
 
 extension SearchResultVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return SearchResultDataModel.sampleSearchResultData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTVC.className, for: indexPath) as? SearchResultTVC else { return UITableViewCell() }
+        cell.setData(data: SearchResultDataModel.sampleSearchResultData[indexPath.row])
         return cell
     }
 }

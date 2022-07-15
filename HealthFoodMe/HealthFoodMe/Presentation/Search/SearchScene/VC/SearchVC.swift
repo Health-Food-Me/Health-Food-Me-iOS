@@ -355,7 +355,7 @@ extension SearchVC: UITableViewDataSource {
         case .search:
             return searchRecentList.count
         case .searchResult:
-            return searchRecentList.count
+            return SearchResultDataModel.sampleSearchResultData.count
         }
     }
     
@@ -373,6 +373,7 @@ extension SearchVC: UITableViewDataSource {
             return cell
         case .searchResult:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTVC.className, for: indexPath) as? SearchResultTVC else { return UITableViewCell() }
+            cell.setData(data: SearchResultDataModel.sampleSearchResultData[indexPath.row])
             return cell
         }
     }
