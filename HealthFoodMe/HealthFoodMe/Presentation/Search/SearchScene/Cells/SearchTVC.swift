@@ -14,6 +14,7 @@ final class SearchTVC: UITableViewCell, UITableViewRegisterable {
     // MARK: - Properties
     
     static var isFromNib: Bool = false
+    var searchContent: String = ""
     
     private var searchImageView: UIImageView = {
         let iv = UIImageView()
@@ -51,11 +52,13 @@ extension SearchTVC {
             searchImageView.image = ImageLiterals.Search.normalIcon
         }
         searchLabel.text = data.title
+        searchLabel.partColorChange(targetString: searchContent, textColor: .mainRed)
     }
     
     private func setUI() {
         backgroundColor = .helfmeWhite
         selectionStyle = .none
+        print(searchContent)
     }
     
     private func setLayout() {

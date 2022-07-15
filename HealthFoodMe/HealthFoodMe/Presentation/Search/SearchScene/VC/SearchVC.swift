@@ -158,6 +158,7 @@ extension SearchVC {
         } else {
             searchTextField.rightViewMode = .always
             isSearch()
+            searchTableView.reloadData()
         }
     }
     
@@ -381,6 +382,9 @@ extension SearchVC: UITableViewDataSource {
             return cell
         case .search:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTVC.className, for: indexPath) as? SearchTVC else { return UITableViewCell() }
+            if let text = searchTextField.text {
+                cell.searchContent = text
+            }
             cell.setData(data: SearchDataModel.sampleSearchData[indexPath.row])
             return cell
         case .searchResult:
