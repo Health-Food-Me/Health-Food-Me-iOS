@@ -18,13 +18,13 @@ protocol NicknameChangeUseCase {
 
 final class DefaultNicknameChangeUseCase {
   
-  private let repository: NicknameChangeRepository
+  private let repository: NicknameRepository
   private let disposeBag = DisposeBag()
   
   var nicknameDuplicated = PublishSubject<Bool>()
   var nicknameHasCharacter = PublishSubject<Bool>()
 
-  init(repository: NicknameChangeRepository) {
+  init(repository: NicknameRepository) {
     self.repository = repository
   }
 }
