@@ -26,9 +26,10 @@ final class SearchVC: UIViewController {
             searchTableView.reloadData()
         }
     }
-    var searchDataModel: [SearchResultModel] = []
     var searchRecentList: [String] = []
-    private var isEmpty: Bool = true
+    var searchList: [SearchDataModel] = []
+    var searchResultList: [SearchResultDataModel] = []
+    private var isEmpty: Bool = false
     private var searchEmptyView = SearchEmptyView()
     
     private let searchView: UIView = {
@@ -42,7 +43,7 @@ final class SearchVC: UIViewController {
         tf.leftViewMode = .always
         tf.rightViewMode = .never
         tf.enablesReturnKeyAutomatically = true
-        tf.attributedPlaceholder = NSAttributedString(string: "식당, 음식 검색", attributes: [NSAttributedString.Key.foregroundColor: UIColor.helfmeTagGray])
+        tf.attributedPlaceholder = NSAttributedString(string: I18N.Search.search, attributes: [NSAttributedString.Key.foregroundColor: UIColor.helfmeTagGray])
         tf.font = .NotoRegular(size: 15)
         tf.textColor = .helfmeBlack
         tf.backgroundColor = .helfmeWhite
@@ -54,7 +55,7 @@ final class SearchVC: UIViewController {
     
     private lazy var backButton: UIButton = {
         let btn = UIButton()
-        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)
+        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 12)
         btn.setImage(ImageLiterals.Search.beforeIcon, for: .normal)
         btn.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
         return btn
@@ -63,6 +64,7 @@ final class SearchVC: UIViewController {
     private lazy var clearButton: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Search.textDeleteBtn, for: .normal)
+        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16)
         btn.addTarget(self, action: #selector(didTapClearButton), for: .touchUpInside)
         return btn
     }()
@@ -70,6 +72,7 @@ final class SearchVC: UIViewController {
     private lazy var resultCloseButton: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Search.xIcon, for: .normal)
+        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
         btn.addTarget(self, action: #selector(popToMainMapVC), for: .touchUpInside)
         return btn
     }()
@@ -84,7 +87,7 @@ final class SearchVC: UIViewController {
     
     private let recentHeaderLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "최근 검색어"
+        lb.text = I18N.Search.searchRecent
         lb.textColor = .helfmeGray1
         lb.font = .NotoRegular(size: 14)
         return lb
@@ -93,7 +96,7 @@ final class SearchVC: UIViewController {
     private lazy var resultHeaderButton: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Search.viewMapBtn, for: .normal)
-        btn.setTitle("지도 뷰로 보기", for: .normal)
+        btn.setTitle(I18N.Search.searchMap, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray1, for: .normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.isHidden = true
@@ -125,6 +128,7 @@ final class SearchVC: UIViewController {
         super.viewDidLoad()
         
         setData()
+        fetchData()
         setUI()
         setLayout()
         setDelegate()
@@ -138,9 +142,9 @@ extension SearchVC {
     @objc func didTapBackButton() {
         switch searchType {
         case .recent:
-            navigationController?.popViewController(animated: false)
+            navigationController?.popViewController(animated: true)
         case .search:
-            navigationController?.popViewController(animated: false)
+            navigationController?.popViewController(animated: true)
         case .searchResult:
             isSearchRecent()
             initTextField()
@@ -158,6 +162,7 @@ extension SearchVC {
         } else {
             searchTextField.rightViewMode = .always
             isSearch()
+            searchTableView.reloadData()
         }
     }
     
@@ -171,7 +176,7 @@ extension SearchVC {
     }
     
     @objc func popToMainMapVC() {
-        navigationController?.popViewController(animated: false)
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -191,6 +196,11 @@ extension SearchVC {
         }
     }
     
+    private func fetchData() {
+        searchList = SearchDataModel.sampleSearchData
+        searchResultList = SearchResultDataModel.sampleSearchResultData
+    }
+    
     private func setUI() {
         view.backgroundColor = .helfmeWhite
         dismissKeyboard()
@@ -206,23 +216,23 @@ extension SearchVC {
                          searchEmptyView)
         
         searchTextField.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(25)
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(56)
         }
         
         backButton.snp.makeConstraints {
             $0.height.equalTo(24)
-            $0.width.equalTo(36)
+            $0.width.equalTo(56)
         }
         
         clearButton.snp.makeConstraints {
-            $0.height.width.equalTo(24)
+            $0.height.equalTo(24)
+            $0.width.equalTo(40)
         }
         
         resultCloseButton.snp.makeConstraints {
-            $0.height.width.equalTo(24)
+            $0.height.equalTo(24)
+            $0.width.equalTo(44)
         }
         
         lineView.snp.makeConstraints {
@@ -258,7 +268,7 @@ extension SearchVC {
         
         searchEmptyView.snp.makeConstraints {
             $0.top.equalTo(lineView.snp.bottom)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
@@ -276,9 +286,13 @@ extension SearchVC {
     }
     
     func addSearchRecent(title: String) {
-        let searchRecent = SearchRecent()
-        searchRecent.title = title
         try? realm?.write {
+            if let savedSearchRecent = realm?.objects(SearchRecent.self).filter("title == '\(title)'") {
+                realm?.delete(savedSearchRecent)
+                searchRecentList = searchRecentList.filter { $0 != title }
+            }
+            let searchRecent = SearchRecent()
+            searchRecent.title = title
             realm?.add(searchRecent)
         }
         searchRecentList.insert(title, at: 0)
@@ -295,6 +309,7 @@ extension SearchVC {
     }
     
     private func isSearch() {
+        searchTextField.rightView = clearButton
         searchTextField.becomeFirstResponder()
         searchTableView.tableHeaderView = nil
         searchEmptyView.isHidden = true
@@ -302,16 +317,25 @@ extension SearchVC {
     }
     
     private func isSearchResult() {
-        searchTextField.resignFirstResponder()
-        if let text = searchTextField.text {
-            addSearchRecent(title: text)
+        // 결과 검색 서버 연동 (여기서 해당 텍스트필드의 검색어 서버에 넘겨줌)
+        if searchList.isEmpty {
+            isEmpty = true
+            isSearchEmpty()
+        } else {
+            searchTextField.resignFirstResponder()
+            if let text = searchTextField.text {
+                if !SearchDataModel.sampleSearchData.isEmpty {
+                    addSearchRecent(title: text)
+                }
+            }
+            searchTextField.rightViewMode = .always
+            searchTextField.rightView = resultCloseButton
+            searchTableView.tableHeaderView = searchHeaderView
+            searchTableView.tableHeaderView?.frame.size.height = 42
+            recentHeaderLabel.isHidden = true
+            resultHeaderButton.isHidden = false
+            searchType = .searchResult
         }
-        searchTableView.tableHeaderView = searchHeaderView
-        searchTableView.tableHeaderView?.frame.size.height = 42
-        clearButton.isHidden = true
-        recentHeaderLabel.isHidden = true
-        resultHeaderButton.isHidden = false
-        searchType = .searchResult
     }
     
     private func isSearchEmpty() {
@@ -333,7 +357,9 @@ extension SearchVC: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        isSearch()
+        if searchType == .searchResult {
+            isSearch()
+        }
     }
 }
 
@@ -351,9 +377,9 @@ extension SearchVC: UITableViewDataSource {
         case .recent:
             return searchRecentList.count
         case .search:
-            return searchRecentList.count
+            return searchList.count
         case .searchResult:
-            return searchRecentList.count
+            return searchResultList.count
         }
     }
     
@@ -367,10 +393,14 @@ extension SearchVC: UITableViewDataSource {
             return cell
         case .search:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTVC.className, for: indexPath) as? SearchTVC else { return UITableViewCell() }
-            cell.setData(data: searchRecentList[indexPath.row])
+            if let text = searchTextField.text {
+                cell.searchContent = text
+            }
+            cell.setData(data: searchList[indexPath.row])
             return cell
         case .searchResult:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTVC.className, for: indexPath) as? SearchResultTVC else { return UITableViewCell() }
+            cell.setData(data: searchResultList[indexPath.row])
             return cell
         }
     }
@@ -383,6 +413,22 @@ extension SearchVC: UITableViewDataSource {
             return 56
         case .searchResult:
             return 127
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch searchType {
+        case .recent:
+            searchTextField.text = searchRecentList[indexPath.row]
+            addSearchRecent(title: searchRecentList[indexPath.row])
+            isSearchResult()
+        case .search:
+            // 화면 전환 코드 추가해야 됨
+            print("\(searchList[indexPath.row].title) 식당 상세 페이지로 이동")
+            addSearchRecent(title: SearchDataModel.sampleSearchData[indexPath.row].title)
+        case .searchResult:
+            // 화면 전환 코드 추가해야 됨
+            print("\(searchResultList[indexPath.row].storeName) 식당 상세 페이지로 이동")
         }
     }
 }
@@ -405,8 +451,8 @@ extension SearchVC: SearchRecentTVCDelegate {
 
 extension SearchVC: SearchResultVCDelegate {
     func searchResultVCSearchType(type: SearchType) {
-        searchType = type
         if type == .search {
+            clearButton.isHidden = false
             searchTextField.becomeFirstResponder()
         } else {
             isSearchRecent()
