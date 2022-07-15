@@ -35,7 +35,7 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         return lb
     }()
     
-    lazy var blogReviewSeperatorView: UIView = {
+    lazy var reviewSeperatorView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.helfmeCardlineGray
         return view
@@ -88,9 +88,9 @@ extension BlogReviewCVC {
     }
     
     private func setLayoutWithImage() {
-        contentView.addSubviews(blogReviewSeperatorView, blogReviewWithImageStackView)
+        contentView.addSubviews(reviewSeperatorView, blogReviewWithImageStackView)
         
-        blogReviewSeperatorView.snp.makeConstraints { make in
+        reviewSeperatorView.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
             make.height.equalTo(1)
         }
@@ -101,9 +101,9 @@ extension BlogReviewCVC {
     }
     
     func setLayoutWithoutImage() {
-        contentView.addSubviews(blogReviewSeperatorView, blogReviewStackView)
+        contentView.addSubviews(reviewSeperatorView, blogReviewStackView)
         
-        blogReviewSeperatorView.snp.makeConstraints { make in
+        reviewSeperatorView.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
             make.height.equalTo(1)
         }

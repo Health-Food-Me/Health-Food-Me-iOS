@@ -1,24 +1,26 @@
 //
-//  ReviewTabVC.swift
+//  ReviewDetailVC.swift
 //  HealthFoodMe
 //
-//  Created by 강윤서 on 2022/07/14.
+//  Created by 강윤서 on 2022/07/15.
 //
 
 import UIKit
 
-class ReviewTabVC: UIViewController {
-    
-    // MARK: - Property
-    
+class ReviewDetailVC: UIViewController {
+
     private let withImageAndContents = 0
     private let withImage = 1
     private let withContents = 2
     private let withoutImageAndContents = 3
     
     private var reviewData: [ReviewCellViewModel] = []
-
-    // MARK: - UI Components
+    
+    var selectedCustomSegment = 0 {
+        didSet {
+            reviewCV.reloadData()
+        }
+    }
     
     private lazy var reviewCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -32,9 +34,6 @@ class ReviewTabVC: UIViewController {
         
         return cv
     }()
-
-    // MARK: - View Life Cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
@@ -43,12 +42,14 @@ class ReviewTabVC: UIViewController {
     }
 }
 
-// MARK: - Extension
-
-extension ReviewTabVC {
+extension ReviewDetailVC {
     func setDelegate() {
         reviewCV.delegate = self
         reviewCV.dataSource = self
+    }
+    
+    private func setUI() {
+        view.backgroundColor = .helfmeWhite
     }
     
     private func setLayout() {
@@ -62,6 +63,8 @@ extension ReviewTabVC {
     
     private func registerCell() {
         ReviewCVC.register(target: reviewCV)
+        ReviewHeaderCVC.register(target: reviewCV)
+        BlogReviewCVC.register(target: reviewCV)
         ReviewHeaderCVC.register(target: reviewCV)
     }
     
@@ -79,6 +82,12 @@ extension ReviewTabVC {
                 return withoutImageAndContents
             }
         }
+    }
+    
+    private func fetchData() {
+        // 데이터를 서버에서 받아와야 함
+        let data = ReviewDataModel.sampleData // 서버에서 받아와야 할 데이터
+        processViewModel(data)
     }
     
     private func processViewModel(_ dataList: [ReviewDataModel]) {
@@ -102,19 +111,23 @@ extension ReviewTabVC {
     }
 }
 
-extension ReviewTabVC: UICollectionViewDelegate {
+extension ReviewDetailVC: UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
 }
 
-extension ReviewTabVC: UICollectionViewDataSource {
+extension ReviewDetailVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 1
         case 1:
-            return ReviewDataModel.sampleData.count
+            if selectedCustomSegment == 0 {
+                return ReviewDataModel.sampleData.count
+            } else {
+                return BlogReviewDataModel.sampleData.count
+            }
         default:
             return 0
         }
@@ -123,22 +136,33 @@ extension ReviewTabVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
-            let header = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewHeaderCVC.className, for: indexPath)
+            guard let header = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewHeaderCVC.className, for: indexPath) as? ReviewHeaderCVC else { return UICollectionViewCell() }
+            header.delegate = self
+            
             return header
         case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCVC.className, for: indexPath) as? ReviewCVC else { return UICollectionViewCell() }
-            cell.blogReviewSeperatorView.isHidden = indexPath.item == 0
-            cell.setData(reviewData: ReviewDataModel.sampleData[indexPath.row])
-            cell.setEnumValue = setEnumValue(data: ReviewDataModel.sampleData[indexPath.row])
-            cell.setLayout()
-            return cell
+            if selectedCustomSegment == 0 {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCVC.className, for: indexPath) as? ReviewCVC else { return UICollectionViewCell() }
+                cell.reviewSeperatorView.isHidden = indexPath.item == 0
+                cell.setData(reviewData: ReviewDataModel.sampleData[indexPath.row])
+                cell.setEnumValue = setEnumValue(data: ReviewDataModel.sampleData[indexPath.row])
+                cell.setLayout()
+                return cell
+            } else {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BlogReviewCVC.className, for: indexPath) as? BlogReviewCVC
+                else { return UICollectionViewCell() }
+                cell.reviewSeperatorView.isHidden = indexPath.item == 0
+                cell.setData(blogReviewData: BlogReviewDataModel.sampleData[indexPath.row])
+                cell.setLayout()
+                return cell
+            }
         default:
             return UICollectionViewCell()
         }
     }
 }
 
-extension ReviewTabVC: UICollectionViewDelegateFlowLayout {
+extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = UIScreen.main.bounds.width
         switch indexPath.section {
@@ -147,13 +171,18 @@ extension ReviewTabVC: UICollectionViewDelegateFlowLayout {
             let cellHeight = cellWidth * 40/335
             return CGSize(width: cellWidth, height: cellHeight)
         case 1:
-            let cellWidth = width * 355/375
-            let cellHeight = calculateReviewCellHeight(containsPhoto: ReviewDataModel.sampleData[indexPath.row].reviewImageURLList?.count != 0,
-                                                       reviewText: ReviewDataModel.sampleData[indexPath.row].reviewContents)
-            return CGSize(width: cellWidth, height: cellHeight)
+            if selectedCustomSegment == 0 {
+                let cellWidth = width * 355/375
+                let cellHeight = calculateReviewCellHeight(containsPhoto: ReviewDataModel.sampleData[indexPath.row].reviewImageURLList?.count != 0,
+                                                           reviewText: ReviewDataModel.sampleData[indexPath.row].reviewContents)
+                return CGSize(width: cellWidth, height: cellHeight)
+            } else {
+                let cellWidth = width * 335/375
+                let cellHeight = cellWidth * 158/335
+                return CGSize(width: cellWidth, height: cellHeight)
+            }
         default:
             return CGSize(width: 0, height: 0)
-            
         }
     }
     
@@ -195,5 +224,11 @@ extension ReviewTabVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+extension ReviewDetailVC: ReviewHeaderDelegate {
+    func segmentIndexClicked(idx: Int) {
+        selectedCustomSegment = idx
     }
 }
