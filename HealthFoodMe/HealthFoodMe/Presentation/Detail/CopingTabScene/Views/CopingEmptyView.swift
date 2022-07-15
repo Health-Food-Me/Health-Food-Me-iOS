@@ -19,6 +19,15 @@ class CopingEmptyView: UIView {
         return view
     }()
     
+    private let categoryLabel: UILabel = {
+        let lb = UILabel()
+        lb.textColor = .helfmeWhite
+        lb.text = "#샤브샤브"
+        lb.font = .NotoBold(size: 15)
+        return lb
+    }()
+    
+    
     let copingEmptyView: UIView = {
         let view = UIView()
         view.backgroundColor = .helfmeWhite
@@ -38,6 +47,8 @@ class CopingEmptyView: UIView {
     private let emptyLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
+        lb.textAlignment = .center
+        lb.numberOfLines = 2
         lb.text = I18N.Coping.copingEmpty
         lb.font = .NotoRegular(size: 14)
         return lb
@@ -55,7 +66,7 @@ class CopingEmptyView: UIView {
         let sv = UIStackView()
         sv.axis = .vertical
         sv.alignment = .center
-        sv.spacing = 0
+        sv.spacing = 24
         sv.addArrangedSubview(emptyLabel)
         sv.addArrangedSubview(waitLabel)
         return sv
@@ -85,18 +96,31 @@ extension CopingEmptyView {
 
     private func setLayout() {
         
-        self.addSubviews(categoryView, copingEmptyView)
+        self.addSubviews(copingEmptyView, categoryView)
         
-//        copingEmptyView.snp.makeConstraints { make in
-//            make.top
-//        }
+        categoryView.snp.makeConstraints { make in
+            make.centerX.equalTo(copingEmptyView.snp.centerX)
+            make.centerY.equalTo(copingEmptyView.snp.top)
+            make.height.equalTo(32)
+            make.width.equalTo(117)
+        }
+        
+        categoryView.addSubviews(categoryLabel)
+        
+        categoryLabel.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
+        
+        copingEmptyView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         copingEmptyView.addSubviews(icnImageView, copingLabelStackView)
         
         icnImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(65)
-            make.width.equalTo(76)
-            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().offset(139)
+            make.trailing.equalToSuperview().inset(120)
         }
         
         copingLabelStackView.snp.makeConstraints { make in

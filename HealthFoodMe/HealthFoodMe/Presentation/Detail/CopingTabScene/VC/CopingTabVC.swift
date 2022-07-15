@@ -11,6 +11,7 @@ class CopingTabVC: UIViewController {
     
     // MARK: - Properties
     private var copingHeader = CopingHeaderView()
+    private var copingEmptyView = CopingEmptyView()
     // MARK: - UI Components
     
     var recommendList: [String] = []
@@ -38,6 +39,7 @@ class CopingTabVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUI()
         setLayout()
         setDelegate()
         registerCell()
@@ -49,16 +51,24 @@ class CopingTabVC: UIViewController {
 
 extension CopingTabVC {
     private func setUI() {
-        
+        copingEmptyView.isHidden = !(recommendList.isEmpty && eatingList.isEmpty)
+        copingTableView.isHidden = (recommendList.isEmpty && eatingList.isEmpty)
     }
     
     private func setLayout() {
-        view.addSubviews(copingTableView)
+        view.addSubviews(copingTableView, copingEmptyView)
         
         copingTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(36)
             make.leading.equalToSuperview().offset(20)
             make.trailing.bottom.equalToSuperview().inset(20)
+        }
+        
+        copingEmptyView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(36)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(346)
         }
     }
     

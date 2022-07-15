@@ -94,6 +94,6 @@ struct ImageLiterals {
         static let icnTipPink = UIImage(named: "icn_tip_check_pink")
         static let imageEmpty = UIImage(named: "img_tip_empty")
         static let imageRecommend = UIImage(named: "img_tip_recommend")
-        static let imagetasteIt = UIImage(named: "img_tip_tasteIt")
+        static let imagetasteIt = UIImage(named: "img_tip_tasteit")
     }
 }
