@@ -53,12 +53,12 @@ extension SearchTVC {
         }
         searchLabel.text = data.title
         searchLabel.partColorChange(targetString: searchContent, textColor: .mainRed)
+        print(searchContent)
     }
     
     private func setUI() {
         backgroundColor = .helfmeWhite
         selectionStyle = .none
-        print(searchContent)
     }
     
     private func setLayout() {
