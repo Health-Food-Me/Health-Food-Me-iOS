@@ -9,24 +9,7 @@ import UIKit
 
 class CopingEmptyView: UIView {
     
-    // MARK: - Properties
-  
     // MARK: - UI Components
-    let categoryView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .helfmeGreenSubLight
-        view.layer.cornerRadius = 16
-        return view
-    }()
-    
-    private let categoryLabel: UILabel = {
-        let lb = UILabel()
-        lb.textColor = .helfmeWhite
-        lb.text = "#샤브샤브"
-        lb.font = .NotoBold(size: 15)
-        return lb
-    }()
-    
     
     let copingEmptyView: UIView = {
         let view = UIView()
@@ -74,11 +57,8 @@ class CopingEmptyView: UIView {
     
     // MARK: - View Life Cycle
     
-    // MARK: - View Life Cycle
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUI()
         setLayout()
     }
     
@@ -90,26 +70,9 @@ class CopingEmptyView: UIView {
 // MARK: - Methods
 
 extension CopingEmptyView {
-    private func setUI() {
-        
-    }
 
     private func setLayout() {
-        
-        self.addSubviews(copingEmptyView, categoryView)
-        
-        categoryView.snp.makeConstraints { make in
-            make.centerX.equalTo(copingEmptyView.snp.centerX)
-            make.centerY.equalTo(copingEmptyView.snp.top)
-            make.height.equalTo(32)
-            make.width.equalTo(117)
-        }
-        
-        categoryView.addSubviews(categoryLabel)
-        
-        categoryLabel.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
-        }
+        self.addSubviews(copingEmptyView)
         
         copingEmptyView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

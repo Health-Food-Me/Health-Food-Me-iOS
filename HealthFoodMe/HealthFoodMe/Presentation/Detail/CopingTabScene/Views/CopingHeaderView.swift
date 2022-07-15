@@ -17,13 +17,19 @@ final class CopingHeaderView: UITableViewHeaderFooterView, UITableViewHeaderFoot
     
     // MARK: - UI Components
     
-    lazy var icnImageView: UIImageView = {
+    private lazy var lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .helfmeLineGray
+        return view
+    }()
+    
+    private lazy var icnImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         return iv
     }()
     
-    lazy var headerLabel: UILabel = {
+    private lazy var headerLabel: UILabel = {
         let lb = UILabel()
         lb.font = .NotoBold(size: 15)
         return lb
@@ -47,6 +53,7 @@ extension CopingHeaderView {
     
     func setHeaderData(section: Int) {
         if section == 0 {
+            lineView.isHidden = true
             icnImageView.image = ImageLiterals.Coping.imageRecommend
             headerLabel.text = I18N.Coping.recommendHeader
             headerLabel.textColor = .mainGreen
@@ -63,10 +70,17 @@ extension CopingHeaderView {
 extension CopingHeaderView {
     
     private func setLayout() {
-        self.addSubviews(icnImageView, headerLabel)
+        self.addSubviews(icnImageView, headerLabel, lineView)
+        
+        lineView.snp.makeConstraints { make in
+            make.bottom.equalTo(icnImageView.snp.top).offset(-25)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(1)
+        }
         
         icnImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(23)
+            make.top.equalToSuperview().offset(53)
             make.centerX.equalToSuperview()
             make.width.equalTo(55)
         }

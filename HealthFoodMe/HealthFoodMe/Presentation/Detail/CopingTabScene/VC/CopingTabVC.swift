@@ -10,14 +10,29 @@ import UIKit
 class CopingTabVC: UIViewController {
     
     // MARK: - Properties
+    
     private var copingHeader = CopingHeaderView()
     private var copingEmptyView = CopingEmptyView()
-    // MARK: - UI Components
-    
     var recommendList: [String] = []
     var eatingList: [String] = []
     
-    //태그 종류 UI 추가해야함
+    // MARK: - UI Components
+    
+    private let categoryView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .helfmeGreenSubDark
+        view.layer.cornerRadius = 16
+        return view
+    }()
+    
+    private let categoryLabel: UILabel = {
+        let lb = UILabel()
+        lb.textColor = .helfmeWhite
+        lb.text = "#샤브샤브"
+        lb.font = .NotoBold(size: 15)
+        return lb
+    }()
+    
     private lazy var copingTableView: UITableView = {
         let tv = UITableView(frame: .zero, style: .plain)
         tv.separatorStyle = .none
@@ -34,16 +49,16 @@ class CopingTabVC: UIViewController {
         }
         return tv
     }()
-  
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchData()
         setUI()
         setLayout()
         setDelegate()
         registerCell()
-        fetchData()
     }
 }
 
@@ -56,12 +71,26 @@ extension CopingTabVC {
     }
     
     private func setLayout() {
-        view.addSubviews(copingTableView, copingEmptyView)
+        view.addSubviews(copingTableView, copingEmptyView, categoryView)
+        
+        categoryView.snp.makeConstraints { make in
+            make.centerX.equalTo(copingEmptyView.snp.centerX)
+            make.centerY.equalTo(copingEmptyView.snp.top)
+            make.height.equalTo(32)
+            make.width.equalTo(117)
+        }
+        
+        categoryView.addSubviews(categoryLabel)
+        
+        categoryLabel.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
         
         copingTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(36)
             make.leading.equalToSuperview().offset(20)
-            make.trailing.bottom.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(130 * 2 + 38 * (recommendList.count + eatingList.count) + 56)
         }
         
         copingEmptyView.snp.makeConstraints { make in
@@ -92,7 +121,7 @@ extension CopingTabVC {
 // MARK: - Network
 
 extension CopingTabVC {
-
+    
 }
 
 extension CopingTabVC: UITableViewDelegate {
@@ -101,7 +130,7 @@ extension CopingTabVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 100
+        return 130
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -141,5 +170,3 @@ extension CopingTabVC: UITableViewDataSource {
         return cell
     }
 }
-
-
