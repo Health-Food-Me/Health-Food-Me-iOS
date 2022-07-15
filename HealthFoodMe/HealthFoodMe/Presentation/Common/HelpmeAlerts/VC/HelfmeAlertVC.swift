@@ -63,17 +63,17 @@ extension HelfmeAlertVC {
         switch alertType {
         case .logoutAlert:
             logoutAlertView.setData(title: alertTitle, subtitle: alertContent)
-            setAlertView(false, true, true)
+            setAlertView(logout: false, deleteReview: true, withdrawal: true)
         case .deleteReviewAlert:
             reviewDeleteAlertView.setData(title: alertTitle)
-            setAlertView(true, false, true)
+            setAlertView(logout: true, deleteReview: false, withdrawal: true)
         case .withdrawalAlert:
             withdrawalAlertView.setData(title: alertTitle, subtitle: alertContent)
-            setAlertView(true, true, false)
+            setAlertView(logout: true, deleteReview: true, withdrawal: false)
         }
     }
     
-    private func setAlertView(_ logout: Bool, _ deleteReview: Bool, _ withdrawal: Bool) {
+    private func setAlertView(logout: Bool, deleteReview: Bool, withdrawal: Bool) {
         logoutAlertView.isHidden = logout
         reviewDeleteAlertView.isHidden = deleteReview
         withdrawalAlertView.isHidden = withdrawal
