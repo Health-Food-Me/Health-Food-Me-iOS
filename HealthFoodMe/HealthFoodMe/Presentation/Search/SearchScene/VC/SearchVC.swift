@@ -48,13 +48,12 @@ final class SearchVC: UIViewController {
         tf.backgroundColor = .helfmeWhite
         tf.addTarget(self, action: #selector(editingChanged(_:)), for: .editingChanged)
         tf.leftView = backButton
-        tf.rightView = clearButton
         return tf
     }()
     
     private lazy var backButton: UIButton = {
         let btn = UIButton()
-        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)
+        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 12)
         btn.setImage(ImageLiterals.Search.beforeIcon, for: .normal)
         btn.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
         return btn
@@ -63,6 +62,7 @@ final class SearchVC: UIViewController {
     private lazy var clearButton: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Search.textDeleteBtn, for: .normal)
+        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16)
         btn.addTarget(self, action: #selector(didTapClearButton), for: .touchUpInside)
         return btn
     }()
@@ -70,6 +70,7 @@ final class SearchVC: UIViewController {
     private lazy var resultCloseButton: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Search.xIcon, for: .normal)
+        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
         btn.addTarget(self, action: #selector(popToMainMapVC), for: .touchUpInside)
         return btn
     }()
@@ -138,9 +139,9 @@ extension SearchVC {
     @objc func didTapBackButton() {
         switch searchType {
         case .recent:
-            navigationController?.popViewController(animated: false)
+            navigationController?.popViewController(animated: true)
         case .search:
-            navigationController?.popViewController(animated: false)
+            navigationController?.popViewController(animated: true)
         case .searchResult:
             isSearchRecent()
             initTextField()
@@ -171,7 +172,7 @@ extension SearchVC {
     }
     
     @objc func popToMainMapVC() {
-        navigationController?.popViewController(animated: false)
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -206,23 +207,23 @@ extension SearchVC {
                          searchEmptyView)
         
         searchTextField.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(25)
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(56)
         }
         
         backButton.snp.makeConstraints {
             $0.height.equalTo(24)
-            $0.width.equalTo(36)
+            $0.width.equalTo(56)
         }
         
         clearButton.snp.makeConstraints {
-            $0.height.width.equalTo(24)
+            $0.height.equalTo(24)
+            $0.width.equalTo(40)
         }
         
         resultCloseButton.snp.makeConstraints {
-            $0.height.width.equalTo(24)
+            $0.height.equalTo(24)
+            $0.width.equalTo(44)
         }
         
         lineView.snp.makeConstraints {
@@ -295,7 +296,7 @@ extension SearchVC {
     }
     
     private func isSearch() {
-        clearButton.isHidden = false
+        searchTextField.rightView = clearButton
         searchTextField.becomeFirstResponder()
         searchTableView.tableHeaderView = nil
         searchEmptyView.isHidden = true
@@ -307,9 +308,9 @@ extension SearchVC {
         if let text = searchTextField.text {
             addSearchRecent(title: text)
         }
+        searchTextField.rightView = resultCloseButton
         searchTableView.tableHeaderView = searchHeaderView
         searchTableView.tableHeaderView?.frame.size.height = 42
-        clearButton.isHidden = true
         recentHeaderLabel.isHidden = true
         resultHeaderButton.isHidden = false
         searchType = .searchResult

@@ -30,11 +30,13 @@ final class SearchResultVC: UIViewController {
     private lazy var searchTextField: UITextField = {
         let tf = UITextField()
         tf.leftViewMode = .always
+        tf.rightViewMode = .always
         tf.font = .NotoRegular(size: 15)
         tf.text = searchContent
         tf.textColor = .helfmeBlack
         tf.backgroundColor = .helfmeWhite
         tf.leftView = backButton
+        tf.rightView = resultCloseButton
         return tf
     }()
     
@@ -43,6 +45,14 @@ final class SearchResultVC: UIViewController {
         btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 12)
         btn.setImage(ImageLiterals.Search.beforeIcon, for: .normal)
         btn.addTarget(self, action: #selector(popToSearchVC), for: .touchUpInside)
+        return btn
+    }()
+    
+    private lazy var resultCloseButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(ImageLiterals.Search.xIcon, for: .normal)
+        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+        btn.addTarget(self, action: #selector(popToMainMapVC), for: .touchUpInside)
         return btn
     }()
     
@@ -110,6 +120,13 @@ extension SearchResultVC {
     @objc func moveSearchResultView() {
         initUI()
     }
+    
+    @objc func popToMainMapVC() {
+        guard let vcs = navigationController?.viewControllers else { return }
+        for vc in vcs {
+            navigationController?.popToViewController(vc, animated: true)
+        }
+    }
 }
 
 // MARK: - Methods
@@ -137,13 +154,19 @@ extension SearchResultVC {
                          searchResultTableView)
         
         searchTextField.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(56)
         }
         
         backButton.snp.makeConstraints {
             $0.height.equalTo(24)
             $0.width.equalTo(56)
+        }
+        
+        resultCloseButton.snp.makeConstraints {
+            $0.height.equalTo(24)
+            $0.width.equalTo(44)
         }
         
         lineView.snp.makeConstraints {
