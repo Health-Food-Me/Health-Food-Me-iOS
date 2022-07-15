@@ -277,9 +277,13 @@ extension SearchVC {
     }
     
     func addSearchRecent(title: String) {
-        let searchRecent = SearchRecent()
-        searchRecent.title = title
         try? realm?.write {
+            if let savedSearchRecent = realm?.objects(SearchRecent.self).filter("title == '\(title)'") {
+                realm?.delete(savedSearchRecent)
+                searchRecentList = searchRecentList.filter { $0 != title }
+            }
+            let searchRecent = SearchRecent()
+            searchRecent.title = title
             realm?.add(searchRecent)
         }
         searchRecentList.insert(title, at: 0)
@@ -396,6 +400,7 @@ extension SearchVC: SearchRecentTVCDelegate {
     func searchRecentTVCDelete(index: Int) {
         try? realm?.write {
             if let savedSearchRecent =  realm?.objects(SearchRecent.self).filter("title == '\(searchRecentList[index])'") {
+                print(searchRecentList[index])
                 realm?.delete(savedSearchRecent)
             }
         }
