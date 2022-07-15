@@ -146,7 +146,7 @@ extension MapDetailSummaryView {
         starRateStackView.addArrangedSubviews(starRateView, rateLabel)
         
         starRateView.snp.makeConstraints { make in
-            make.width.equalTo(87)
+            make.width.equalTo(70)
             make.centerY.equalToSuperview()
         }
         

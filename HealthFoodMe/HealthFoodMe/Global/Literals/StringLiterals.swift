@@ -27,6 +27,14 @@ struct I18N {
         static let formatErrMessage =  "닉네임 설정 기준에 적합하지 않습니다"
         static let duplicatedErrMessage = "중복된 닉네임입니다"
       }
+      
+      struct Withdrawal {
+        static let headerTitle = "회원탈퇴"
+        static let topGuideText = "탈퇴하면 내 앱 모든 데이터가 사라집니다"
+        static let bottomGuideText = "서비스를 탈퇴하려면 닉네임을 입력해주세요"
+        static let ctaButtonTitle = "확인"
+        
+      }
     }
     
     struct Detail {
@@ -87,5 +95,30 @@ struct I18N {
         static let eatingHeader = "이렇게 드셔보세요!"
         static let copingEmpty = "해당되는 카테고리에\n 관련된 외식대처법은 준비중입니다"
         static let copingWait = "조금만 기다려 주세요!"
+    }
+    
+    struct HelfmeAlert {
+        static let logout = "정말 로그아웃 하시겠어요?"
+        static let logoutContent =
+        """
+        로그아웃 시 헬푸미의 업데이트 내용을
+        보실 수 없습니다.
+        """
+        static let yes = "네"
+        static let no = "아니요"
+        
+        static let reviewDelete =
+        """
+        작성한 리뷰를
+        삭제하실 건가요?
+        """
+        
+        static let withdrawal = "정말로 탈퇴하실건가요?"
+        static let withdrawalContent =
+        """
+        탈퇴 시 헬푸미의 새로운 정보를
+        얻을 수 없습니다.
+        """
+        static let withdrawalYes = "네 탈퇴할게요"
     }
 }

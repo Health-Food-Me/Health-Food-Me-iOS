@@ -48,11 +48,9 @@ final class DetailSummaryView: UIView {
         return st
     }()
     
-    private let starStackView: UIStackView = {
-        let st = UIStackView()
-        st.axis = .horizontal
-        st.spacing = 2
-        st.distribution = .equalSpacing
+    private let starRateView: StarRatingView = {
+        let st = StarRatingView(starScale: 14)
+        st.rate = 4.3
         return st
     }()
     
@@ -108,8 +106,12 @@ extension DetailSummaryView {
         }
         
         titleStackView.addArrangedSubviews(restaurantNameLabel, starRateStackView)
-        starRateStackView.addArrangedSubviews(starStackView, rateLabel)
-        setStarStackView()
+        starRateStackView.addArrangedSubviews(starRateView, rateLabel)
+        
+        starRateView.snp.makeConstraints { make in
+            make.width.equalTo(70)
+            make.centerY.equalToSuperview()
+        }
         
         restaurantNameLabel.snp.makeConstraints { make in
             make.width.lessThanOrEqualTo(200)
@@ -122,20 +124,6 @@ extension DetailSummaryView {
         titleStackView.snp.makeConstraints { make in
             make.leading.equalTo(logoImageView.snp.trailing).offset(16)
             make.centerY.equalTo(logoImageView)
-        }
-    }
-    
-    private func setStarStackView() {
-        for starNumber in 1...5 {
-            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 16, height: 16))
-            imageView.contentMode = .scaleAspectFill
-            if starNumber < 5 {
-                imageView.image = ImageLiterals.MainDetail.starIcon_filled
-            } else {
-                imageView.image = ImageLiterals.MainDetail.starIcon
-            }
-            imageView.tag = starNumber
-            starStackView.addArrangedSubviews(imageView)
         }
     }
 }
