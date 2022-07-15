@@ -18,8 +18,6 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
     private let disposeBag = DisposeBag()
     private let locationManager = NMFLocationManager.sharedInstance()
-    private var currentLatitude: Double?
-    private var currentLongitude: Double?
     private var selectedCategories: [Bool] = [false, false, false,
                                               false, false, false,
                                               false, false] {
@@ -40,6 +38,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.menuIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
+            self.makeVibrate()
             let nextVC = ModuleFactory.resolve().makeHamburgerBarVC()
             nextVC.modalPresentationStyle = .overFullScreen
             self.present(nextVC, animated: false)
@@ -89,11 +88,12 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         return cv
     }()
     
-    private let scrapButton: UIButton = {
+    private lazy var scrapButton: UIButton = {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.scrapIcon, for: .normal)
         bt.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
         bt.addAction(UIAction(handler: { _ in
+            self.makeVibrate()
             bt.isSelected.toggle()
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
@@ -107,8 +107,11 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.mylocationIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
+            self.makeVibrate()
             let NMGPosition = self.locationManager?.currentLatLng()
-            self.mapView.moveCameraPosition(NMGPosition ?? NMGLatLng(lat: 37.5666805, lng: 126.9784147))
+            if let position = NMGPosition {
+                self.mapView.moveCameraPosition(position)
+            }
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
         bt.clipsToBounds = true
@@ -368,6 +371,7 @@ extension MainMapVC {
     
     @objc
     private func presentSearchVC() {
+        self.makeVibrate()
         let nextVC = ModuleFactory.resolve().makeSearchVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
