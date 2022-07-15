@@ -28,8 +28,6 @@ class ContentTVC: UITableViewCell, UITableViewRegisterable {
         lb.textColor = .helfmeBlack
         lb.font = .NotoRegular(size: 12)
         lb.numberOfLines = 0
-        lb.layer.borderColor = UIColor.mainRed.cgColor
-        lb.layer.borderWidth = 0.5
         return lb
     }()
     
@@ -69,17 +67,14 @@ extension ContentTVC {
             make.width.height.equalTo(20)
         }
         
-        contentLabel.snp.makeConstraints{ make in
+        contentLabel.snp.makeConstraints { make in
             make.width.equalTo(228)
         }
         
         contentStackView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.centerX.equalToSuperview()
-//            make.leading.equalToSuperview().offset(38.5)
-//            make.trailing.equalToSuperview().inset(38.5)
         }
-        
     }
     
     func setData(section: Int, content: String) {

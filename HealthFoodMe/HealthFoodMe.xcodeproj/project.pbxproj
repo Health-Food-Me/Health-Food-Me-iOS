@@ -36,7 +36,13 @@
 		695758C3287DF04400E36789 /* AddPhotoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758C2287DF04400E36789 /* AddPhotoCVC.swift */; };
 		695758C5287DF08800E36789 /* ListPhotoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758C4287DF08800E36789 /* ListPhotoCVC.swift */; };
 		695758C8287F1DCF00E36789 /* PhotoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758C7287F1DCF00E36789 /* PhotoDataModel.swift */; };
-		695758CA288057D700E36789 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758C9288057D700E36789 /* Config.swift */; };
+		695758D52881121900E36789 /* CopingTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758D42881121900E36789 /* CopingTabVC.swift */; };
+		695758D72881122800E36789 /* CopingTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758D62881122800E36789 /* CopingTab.storyboard */; };
+		695758DC2881128300E36789 /* ContentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758DB2881128300E36789 /* ContentTVC.swift */; };
+		695758DE28811E9D00E36789 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758DD28811E9D00E36789 /* Config.swift */; };
+		695758E02881228700E36789 /* CopingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758DF2881228700E36789 /* CopingHeaderView.swift */; };
+		695758E328812B3100E36789 /* CopingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758E228812B3100E36789 /* CopingDataModel.swift */; };
+		695758E52881852F00E36789 /* CopingEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758E42881852E00E36789 /* CopingEmptyView.swift */; };
 		A9325274287D3065001EDF50 /* SearchResultTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9325273287D3065001EDF50 /* SearchResultTVC.swift */; };
 		A9325277287D4F10001EDF50 /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9325276287D4F10001EDF50 /* SearchResultModel.swift */; };
 		A932527E287DD261001EDF50 /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A932527D287DD261001EDF50 /* SearchResultVC.swift */; };
@@ -197,7 +203,13 @@
 		695758C2287DF04400E36789 /* AddPhotoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCVC.swift; sourceTree = "<group>"; };
 		695758C4287DF08800E36789 /* ListPhotoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPhotoCVC.swift; sourceTree = "<group>"; };
 		695758C7287F1DCF00E36789 /* PhotoDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDataModel.swift; sourceTree = "<group>"; };
-		695758C9288057D700E36789 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		695758D42881121900E36789 /* CopingTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingTabVC.swift; sourceTree = "<group>"; };
+		695758D62881122800E36789 /* CopingTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CopingTab.storyboard; sourceTree = "<group>"; };
+		695758DB2881128300E36789 /* ContentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTVC.swift; sourceTree = "<group>"; };
+		695758DD28811E9D00E36789 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = ../../../../../../../../Downloads/Config.swift; sourceTree = "<group>"; };
+		695758DF2881228700E36789 /* CopingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingHeaderView.swift; sourceTree = "<group>"; };
+		695758E228812B3100E36789 /* CopingDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingDataModel.swift; sourceTree = "<group>"; };
+		695758E42881852E00E36789 /* CopingEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingEmptyView.swift; sourceTree = "<group>"; };
 		A9325273287D3065001EDF50 /* SearchResultTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTVC.swift; sourceTree = "<group>"; };
 		A9325276287D4F10001EDF50 /* SearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
 		A932527D287DD261001EDF50 /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
@@ -458,6 +470,51 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		695758D12881109600E36789 /* CopingTabScene */ = {
+			isa = PBXGroup;
+			children = (
+				695758D2288111E800E36789 /* VC */,
+				695758E128812B0D00E36789 /* ViewModel */,
+				695758D3288111F100E36789 /* Views */,
+				695758D82881124300E36789 /* Cell */,
+			);
+			path = CopingTabScene;
+			sourceTree = "<group>";
+		};
+		695758D2288111E800E36789 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				695758D42881121900E36789 /* CopingTabVC.swift */,
+				695758D62881122800E36789 /* CopingTab.storyboard */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		695758D3288111F100E36789 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				695758DF2881228700E36789 /* CopingHeaderView.swift */,
+				695758E42881852E00E36789 /* CopingEmptyView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		695758D82881124300E36789 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				695758DB2881128300E36789 /* ContentTVC.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		695758E128812B0D00E36789 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				695758E228812B3100E36789 /* CopingDataModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		697074FB28737D78001A607F /* MenuTabScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -681,6 +738,7 @@
 		EB6A44C828737BF700749582 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				695758D12881109600E36789 /* CopingTabScene */,
 				3BC01F7C287E91F7006C2181 /* BlogReviewTabScene */,
 				695758BA287DA4A400E36789 /* ReviewWriteScene */,
 				697074FB28737D78001A607F /* MenuTabScene */,
@@ -1151,7 +1209,7 @@
 		EBF66A8B287227F500DE0ED1 /* Environment */ = {
 			isa = PBXGroup;
 			children = (
-				695758C9288057D700E36789 /* Config.swift */,
+				695758DD28811E9D00E36789 /* Config.swift */,
 				EBF66A8C287227F500DE0ED1 /* NetworkConstants.swift */,
 			);
 			path = Environment;
@@ -1428,6 +1486,7 @@
 				A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */,
 				695758BD287DA4CD00E36789 /* ReviewWrite.storyboard in Resources */,
 				3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */,
+				695758D72881122800E36789 /* CopingTab.storyboard in Resources */,
 				3B089C4A287D877B00DA80B9 /* GodoB.ttf in Resources */,
 				3B0B25562876BBE400950539 /* Pretendard-Regular.otf in Resources */,
 				EBF66AD0287227F500DE0ED1 /* Assets.xcassets in Resources */,
@@ -1545,6 +1604,7 @@
 				695758BF287DA50000E36789 /* ReviewWriteVC.swift in Sources */,
 				EBF66AFE287227F500DE0ED1 /* makeVibrate.swift in Sources */,
 				FDF2E1FC287EFC710007D4F9 /* StarRatingSlider.swift in Sources */,
+				695758DE28811E9D00E36789 /* Config.swift in Sources */,
 				EBD19262287DBC1800EA053E /* MapDetailSummaryView.swift in Sources */,
 				EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */,
 				EB6A45172874276B00749582 /* DetailTabTitleHeader.swift in Sources */,
@@ -1574,6 +1634,7 @@
 				EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */,
 				EBF66AD5287227F500DE0ED1 /* ViewModelType.swift in Sources */,
 				69028BB02874A60E00373984 /* HeaderView.swift in Sources */,
+				695758D52881121900E36789 /* CopingTabVC.swift in Sources */,
 				EBF66ADA287227F500DE0ED1 /* controllerFromStoryBoard.swift in Sources */,
 				3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */,
 				3BC01F84287EAE48006C2181 /* BlogReviewCVC.swift in Sources */,
@@ -1590,6 +1651,7 @@
 				69028BA82874675800373984 /* MenuView.swift in Sources */,
 				3BC01F7F287E9225006C2181 /* BlogReviewTabVC.swift in Sources */,
 				A9E593C72874266200B0F8B5 /* SearchRecent.swift in Sources */,
+				695758E328812B3100E36789 /* CopingDataModel.swift in Sources */,
 				FDC1028C2880B13D001F0125 /* UpperToastView.swift in Sources */,
 				EBF66AF2287227F500DE0ED1 /* buttonPress.swift in Sources */,
 				EBF66ADF287227F500DE0ED1 /* AuthRouter.swift in Sources */,
@@ -1607,7 +1669,9 @@
 				EBD19275287F256000EA053E /* EncodeURLKorean.swift in Sources */,
 				EB033E84287B5BE300C48FB9 /* StarRatingView.swift in Sources */,
 				EB6A451128740CFF00749582 /* MainInfoTVC.swift in Sources */,
+				695758DC2881128300E36789 /* ContentTVC.swift in Sources */,
 				EB6A44F22873BED500749582 /* MainMapViewModel.swift in Sources */,
+				695758E52881852F00E36789 /* CopingEmptyView.swift in Sources */,
 				69028BAC2874681700373984 /* MenuTabVC.swift in Sources */,
 				EBD19265287DC33900EA053E /* TagCVCFlowLayout.swift in Sources */,
 				695758C5287DF08800E36789 /* ListPhotoCVC.swift in Sources */,
@@ -1619,6 +1683,7 @@
 				EB6A450C2873D6C500749582 /* DetailSummaryView.swift in Sources */,
 				FDC1028A2880B115001F0125 /* NicknameChangeRepository.swift in Sources */,
 				A93252AD287F09D0001EDF50 /* SearchEmptyView.swift in Sources */,
+				695758E02881228700E36789 /* CopingHeaderView.swift in Sources */,
 				EBF66ACC287227F500DE0ED1 /* BaseNotiList.swift in Sources */,
 				EBF66AD8287227F500DE0ED1 /* BaseControllable.swift in Sources */,
 				EBF66ABF287227F500DE0ED1 /* UITabBar+.swift in Sources */,
@@ -1630,7 +1695,6 @@
 				A9325277287D4F10001EDF50 /* SearchResultModel.swift in Sources */,
 				EBF66AC0287227F500DE0ED1 /* UIView+.swift in Sources */,
 				EBF66B02287227F500DE0ED1 /* NoData.swift in Sources */,
-				695758CA288057D700E36789 /* Config.swift in Sources */,
 				EB6A44F02873BED500749582 /* MainMapModel.swift in Sources */,
 				EB6A44EF2873BED500749582 /* MainMapRepository.swift in Sources */,
 				EBF66AC9287227F500DE0ED1 /* UIColor+.swift in Sources */,
@@ -1795,7 +1859,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
+				PROVISIONING_PROFILE_SPECIFIER = HealthFoodMe_Dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

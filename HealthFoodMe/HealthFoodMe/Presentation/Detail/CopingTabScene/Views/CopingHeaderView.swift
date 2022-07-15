@@ -9,7 +9,6 @@ import UIKit
 
 import SnapKit
 
-
 final class CopingHeaderView: UITableViewHeaderFooterView, UITableViewHeaderFooterRegisterable {
     
     // MARK: - Properties
@@ -26,19 +25,10 @@ final class CopingHeaderView: UITableViewHeaderFooterView, UITableViewHeaderFoot
     
     lazy var headerLabel: UILabel = {
         let lb = UILabel()
-        lb.font = .NotoMedium(size: 15)
+        lb.font = .NotoBold(size: 15)
         return lb
     }()
-    
-    lazy var headerStackView: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .horizontal
-        sv.alignment = .bottom
-        sv.spacing = 10
-        sv.addArrangedSubviews(icnImageView, headerLabel)
-        return sv
-    }()
-    
+
     // MARK: - View Life Cycles
     
     override init(reuseIdentifier: String?) {
@@ -58,11 +48,11 @@ extension CopingHeaderView {
     func setHeaderData(section: Int) {
         if section == 0 {
             icnImageView.image = ImageLiterals.Coping.imageRecommend
-            headerLabel.text = "추천하는 이유!"
+            headerLabel.text = I18N.Coping.recommendHeader
             headerLabel.textColor = .mainGreen
         } else {
             icnImageView.image = ImageLiterals.Coping.imagetasteIt
-            headerLabel.text = "이렇게 드셔보세요"
+            headerLabel.text = I18N.Coping.eatingHeader
             headerLabel.textColor = .mainRed
         }
     }
@@ -73,10 +63,6 @@ extension CopingHeaderView {
 extension CopingHeaderView {
     
     private func setLayout() {
-        self.snp.makeConstraints { make in
-            make.width.equalTo(UIScreen.main.bounds.width)
-            make.height.equalTo(140)
-        }
         self.addSubviews(icnImageView, headerLabel)
         
         icnImageView.snp.makeConstraints { make in
@@ -86,7 +72,7 @@ extension CopingHeaderView {
         }
         
         headerLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(4)
+            make.top.equalTo(icnImageView.snp.bottom).offset(4)
             make.centerX.equalToSuperview()
         }
     }

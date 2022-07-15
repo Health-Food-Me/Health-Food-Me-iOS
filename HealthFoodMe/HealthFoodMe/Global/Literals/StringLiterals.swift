@@ -81,4 +81,11 @@ struct I18N {
         static let dietStore = "다이어터도 즐길 수 있는 식당"
         static let goScrap = "스크랩하러 가기"
     }
+    
+    struct Coping {
+        static let recommendHeader = "추천하는 이유!"
+        static let eatingHeader = "이렇게 드셔보세요!"
+        static let copingEmpty = "해당되는 카테고리에 관련된 외식대처법은 준비중입니다"
+        static let copingWait = "조금만 기다려 주세요!"
+    }
 }
