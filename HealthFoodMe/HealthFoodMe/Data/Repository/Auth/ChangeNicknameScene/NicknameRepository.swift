@@ -7,12 +7,13 @@
 
 import RxSwift
 
-protocol NicknameChangeRepository {
+protocol NicknameRepository {
   func postNicknameInValidCheck(nickname: String) -> Observable<Bool?>
+  func getUserNickname() -> Observable<String?>
 }
 
 // FIXME: - 실제 네트워크 나오면 바로 Service 프로토콜 주입 및 파일 붙일 예정
-final class DefaultNicknameChangeRepository {
+final class DefaultNicknameRepository {
   
 //  private let networkService: AuthServiceType
   private let disposeBag = DisposeBag()
@@ -22,7 +23,7 @@ final class DefaultNicknameChangeRepository {
 //  }
 }
 
-extension DefaultNicknameChangeRepository: NicknameChangeRepository {
+extension DefaultNicknameRepository: NicknameRepository {
   func postNicknameInValidCheck(nickname: String) -> Observable<Bool?> {
     //  return self.networkService.checkNicknameDuplicated(nickname: nickname)
     //  이후 실제로 쓸 코드 잠시 주석처리 해둠 (서버 되면 붙일 예정)
@@ -34,6 +35,13 @@ extension DefaultNicknameChangeRepository: NicknameChangeRepository {
       }else {
         observer.onNext(false)
       }
+      return Disposables.create()
+    }
+  }
+  
+  func getUserNickname() -> Observable<String?> {
+    return .create { observer in
+      observer.onNext("혜화동불가마")
       return Disposables.create()
     }
   }

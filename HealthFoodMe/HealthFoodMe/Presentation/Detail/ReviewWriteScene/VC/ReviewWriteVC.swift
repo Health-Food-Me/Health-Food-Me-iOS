@@ -6,10 +6,10 @@
 //
 
 import UIKit
+import Photos
 
 import BSImagePicker
 import SnapKit
-import Photos
 
 enum Cell: Int {
     case addCell = 0, photoCell
@@ -24,6 +24,9 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     }
     var selectedAssets: [PHAsset] = [PHAsset]()
     var userSelectedImages: [UIImage] = [UIImage]()
+    var tasteSet = ""
+    var feelingArray: [Bool] = [false, false, false]
+    private var currentRate: Double = 0
     
     // MARK: - UI Components
     
@@ -48,6 +51,8 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         lb.font = .NotoBold(size: 16)
         return lb
     }()
+    
+    let sliderView = StarRatingSlider(starWidth: 37)
     
     private lazy var lineView: UIView = {
         let view = UIView()
@@ -80,6 +85,9 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         return sv
     }()
     
+    private var selectedButton: Int = 0
+    private var tasteTagButton: [UIButton] = []
+    
     private lazy var tagGood: UIButton = {
         let btn = UIButton()
         btn.setTitle("# 맛 최고", for: .normal)
@@ -89,30 +97,36 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.tag = 0
+        tasteTagButton.append(btn)
         return btn
     }()
     
     private lazy var tagSoso: UIButton = {
         let btn = UIButton()
-        btn.setTitle("#맛 그럭저럭", for: .normal)
+        btn.setTitle("# 맛 그럭저럭", for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.tag = 1
+        tasteTagButton.append(btn)
         return btn
     }()
     
     private lazy var tagBad: UIButton = {
         let btn = UIButton()
-        btn.setTitle("#맛 별로에요", for: .normal)
+        btn.setTitle("# 맛 별로에요", for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.tag = 2
+        tasteTagButton.append(btn)
         return btn
     }()
     
@@ -159,6 +173,8 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.tag = 0
+        btn.addTarget(self, action: #selector(didTapFeelingTag), for: .touchUpInside)
         return btn
     }()
     
@@ -171,6 +187,8 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.tag = 1
+        btn.addTarget(self, action: #selector(didTapFeelingTag), for: .touchUpInside)
         return btn
     }()
     
@@ -183,6 +201,8 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
         btn.layer.cornerRadius = 14
+        btn.tag = 2
+        btn.addTarget(self, action: #selector(didTapFeelingTag), for: .touchUpInside)
         return btn
     }()
     
@@ -233,6 +253,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         tv.font = .NotoRegular(size: 12)
         tv.textColor = .helfmeGray2
         tv.backgroundColor = .helfmeBgGray
+        tv.showsHorizontalScrollIndicator = false
         return tv
     }()
     
@@ -296,7 +317,15 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.titleLabel?.font = .NotoBold(size: 14)
         btn.backgroundColor = .mainRed
         btn.layer.cornerRadius = 22
+        btn.addTarget(self, action: #selector(didTapWriteReview), for: .touchUpInside)
         return btn
+    }()
+    
+    private lazy var checkReviewToastView: UpperToastView = {
+        let toastView = UpperToastView(title: "별점과 맛 평가는 필수입니다.")
+        toastView.layer.cornerRadius = 20
+        toastView.alpha = 0
+        return toastView
     }()
     
     // MARK: - View Life Cycle
@@ -307,12 +336,28 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         setNavigation()
         setLayout()
         registerCell()
+        setAddTargets()
+        setTextView()
+        addTapGesture()
+        bindSlider()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setKeyboardObserver()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        removeKeyboardObserver()
     }
 }
 
 // MARK: - Methods
 
 extension ReviewWriteVC {
+    private func setTextView() {
+        addToolBar(textView: reviewTextView)
+    }
+    
     private func setDelegate() {
         scrollView.delegate = self
         reviewTextView.delegate = self
@@ -337,15 +382,22 @@ extension ReviewWriteVC {
             make.width.equalTo(scrollView.snp.width)
         }
         
-        contentView.addSubviews(restaurantTitleLabel, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView, photoSubLabel, writeReviewButton)
+        contentView.addSubviews(restaurantTitleLabel, sliderView, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView, photoSubLabel, writeReviewButton, checkReviewToastView)
         
         restaurantTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
             make.centerX.equalToSuperview()
         }
         
+        sliderView.snp.makeConstraints { make in
+            make.top.equalTo(restaurantTitleLabel.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(185)
+            make.height.equalTo(37)
+        }
+        
         lineView.snp.makeConstraints { make in
-            make.top.equalTo(restaurantTitleLabel.snp.bottom).offset(67)
+            make.top.equalTo(sliderView.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(1)
         }
@@ -442,9 +494,52 @@ extension ReviewWriteVC {
             make.height.equalTo(44)
             make.bottom.equalToSuperview().inset(10)
         }
+        
+        checkReviewToastView.snp.updateConstraints { make in
+            make.leading.equalToSuperview().offset(63)
+            make.trailing.equalToSuperview().offset(-63)
+            make.bottom.equalToSuperview().offset(40)
+            make.height.equalTo(40)
+        }
     }
     
-    func checkMaxLength(_ textView: UITextView) {
+    private func setAddTargets() {
+        tasteTagButton.forEach { button in
+            button.addTarget(self, action: #selector(didTapTasteTag), for: .touchUpInside)
+        }
+    }
+    
+    @objc private func didTapTasteTag(_ sender: UIButton) {
+        self.selectedButton = sender.tag
+        tasteTagButton.forEach { button in
+            guard let tagTitle = button.titleLabel?.text else { return }
+            button.isSelected = sender == button
+            if button.isSelected {
+                button.layer.borderColor = UIColor.mainRed.cgColor
+                button.setTitleColor(UIColor.mainRed, for: UIControl.State.normal)
+                tasteSet = tagTitle
+            } else {
+                button.layer.borderColor = UIColor.helfmeGray2.cgColor
+                button.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
+            }
+        }
+        print(tasteSet)
+    }
+    
+    @objc private func didTapFeelingTag(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        feelingArray[sender.tag].toggle()
+        if sender.isSelected {
+            sender.layer.borderColor = UIColor.mainRed.cgColor
+            sender.setTitleColor(UIColor.mainRed, for: UIControl.State.normal)
+        } else {
+            sender.layer.borderColor = UIColor.helfmeGray2.cgColor
+            sender.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
+        }
+        print(feelingArray)
+    }
+    
+    private func checkMaxLength(_ textView: UITextView) {
         if (textView.text.count) > 500 {
             textView.deleteBackward()
         }
@@ -455,7 +550,7 @@ extension ReviewWriteVC {
         ListPhotoCVC.register(target: photoCollectionView)
     }
     
-    @objc func showStatusActionSheet(_ sender: UITapGestureRecognizer) {
+    @objc private func showStatusActionSheet(_ sender: UITapGestureRecognizer) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let takePictureAction = UIAlertAction(title: "사진 찍기", style: .default) {_ in
@@ -479,7 +574,7 @@ extension ReviewWriteVC {
         self.present(actionSheet, animated: true)
     }
     
-    func didTapimageAlbum() {
+    private func didTapimageAlbum() {
         selectedAssets.removeAll()
         userSelectedImages.removeAll()
         
@@ -488,11 +583,8 @@ extension ReviewWriteVC {
         imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
         
         self.presentImagePicker(imagePicker, select: { (asset) in
-            
         }, deselect: { (asset) in
-            
         }, cancel: { (assets) in
-            
         }, finish: { (assets) in
             
             for i in 0..<assets.count {
@@ -504,7 +596,7 @@ extension ReviewWriteVC {
         })
     }
     
-    func convertAssetToImages() {
+    private func convertAssetToImages() {
         if selectedAssets.count != 0 {
             for i in 0..<selectedAssets.count {
                 
@@ -517,12 +609,85 @@ extension ReviewWriteVC {
                                           targetSize: CGSize(width: 200, height: 200),
                                           contentMode: .aspectFit,
                                           options: option) { (result, info) in thumbnail = result! }
-                
                 let data = thumbnail.jpegData(compressionQuality: 0.7)
                 let newImage = UIImage(data: data!)
                 
                 self.userSelectedImages.append(newImage! as UIImage)
             }
+        }
+    }
+    
+    private func bindSlider() {
+        sliderView.sliderValue = { rate in
+            self.currentRate = rate
+        }
+    }
+    
+    private func checkReview() -> Bool {
+        if self.currentRate > 0 && !tasteSet.isEmpty {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    @objc private func didTapWriteReview(_ sender: UIButton) {
+        if !checkReview() {
+            showToast()
+        } else {
+            makeAlert(title: "알림", message: "작성완료!")
+        }
+    }
+    
+    @objc override func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            let safeareaHeight = self.view.safeAreaInsets.bottom
+            UIView.animate(withDuration: 1) {
+                self.contentView.transform =
+                CGAffineTransform(translationX: 0, y: -(keyboardHeight - safeareaHeight))
+            }
+        }
+    }
+    
+    @objc override func keyboardWillHide(notification: NSNotification) {
+        self.contentView
+            .transform = .identity
+    }
+}
+
+extension ReviewWriteVC {
+    private func showToast() {
+        makeVibrate()
+        checkReviewToastView.snp.remakeConstraints { make in
+            make.leading.equalToSuperview().offset(63)
+            make.trailing.equalToSuperview().offset(-63)
+            make.bottom.equalTo(writeReviewButton.snp.top).offset(-10)
+            make.height.equalTo(40)
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.view.layoutIfNeeded()
+            self.checkReviewToastView.alpha = 1
+            
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.hideToast()
+            }
+        }
+    }
+    
+    private func hideToast() {
+        checkReviewToastView.snp.remakeConstraints { make in
+            make.leading.equalToSuperview().offset(63)
+            make.trailing.equalToSuperview().offset(-63)
+            make.bottom.equalToSuperview().offset(40)
+            make.height.equalTo(40)
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.checkReviewToastView.alpha = 0
+            self.view.layoutIfNeeded()
         }
     }
 }
@@ -534,7 +699,6 @@ extension ReviewWriteVC {
 }
 
 extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photoModel.userSelectedImages.count + 1
     }
@@ -573,7 +737,6 @@ extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
 }
 
 extension ReviewWriteVC: UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWidth = 105
         let cellHeight = 105
@@ -590,7 +753,6 @@ extension ReviewWriteVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension ReviewWriteVC: AddImageDelegate {
-    
     func didPickImagesToUpload(images: [UIImage]) {
         photoModel.userSelectedImages += images
     }
@@ -635,11 +797,14 @@ extension ReviewWriteVC: UITextViewDelegate {
         let count = textView.text.count
         textCountLabel.text = "\(count)/500자"
     }
+    
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        return true
+    }
 }
 
 extension ReviewWriteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
             var images = [UIImage]()
             images.append(image)
@@ -650,5 +815,49 @@ extension ReviewWriteVC: UIImagePickerControllerDelegate, UINavigationController
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension UIViewController {
+    func setKeyboardObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(UIViewController.keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(UIViewController.keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    func removeKeyboardObserver() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            UIView.animate(withDuration: 1) {
+                self.view.window?.frame.origin.y -= keyboardHeight
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.window?.frame.origin.y != 0 {
+            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardRectangle = keyboardFrame.cgRectValue
+                let keyboardHeight = keyboardRectangle.height
+                UIView.animate(withDuration: 1) {
+                    self.view.window?.frame.origin.y += keyboardHeight
+                }
+            }
+        }
     }
 }
