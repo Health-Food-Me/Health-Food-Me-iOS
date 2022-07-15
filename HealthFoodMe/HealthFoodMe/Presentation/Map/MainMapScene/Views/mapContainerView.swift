@@ -27,14 +27,14 @@ final class NaverMapContainerView: UIView {
         super.init(frame: frame)
         bindRelay()
         setUI()
-        moveCameraPosition(NMGLatLng(lat: 37.5666102, lng: 126.9783881))
+        moveCameraPosition(LocationLiterals.gangnamStation)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         bindRelay()
         setUI()
-        moveCameraPosition(NMGLatLng(lat: 37.5666102, lng: 126.9783881))
+        moveCameraPosition(LocationLiterals.gangnamStation)
     }
 }
 
@@ -124,7 +124,6 @@ extension NaverMapContainerView {
         guard let marker = markers.filter({ point in
             return point.position == NMGPosition
         }).first else { return }
-        moveCameraPosition(NMGPosition)
         if let seletedMark = self.selectedMarker,
            let type = selectedMarkerType?.type {
             switch type {
