@@ -302,7 +302,14 @@ extension MainMapVC {
                     self.view.layoutIfNeeded()
                 }
             }).disposed(by: self.disposeBag)
-        
+      
+      mapView.zoomLevelChange
+        .subscribe(onNext: { [weak self] zoomLevel in
+          guard let self = self else { return }
+          print(zoomLevel)
+          
+        }).disposed(by: self.disposeBag)
+              
         mapView.setSelectPoint
             .subscribe(onNext: { [weak self] dataModel in
                 let summaryViewHeight: CGFloat = 189

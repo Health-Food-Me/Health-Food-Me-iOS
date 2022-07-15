@@ -1,8 +1,8 @@
 //
-//  NaverMapContainerViewDelegateProxy.swift
-//  NaverMap + RxDelegate
+//  mapContainerViewCameraDelegateProxy.swift
+//  HealthFoodMe
 //
-//  Created by 송지훈 on 2022/07/12.
+//  Created by 송지훈 on 2022/07/16.
 //
 
 import NMapsMap
@@ -34,9 +34,4 @@ extension Reactive where Base: NaverMapContainerView {
         return delegate.methodInvoked(#selector(NMFMapViewTouchDelegate.mapView(_:didTapMap:point:)))
             .map { _ in return ()}
     }
-  
-//  var mapZoomLevelChanged: Observable<Void> {
-//    return delegate.methodInvoked(#selector(NMFMapViewOptionDelegate.map
-//          .map { _ in return ()}
-//  }
 }

@@ -18,8 +18,10 @@ final class NaverMapContainerView: UIView {
     private var previousMarker: NMFMarker?
     private var selectedMarker: NMFMarker?
     private var selectedMarkerType: MapPointDataModel?
+    internal var zoomLevelChange = PublishRelay<Int>()
     var naverMapView = NMFNaverMapView()
     var delegate: NMFMapViewTouchDelegate?
+    var cameraDelegate: NMFMapViewCameraDelegate?
     var pointList = PublishRelay<[MapPointDataModel]>()
     var setSelectPoint = PublishRelay<MapPointDataModel>()
     var disableSelectPoint = PublishRelay<Void>()
@@ -53,6 +55,8 @@ extension NaverMapContainerView {
         naverMapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+      
+      naverMapView.mapView.addCameraDelegate(delegate: self)
     }
   
     
@@ -171,6 +175,12 @@ extension NaverMapContainerView {
     }
 }
 
+extension NaverMapContainerView: NMFMapViewCameraDelegate {
+  func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
+    self.zoomLevelChange.accept(Int(mapView.zoomLevel))
+  }
+}
+
 struct MapAccumulationCalculator {
   static func zoomLevelToDistance(level: Int) -> Int {
     switch(level) {
@@ -213,5 +223,6 @@ struct MapAccumulationCalculator {
       case 200000 ..< 500000    : return 6
       case 500000 ..< 1000000   : return 5
       default                   : return 4
+    }
   }
 }
