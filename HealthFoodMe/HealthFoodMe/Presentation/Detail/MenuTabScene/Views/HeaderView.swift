@@ -11,7 +11,7 @@ protocol MenuCVCDelegate: AnyObject {
     func controlSegement()
 }
 
-final class HeaderView: UIView {
+final class HeaderView: UICollectionReusableView {
     
     // MARK: - Properties
     
