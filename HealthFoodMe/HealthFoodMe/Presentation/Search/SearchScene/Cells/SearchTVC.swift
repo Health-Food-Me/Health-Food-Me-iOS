@@ -17,7 +17,6 @@ final class SearchTVC: UITableViewCell, UITableViewRegisterable {
     
     private var searchImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = ImageLiterals.Search.dietIcon
         iv.contentMode = .scaleAspectFill
         return iv
     }()
@@ -28,9 +27,9 @@ final class SearchTVC: UITableViewCell, UITableViewRegisterable {
         lb.font = .NotoRegular(size: 16)
         return lb
     }()
-  
+    
     // MARK: - View Life Cycle
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
@@ -45,8 +44,13 @@ final class SearchTVC: UITableViewCell, UITableViewRegisterable {
 // MARK: - Methods
 
 extension SearchTVC {
-    func setData(data: String) {
-        searchLabel.text = data
+    func setData(data: SearchDataModel) {
+        if data.isDiet {
+            searchImageView.image = ImageLiterals.Search.dietIcon
+        } else {
+            searchImageView.image = ImageLiterals.Search.normalIcon
+        }
+        searchLabel.text = data.title
     }
     
     private func setUI() {
