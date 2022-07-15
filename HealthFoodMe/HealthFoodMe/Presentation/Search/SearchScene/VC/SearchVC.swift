@@ -42,7 +42,7 @@ final class SearchVC: UIViewController {
         tf.leftViewMode = .always
         tf.rightViewMode = .never
         tf.enablesReturnKeyAutomatically = true
-        tf.attributedPlaceholder = NSAttributedString(string: "식당, 음식 검색", attributes: [NSAttributedString.Key.foregroundColor: UIColor.helfmeTagGray])
+        tf.attributedPlaceholder = NSAttributedString(string: I18N.Search.search, attributes: [NSAttributedString.Key.foregroundColor: UIColor.helfmeTagGray])
         tf.font = .NotoRegular(size: 15)
         tf.textColor = .helfmeBlack
         tf.backgroundColor = .helfmeWhite
@@ -84,7 +84,7 @@ final class SearchVC: UIViewController {
     
     private let recentHeaderLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "최근 검색어"
+        lb.text = I18N.Search.searchRecent
         lb.textColor = .helfmeGray1
         lb.font = .NotoRegular(size: 14)
         return lb
@@ -93,7 +93,7 @@ final class SearchVC: UIViewController {
     private lazy var resultHeaderButton: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Search.viewMapBtn, for: .normal)
-        btn.setTitle("지도 뷰로 보기", for: .normal)
+        btn.setTitle(I18N.Search.searchMap, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray1, for: .normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.isHidden = true
