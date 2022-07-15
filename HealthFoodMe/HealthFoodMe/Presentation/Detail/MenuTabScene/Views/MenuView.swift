@@ -31,6 +31,7 @@ final class MenuView: UIView {
     
     lazy var menuImageView: UIImageView = {
         let iv = UIImageView()
+        iv.image = ImageLiterals.MenuTab.emptyCard
         iv.layer.cornerRadius = 8
         iv.contentMode = .scaleAspectFill
         return iv

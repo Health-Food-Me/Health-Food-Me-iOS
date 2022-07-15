@@ -88,4 +88,8 @@ struct ImageLiterals {
         static let addPhotoIcon = UIImage(named: "icn_photoAdd")
         static let deletePhotoBtn = UIImage(named: "btn_delete")
     }
+    
+    struct MenuTab {
+        static let emptyCard = UIImage(named: "img_empty_card")
+    }
 }
