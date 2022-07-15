@@ -18,6 +18,15 @@ struct I18N {
 샐러드부터 일반식까지
 다이어터를 위한 식당 추천 지도앱
 """
+      
+      struct ChangeNickname {
+        static let headerTitle = "프로필 편집"
+        static let guideText = "변경할 닉네임을 설정해주세요"
+        static let conditionText = "* 특수문자, 이모티콘은 사용 불가합니다\n* 띄어쓰기 포함 최대 12글자"
+        static let ctaButtonTitle = "수정 완료"
+        static let formatErrMessage =  "닉네임 설정 기준에 적합하지 않습니다"
+        static let duplicatedErrMessage = "중복된 닉네임입니다"
+      }
     }
     
     struct Detail {
@@ -74,5 +83,30 @@ struct I18N {
         static let withHelfme = "헬푸미와 외식 걱정을 날려보세요!"
         static let dietStore = "다이어터도 즐길 수 있는 식당"
         static let goScrap = "스크랩하러 가기"
+    }
+    
+    struct HelfmeAlert {
+        static let logout = "정말 로그아웃 하시겠어요?"
+        static let logoutContent =
+        """
+        로그아웃 시 헬푸미의 업데이트 내용을
+        보실 수 없습니다.
+        """
+        static let yes = "네"
+        static let no = "아니요"
+        
+        static let reviewDelete =
+        """
+        작성한 리뷰를
+        삭제하실 건가요?
+        """
+        
+        static let withdrawal = "정말로 탈퇴하실건가요?"
+        static let withdrawalContent =
+        """
+        탈퇴 시 헬푸미의 새로운 정보를
+        얻을 수 없습니다.
+        """
+        static let withdrawalYes = "네 탈퇴할게요"
     }
 }

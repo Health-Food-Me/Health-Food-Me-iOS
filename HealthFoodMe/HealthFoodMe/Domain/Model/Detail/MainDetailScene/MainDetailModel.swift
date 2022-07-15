@@ -10,3 +10,9 @@ import Foundation
 struct MainDetailModel {
 
 }
+
+struct NameLocation {
+    let latitude: String
+    let longtitude: String
+    let name: String
+}

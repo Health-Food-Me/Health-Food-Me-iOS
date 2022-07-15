@@ -18,7 +18,7 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     static var isFromNib: Bool = false
     let disposeBag = DisposeBag()
     let toggleButtonTapped = PublishRelay<Void>()
-    var willUseExpandableOption: Bool = false
+    let telePhoneLabelTapped = PublishRelay<String>()
     
     // MARK: - UI Components
     
@@ -36,6 +36,7 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
         lb.textAlignment = .left
         lb.textColor = .helfmeGray1
         lb.font = .NotoMedium(size: 12)
+        lb.isUserInteractionEnabled = true
         return lb
     }()
     
@@ -97,13 +98,31 @@ extension ExpandableInfoTVC {
         switch indexPath.section {
         case 0:
             iconImageView.image = ImageLiterals.MainDetail.locationIcon
+            infoLabel.text = "서울특별시 중랑구 상봉동"
         case 1:
             iconImageView.image = ImageLiterals.MainDetail.timeIcon
         default:
             iconImageView.image = ImageLiterals.MainDetail.phoneIcon
+            let telephoneString = "02-123-123"
+            let attributeString = NSMutableAttributedString(string: telephoneString)
+            attributeString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: telephoneString.count))
+            infoLabel.attributedText = attributeString
+            setTapGesture()
         }
         
         iconImageView.isHidden = !isFirstRow
         toggleButton.isHidden = !(isFirstRow && isSecondSection)
+    }
+    
+    private func setTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentTelephoneApp))
+        infoLabel.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc
+    private func presentTelephoneApp() {
+        if let text = infoLabel.text {
+            telePhoneLabelTapped.accept(text)
+        }
     }
 }
