@@ -20,6 +20,13 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     private let locationManager = NMFLocationManager.sharedInstance()
     private var currentLatitude: Double?
     private var currentLongitude: Double?
+    private var selectedCategories: [Bool] = [false, false, false,
+                                              false, false, false,
+                                              false, false] {
+        didSet {
+            categoryCollectionView.reloadData()
+        }
+    }
     var viewModel: MainMapViewModel!
     
     // MARK: - UI Components
@@ -78,6 +85,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 32), collectionViewLayout: layout)
         cv.showsHorizontalScrollIndicator = false
         cv.backgroundColor = .clear
+        cv.allowsMultipleSelection = true
         return cv
     }()
     
@@ -384,7 +392,14 @@ extension MainMapVC {
 // MARK: - CollectionView Delegate
 
 extension MainMapVC: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        makeVibrate()
+    }
     
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        selectedCategories[indexPath.row].toggle()
+        return true
+    }
 }
 
 extension MainMapVC: UICollectionViewDelegateFlowLayout {
@@ -400,7 +415,9 @@ extension MainMapVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MenuCategoryCVC.className, for: indexPath) as? MenuCategoryCVC else { return UICollectionViewCell() }
+        cell.isDietMenu = MainMapCategory.categorySample[indexPath.row].isDietMenu
         cell.setData(data: MainMapCategory.categorySample[indexPath.row])
+        cell.isSelected = selectedCategories[indexPath.row]
         return cell
     }
 }
