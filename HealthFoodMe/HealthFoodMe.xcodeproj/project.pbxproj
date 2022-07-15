@@ -152,7 +152,14 @@
 		FD58291A287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582917287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift */; };
 		FD58291B287DC39A00CE62E8 /* mapContainerView + Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582918287DC39A00CE62E8 /* mapContainerView + Reactive.swift */; };
 		FD58291C287DC39A00CE62E8 /* mapContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582919287DC39A00CE62E8 /* mapContainerView.swift */; };
+		FD924376288007ED0034876B /* NicknameChange.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD924375288007ED0034876B /* NicknameChange.storyboard */; };
 		FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */; };
+		FDC102872880B0FE001F0125 /* NicknameChangeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E202287F27860007D4F9 /* NicknameChangeVC.swift */; };
+		FDC102882880B101001F0125 /* NicknameChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E203287F27860007D4F9 /* NicknameChangeViewModel.swift */; };
+		FDC102892880B10A001F0125 /* NicknameChangeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20E287F5D080007D4F9 /* NicknameChangeUseCase.swift */; };
+		FDC1028A2880B115001F0125 /* NicknameChangeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20F287F5D080007D4F9 /* NicknameChangeRepository.swift */; };
+		FDC1028B2880B133001F0125 /* CTAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E208287F30770007D4F9 /* CTAButton.swift */; };
+		FDC1028C2880B13D001F0125 /* UpperToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20A287F3C360007D4F9 /* UpperToastView.swift */; };
 		FDF2E1FA287EFA5B0007D4F9 /* SampleStarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E1F9287EFA5B0007D4F9 /* SampleStarVC.swift */; };
 		FDF2E1FC287EFC710007D4F9 /* StarRatingSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E1FB287EFC710007D4F9 /* StarRatingSlider.swift */; };
 		FDF2E1FE287F08010007D4F9 /* TouchableSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E1FD287F08010007D4F9 /* TouchableSlider.swift */; };
@@ -266,7 +273,7 @@
 		EBF66A73287227F500DE0ED1 /* UITableViewRegisterable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewRegisterable.swift; sourceTree = "<group>"; };
 		EBF66A77287227F500DE0ED1 /* Presentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presentable.swift; sourceTree = "<group>"; };
 		EBF66A78287227F500DE0ED1 /* BaseControllable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseControllable.swift; sourceTree = "<group>"; };
-		EBF66A7A287227F500DE0ED1 /* ModuleFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleFactory.swift; sourceTree = "<group>"; };
+		EBF66A7A287227F500DE0ED1 /* ModuleFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ModuleFactory.swift; sourceTree = "<group>"; tabWidth = 4; };
 		EBF66A7B287227F500DE0ED1 /* controllerFromStoryBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = controllerFromStoryBoard.swift; sourceTree = "<group>"; };
 		EBF66A7D287227F500DE0ED1 /* LaunchInstructor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchInstructor.swift; sourceTree = "<group>"; };
 		EBF66A7E287227F500DE0ED1 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -309,10 +316,19 @@
 		FD582917287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerViewDelegateProxy.swift; sourceTree = "<group>"; };
 		FD582918287DC39A00CE62E8 /* mapContainerView + Reactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "mapContainerView + Reactive.swift"; sourceTree = "<group>"; };
 		FD582919287DC39A00CE62E8 /* mapContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerView.swift; sourceTree = "<group>"; };
+		FD924375288007ED0034876B /* NicknameChange.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NicknameChange.storyboard; sourceTree = "<group>"; };
 		FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegementControl.swift; sourceTree = "<group>"; };
 		FDF2E1F9287EFA5B0007D4F9 /* SampleStarVC.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = SampleStarVC.swift; sourceTree = "<group>"; tabWidth = 4; };
 		FDF2E1FB287EFC710007D4F9 /* StarRatingSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingSlider.swift; sourceTree = "<group>"; };
 		FDF2E1FD287F08010007D4F9 /* TouchableSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchableSlider.swift; sourceTree = "<group>"; };
+		FDF2E202287F27860007D4F9 /* NicknameChangeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameChangeVC.swift; sourceTree = "<group>"; };
+		FDF2E203287F27860007D4F9 /* NicknameChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameChangeViewModel.swift; sourceTree = "<group>"; };
+		FDF2E206287F2CAA0007D4F9 /* addTextFieldPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addTextFieldPadding.swift; sourceTree = "<group>"; };
+		FDF2E208287F30770007D4F9 /* CTAButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTAButton.swift; sourceTree = "<group>"; };
+		FDF2E20A287F3C360007D4F9 /* UpperToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpperToastView.swift; sourceTree = "<group>"; };
+		FDF2E20E287F5D080007D4F9 /* NicknameChangeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameChangeUseCase.swift; sourceTree = "<group>"; };
+		FDF2E20F287F5D080007D4F9 /* NicknameChangeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameChangeRepository.swift; sourceTree = "<group>"; };
+		FDF2E213287F5D080007D4F9 /* ChangeNicknameEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNicknameEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +399,7 @@
 		3BCC441A28745FA900661A12 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				FDF2E1FF287F27650007D4F9 /* NicknameChangeScene */,
 				3BCC441B28745FB000661A12 /* SocialLoginScene */,
 			);
 			path = Auth;
@@ -621,6 +638,8 @@
 				FDF2E1F9287EFA5B0007D4F9 /* SampleStarVC.swift */,
 				FDF2E1FB287EFC710007D4F9 /* StarRatingSlider.swift */,
 				FDF2E1FD287F08010007D4F9 /* TouchableSlider.swift */,
+				FDF2E208287F30770007D4F9 /* CTAButton.swift */,
+				FDF2E20A287F3C360007D4F9 /* UpperToastView.swift */,
 			);
 			path = "UI Components";
 			sourceTree = "<group>";
@@ -717,6 +736,7 @@
 		EB6A44DA28737DBD00749582 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				FDF2E21C287F5D990007D4F9 /* Auth */,
 				EB6A44FA2873BF6500749582 /* Map */,
 				EB6A44DB28737DC300749582 /* Detail */,
 			);
@@ -750,6 +770,7 @@
 		EB6A44DE28737E5200749582 /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
+				FDF2E20C287F5CE80007D4F9 /* Auth */,
 				EB6A44F62873BF1A00749582 /* Map */,
 				EB6A44DF28737E5A00749582 /* Detail */,
 			);
@@ -1044,7 +1065,6 @@
 				EBD19271287F0C7A00EA053E /* Manager */,
 				EBF66A75287227F500DE0ED1 /* ModuleFactory */,
 				EBF66A7E287227F500DE0ED1 /* AppDelegate.swift */,
-				EBF66A7F287227F500DE0ED1 /* SceneDelegate.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1052,6 +1072,7 @@
 		EBF66A75287227F500DE0ED1 /* ModuleFactory */ = {
 			isa = PBXGroup;
 			children = (
+				EBF66A7F287227F500DE0ED1 /* SceneDelegate.swift */,
 				EBF66A76287227F500DE0ED1 /* Protocol */,
 				EBF66A79287227F500DE0ED1 /* Factory */,
 				EBF66A7C287227F500DE0ED1 /* Base */,
@@ -1194,6 +1215,7 @@
 				EBF66AB0287227F500DE0ED1 /* makeVibrate.swift */,
 				EBF66AB1287227F500DE0ED1 /* makeAlert.swift */,
 				EBF66AB2287227F500DE0ED1 /* Adjusted+.swift */,
+				FDF2E206287F2CAA0007D4F9 /* addTextFieldPadding.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1240,11 +1262,94 @@
 		EBF66B062872AE4200DE0ED1 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				FDF2E21A287F5D7F0007D4F9 /* Author */,
 				EB6A44F82873BF4000749582 /* Map */,
 				EB6A44DC28737DFA00749582 /* Detail */,
 				EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		FD924374288007E00034876B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FD924375288007ED0034876B /* NicknameChange.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FDF2E1FF287F27650007D4F9 /* NicknameChangeScene */ = {
+			isa = PBXGroup;
+			children = (
+				FD924374288007E00034876B /* Views */,
+				FDF2E201287F27750007D4F9 /* ViewModel */,
+				FDF2E200287F276F0007D4F9 /* VC */,
+			);
+			path = NicknameChangeScene;
+			sourceTree = "<group>";
+		};
+		FDF2E200287F276F0007D4F9 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				FDF2E202287F27860007D4F9 /* NicknameChangeVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		FDF2E201287F27750007D4F9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FDF2E203287F27860007D4F9 /* NicknameChangeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		FDF2E20C287F5CE80007D4F9 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				FDF2E20D287F5CEF0007D4F9 /* NicknameChangeScene */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		FDF2E20D287F5CEF0007D4F9 /* NicknameChangeScene */ = {
+			isa = PBXGroup;
+			children = (
+				FDF2E20E287F5D080007D4F9 /* NicknameChangeUseCase.swift */,
+			);
+			path = NicknameChangeScene;
+			sourceTree = "<group>";
+		};
+		FDF2E21A287F5D7F0007D4F9 /* Author */ = {
+			isa = PBXGroup;
+			children = (
+				FDF2E21B287F5D880007D4F9 /* ChangeNicknameScene */,
+			);
+			path = Author;
+			sourceTree = "<group>";
+		};
+		FDF2E21B287F5D880007D4F9 /* ChangeNicknameScene */ = {
+			isa = PBXGroup;
+			children = (
+				FDF2E213287F5D080007D4F9 /* ChangeNicknameEntity.swift */,
+			);
+			path = ChangeNicknameScene;
+			sourceTree = "<group>";
+		};
+		FDF2E21C287F5D990007D4F9 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				FDF2E21D287F5DA50007D4F9 /* ChangeNicknameScene */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		FDF2E21D287F5DA50007D4F9 /* ChangeNicknameScene */ = {
+			isa = PBXGroup;
+			children = (
+				FDF2E20F287F5D080007D4F9 /* NicknameChangeRepository.swift */,
+			);
+			path = ChangeNicknameScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1328,6 +1433,7 @@
 				EBF66AD0287227F500DE0ED1 /* Assets.xcassets in Resources */,
 				EBF66AD2287227F500DE0ED1 /* LaunchScreen.storyboard in Resources */,
 				A9E593CF2876C26900B0F8B5 /* Color.xcassets in Resources */,
+				FD924376288007ED0034876B /* NicknameChange.storyboard in Resources */,
 				EB6A44FD2873BF8800749582 /* MainMap.storyboard in Resources */,
 				EBF66AD1287227F500DE0ED1 /* NotoSansSC-Bold.otf in Resources */,
 				3B0B25592876BBE400950539 /* NotoSansCJKkr-Medium.otf in Resources */,
@@ -1400,6 +1506,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDC102872880B0FE001F0125 /* NicknameChangeVC.swift in Sources */,
 				EBF66AFF287227F500DE0ED1 /* makeAlert.swift in Sources */,
 				EBF66AF3287227F500DE0ED1 /* applyShadow.swift in Sources */,
 				EB6A44D628737CC400749582 /* MainDetailEntity.swift in Sources */,
@@ -1410,6 +1517,7 @@
 				EBF66AF4287227F500DE0ED1 /* calculatePastTime.swift in Sources */,
 				EBF66AD9287227F500DE0ED1 /* ModuleFactory.swift in Sources */,
 				3BC01F87287EBB8E006C2181 /* BlogReviewDataModel.swift in Sources */,
+				FDC102892880B10A001F0125 /* NicknameChangeUseCase.swift in Sources */,
 				EBF66AF9287227F500DE0ED1 /* setDefaultFonts.swift in Sources */,
 				EBF66ADD287227F500DE0ED1 /* SceneDelegate.swift in Sources */,
 				EBF66AC2287227F500DE0ED1 /* UIViewController+.swift in Sources */,
@@ -1448,6 +1556,7 @@
 				3B18D8AC287AB7CD009AF9E7 /* HamburgerBarVC.swift in Sources */,
 				EBF66ACA287227F500DE0ED1 /* Reactive+.swift in Sources */,
 				EB6A44D228737CC400749582 /* MainDetailRepository.swift in Sources */,
+				FDC1028B2880B133001F0125 /* CTAButton.swift in Sources */,
 				EBF66B0C2872B4FE00DE0ED1 /* StoryboardLiterals.swift in Sources */,
 				EBF66AF7287227F500DE0ED1 /* manageObserverAction.swift in Sources */,
 				EBF66B05287227F500DE0ED1 /* GeneralResponse.swift in Sources */,
@@ -1481,6 +1590,7 @@
 				69028BA82874675800373984 /* MenuView.swift in Sources */,
 				3BC01F7F287E9225006C2181 /* BlogReviewTabVC.swift in Sources */,
 				A9E593C72874266200B0F8B5 /* SearchRecent.swift in Sources */,
+				FDC1028C2880B13D001F0125 /* UpperToastView.swift in Sources */,
 				EBF66AF2287227F500DE0ED1 /* buttonPress.swift in Sources */,
 				EBF66ADF287227F500DE0ED1 /* AuthRouter.swift in Sources */,
 				EBF66ADC287227F500DE0ED1 /* AppDelegate.swift in Sources */,
@@ -1507,12 +1617,14 @@
 				EBD1925F287DBBFC00EA053E /* TagSummaryCVC.swift in Sources */,
 				A9525F712873E1750065EB1D /* SearchVC.swift in Sources */,
 				EB6A450C2873D6C500749582 /* DetailSummaryView.swift in Sources */,
+				FDC1028A2880B115001F0125 /* NicknameChangeRepository.swift in Sources */,
 				A93252AD287F09D0001EDF50 /* SearchEmptyView.swift in Sources */,
 				EBF66ACC287227F500DE0ED1 /* BaseNotiList.swift in Sources */,
 				EBF66AD8287227F500DE0ED1 /* BaseControllable.swift in Sources */,
 				EBF66ABF287227F500DE0ED1 /* UITabBar+.swift in Sources */,
 				69028BAA287467F100373984 /* MenuDetailView.swift in Sources */,
 				FDF2E1FA287EFA5B0007D4F9 /* SampleStarVC.swift in Sources */,
+				FDC102882880B101001F0125 /* NicknameChangeViewModel.swift in Sources */,
 				EB6A44F12873BED500749582 /* MainMapVC.swift in Sources */,
 				EB6A44EE2873BED500749582 /* MainMapUseCase.swift in Sources */,
 				A9325277287D4F10001EDF50 /* SearchResultModel.swift in Sources */,
@@ -1683,7 +1795,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = HealthFoodMe_Dev;
+				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
