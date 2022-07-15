@@ -24,4 +24,24 @@ extension UIViewController {
     func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    func makeAlert(alertType: AlertType = .logoutAlert,
+                   title: String?,
+                   subtitle: String?,
+                   okAction: (() -> Void)? ) {
+        
+        let alertVC = ModuleFactory.resolve().makeHelfmeAlertVC()
+        
+        alertVC.alertType = alertType
+        if let title = title {
+            alertVC.alertTitle = title
+        }
+        if let subtitle = subtitle {
+            alertVC.alertContent = subtitle
+        }
+        alertVC.okAction = okAction
+        alertVC.modalTransitionStyle = .crossDissolve
+        alertVC.modalPresentationStyle = .overCurrentContext
+        present(alertVC, animated: true)
+    }
 }

@@ -99,6 +99,13 @@ class ModuleFactory: ModuleFactoryProtocol {
         
         return vc
     }
+    
+    // MARK: - HelfmeAlert
+    func makeHelfmeAlertVC() -> HelfmeAlertVC {
+        let vc = HelfmeAlertVC.controllerFromStoryboard(.helfmeAlert)
+        
+        return vc
+    }
 
     // MARK: - Plan
     
