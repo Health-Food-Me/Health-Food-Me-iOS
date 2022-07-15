@@ -308,6 +308,7 @@ extension SearchVC {
     }
     
     private func isSearchResult() {
+        // 결과 검색 서버 연동 (여기서 해당 텍스트필드의 검색어 서버에 넘겨줌)
         if SearchDataModel.sampleSearchData.isEmpty {
             isEmpty = true
             isSearchEmpty()
@@ -402,6 +403,22 @@ extension SearchVC: UITableViewDataSource {
             return 56
         case .searchResult:
             return 127
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch searchType {
+        case .recent:
+            searchTextField.text = searchRecentList[indexPath.row]
+            addSearchRecent(title: searchRecentList[indexPath.row])
+            isSearchResult()
+        case .search:
+            // 화면 전환 코드 추가해야 됨
+            print("\(SearchDataModel.sampleSearchData[indexPath.row].title) 식당 상세 페이지로 이동")
+            addSearchRecent(title: SearchDataModel.sampleSearchData[indexPath.row].title)
+        case .searchResult:
+            // 화면 전환 코드 추가해야 됨
+            print("\(SearchResultDataModel.sampleSearchResultData[indexPath.row].storeName) 식당 상세 페이지로 이동")
         }
     }
 }
