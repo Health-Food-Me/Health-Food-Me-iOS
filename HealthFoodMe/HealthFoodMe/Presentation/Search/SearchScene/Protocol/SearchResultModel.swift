@@ -26,6 +26,17 @@ struct SearchResultDataModel: SearchResultModel {
     let distance: Int
 }
 
+extension SearchDataModel {
+    static var sampleSearchData: [SearchDataModel] = [
+        SearchDataModel(isDiet: true, title: "디어파인 용산점"),
+        SearchDataModel(isDiet: true, title: "디리링"),
+        SearchDataModel(isDiet: true, title: "디비디비딥"),
+        SearchDataModel(isDiet: false, title: "디디디"),
+        SearchDataModel(isDiet: false, title: "디디디"),
+        SearchDataModel(isDiet: false, title: "디디디")
+    ]
+}
+
 extension SearchResultDataModel {
     static var sampleSearchResultData: [SearchResultDataModel] = [
         SearchResultDataModel(imgUrl: "tempSalady", foodCategory: "샐러드", storeName: "써브웨이 공덕역점", starRate: 2.5, distance: 50),

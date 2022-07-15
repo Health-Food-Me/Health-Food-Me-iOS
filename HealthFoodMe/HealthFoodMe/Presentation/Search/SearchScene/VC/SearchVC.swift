@@ -26,7 +26,6 @@ final class SearchVC: UIViewController {
             searchTableView.reloadData()
         }
     }
-    var searchDataModel: [SearchResultModel] = []
     var searchRecentList: [String] = []
     private var isEmpty: Bool = false
     private var searchEmptyView = SearchEmptyView()
@@ -308,16 +307,23 @@ extension SearchVC {
     }
     
     private func isSearchResult() {
-        searchTextField.resignFirstResponder()
-        if let text = searchTextField.text {
-            addSearchRecent(title: text)
+        if SearchDataModel.sampleSearchData.isEmpty {
+            isEmpty = true
+            isSearchEmpty()
+        } else {
+            searchTextField.resignFirstResponder()
+            if let text = searchTextField.text {
+                if !SearchDataModel.sampleSearchData.isEmpty {
+                    addSearchRecent(title: text)
+                }
+            }
+            searchTextField.rightView = resultCloseButton
+            searchTableView.tableHeaderView = searchHeaderView
+            searchTableView.tableHeaderView?.frame.size.height = 42
+            recentHeaderLabel.isHidden = true
+            resultHeaderButton.isHidden = false
+            searchType = .searchResult
         }
-        searchTextField.rightView = resultCloseButton
-        searchTableView.tableHeaderView = searchHeaderView
-        searchTableView.tableHeaderView?.frame.size.height = 42
-        recentHeaderLabel.isHidden = true
-        resultHeaderButton.isHidden = false
-        searchType = .searchResult
     }
     
     private func isSearchEmpty() {
@@ -339,7 +345,9 @@ extension SearchVC: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        isSearch()
+        if searchType == .searchResult {
+            isSearch()
+        }
     }
 }
 
@@ -357,7 +365,7 @@ extension SearchVC: UITableViewDataSource {
         case .recent:
             return searchRecentList.count
         case .search:
-            return searchRecentList.count
+            return SearchDataModel.sampleSearchData.count
         case .searchResult:
             return SearchResultDataModel.sampleSearchResultData.count
         }
@@ -373,7 +381,7 @@ extension SearchVC: UITableViewDataSource {
             return cell
         case .search:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTVC.className, for: indexPath) as? SearchTVC else { return UITableViewCell() }
-            cell.setData(data: searchRecentList[indexPath.row])
+            cell.setData(data: SearchDataModel.sampleSearchData[indexPath.row])
             return cell
         case .searchResult:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTVC.className, for: indexPath) as? SearchResultTVC else { return UITableViewCell() }
@@ -400,7 +408,6 @@ extension SearchVC: SearchRecentTVCDelegate {
     func searchRecentTVCDelete(index: Int) {
         try? realm?.write {
             if let savedSearchRecent =  realm?.objects(SearchRecent.self).filter("title == '\(searchRecentList[index])'") {
-                print(searchRecentList[index])
                 realm?.delete(savedSearchRecent)
             }
         }
