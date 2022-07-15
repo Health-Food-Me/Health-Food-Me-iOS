@@ -47,6 +47,11 @@
 		A93252B7287F3272001EDF50 /* Scrap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A93252B6287F3272001EDF50 /* Scrap.storyboard */; };
 		A93252BA287F3E73001EDF50 /* ScrapEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252B9287F3E73001EDF50 /* ScrapEmptyView.swift */; };
 		A93252BD287F52E4001EDF50 /* ScrapDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252BC287F52E4001EDF50 /* ScrapDataModel.swift */; };
+		A93252C628808B82001EDF50 /* ReviewDeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252C528808B82001EDF50 /* ReviewDeleteAlertView.swift */; };
+		A93252CD28808BE2001EDF50 /* LogoutAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252CC28808BE2001EDF50 /* LogoutAlertView.swift */; };
+		A93252CF2880913F001EDF50 /* HelfmeAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252CE2880913F001EDF50 /* HelfmeAlertVC.swift */; };
+		A93252D428809BBC001EDF50 /* WithdrawalAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252D328809BBC001EDF50 /* WithdrawalAlertView.swift */; };
+		A93252E22880CBB9001EDF50 /* HelfmeAlert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A93252E12880CBB9001EDF50 /* HelfmeAlert.storyboard */; };
 		A938BB8E287D221200B8DE07 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A938BB8D287D221200B8DE07 /* Search.storyboard */; };
 		A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A938BB8F287D222800B8DE07 /* MainDetail.storyboard */; };
 		A9525F712873E1750065EB1D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9525F702873E1750065EB1D /* SearchVC.swift */; };
@@ -208,6 +213,11 @@
 		A93252B6287F3272001EDF50 /* Scrap.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Scrap.storyboard; sourceTree = "<group>"; };
 		A93252B9287F3E73001EDF50 /* ScrapEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapEmptyView.swift; sourceTree = "<group>"; };
 		A93252BC287F52E4001EDF50 /* ScrapDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapDataModel.swift; sourceTree = "<group>"; };
+		A93252C528808B82001EDF50 /* ReviewDeleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDeleteAlertView.swift; sourceTree = "<group>"; };
+		A93252CC28808BE2001EDF50 /* LogoutAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutAlertView.swift; sourceTree = "<group>"; };
+		A93252CE2880913F001EDF50 /* HelfmeAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelfmeAlertVC.swift; sourceTree = "<group>"; };
+		A93252D328809BBC001EDF50 /* WithdrawalAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalAlertView.swift; sourceTree = "<group>"; };
+		A93252E12880CBB9001EDF50 /* HelfmeAlert.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelfmeAlert.storyboard; sourceTree = "<group>"; };
 		A938BB8D287D221200B8DE07 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		A938BB8F287D222800B8DE07 /* MainDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainDetail.storyboard; sourceTree = "<group>"; };
 		A9525F702873E1750065EB1D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
@@ -580,6 +590,34 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		A93252BE288086BA001EDF50 /* HelpmeAlerts */ = {
+			isa = PBXGroup;
+			children = (
+				A93252D72880B13A001EDF50 /* VC */,
+				A93252D028809144001EDF50 /* Views */,
+			);
+			path = HelpmeAlerts;
+			sourceTree = "<group>";
+		};
+		A93252D028809144001EDF50 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A93252CC28808BE2001EDF50 /* LogoutAlertView.swift */,
+				A93252C528808B82001EDF50 /* ReviewDeleteAlertView.swift */,
+				A93252D328809BBC001EDF50 /* WithdrawalAlertView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A93252D72880B13A001EDF50 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				A93252CE2880913F001EDF50 /* HelfmeAlertVC.swift */,
+				A93252E12880CBB9001EDF50 /* HelfmeAlert.storyboard */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
 		A9525F6A2873DCD30065EB1D /* SearchScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -683,10 +721,10 @@
 		EB6A44C828737BF700749582 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				EB6A44C928737C4600749582 /* MainDetailScene */,
 				3BC01F7C287E91F7006C2181 /* BlogReviewTabScene */,
 				695758BA287DA4A400E36789 /* ReviewWriteScene */,
 				697074FB28737D78001A607F /* MenuTabScene */,
-				EB6A44C928737C4600749582 /* MainDetailScene */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -1184,6 +1222,7 @@
 		EBF66A9F287227F500DE0ED1 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				A93252BE288086BA001EDF50 /* HelpmeAlerts */,
 				EB033E82287B5B6E00C48FB9 /* UI Components */,
 				EBF66AA0287227F500DE0ED1 /* Base */,
 			);
@@ -1429,6 +1468,7 @@
 				3B089C4B287D877F00DA80B9 /* GodoB.otf in Resources */,
 				A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */,
 				695758BD287DA4CD00E36789 /* ReviewWrite.storyboard in Resources */,
+				A93252E22880CBB9001EDF50 /* HelfmeAlert.storyboard in Resources */,
 				3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */,
 				3B089C4A287D877B00DA80B9 /* GodoB.ttf in Resources */,
 				3B0B25562876BBE400950539 /* Pretendard-Regular.otf in Resources */,
@@ -1540,6 +1580,7 @@
 				EBF66AE4287227F500DE0ED1 /* HeaderType.swift in Sources */,
 				FD58291A287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift in Sources */,
 				EBF66ADB287227F500DE0ED1 /* LaunchInstructor.swift in Sources */,
+				A93252D428809BBC001EDF50 /* WithdrawalAlertView.swift in Sources */,
 				EBF66B01287227F500DE0ED1 /* PostDetail.swift in Sources */,
 				EBF66ABC287227F500DE0ED1 /* UserDefaults+.swift in Sources */,
 				695758C3287DF04400E36789 /* AddPhotoCVC.swift in Sources */,
@@ -1560,8 +1601,10 @@
 				EB6A44D228737CC400749582 /* MainDetailRepository.swift in Sources */,
 				FDC1028B2880B133001F0125 /* CTAButton.swift in Sources */,
 				EBF66B0C2872B4FE00DE0ED1 /* StoryboardLiterals.swift in Sources */,
+				A93252CD28808BE2001EDF50 /* LogoutAlertView.swift in Sources */,
 				EBF66AF7287227F500DE0ED1 /* manageObserverAction.swift in Sources */,
 				EBF66B05287227F500DE0ED1 /* GeneralResponse.swift in Sources */,
+				A93252CF2880913F001EDF50 /* HelfmeAlertVC.swift in Sources */,
 				EBF66AC1287227F500DE0ED1 /* UIStackView+.swift in Sources */,
 				EBF66AF1287227F500DE0ED1 /* ShowToast.swift in Sources */,
 				EBF66AC4287227F500DE0ED1 /* UIButton+.swift in Sources */,
@@ -1604,6 +1647,7 @@
 				EBF66AFD287227F500DE0ED1 /* calculateTopInset.swift in Sources */,
 				EBF66ADE287227F500DE0ED1 /* HomeRouter.swift in Sources */,
 				EBF66ACF287227F500DE0ED1 /* Result+.swift in Sources */,
+				A93252C628808B82001EDF50 /* ReviewDeleteAlertView.swift in Sources */,
 				EBF66AD7287227F500DE0ED1 /* Presentable.swift in Sources */,
 				A932527E287DD261001EDF50 /* SearchResultVC.swift in Sources */,
 				EBD19275287F256000EA053E /* EncodeURLKorean.swift in Sources */,

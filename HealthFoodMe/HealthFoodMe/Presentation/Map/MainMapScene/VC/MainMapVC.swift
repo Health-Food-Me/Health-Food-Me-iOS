@@ -12,21 +12,25 @@ import NMapsMap
 import RxSwift
 import SnapKit
 
-class MainMapVC: UIViewController {
+class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
     // MARK: - Properties
     
     private let disposeBag = DisposeBag()
-    private var locationManager = CLLocationManager()
-    private var currentLatitude: Double?
-    private var currentLongitude: Double?
+    private let locationManager = NMFLocationManager.sharedInstance()
+    private var selectedCategories: [Bool] = [false, false, false,
+                                              false, false, false,
+                                              false, false] {
+        didSet {
+            categoryCollectionView.reloadData()
+        }
+    }
     var viewModel: MainMapViewModel!
     
     // MARK: - UI Components
     
-    private lazy var mapView: NMFMapView = {
-        let map = NMFMapView()
-        map.locationOverlay.hidden = false
+    private lazy var mapView: NaverMapContainerView = {
+        let map = NaverMapContainerView()
         return map
     }()
     
@@ -34,6 +38,7 @@ class MainMapVC: UIViewController {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.menuIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
+            self.makeVibrate()
             let nextVC = ModuleFactory.resolve().makeHamburgerBarVC()
             nextVC.modalPresentationStyle = .overFullScreen
             self.present(nextVC, animated: false)
@@ -79,14 +84,16 @@ class MainMapVC: UIViewController {
         let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 32), collectionViewLayout: layout)
         cv.showsHorizontalScrollIndicator = false
         cv.backgroundColor = .clear
+        cv.allowsMultipleSelection = true
         return cv
     }()
     
-    private let scrapButton: UIButton = {
+    private lazy var scrapButton: UIButton = {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.scrapIcon, for: .normal)
         bt.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
         bt.addAction(UIAction(handler: { _ in
+            self.makeVibrate()
             bt.isSelected.toggle()
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
@@ -96,11 +103,15 @@ class MainMapVC: UIViewController {
         return bt
     }()
     
-    private let myLocationButton: UIButton = {
+    private lazy var myLocationButton: UIButton = {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.mylocationIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            
+            self.makeVibrate()
+            let NMGPosition = self.locationManager?.currentLatLng()
+            if let position = NMGPosition {
+                self.mapView.moveCameraPosition(position)
+            }
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
         bt.clipsToBounds = true
@@ -121,6 +132,9 @@ class MainMapVC: UIViewController {
         setDelegate()
         registerCell()
         setPanGesture()
+        setMapView()
+        bindMapView()
+        sampleViewInputEvent()
         self.bindViewModels()
     }
     
@@ -182,7 +196,7 @@ extension MainMapVC {
         
         mapDetailSummaryView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().inset(UIScreen.main.bounds.height - 189)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
             make.height.equalTo(UIScreen.main.bounds.height + 300)
         }
         
@@ -243,7 +257,7 @@ extension MainMapVC {
                         } completion: { _ in
                             self?.transitionAndPresentMainDetailVC()
                         }
-
+                        
                     } else {
                         let summaryViewHeight: CGFloat = 189
                         self?.mapDetailSummaryView.snp.updateConstraints { make in
@@ -264,7 +278,7 @@ extension MainMapVC {
     }
     
     private func bindViewModels() {
-        let input = MainMapViewModel.Input()
+        let input = MainMapViewModel.Input(myLocationButtonTapped: myLocationButton.rx.tap.asObservable(), scrapButtonTapped: scrapButton.rx.tap.asObservable())
         let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
     }
     
@@ -272,25 +286,56 @@ extension MainMapVC {
         navigationController?.isNavigationBarHidden =  true
     }
     
-    @objc
-    private func presentSearchVC() {
-        let nextVC = ModuleFactory.resolve().makeSearchVC()
-        self.navigationController?.pushViewController(nextVC, animated: true)
+    private func setMapView() {
+        locationManager?.add(self)
     }
     
-    @objc
-    private func presentDetailVC() {
-        self.scrapButton.isHidden = true
-        self.myLocationButton.isHidden = true
-        self.mapDetailSummaryView.snp.updateConstraints { make in
-            make.top.equalToSuperview().inset(44)
-        }
+    private func bindMapView() {
+        mapView.rx.mapViewClicked
+            .subscribe(onNext: { _ in
+                self.mapView.disableSelectPoint.accept(())
+                self.mapDetailSummaryView.snp.updateConstraints { make in
+                    make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
+                }
+                UIView.animate(withDuration: 0.3, delay: 0) {
+                    self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+                    self.view.layoutIfNeeded()
+                }
+            }).disposed(by: self.disposeBag)
         
-        UIView.animate(withDuration: 0.3, delay: 0) {
-            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            self.transitionAndPresentMainDetailVC()
+        mapView.setSelectPoint
+            .subscribe(onNext: { [weak self] dataModel in
+                let summaryViewHeight: CGFloat = 189
+                self?.mapDetailSummaryView.snp.updateConstraints { make in
+                    make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
+                }
+                UIView.animate(withDuration: 0.3, delay: 0) {
+                    self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+                    self?.view.layoutIfNeeded()
+                }
+            }).disposed(by: self.disposeBag)
+    }
+    
+    private func sampleViewInputEvent() {
+        makeDummyPoints()
+            .bind(to: mapView.rx.pointList)
+            .disposed(by: self.disposeBag)
+    }
+    
+    private func makeDummyPoints() -> Observable<[MapPointDataModel]> {
+        return .create { observer in
+            let pointList: [MapPointDataModel] = .init([
+                MapPointDataModel.init(latitude: 37.5666805, longtitude: 126.9784147, type: .normalFood),
+                MapPointDataModel.init(latitude: 37.567, longtitude: 126.9784147, type: .healthFood),
+                MapPointDataModel.init(latitude: 37.568, longtitude: 126.9784147, type: .normalFood),
+                MapPointDataModel.init(latitude: 37.569, longtitude: 126.9784147, type: .normalFood),
+                MapPointDataModel.init(latitude: 37.557, longtitude: 126.9784147, type: .healthFood),
+                MapPointDataModel.init(latitude: 37.571, longtitude: 126.9784147, type: .normalFood),
+                MapPointDataModel.init(latitude: 37.572, longtitude: 126.9784147, type: .normalFood),
+                MapPointDataModel.init(latitude: 37.010, longtitude: 126.9784147, type: .normalFood)
+            ])
+            observer.onNext(pointList)
+            return Disposables.create()
         }
     }
     
@@ -323,12 +368,42 @@ extension MainMapVC {
             self.categoryCollectionView.isHidden = true
         }
     }
+    
+    @objc
+    private func presentSearchVC() {
+        self.makeVibrate()
+        let nextVC = ModuleFactory.resolve().makeSearchVC()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+    
+    @objc
+    private func presentDetailVC() {
+        self.scrapButton.isHidden = true
+        self.myLocationButton.isHidden = true
+        self.mapDetailSummaryView.snp.updateConstraints { make in
+            make.top.equalToSuperview().inset(44)
+        }
+        
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.transitionAndPresentMainDetailVC()
+        }
+    }
 }
 
 // MARK: - CollectionView Delegate
 
 extension MainMapVC: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        makeVibrate()
+    }
     
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        selectedCategories[indexPath.row].toggle()
+        return true
+    }
 }
 
 extension MainMapVC: UICollectionViewDelegateFlowLayout {
@@ -344,7 +419,9 @@ extension MainMapVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MenuCategoryCVC.className, for: indexPath) as? MenuCategoryCVC else { return UICollectionViewCell() }
+        cell.isDietMenu = MainMapCategory.categorySample[indexPath.row].isDietMenu
         cell.setData(data: MainMapCategory.categorySample[indexPath.row])
+        cell.isSelected = selectedCategories[indexPath.row]
         return cell
     }
 }

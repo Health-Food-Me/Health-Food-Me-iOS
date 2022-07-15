@@ -6,6 +6,7 @@
 //
 
 import RxSwift
+import RxRelay
 
 final class MainMapViewModel: ViewModelType {
 
@@ -15,13 +16,14 @@ final class MainMapViewModel: ViewModelType {
     // MARK: - Inputs
     
     struct Input {
-    
+        let myLocationButtonTapped: Observable<Void>
+        let scrapButtonTapped: Observable<Void>
     }
   
     // MARK: - Outputs
     
     struct Output {
-    
+        var moveToMyLocation = PublishRelay<String>()
     }
   
     init(useCase: MainMapUseCase) {
