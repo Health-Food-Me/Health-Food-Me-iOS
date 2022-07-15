@@ -34,4 +34,9 @@ extension Reactive where Base: NaverMapContainerView {
         return delegate.methodInvoked(#selector(NMFMapViewTouchDelegate.mapView(_:didTapMap:point:)))
             .map { _ in return ()}
     }
+  
+//  var mapZoomLevelChanged: Observable<Void> {
+//    return delegate.methodInvoked(#selector(NMFMapViewOptionDelegate.map
+//          .map { _ in return ()}
+//  }
 }
