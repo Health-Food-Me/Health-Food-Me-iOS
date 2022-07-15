@@ -27,7 +27,7 @@ extension ReviewDataModel {
         ReviewDataModel(reviewer: "나는헬푸파미",
                         starLate: 3.5,
                         tagList: ["#맛 최고", "#약속 시 부담없는", "#양 조절 쉬운", "#든든한"],
-                        reviewImageURLList: nil,
+                        reviewImageURLList: [],
                         reviewContents:
                             "이거는 사진 없고 더보기도 없는 버즈어언 귀찮은 사람은 백퍼무조건 이렇게 리뷰 씀 ㅋㅋ 내가 보장함 ㅋㅋ"),
         ReviewDataModel(reviewer: "나는헬푸파미",
@@ -50,7 +50,7 @@ extension ReviewDataModel {
         ReviewDataModel(reviewer: "나는헬푸파미야",
                         starLate: 5.0,
                         tagList: ["#맛 최고"],
-                        reviewImageURLList: nil,
+                        reviewImageURLList: [],
                         reviewContents: nil)
     ]
 }

@@ -68,14 +68,14 @@ class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         return cv
     }()
     
-    private var reviewContents: UITextView = {
-        let tv = UITextView()
-        tv.textColor = .helfmeBlack
-        tv.font = UIFont.NotoRegular(size: 12)
-        tv.isEditable = false
-        tv.isScrollEnabled = false
-        tv.text = " "
-        return tv
+    private var reviewContents: UILabel = {
+        let lb = UILabel()
+        lb.textColor = .helfmeBlack
+        lb.font = UIFont.NotoRegular(size: 12)
+        lb.numberOfLines = 0
+        lb.text = " "
+        lb.lineBreakMode = .byCharWrapping
+        return lb
     }()
     
     lazy var blogReviewSeperatorView: UIView = {
@@ -164,7 +164,7 @@ extension ReviewCVC {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-28)
-            make.width.equalTo(50)
+            make.width.equalTo(width - 40)
         }
     }
     
@@ -177,7 +177,7 @@ extension ReviewCVC {
         case 2:
             setLayoutWithContents()
         case 3:
-            setLayoutWithImageAndContents()
+            setLayoutOnlyTag()
         default:
             setLayoutOnlyTag()
         }
@@ -185,27 +185,40 @@ extension ReviewCVC {
     }
     
     func setLayoutOnlyTag() {
-        
+        reviewPhotoCV.removeFromSuperview()
+        reviewContents.removeFromSuperview()
         reviewContents.isHidden = true
         reviewPhotoCV.isHidden = true
     }
     
     func setLayoutWithContents() {
         
+        reviewPhotoCV.removeFromSuperview()
+        addSubviews(reviewContents)
         reviewContents.isHidden = false
+        
+        tagCV.snp.remakeConstraints { make in
+            make.top.equalTo(nameLabel.snp.bottom).offset(10)
+            make.leading.equalToSuperview()
+            make.width.equalTo(width)
+            make.height.equalTo(22)
+        }
         
         reviewContents.snp.remakeConstraints { make in
             make.top.equalTo(tagCV.snp.bottom).offset(10)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview().offset(-20)
             make.bottom.equalToSuperview().offset(-28)
+            make.width.equalTo(width - 40)
         }
     }
     
     func setLayoutWithImage() {
+        reviewContents.removeFromSuperview()
+        contentView.addSubviews(reviewPhotoCV)
         
         let width = UIScreen.main.bounds.width
-        reviewContents.isHidden = true
+//        reviewContents.isHidden = true
         
         reviewPhotoCV.snp.remakeConstraints { make in
             make.top.equalTo(tagCV.snp.bottom).offset(10)
@@ -217,8 +230,12 @@ extension ReviewCVC {
     }
 
     func setLayoutWithImageAndContents() {
+        
+        addSubviews(reviewPhotoCV, reviewContents)
+        
         let width = UIScreen.main.bounds.width
         reviewContents.isHidden = false
+        reviewPhotoCV.isHidden = false
         
         reviewPhotoCV.snp.remakeConstraints { make in
             make.top.equalTo(tagCV.snp.bottom).offset(10)
@@ -232,6 +249,7 @@ extension ReviewCVC {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-28)
+            make.width.equalTo(width - 40)
         }
     }
     

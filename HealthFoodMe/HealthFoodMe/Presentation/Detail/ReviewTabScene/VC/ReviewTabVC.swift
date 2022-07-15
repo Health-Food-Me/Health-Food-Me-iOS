@@ -125,11 +125,8 @@ extension ReviewTabVC: UICollectionViewDelegateFlowLayout {
             return CGSize(width: cellWidth, height: cellHeight)
         case 1:
             let cellWidth = width * 355/375
-//            let cellHeight = width * 400/355
-            let cellHeight = calculateReviewCellHeight(containsPhoto: ReviewDataModel.sampleData[indexPath.row].reviewImageURLList?.count != nil,
+            let cellHeight = calculateReviewCellHeight(containsPhoto: ReviewDataModel.sampleData[indexPath.row].reviewImageURLList?.count != 0,
                                                        reviewText: ReviewDataModel.sampleData[indexPath.row].reviewContents)
-            print("길이 출력 되나???",
-                  calculateReviewHeight(String(ReviewDataModel.sampleData[indexPath.row].reviewContents ?? "")))
             return CGSize(width: cellWidth, height: cellHeight)
         default:
             return CGSize(width: 0, height: 0)
@@ -139,36 +136,38 @@ extension ReviewTabVC: UICollectionViewDelegateFlowLayout {
     
     private func calculateReviewCellHeight(containsPhoto: Bool, reviewText: String? ) -> CGFloat {
         var cellHeight: CGFloat = 0
+        let topPadding: CGFloat = 28
+        let nameLabelHeight: CGFloat = 20
+        let tagHeight: CGFloat = 22
+        let tagTopPadding: CGFloat = 10
+        let tempPadding: CGFloat = 15
+        let threeLineHeight: CGFloat = 51
+        let bottomPadding: CGFloat = 28
+        let imageBottomPadding: CGFloat = 12
         
-        cellHeight += 28
-        cellHeight += 20
-        cellHeight += 22
-        cellHeight += 10
+        cellHeight += topPadding
+        cellHeight += nameLabelHeight
+        cellHeight += tagHeight
+        cellHeight += tagTopPadding
+        cellHeight += tempPadding
         
         if containsPhoto {
             cellHeight += (UIScreen.main.bounds.width * (105/375))
-            cellHeight += 12
+            cellHeight += imageBottomPadding
         }
         
-        print("reviewText", reviewText ?? "")
         let textViewHeight = calculateReviewHeight(reviewText ?? "")
-        print(textViewHeight)
-        if textViewHeight >= 51 {
-            cellHeight += (51 + 28)
+        if textViewHeight >= threeLineHeight {
+            cellHeight += (threeLineHeight + bottomPadding)
         } else {
-            cellHeight += (textViewHeight + 28)
+            cellHeight += (textViewHeight + bottomPadding)
         }
-//        if isFold && textViewHeight >= 51 {
-//            cellHeight += (51 + 28)
-//        } else {
-//            cellHeight += (textViewHeight + 28)
-//        }
         
         return cellHeight
     }
     
     private func calculateReviewHeight(_ text: String) -> CGFloat {
-        let textView = UITextView()
+        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 40, height: 0))
         textView.textContainer.lineFragmentPadding = .zero
         textView.textContainerInset = .zero
         textView.font = .NotoRegular(size: 12)
