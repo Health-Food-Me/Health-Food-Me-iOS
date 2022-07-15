@@ -27,6 +27,8 @@ final class SearchVC: UIViewController {
         }
     }
     var searchRecentList: [String] = []
+    var searchList: [SearchDataModel] = []
+    var searchResultList: [SearchResultDataModel] = []
     private var isEmpty: Bool = false
     private var searchEmptyView = SearchEmptyView()
     
@@ -47,6 +49,7 @@ final class SearchVC: UIViewController {
         tf.backgroundColor = .helfmeWhite
         tf.addTarget(self, action: #selector(editingChanged(_:)), for: .editingChanged)
         tf.leftView = backButton
+        tf.rightView = clearButton
         return tf
     }()
     
@@ -125,6 +128,7 @@ final class SearchVC: UIViewController {
         super.viewDidLoad()
         
         setData()
+        fetchData()
         setUI()
         setLayout()
         setDelegate()
@@ -190,6 +194,11 @@ extension SearchVC {
         savedSearchRecent?.forEach { object in
             searchRecentList.insert(object.title, at: 0)
         }
+    }
+    
+    private func fetchData() {
+        searchList = SearchDataModel.sampleSearchData
+        searchResultList = SearchResultDataModel.sampleSearchResultData
     }
     
     private func setUI() {
@@ -309,7 +318,7 @@ extension SearchVC {
     
     private func isSearchResult() {
         // 결과 검색 서버 연동 (여기서 해당 텍스트필드의 검색어 서버에 넘겨줌)
-        if SearchDataModel.sampleSearchData.isEmpty {
+        if searchList.isEmpty {
             isEmpty = true
             isSearchEmpty()
         } else {
@@ -319,6 +328,7 @@ extension SearchVC {
                     addSearchRecent(title: text)
                 }
             }
+            searchTextField.rightViewMode = .always
             searchTextField.rightView = resultCloseButton
             searchTableView.tableHeaderView = searchHeaderView
             searchTableView.tableHeaderView?.frame.size.height = 42
@@ -367,9 +377,9 @@ extension SearchVC: UITableViewDataSource {
         case .recent:
             return searchRecentList.count
         case .search:
-            return SearchDataModel.sampleSearchData.count
+            return searchList.count
         case .searchResult:
-            return SearchResultDataModel.sampleSearchResultData.count
+            return searchResultList.count
         }
     }
     
@@ -386,11 +396,11 @@ extension SearchVC: UITableViewDataSource {
             if let text = searchTextField.text {
                 cell.searchContent = text
             }
-            cell.setData(data: SearchDataModel.sampleSearchData[indexPath.row])
+            cell.setData(data: searchList[indexPath.row])
             return cell
         case .searchResult:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTVC.className, for: indexPath) as? SearchResultTVC else { return UITableViewCell() }
-            cell.setData(data: SearchResultDataModel.sampleSearchResultData[indexPath.row])
+            cell.setData(data: searchResultList[indexPath.row])
             return cell
         }
     }
@@ -414,11 +424,11 @@ extension SearchVC: UITableViewDataSource {
             isSearchResult()
         case .search:
             // 화면 전환 코드 추가해야 됨
-            print("\(SearchDataModel.sampleSearchData[indexPath.row].title) 식당 상세 페이지로 이동")
+            print("\(searchList[indexPath.row].title) 식당 상세 페이지로 이동")
             addSearchRecent(title: SearchDataModel.sampleSearchData[indexPath.row].title)
         case .searchResult:
             // 화면 전환 코드 추가해야 됨
-            print("\(SearchResultDataModel.sampleSearchResultData[indexPath.row].storeName) 식당 상세 페이지로 이동")
+            print("\(searchResultList[indexPath.row].storeName) 식당 상세 페이지로 이동")
         }
     }
 }
