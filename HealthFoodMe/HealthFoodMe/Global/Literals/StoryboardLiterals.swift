@@ -30,6 +30,7 @@ enum Storyboards: String {
     case blogReviewTab = "BlogReviewTab"
     case nicknameChange = "NicknameChange"
     case userWithdrawal = "UserWithdrawal"
+    case reviewEmptyView = "ReviewEmptyView"
 }
 
 extension UIStoryboard {
