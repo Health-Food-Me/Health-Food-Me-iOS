@@ -45,7 +45,7 @@ extension ReviewHeaderCVC {
         contentView.addSubviews(reviewSegmentControl)
         
         reviewSegmentControl.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview()
+            make.centerX.equalToSuperview()
             make.width.equalTo(226)
             make.height.equalTo(40)
         }

@@ -126,7 +126,8 @@ extension ReviewCVC {
         let width = UIScreen.main.bounds.width
         
         reviewSeperatorView.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview()
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview().offset(20)
             make.height.equalTo(1)
             make.width.equalTo(width - 40)
         }
@@ -181,6 +182,7 @@ extension ReviewCVC {
             setLayoutOnlyTag()
         }
         layoutIfNeeded()
+        contentView.layoutIfNeeded()
     }
     
     func setLayoutOnlyTag() {

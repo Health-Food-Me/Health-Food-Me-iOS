@@ -152,7 +152,7 @@ extension ReviewDetailVC: UICollectionViewDataSource {
                 else { return UICollectionViewCell() }
                 cell.reviewSeperatorView.isHidden = indexPath.item == 0
                 cell.setData(blogReviewData: BlogReviewDataModel.sampleData[indexPath.row])
-                cell.setLayout()
+                cell.setLayout(hasImage: BlogReviewDataModel.sampleData[indexPath.row].blogReviewImageURL != nil)
                 return cell
             }
         default:
