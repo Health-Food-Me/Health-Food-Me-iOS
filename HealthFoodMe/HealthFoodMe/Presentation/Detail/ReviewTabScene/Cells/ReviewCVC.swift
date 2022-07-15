@@ -73,8 +73,8 @@ class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         lb.textColor = .helfmeBlack
         lb.font = UIFont.NotoRegular(size: 12)
         lb.numberOfLines = 0
+        lb.lineBreakMode = .byTruncatingTail
         lb.text = " "
-        lb.lineBreakMode = .byCharWrapping
         return lb
     }()
     
@@ -218,7 +218,6 @@ extension ReviewCVC {
         contentView.addSubviews(reviewPhotoCV)
         
         let width = UIScreen.main.bounds.width
-//        reviewContents.isHidden = true
         
         reviewPhotoCV.snp.remakeConstraints { make in
             make.top.equalTo(tagCV.snp.bottom).offset(10)
