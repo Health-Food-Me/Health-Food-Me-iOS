@@ -32,6 +32,8 @@ final class SearchVC: UIViewController {
     private var isEmpty: Bool = false
     private var searchEmptyView = SearchEmptyView()
     
+    // MARK: - UI Components
+    
     private let searchView: UIView = {
         let view = UIView()
         view.backgroundColor = .mainRed
@@ -50,6 +52,7 @@ final class SearchVC: UIViewController {
         tf.addTarget(self, action: #selector(editingChanged(_:)), for: .editingChanged)
         tf.leftView = backButton
         tf.rightView = clearButton
+        tf.autocorrectionType = .no
         return tf
     }()
     
@@ -126,7 +129,6 @@ final class SearchVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setData()
         fetchData()
         setUI()
@@ -162,7 +164,6 @@ extension SearchVC {
         } else {
             searchTextField.rightViewMode = .always
             isSearch()
-            searchTableView.reloadData()
         }
     }
     
