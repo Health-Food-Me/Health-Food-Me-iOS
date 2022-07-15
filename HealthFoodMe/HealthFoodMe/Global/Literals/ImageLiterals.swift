@@ -88,4 +88,8 @@ struct ImageLiterals {
         static let addPhotoIcon = UIImage(named: "icn_photoAdd")
         static let deletePhotoBtn = UIImage(named: "btn_delete")
     }
+    
+    struct ReviewDetail {
+        static let reviewEmptyIcon = UIImage(named: "img_review_empty")
+    }
 }
