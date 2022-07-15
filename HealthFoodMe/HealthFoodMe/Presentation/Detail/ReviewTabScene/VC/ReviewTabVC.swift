@@ -114,7 +114,7 @@ extension ReviewTabVC: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            return reviewData.count
+            return ReviewDataModel.sampleData.count
         default:
             return 0
         }
