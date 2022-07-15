@@ -11,7 +11,8 @@ protocol ModuleFactoryProtocol {
     
     // MARK: - Auth
     func makeNicknameChangeVC() -> NicknameChangeVC
-    
+    func makeUserWithdrawlVC() -> UserWithdrawalVC
+
     // MARK: - Map
     func makeMainMapVC() -> MainMapVC
     func makeHamburgerBarVC() -> HamburgerBarVC
@@ -36,10 +37,20 @@ class ModuleFactory: ModuleFactoryProtocol {
   
     // MARK: - Auth
     func makeNicknameChangeVC() -> NicknameChangeVC {
-        let repository = DefaultNicknameChangeRepository()
+        let repository = DefaultNicknameRepository()
         let useCase = DefaultNicknameChangeUseCase(repository: repository)
         let viewModel = NicknameChangeViewModel(useCase: useCase)
         let vc = NicknameChangeVC.controllerFromStoryboard(.nicknameChange)
+        vc.viewModel = viewModel
+        
+        return vc
+    }
+    
+    func makeUserWithdrawlVC() -> UserWithdrawalVC {
+        let repository = DefaultNicknameRepository()
+        let useCase = DefaultUserWithdrawlUseCase(repository: repository)
+        let viewModel = UserWithdrawalViewModel(useCase: useCase)
+        let vc = UserWithdrawalVC.controllerFromStoryboard(.userWithdrawal)
         vc.viewModel = viewModel
         
         return vc
@@ -96,6 +107,13 @@ class ModuleFactory: ModuleFactoryProtocol {
     // MARK: - Scrap
     func makeScrapVC() -> ScrapVC {
         let vc = ScrapVC.controllerFromStoryboard(.scrap)
+        
+        return vc
+    }
+    
+    // MARK: - HelfmeAlert
+    func makeHelfmeAlertVC() -> HelfmeAlertVC {
+        let vc = HelfmeAlertVC.controllerFromStoryboard(.helfmeAlert)
         
         return vc
     }
