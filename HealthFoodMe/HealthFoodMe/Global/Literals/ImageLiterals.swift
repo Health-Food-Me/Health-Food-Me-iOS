@@ -35,7 +35,7 @@ struct ImageLiterals {
     }
     
     struct Search {
-        static let deleteBtn = UIImage(named: "btn_delete")
+        static let deleteBtn = UIImage(named: "btn_search_delete")
         static let textDeleteBtn = UIImage(named: "btn_textdelete")
         static let dietIcon = UIImage(named: "icn_diet")
         static let normalIcon = UIImage(named: "icn_normal")

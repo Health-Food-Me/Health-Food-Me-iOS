@@ -30,11 +30,13 @@ final class SearchResultVC: UIViewController {
     private lazy var searchTextField: UITextField = {
         let tf = UITextField()
         tf.leftViewMode = .always
+        tf.rightViewMode = .always
         tf.font = .NotoRegular(size: 15)
         tf.text = searchContent
         tf.textColor = .helfmeBlack
         tf.backgroundColor = .helfmeWhite
         tf.leftView = backButton
+        tf.rightView = resultCloseButton
         return tf
     }()
     
@@ -43,6 +45,14 @@ final class SearchResultVC: UIViewController {
         btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 12)
         btn.setImage(ImageLiterals.Search.beforeIcon, for: .normal)
         btn.addTarget(self, action: #selector(popToSearchVC), for: .touchUpInside)
+        return btn
+    }()
+    
+    private lazy var resultCloseButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(ImageLiterals.Search.xIcon, for: .normal)
+        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+        btn.addTarget(self, action: #selector(popToMainMapVC), for: .touchUpInside)
         return btn
     }()
     
@@ -79,6 +89,13 @@ final class SearchResultVC: UIViewController {
         return tv
     }()
     
+    private let searchResultLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .helfmeLineGray
+        view.layer.cornerRadius = 1.5
+        return view
+    }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -103,6 +120,13 @@ extension SearchResultVC {
     @objc func moveSearchResultView() {
         initUI()
     }
+    
+    @objc func popToMainMapVC() {
+        guard let vcs = navigationController?.viewControllers else { return }
+        for vc in vcs {
+            navigationController?.popToViewController(vc, animated: true)
+        }
+    }
 }
 
 // MARK: - Methods
@@ -113,6 +137,8 @@ extension SearchResultVC {
             self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 500)
         })
         searchResultHeaderButton.isHidden = true
+        searchResultLineView.isHidden = false
+        searchResultTableView.layer.cornerRadius = 15
         isBottom = true
     }
     
@@ -128,13 +154,19 @@ extension SearchResultVC {
                          searchResultTableView)
         
         searchTextField.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(56)
         }
         
         backButton.snp.makeConstraints {
             $0.height.equalTo(24)
             $0.width.equalTo(56)
+        }
+        
+        resultCloseButton.snp.makeConstraints {
+            $0.height.equalTo(24)
+            $0.width.equalTo(44)
         }
         
         lineView.snp.makeConstraints {
@@ -160,6 +192,15 @@ extension SearchResultVC {
         searchResultTableView.snp.makeConstraints {
             $0.top.equalTo(lineView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        searchResultTableView.addSubviews(searchResultLineView)
+        
+        searchResultLineView.snp.makeConstraints {
+            $0.top.equalTo(searchResultTableView.snp.top).inset(8)
+            $0.width.equalTo(70)
+            $0.height.equalTo(3)
+            $0.centerX.equalTo(searchResultTableView)
         }
     }
     
@@ -194,11 +235,12 @@ extension SearchResultVC: UITableViewDelegate {
 
 extension SearchResultVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return SearchResultDataModel.sampleSearchResultData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTVC.className, for: indexPath) as? SearchResultTVC else { return UITableViewCell() }
+        cell.setData(data: SearchResultDataModel.sampleSearchResultData[indexPath.row])
         return cell
     }
 }
@@ -215,7 +257,9 @@ extension SearchResultVC: UIScrollViewDelegate {
             })
         }
         isBottom = false
-        self.searchResultTableView.isScrollEnabled = true
+        searchResultTableView.layer.cornerRadius = 0
+        searchResultLineView.isHidden = true
+        searchResultTableView.isScrollEnabled = true
     }
 }
 
