@@ -15,6 +15,11 @@ struct ReviewDataModel {
     let reviewContents: String?
 }
 
+struct ReviewCellViewModel {
+    var data: ReviewDataModel
+    var foldRequired: Bool
+}
+
 extension ReviewDataModel {
     static let sampleData: [ReviewDataModel] = [
         ReviewDataModel(reviewer: "나는헬푸파미",
