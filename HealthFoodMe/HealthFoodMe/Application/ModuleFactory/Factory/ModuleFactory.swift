@@ -16,6 +16,7 @@ protocol ModuleFactoryProtocol {
     // MARK: - Map
     func makeMainMapVC() -> MainMapVC
     func makeHamburgerBarVC() -> HamburgerBarVC
+    func makeSupplementMapVC() -> SupplementMapVC
     
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
@@ -72,6 +73,12 @@ class ModuleFactory: ModuleFactoryProtocol {
     
     func makeHamburgerBarVC() -> HamburgerBarVC {
         let vc = HamburgerBarVC.controllerFromStoryboard(.hamburgerBar)
+        
+        return vc
+    }
+    
+    func makeSupplementMapVC() -> SupplementMapVC {
+        let vc = SupplementMapVC.controllerFromStoryboard(.supplementMap)
         
         return vc
     }

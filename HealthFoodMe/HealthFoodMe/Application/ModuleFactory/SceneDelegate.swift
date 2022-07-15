@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let rootViewController = ModuleFactory.resolve().makeMainMapVC()
+        let rootViewController = ModuleFactory.resolve().makeSupplementMapVC()
         let navigation = UINavigationController(rootViewController: rootViewController)
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = navigation
