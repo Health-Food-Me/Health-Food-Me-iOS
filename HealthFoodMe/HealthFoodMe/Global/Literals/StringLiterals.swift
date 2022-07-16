@@ -50,6 +50,14 @@ struct I18N {
             static let protein = "단백질"
             static let fats = "지방"
         }
+        
+        struct Review {
+            static let emptyViewMessage =
+        """
+        아직 작성된 리뷰가 없습니다
+        첫 리뷰를 작성해 주세요
+        """
+        }
     }
     
     struct Alert {
