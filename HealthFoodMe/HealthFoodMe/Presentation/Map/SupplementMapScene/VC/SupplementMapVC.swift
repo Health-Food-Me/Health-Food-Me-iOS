@@ -21,6 +21,20 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
     
     // MARK: - UI Components
     
+    private let statusTopView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private lazy var customNavigationBar: HelfmeNaviBar = {
+        let view = HelfmeNaviBar()
+        view.buttonClosure = {
+            self.popViewController()
+        }
+        return view
+    }()
+    
     private lazy var mapView: NaverMapContainerView = {
         let map = NaverMapContainerView()
         return map
@@ -30,7 +44,6 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.mylocationIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            self.makeVibrate()
             let NMGPosition = self.locationManager?.currentLatLng()
             if let position = NMGPosition {
                 self.mapView.moveCameraPosition(position)
@@ -51,16 +64,14 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
         super.viewDidLoad()
         setUI()
         setLayout()
-        setTapGesture()
-        setPanGesture()
         setMapView()
         bindMapView()
         sampleViewInputEvent()
+        setPanGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        resetUI()
     }
 }
 
@@ -69,11 +80,23 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
 extension SupplementMapVC {
     
     private func setUI() {
-        self.navigationController?.isNavigationBarHidden = true
+        
     }
     
     private func setLayout() {
-        view.addSubviews(mapView, mapDetailSummaryView, myLocationButton)
+        view.addSubviews(mapView, mapDetailSummaryView, myLocationButton,
+                         statusTopView, customNavigationBar)
+        
+        statusTopView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.bottom.equalTo(customNavigationBar.snp.top)
+            make.leading.trailing.equalToSuperview()
+        }
+        
+        customNavigationBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+        }
         
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -81,7 +104,7 @@ extension SupplementMapVC {
         
         mapDetailSummaryView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height - 189)
             make.height.equalTo(UIScreen.main.bounds.height + 300)
         }
         
@@ -90,11 +113,6 @@ extension SupplementMapVC {
             make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-12)
             make.width.height.equalTo(56)
         }
-    }
-    
-    private func setTapGesture() {
-        let tapBottomSheet = UITapGestureRecognizer(target: self, action: #selector(presentDetailVC))
-        mapDetailSummaryView.addGestureRecognizer(tapBottomSheet)
     }
     
     private func setPanGesture() {
@@ -114,7 +132,7 @@ extension SupplementMapVC {
                     if summaryViewTranslation.y < -90
                         || (self?.mapDetailSummaryView.frame.origin.y ?? 40 < 30) {
                         self?.mapDetailSummaryView.snp.updateConstraints { make in
-                            make.top.equalToSuperview().inset(44)
+                            make.top.equalToSuperview().inset(66)
                         }
                         
                         UIView.animate(withDuration: 0.3, delay: 0) {
@@ -140,10 +158,6 @@ extension SupplementMapVC {
                     break
                 }
             }).disposed(by: disposeBag)
-    }
-    
-    private func resetUI() {
-        navigationController?.isNavigationBarHidden =  true
     }
     
     private func setMapView() {
@@ -220,6 +234,10 @@ extension SupplementMapVC {
         self.present(nav, animated: true) {
             self.mapDetailSummaryView.isHidden = true
         }
+    }
+    
+    private func popViewController() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc
