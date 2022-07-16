@@ -1241,9 +1241,9 @@
 			isa = PBXGroup;
 			children = (
 				EBF66A82287227F500DE0ED1 /* Routers */,
+				EBF66A8D287227F500DE0ED1 /* Services */,
 				EBF66A85287227F500DE0ED1 /* Foundation */,
 				EBF66A8B287227F500DE0ED1 /* Environment */,
-				EBF66A8D287227F500DE0ED1 /* Services */,
 			);
 			path = Network;
 			sourceTree = "<group>";
