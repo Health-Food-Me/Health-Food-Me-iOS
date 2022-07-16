@@ -65,6 +65,7 @@ extension ReviewDetailVC {
         ReviewHeaderCVC.register(target: reviewCV)
         BlogReviewCVC.register(target: reviewCV)
         ReviewHeaderCVC.register(target: reviewCV)
+        ReviewEmptyViewCVC.register(target: reviewCV)
     }
     
     private func setEnumValue(data: ReviewDataModel) -> Int {
@@ -123,9 +124,17 @@ extension ReviewDetailVC: UICollectionViewDataSource {
             return 1
         case 1:
             if selectedCustomSegment == 0 {
-                return ReviewDataModel.sampleData.count
+                if ReviewDataModel.sampleData.count == 0 {
+                    return 1
+                } else {
+                    return ReviewDataModel.sampleData.count
+                }
             } else {
-                return BlogReviewDataModel.sampleData.count
+                if BlogReviewDataModel.sampleData.count == 0 {
+                    return 1
+                } else {
+                    return BlogReviewDataModel.sampleData.count
+                }
             }
         default:
             return 0
@@ -141,19 +150,29 @@ extension ReviewDetailVC: UICollectionViewDataSource {
             return header
         case 1:
             if selectedCustomSegment == 0 {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCVC.className, for: indexPath) as? ReviewCVC else { return UICollectionViewCell() }
-                cell.reviewSeperatorView.isHidden = indexPath.item == 0
-                cell.setData(reviewData: ReviewDataModel.sampleData[indexPath.row])
-                cell.setEnumValue = setEnumValue(data: ReviewDataModel.sampleData[indexPath.row])
-                cell.setLayout()
-                return cell
+                if ReviewDataModel.sampleData.count == 0 {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewEmptyViewCVC.className, for: indexPath) as? ReviewEmptyViewCVC else { return UICollectionViewCell() }
+                    return cell
+                } else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCVC.className, for: indexPath) as? ReviewCVC else { return UICollectionViewCell() }
+                    cell.reviewSeperatorView.isHidden = indexPath.item == 0
+                    cell.setData(reviewData: ReviewDataModel.sampleData[indexPath.row])
+                    cell.setEnumValue = setEnumValue(data: ReviewDataModel.sampleData[indexPath.row])
+                    cell.setLayout()
+                    return cell
+                }
             } else {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BlogReviewCVC.className, for: indexPath) as? BlogReviewCVC
-                else { return UICollectionViewCell() }
-                cell.reviewSeperatorView.isHidden = indexPath.item == 0
-                cell.setData(blogReviewData: BlogReviewDataModel.sampleData[indexPath.row])
-                cell.setLayout(hasImage: BlogReviewDataModel.sampleData[indexPath.row].blogReviewImageURL != nil)
-                return cell
+                if BlogReviewDataModel.sampleData.count == 0 {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewEmptyViewCVC.className, for: indexPath) as? ReviewEmptyViewCVC else { return UICollectionViewCell() }
+                    return cell
+                } else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BlogReviewCVC.className, for: indexPath) as? BlogReviewCVC
+                    else { return UICollectionViewCell() }
+                    cell.reviewSeperatorView.isHidden = indexPath.item == 0
+                    cell.setData(blogReviewData: BlogReviewDataModel.sampleData[indexPath.row])
+//                    cell.setLayout(hasImage: BlogReviewDataModel.sampleData[indexPath.row].blogReviewImageURL != nil)
+                    return cell
+                }
             }
         default:
             return UICollectionViewCell()
@@ -171,14 +190,26 @@ extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
             return CGSize(width: cellWidth, height: cellHeight)
         case 1:
             if selectedCustomSegment == 0 {
-                let cellWidth = width
-                let cellHeight = calculateReviewCellHeight(containsPhoto: ReviewDataModel.sampleData[indexPath.row].reviewImageURLList?.count != 0,
-                                                           reviewText: ReviewDataModel.sampleData[indexPath.row].reviewContents)
-                return CGSize(width: cellWidth, height: cellHeight)
+                if ReviewDataModel.sampleData.count == 0 {
+                    let cellWidth = width
+                    let cellHeight = width * 200/width
+                    return CGSize(width: cellWidth, height: cellHeight)
+                } else {
+                    let cellWidth = width
+                    let cellHeight = calculateReviewCellHeight(containsPhoto: ReviewDataModel.sampleData[indexPath.row].reviewImageURLList?.count != 0,
+                                                               reviewText: ReviewDataModel.sampleData[indexPath.row].reviewContents)
+                    return CGSize(width: cellWidth, height: cellHeight)
+                }
             } else {
-                let cellWidth = width * 335/375
-                let cellHeight = cellWidth * 158/335
-                return CGSize(width: cellWidth, height: cellHeight)
+                if BlogReviewDataModel.sampleData.count == 0 {
+                    let cellWidth = width
+                    let cellHeight = width * 200/width
+                    return CGSize(width: cellWidth, height: cellHeight)
+                } else {
+                    let cellWidth = width * 335/375
+                    let cellHeight = cellWidth * 158/335
+                    return CGSize(width: cellWidth, height: cellHeight)
+                }
             }
         default:
             return CGSize(width: 0, height: 0)
