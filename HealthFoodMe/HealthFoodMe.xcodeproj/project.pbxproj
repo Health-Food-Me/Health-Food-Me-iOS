@@ -29,6 +29,8 @@
 		3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC441D28745FD800661A12 /* SocialLoginVC.swift */; };
 		3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC441F28745FE500661A12 /* SocialLogin.storyboard */; };
 		3BDE7F292882054200EE7F47 /* ReviewEmptyViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDE7F282882054200EE7F47 /* ReviewEmptyViewCVC.swift */; };
+		4AEA5A7C121189B57DD6CE75 /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C321ED365502C47A4E65A10E /* Pods_HealthFoodMe.framework */; };
+		4F66D470143F608082F91FC7 /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 460E90FE1B4033E15246265B /* Pods_HealthFoodMe.framework */; };
 		69028BA62874673600373984 /* MenuCellCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BA52874673600373984 /* MenuCellCVC.swift */; };
 		69028BA82874675800373984 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BA72874675800373984 /* MenuView.swift */; };
 		69028BAA287467F100373984 /* MenuDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BA9287467F100373984 /* MenuDetailView.swift */; };
@@ -263,6 +265,7 @@
 		A9E593C62874266200B0F8B5 /* SearchRecent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecent.swift; sourceTree = "<group>"; };
 		A9E593CE2876C26900B0F8B5 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		A9E593D0287818E900B0F8B5 /* SearchTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTVC.swift; sourceTree = "<group>"; };
+		C321ED365502C47A4E65A10E /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4CAC0AB97262726248978F9 /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
 		E453A668B114DA7D1E40B7F7 /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB033E83287B5BE300C48FB9 /* StarRatingView.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; tabWidth = 4; };
@@ -394,6 +397,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AEA5A7C121189B57DD6CE75 /* Pods_HealthFoodMe.framework in Frameworks */,
+				4F66D470143F608082F91FC7 /* Pods_HealthFoodMe.framework in Frameworks */,
 				FF87259B39272C95D578809A /* Pods_HealthFoodMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -670,6 +675,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		A90CFDA5288328C90018AB94 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				C321ED365502C47A4E65A10E /* Pods_HealthFoodMe.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		A9325272287D24CD001EDF50 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -844,6 +857,8 @@
 				EB085ED828716E1900361837 /* HealthFoodMe */,
 				EB085ED728716E1900361837 /* Products */,
 				E3F60CBC9B890A7FB4D4AAAF /* Pods */,
+				4B325ED2B321D62B4089A483 /* Frameworks */,
+				A90CFDA5288328C90018AB94 /* Recovered References */,
 				EC921F0D619DA4E9C0CE8F2B /* Frameworks */,
 			);
 			indentWidth = 4;
@@ -2079,7 +2094,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
+				PROVISIONING_PROFILE_SPECIFIER = HealthFoodMe_Dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
