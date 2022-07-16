@@ -302,11 +302,7 @@ extension MainMapVC {
     private func setIntitialMapPoint() {
             
             let NMGPosition = self.locationManager?.currentLatLng()
-            print("@#@#@#@",NMGPosition)
-
             if let position = NMGPosition {
-                print("@#@#@#@22222")
-
                 self.mapView.moveCameraPositionWithZoom(position, 2000)
             } else {
                 self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)

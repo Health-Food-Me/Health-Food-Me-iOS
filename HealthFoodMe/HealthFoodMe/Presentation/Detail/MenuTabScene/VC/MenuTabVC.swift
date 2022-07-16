@@ -76,14 +76,21 @@ extension MenuTabVC {
 	}
 	
 	private func lockCollectionView() {
-//		menuCV.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
 		menuCV.isScrollEnabled = false
 	}
 }
 
 extension MenuTabVC: UICollectionViewDelegate {
 	func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+		
 		let yVelocity = scrollView.panGestureRecognizer.velocity(in: scrollView).y
+		print(yVelocity)
+		print(scrollView.contentOffset.y)
+		if yVelocity > 300 && scrollView.contentOffset.y == 0 {
+			delegate?.childViewScrollDidEnd()
+			return
+		}
+		
 		if yVelocity < 0 && topScrollAnimationNotFinished {
 			menuCV.isScrollEnabled = false
 		}
@@ -96,7 +103,8 @@ extension MenuTabVC: UICollectionViewDelegate {
 	}
 	
 	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		if scrollView.contentOffset.y == 0 {
+		print("scrollViewCONTENTOFFSET",scrollView.contentOffset.y)
+		if scrollView.contentOffset.y <= 0{
 			delegate?.childViewScrollDidEnd()
 		}
 	}

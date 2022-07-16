@@ -19,7 +19,9 @@ class MainDetailVC: UIViewController {
     private var mainInfoTVC = MainInfoTVC()
     private var detailTabTVC = DetailTabTVC()
     private var detailTabTitleHeader = DetailTabTitleHeader()
-    private var childVC = ModuleFactory.resolve().makeMenuTabVC()
+    private var menuTabVC = ModuleFactory.resolve().makeMenuTabVC()
+    private var copingTabVC = ModuleFactory.resolve().makeCopingTabVC()
+    private var reviewTabVC = ModuleFactory.resolve().makeReviewDetailVC()
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
     
@@ -147,6 +149,7 @@ extension MainDetailVC {
                     break
                 }
             }).disposed(by: disposeBag)
+        
     }
 }
 
@@ -225,12 +228,16 @@ extension MainDetailVC: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTabTVC.className, for: indexPath) as? DetailTabTVC else { return UITableViewCell() }
             detailTabTVC = cell
             
-            if childVC is MenuTabVC {
-                childVC.delegate = self
+            if menuTabVC is MenuTabVC {
+                menuTabVC.delegate = self
             }
             
-            self.addChild(childVC)
-            cell.receiveChildVC(childVC: childVC)
+            self.addChild(menuTabVC)
+            self.addChild(copingTabVC)
+            self.addChild(reviewTabVC)
+            cell.receiveChildVC(childVC: menuTabVC)
+            cell.receiveChildVC(childVC: copingTabVC)
+            cell.receiveChildVC(childVC: reviewTabVC)
             cell.scrollRatio.asDriver(onErrorJustReturn: 0)
                 .drive { ratio in
                     self.detailTabTitleHeader.moveWithContinuousRatio(ratio: ratio)
@@ -268,7 +275,7 @@ extension MainDetailVC: ScrollDeliveryDelegate {
     
     func childViewScrollDidEnd() {
         self.mainTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-        childVC.topScrollAnimationNotFinished = true
+        menuTabVC.topScrollAnimationNotFinished = true
     }
     
     func scrollStarted(velocity: CGFloat, scrollView: UIScrollView) {
@@ -279,7 +286,7 @@ extension MainDetailVC: ScrollDeliveryDelegate {
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > 50 {
-            childVC.topScrollAnimationNotFinished = false
+            menuTabVC.topScrollAnimationNotFinished = false
         }
     }
 }

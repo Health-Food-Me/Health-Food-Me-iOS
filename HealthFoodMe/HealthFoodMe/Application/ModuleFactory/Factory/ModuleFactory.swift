@@ -20,6 +20,7 @@ protocol ModuleFactoryProtocol {
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
     func makeMenuTabVC() -> MenuTabVC
+    func makeCopingTabVC() -> CopingTabVC
     func makeReviewDetailVC() -> ReviewDetailVC
     
     // MARK: - Search
@@ -89,6 +90,11 @@ class ModuleFactory: ModuleFactoryProtocol {
     func makeMenuTabVC() -> MenuTabVC {
         let vc = MenuTabVC.controllerFromStoryboard(.menuTab)
         
+        return vc
+    }
+    
+    func makeCopingTabVC() -> CopingTabVC {
+        let vc = CopingTabVC.controllerFromStoryboard(.copingTab)
         return vc
     }
     
