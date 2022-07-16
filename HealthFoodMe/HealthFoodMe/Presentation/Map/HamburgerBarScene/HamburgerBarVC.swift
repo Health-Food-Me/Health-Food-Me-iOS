@@ -8,13 +8,12 @@
 import UIKit
 
 import SnapKit
+import MessageUI
 
 enum HamburgerType {
     case editName
     case scrap
     case myReview
-    case reportStore
-    case reportEdit
     case setting
 }
 
@@ -279,13 +278,11 @@ extension HamburgerBarVC {
         }
         
         menuButtons[2].press {
-            self.dismiss(animated: false)
-            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .reportStore)
+            self.presentReportMail(title: I18N.Map.HamburgerBar.reportStoreTitle, content: I18N.Map.HamburgerBar.reportStoreContent)
         }
         
         menuButtons[3].press {
-            self.dismiss(animated: false)
-            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .reportEdit)
+            self.presentReportMail(title: I18N.Map.HamburgerBar.reportEditTitle, content: I18N.Map.HamburgerBar.reportEditContent)
         }
         
         settingButton.press {
@@ -297,7 +294,7 @@ extension HamburgerBarVC {
             self.makeAlert(alertType: .logoutAlert,
                       title: I18N.HelfmeAlert.logout,
                       subtitle: I18N.HelfmeAlert.logoutContent) {
-                print("로그아웃 구현해주세요")
+                self.makeAlert(title: "", message: "로그아웃 성공 ~ ~ !")
             }
         }
     }
@@ -340,3 +337,23 @@ extension HamburgerBarVC {
         }
     }
 }
+
+extension HamburgerBarVC: MFMailComposeViewControllerDelegate {
+    private func presentReportMail(title: String, content: String) {
+        let mailComposeVC = MFMailComposeViewController()
+        if MFMailComposeViewController.canSendMail() {
+            mailComposeVC.mailComposeDelegate = self
+            mailComposeVC.setToRecipients(["0inn1220@gmail.com"])
+            mailComposeVC.setSubject(title)
+            mailComposeVC.setMessageBody(content, isHTML: false)
+            self.present(mailComposeVC, animated: true, completion: nil)
+        } else {
+            makeAlert(title: "메세지 전송 실패", message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.")
+        }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
+    }
+}
+

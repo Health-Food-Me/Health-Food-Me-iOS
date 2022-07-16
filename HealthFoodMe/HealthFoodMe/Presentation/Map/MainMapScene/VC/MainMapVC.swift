@@ -478,10 +478,6 @@ extension MainMapVC: HamburgerbarVCDelegate {
             navigationController?.pushViewController(ModuleFactory.resolve().makeScrapVC(), animated: true)
         case .myReview:
             navigationController?.pushViewController(ModuleFactory.resolve().makeScrapVC(), animated: true)
-        case .reportStore:
-            present(UIViewController(), animated: true)
-        case .reportEdit:
-            present(UIViewController(), animated: true)
         case .setting:
             navigationController?.pushViewController(ModuleFactory.resolve().makeScrapVC(), animated: true)
         }
