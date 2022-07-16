@@ -96,7 +96,7 @@ struct I18N {
     
     struct Map {
         struct Main {
-            static let searchBar = "식당, 음식 검색"
+            static let searchBar = "식당 검색"
         }
         
         struct HamburgerBar {
@@ -117,7 +117,7 @@ struct I18N {
     }
     
     struct Search {
-        static let search = "식당, 음식 검색"
+        static let search = "식당 검색"
         static let searchRecent = "최근 검색어"
         static let searchMap = "지도 뷰로 보기"
         static let searchEmpty = "해당되는 검색 결과가 없습니다"

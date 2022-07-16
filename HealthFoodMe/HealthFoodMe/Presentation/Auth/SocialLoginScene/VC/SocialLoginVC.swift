@@ -145,7 +145,10 @@ extension SocialLoginVC {
     }
     
     @objc func doAppleLogin() {
-        appleLogin()
+        let vc = ModuleFactory.resolve().makeMainMapNavigationController()
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: false)
+//        appleLogin()
     }
 }
 

@@ -81,6 +81,11 @@ class ModuleFactory: ModuleFactoryProtocol {
 
     
     // MARK: - Map
+    func makeMainMapNavigationController() -> MainMapNavigationController {
+        print("")
+        return MainMapNavigationController.controllerFromStoryboard(.mainMap)
+    }
+    
     func makeMainMapVC() -> MainMapVC {
         let repository = DefaultMainMapRepository()
         let useCase = DefaultMainMapUseCase(repository: repository)

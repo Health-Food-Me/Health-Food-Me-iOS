@@ -190,11 +190,11 @@ extension SettingVC {
 extension SettingVC {
   private func addButtonAction() {
     askButton.press(animated: false) {
-      print("문의하기")
     }
     
     withdrawalButton.press(animated: false) {
-      print("회원탈퇴")
+        let withdrawlVC = ModuleFactory.resolve().makeUserWithdrawlVC()
+        self.navigationController?.pushViewController(withdrawlVC, animated: true)
     }
     
     openSourceButton.press(animated: false) {
