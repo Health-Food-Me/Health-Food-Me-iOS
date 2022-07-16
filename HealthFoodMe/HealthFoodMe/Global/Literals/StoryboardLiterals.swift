@@ -34,6 +34,7 @@ enum Storyboards: String {
     case userWithdrawal = "UserWithdrawal"
     case copingTab = "CopingTab"
     case reviewEmptyView = "ReviewEmptyView"
+    case supplementMap = "SupplementMap"
 }
 
 extension UIStoryboard {
