@@ -21,6 +21,7 @@ final class SearchResultVC: UIViewController {
     weak var delegate: SearchResultVCDelegate?
     private var isBottom: Bool = true
     var searchResultList: [SearchResultDataModel] = []
+    let height = UIScreen.main.bounds.height
     
     // MARK: - UI Components
     
@@ -148,7 +149,7 @@ extension SearchResultVC {
 extension SearchResultVC {
     private func initUI() {
         UIView.animate(withDuration: 0.2, animations: {
-            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 585)
+            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: self.height - self.height/3.3)
         })
         searchResultTableView.layer.shadowOpacity = 0.1
         searchResultHeaderButton.isHidden = true
