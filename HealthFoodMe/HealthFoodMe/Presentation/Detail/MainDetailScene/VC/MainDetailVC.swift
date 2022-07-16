@@ -232,6 +232,10 @@ extension MainDetailVC: UITableViewDataSource {
                 menuTabVC.delegate = self
             }
             
+            if copingTabVC is CopingTabVC {
+                copingTabVC.delegate = self
+            }
+            
             self.addChild(menuTabVC)
             self.addChild(copingTabVC)
             self.addChild(reviewTabVC)
@@ -272,10 +276,13 @@ extension MainDetailVC: UITableViewDataSource {
 }
 
 extension MainDetailVC: ScrollDeliveryDelegate {
-    
-    func childViewScrollDidEnd() {
+    func childViewScrollDidEnd(type: TabMenuCase) {
         self.mainTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-        menuTabVC.topScrollAnimationNotFinished = true
+        switch(type) {
+            case .menu:     menuTabVC.topScrollAnimationNotFinished = true
+            case .coping:   copingTabVC.topScrollAnimationNotFinished = true
+            case .review:   break
+        }
     }
     
     func scrollStarted(velocity: CGFloat, scrollView: UIScrollView) {

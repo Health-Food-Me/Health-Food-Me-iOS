@@ -133,14 +133,4 @@ class ModuleFactory: ModuleFactoryProtocol {
 
     // MARK: - Plan
     
-//    func instantiatePlanPreviewVC(postID: Int) -> PlanPreviewVC {
-//        let repository = DefaultPlanPreviewRepository(service: BaseService.default)
-//        let useCase = DefaultPlanPreviewUseCase(repository: repository, postIdx: postID)
-//        let viewModel = PlanPreviewViewModel(useCase: useCase)
-//        let vc = PlanPreviewVC.controllerFromStoryboard(.planPreview)
-//        vc.viewModel = viewModel
-//
-//        return vc
-//    }
-    
 }

@@ -7,12 +7,17 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 class CopingTabVC: UIViewController {
     
     // MARK: - Properties
-    
+    private let disposeBag = DisposeBag()
     private var copingHeader = CopingHeaderView()
     private var copingEmptyView = CopingEmptyView()
+    var topScrollAnimationNotFinished: Bool = true
+    weak var delegate: ScrollDeliveryDelegate?
     var recommendList: [String] = []
     var eatingList: [String] = []
     
@@ -59,6 +64,7 @@ class CopingTabVC: UIViewController {
         setLayout()
         setDelegate()
         registerCell()
+        addPanGesture()
     }
 }
 
@@ -116,6 +122,28 @@ extension CopingTabVC {
         eatingList = CopingDataModel.sampleCopingData.eating ?? []
         copingTableView.reloadData()
     }
+    
+    private func addPanGesture() {
+        let panGesture = UIPanGestureRecognizer()
+        view.addGestureRecognizer(panGesture)
+        panGesture.rx.event.asDriver { _ in .never() }
+            .drive(onNext: { [weak self] sender in
+                let windowTranslation = sender.translation(in: self?.view)
+                switch sender.state {
+                case .changed:
+                        if windowTranslation.y < 0 {
+                            self?.delegate?.scrollStarted(velocity: windowTranslation.y, scrollView: UIScrollView())
+                        } else {
+                            self?.delegate?.childViewScrollDidEnd(type: .coping)
+                        }
+                case .ended:
+                    break
+                default:
+                    break
+                }
+            }).disposed(by: disposeBag)
+
+    }
 }
 
 // MARK: - Network
@@ -123,8 +151,8 @@ extension CopingTabVC {
 extension CopingTabVC {
     
 }
-
 extension CopingTabVC: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 38
     }
@@ -134,13 +162,16 @@ extension CopingTabVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: CopingHeaderView.className) as? CopingHeaderView else { return nil }
+        guard let topHeaderCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: CopingHeaderView.className) as? CopingHeaderView else { return nil }
+        guard let bottomHeaderCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: CopingHeaderView.className) as? CopingHeaderView else { return nil }
+        
         if section == 0 {
-            headerCell.setHeaderData(section: 0)
+            topHeaderCell.setHeaderData(section: 0)
+            return topHeaderCell
         } else {
-            headerCell.setHeaderData(section: 1)
+            bottomHeaderCell.setHeaderData(section: 1)
+            return bottomHeaderCell
         }
-        return headerCell
     }
 }
 
