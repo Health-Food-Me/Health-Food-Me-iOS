@@ -32,6 +32,7 @@ final class CopingHeaderView: UITableViewHeaderFooterView, UITableViewHeaderFoot
     private lazy var headerLabel: UILabel = {
         let lb = UILabel()
         lb.font = .NotoBold(size: 15)
+        lb.textAlignment = .center
         return lb
     }()
 
@@ -62,6 +63,7 @@ extension CopingHeaderView {
             headerLabel.text = I18N.Coping.eatingHeader
             headerLabel.textColor = .mainRed
         }
+        layoutIfNeeded()
     }
 }
 
@@ -82,12 +84,12 @@ extension CopingHeaderView {
         icnImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(53)
             make.centerX.equalToSuperview()
-            make.width.equalTo(55)
         }
         
         headerLabel.snp.makeConstraints { make in
             make.top.equalTo(icnImageView.snp.bottom).offset(4)
             make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
         }
     }
 }
