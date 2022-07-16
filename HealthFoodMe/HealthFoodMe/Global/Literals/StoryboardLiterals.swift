@@ -16,6 +16,7 @@ import UIKit
  */
 
 enum Storyboards: String {
+    case splash = "Splash"
     case mainMap = "MainMap"
     case mainDetail = "MainDetail"
     case search = "Search"

@@ -28,6 +28,9 @@ protocol ModuleFactoryProtocol {
     
     // MARK: - Scrap
     func makeScrapVC() -> ScrapVC
+    
+    // MARK: - Spalsh
+    func makeSplashVC() -> SplashVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -133,6 +136,12 @@ class ModuleFactory: ModuleFactoryProtocol {
     // MARK: - HelfmeAlert
     func makeHelfmeAlertVC() -> HelfmeAlertVC {
         let vc = HelfmeAlertVC.controllerFromStoryboard(.helfmeAlert)
+        
+        return vc
+    }
+    
+    func makeSplashVC() -> SplashVC {
+        let vc = SplashVC.controllerFromStoryboard(.splash)
         
         return vc
     }
