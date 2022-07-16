@@ -16,6 +16,7 @@ class ReviewDetailVC: UIViewController {
     
     private var reviewData: [ReviewCellViewModel] = []
     private var blogReviewData: [BlogReviewDataModel] = []
+    var moreContentsButtonRect: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     
     var selectedCustomSegment = 0 {
         didSet {
@@ -143,7 +144,8 @@ extension ReviewDetailVC {
                     }
                 }
             }
-        }        
+        }
+        
         return reviewContentsList
     }
     
@@ -206,6 +208,7 @@ extension ReviewDetailVC: UICollectionViewDataSource {
                     cell.setData(reviewData: reviewData[indexPath.row].data)
                     cell.setEnumValue = setEnumValue(data: reviewData[indexPath.row].data)
                     cell.changeContents(cutReviewContents(reviewData[indexPath.row].data.reviewContents ?? ""))
+                    moreContentsButtonRect = cell.calculateCGRect("더보기") ?? CGRect(x: 0, y: 0, width: 0, height: 0)
                     cell.setLayout()
                     return cell
                 }

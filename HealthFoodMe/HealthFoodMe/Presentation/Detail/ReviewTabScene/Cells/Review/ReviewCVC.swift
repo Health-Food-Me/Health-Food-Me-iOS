@@ -267,6 +267,25 @@ extension ReviewCVC {
         reviewContents.text = cutText
         reviewContents.sizeToFit()
     }
+    
+    func calculateCGRect(_ subString: String) -> CGRect? {
+        // NSTextStorage >> NSLayoutManager >> NSTextContainer >> View
+        guard let attributedText = self.reviewContents.attributedText else { return nil }
+        let textStorage = NSTextStorage(attributedString: attributedText)
+        
+        let layoutManager = NSLayoutManager()
+        textStorage.addLayoutManager(layoutManager)
+        
+        let textContainer = NSTextContainer(size: self.bounds.size)
+        textContainer.lineFragmentPadding = 0.0
+        
+        layoutManager.addTextContainer(textContainer)
+        
+        guard let text = self.reviewContents.text,
+              let subRange = text.range(of: subString) else { return nil }
+        let range = NSRange(subRange, in: text)
+        return layoutManager.boundingRect(forGlyphRange: range, in: textContainer)
+    }
 }
 
 extension ReviewCVC: UICollectionViewDelegate {
