@@ -328,6 +328,13 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         return toastView
     }()
     
+    private lazy var checkPhotoToastView: UpperToastView = {
+        let toastView = UpperToastView(title: "사진 첨부는 최대 3장까지만 가능합니다!")
+        toastView.layer.cornerRadius = 20
+        toastView.alpha = 0
+        return toastView
+    }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -382,7 +389,7 @@ extension ReviewWriteVC {
             make.width.equalTo(scrollView.snp.width)
         }
         
-        contentView.addSubviews(restaurantTitleLabel, sliderView, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView, photoSubLabel, writeReviewButton, checkReviewToastView)
+        contentView.addSubviews(restaurantTitleLabel, sliderView, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView, photoSubLabel, writeReviewButton, checkReviewToastView, checkPhotoToastView)
         
         restaurantTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
@@ -501,6 +508,13 @@ extension ReviewWriteVC {
             make.bottom.equalToSuperview().offset(40)
             make.height.equalTo(40)
         }
+        
+        checkPhotoToastView.snp.updateConstraints { make in
+            make.leading.equalToSuperview().offset(63)
+            make.trailing.equalToSuperview().offset(-63)
+            make.bottom.equalToSuperview().offset(40)
+            make.height.equalTo(40)
+        }
     }
     
     private func setAddTargets() {
@@ -550,7 +564,7 @@ extension ReviewWriteVC {
         ListPhotoCVC.register(target: photoCollectionView)
     }
     
-    @objc private func showStatusActionSheet(_ sender: UITapGestureRecognizer) {
+    private func showStatusActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let takePictureAction = UIAlertAction(title: "사진 찍기", style: .default) {_ in
@@ -574,12 +588,20 @@ extension ReviewWriteVC {
         self.present(actionSheet, animated: true)
     }
     
+    @objc private func isAbledPhoto(_ sender: UITapGestureRecognizer) {
+        if photoModel.userSelectedImages.count == 3 {
+            showPhotoToast()
+        } else {
+            showStatusActionSheet()
+        }
+    }
+    
     private func didTapimageAlbum() {
         selectedAssets.removeAll()
         userSelectedImages.removeAll()
         
         let imagePicker = ImagePickerController()
-        imagePicker.settings.selection.max = 5
+        imagePicker.settings.selection.max = 3 - photoModel.userSelectedImages.count
         imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
         
         self.presentImagePicker(imagePicker, select: { (asset) in
@@ -633,7 +655,7 @@ extension ReviewWriteVC {
     
     @objc private func didTapWriteReview(_ sender: UIButton) {
         if !checkReview() {
-            showToast()
+            showReviewToast()
         } else {
             makeAlert(title: "알림", message: "작성완료!")
         }
@@ -657,7 +679,7 @@ extension ReviewWriteVC {
 }
 
 extension ReviewWriteVC {
-    private func showToast() {
+    private func showReviewToast() {
         makeVibrate()
         checkReviewToastView.snp.remakeConstraints { make in
             make.leading.equalToSuperview().offset(63)
@@ -672,12 +694,12 @@ extension ReviewWriteVC {
             
         } completion: { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                self.hideToast()
+                self.hideReviewToast()
             }
         }
     }
     
-    private func hideToast() {
+    private func hideReviewToast() {
         checkReviewToastView.snp.remakeConstraints { make in
             make.leading.equalToSuperview().offset(63)
             make.trailing.equalToSuperview().offset(-63)
@@ -687,6 +709,40 @@ extension ReviewWriteVC {
         
         UIView.animate(withDuration: 0.5, delay: 0) {
             self.checkReviewToastView.alpha = 0
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func showPhotoToast() {
+        makeVibrate()
+        checkPhotoToastView.snp.remakeConstraints { make in
+            make.leading.equalToSuperview().offset(63)
+            make.trailing.equalToSuperview().offset(-63)
+            make.bottom.equalTo(writeReviewButton.snp.top).offset(-10)
+            make.height.equalTo(40)
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.view.layoutIfNeeded()
+            self.checkPhotoToastView.alpha = 1
+            
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.hidePhotoToast()
+            }
+        }
+    }
+    
+    private func hidePhotoToast() {
+        checkPhotoToastView.snp.remakeConstraints { make in
+            make.leading.equalToSuperview().offset(63)
+            make.trailing.equalToSuperview().offset(-63)
+            make.bottom.equalToSuperview().offset(40)
+            make.height.equalTo(40)
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.checkPhotoToastView.alpha = 0
             self.view.layoutIfNeeded()
         }
     }
@@ -708,8 +764,8 @@ extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         case Cell.addCell.rawValue:
             guard let addPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCVC.className, for: indexPath) as? AddPhotoCVC else { fatalError("Failed to dequeue cell for AddPhotoCVC") }
             addPhotoCell.delegate = self
-            addPhotoCell.photoCountLabel.text = "\(photoModel.userSelectedImages.count)/5"
-            addPhotoCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showStatusActionSheet(_:))))
+            addPhotoCell.photoCountLabel.text = "\(photoModel.userSelectedImages.count)/3"
+            addPhotoCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(isAbledPhoto(_:))))
             
             let borderLayer = CAShapeLayer()
             borderLayer.strokeColor = UIColor.helfmeTagGray.cgColor
