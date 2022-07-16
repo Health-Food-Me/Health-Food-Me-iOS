@@ -12,6 +12,7 @@ import SnapKit
 protocol ScrollDeliveryDelegate: AnyObject {
 	func scrollStarted(velocity: CGFloat, scrollView: UIScrollView)
 	func childViewScrollDidEnd(type: TabMenuCase)
+	func currentTabMenu(_ type: TabMenuCase)
 }
 
 enum TabMenuCase {
@@ -113,6 +114,10 @@ extension MenuTabVC: UICollectionViewDelegate {
 		if scrollView.contentOffset.y <= 0{
 			delegate?.childViewScrollDidEnd(type: .menu)
 		}
+	}
+	
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		delegate?.currentTabMenu(.menu)
 	}
 }
 

@@ -10,6 +10,10 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+protocol CopingGestureDelegate {
+    func panGestureSwipe(isRight: Bool)
+}
+
 class CopingTabVC: UIViewController {
     
     // MARK: - Properties
@@ -18,6 +22,7 @@ class CopingTabVC: UIViewController {
     private var copingEmptyView = CopingEmptyView()
     var topScrollAnimationNotFinished: Bool = true
     weak var delegate: ScrollDeliveryDelegate?
+    var panDelegate: CopingGestureDelegate?
     var recommendList: [String] = []
     var eatingList: [String] = []
     
@@ -128,18 +133,22 @@ extension CopingTabVC {
         view.addGestureRecognizer(panGesture)
         panGesture.rx.event.asDriver { _ in .never() }
             .drive(onNext: { [weak self] sender in
-                let windowTranslation = sender.translation(in: self?.view)
-                switch sender.state {
-                case .changed:
-                        if windowTranslation.y < 0 {
-                            self?.delegate?.scrollStarted(velocity: windowTranslation.y, scrollView: UIScrollView())
-                        } else {
-                            self?.delegate?.childViewScrollDidEnd(type: .coping)
-                        }
-                case .ended:
-                    break
-                default:
-                    break
+                let velocity = sender.velocity(in: self?.view)
+                let isVertical = abs(velocity.y) > abs(velocity.x)
+                switch (isVertical, velocity.x, velocity.y) {
+                case (true, _, let y) where y < 0:
+                    self?.delegate?.scrollStarted(velocity: -10, scrollView: UIScrollView())
+
+                case (true, _, let y) where y > 0:
+                    self?.delegate?.childViewScrollDidEnd(type: .coping)
+                        
+                case (false, let x, _) where x > 0:
+                    self?.panDelegate?.panGestureSwipe(isRight: false)
+                        
+                case (false, let x, _) where x < 0:
+                    self?.panDelegate?.panGestureSwipe(isRight: true)
+
+                default: return
                 }
             }).disposed(by: disposeBag)
 

@@ -22,6 +22,7 @@ class MainDetailVC: UIViewController {
     private var menuTabVC = ModuleFactory.resolve().makeMenuTabVC()
     private var copingTabVC = ModuleFactory.resolve().makeCopingTabVC()
     private var reviewTabVC = ModuleFactory.resolve().makeReviewDetailVC()
+    private var menuCase: TabMenuCase = .menu
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
     
@@ -94,7 +95,6 @@ extension MainDetailVC {
     
     private func setLayout() {
         view.addSubviews(mainTableView)
-        
         mainTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.bottom.equalToSuperview()
@@ -234,6 +234,11 @@ extension MainDetailVC: UITableViewDataSource {
             
             if copingTabVC is CopingTabVC {
                 copingTabVC.delegate = self
+                copingTabVC.panDelegate = self
+            }
+            
+            if reviewTabVC is ReviewDetailVC {
+                reviewTabVC.delegate = self
             }
             
             self.addChild(menuTabVC)
@@ -244,10 +249,21 @@ extension MainDetailVC: UITableViewDataSource {
             cell.receiveChildVC(childVC: reviewTabVC)
             cell.scrollRatio.asDriver(onErrorJustReturn: 0)
                 .drive { ratio in
+                    if ratio < 1/3{
+                        self.menuCase = .menu
+                        self.menuTabVC.topScrollAnimationNotFinished = true
+                    } else if ratio < 2/3 {
+                        self.menuCase = .coping
+                        self.copingTabVC.topScrollAnimationNotFinished = true
+                    } else {
+                        self.menuCase = .review
+                        self.reviewTabVC.topScrollAnimationNotFinished = true
+                    }
                     self.detailTabTitleHeader.moveWithContinuousRatio(ratio: ratio)
                 }.disposed(by: cell.disposeBag)
             cell.scrollEnded.asDriver(onErrorJustReturn: 0)
                 .drive { pageIndex in
+
                     self.detailTabTitleHeader.setSelectedButton(buttonIndex: pageIndex)
                 }.disposed(by: cell.disposeBag)
             return cell
@@ -276,12 +292,17 @@ extension MainDetailVC: UITableViewDataSource {
 }
 
 extension MainDetailVC: ScrollDeliveryDelegate {
+    func currentTabMenu(_ type: TabMenuCase) {
+        self.menuCase = type
+    }
+    
     func childViewScrollDidEnd(type: TabMenuCase) {
         self.mainTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         switch(type) {
             case .menu:     menuTabVC.topScrollAnimationNotFinished = true
             case .coping:   copingTabVC.topScrollAnimationNotFinished = true
-            case .review:   break
+            case .review:
+                reviewTabVC.topScrollAnimationNotFinished = true
         }
     }
     
@@ -292,8 +313,28 @@ extension MainDetailVC: ScrollDeliveryDelegate {
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > 50 {
-            menuTabVC.topScrollAnimationNotFinished = false
+        if scrollView.contentOffset.y < 10 {
+            switch(menuCase) {
+                case .menu: menuTabVC.topScrollAnimationNotFinished = true
+                case .coping: copingTabVC.topScrollAnimationNotFinished = true
+                case .review: reviewTabVC.topScrollAnimationNotFinished = true
+            }
         }
+        
+        if scrollView.contentOffset.y > 50 {
+            switch(menuCase) {
+                case .menu: menuTabVC.topScrollAnimationNotFinished = false
+                case .coping: copingTabVC.topScrollAnimationNotFinished = false
+                case .review: reviewTabVC.topScrollAnimationNotFinished = false
+            }
+        }
+    }
+}
+
+extension MainDetailVC: CopingGestureDelegate {
+    func panGestureSwipe(isRight: Bool) {
+        let index = isRight ? 2 : 0
+        detailTabTitleHeader.setSelectedButton(buttonIndex: index)
+        detailTabTVC.containerCollectionView.scrollToItem(at: IndexPath.init(row: index, section: 0), at: .centeredVertically, animated: true)
     }
 }
