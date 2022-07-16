@@ -21,7 +21,6 @@ protocol ModuleFactoryProtocol {
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
     func makeMenuTabVC() -> MenuTabVC
-//    func makeReviewTabVC() -> ReviewTabVC
     func makeReviewDetailVC() -> ReviewDetailVC
     
     // MARK: - Search
@@ -105,7 +104,6 @@ class ModuleFactory: ModuleFactoryProtocol {
         
         return vc
     }
-    
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC {

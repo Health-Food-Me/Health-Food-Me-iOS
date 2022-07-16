@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol SearchResultModel { }
+protocol SearchResultModel: Codable { }
 
 struct SearchRecentDataModel: SearchResultModel {
     let searchContent: String

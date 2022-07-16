@@ -23,11 +23,6 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         return lb
     }()
     
-    private lazy var blogReviewImageView: UIImageView = {
-        let iv = UIImageView()
-        return iv
-    }()
-    
     private lazy var blogReviewContentsLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
@@ -51,29 +46,15 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         return st
     }()
     
-    private var blogReviewWithImageStackView: UIStackView = {
-        let st = UIStackView()
-        st.axis = .horizontal
-        st.distribution = .equalSpacing
-        st.alignment = .center
-        st.spacing = 16
-        return st
-    }()
-    
     // MARK: - Life Cycle Part
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setInitialLayout()
+        setLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForReuse() {
-        blogReviewWithImageStackView.removeFromSuperview()
-        blogReviewStackView.removeFromSuperview()
     }
 }
 
@@ -81,42 +62,10 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
 
 extension BlogReviewCVC {
     
-    private func setInitialLayout() {
-        contentView.addSubviews(reviewSeperatorView)
-        blogReviewImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(100)
-        }
+    func setLayout() {
+        contentView.addSubviews(reviewSeperatorView, blogReviewStackView)
         blogReviewStackView.addArrangedSubviews(blogReviewTitleLabel, blogReviewContentsLabel)
-        blogReviewWithImageStackView.addArrangedSubviews(blogReviewStackView, blogReviewImageView)
-    }
-    func setLayout(hasImage: Bool) {
         
-        if hasImage {
-            
-            contentView.addSubview(blogReviewStackView)
-            blogReviewWithImageStackView.addArrangedSubviews(blogReviewStackView, blogReviewImageView)
-            contentView.addSubview(blogReviewWithImageStackView)
-        } else {
-            contentView.addSubview(blogReviewStackView)
-            setLayoutWithoutImage()
-        }
-
-    }
-    
-    private func setLayoutWithImage() {
-        reviewSeperatorView.snp.makeConstraints { make in
-            make.leading.trailing.top.equalToSuperview()
-            make.height.equalTo(1)
-        }
-        
-        blogReviewWithImageStackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.top.equalTo(reviewSeperatorView.snp.top).offset(28)
-        }
-        contentView.layoutIfNeeded()
-    }
-    
-    private func setLayoutWithoutImage() {
         reviewSeperatorView.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
             make.height.equalTo(1)
@@ -126,12 +75,10 @@ extension BlogReviewCVC {
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(reviewSeperatorView.snp.top).offset(28)
         }
-        contentView.layoutIfNeeded()
     }
     
     func setData(blogReviewData: BlogReviewDataModel) {
         blogReviewTitleLabel.text = blogReviewData.blogReviewTitle
         blogReviewContentsLabel.text = blogReviewData.blogReviewContents
-        blogReviewImageView.image = UIImage(named: blogReviewData.blogReviewImageURL ?? "")
     }
 }
