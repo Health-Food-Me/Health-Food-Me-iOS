@@ -40,6 +40,7 @@ struct I18N {
     struct Detail {
         struct Main {
             static let buttonTitles = ["메뉴", "외식대처법", "리뷰"]
+            static let reviewWriteCTATitle = "리뷰 쓰기"
         }
         
         struct Menu {

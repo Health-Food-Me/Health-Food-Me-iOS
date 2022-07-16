@@ -10,6 +10,7 @@ import Foundation
 protocol ModuleFactoryProtocol {
     
     // MARK: - Auth
+    func makeLoginVC() -> SocialLoginVC
     func makeNicknameChangeVC() -> NicknameChangeVC
     func makeUserWithdrawlVC() -> UserWithdrawalVC
 
@@ -22,6 +23,8 @@ protocol ModuleFactoryProtocol {
     func makeMenuTabVC() -> MenuTabVC
     func makeCopingTabVC() -> CopingTabVC
     func makeReviewDetailVC() -> ReviewDetailVC
+    func makeReviewWriteVC() -> ReviewWriteVC
+    func makeReviewWriteNavigationController() -> ReviewWriteNavigationController
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC
@@ -41,6 +44,11 @@ class ModuleFactory: ModuleFactoryProtocol {
     }
   
     // MARK: - Auth
+    func makeLoginVC() -> SocialLoginVC {
+        let vc = SocialLoginVC.controllerFromStoryboard(.socialLogin)
+        return vc
+    }
+    
     func makeNicknameChangeVC() -> NicknameChangeVC {
         let repository = DefaultNicknameRepository()
         let useCase = DefaultNicknameChangeUseCase(repository: repository)
@@ -60,6 +68,13 @@ class ModuleFactory: ModuleFactoryProtocol {
         
         return vc
     }
+    
+    func makeReviewWriteVC() -> ReviewWriteVC {
+        let vc = ReviewWriteVC.controllerFromStoryboard(.reviewWrite)
+
+        return vc
+    }
+
 
     
     // MARK: - Map
@@ -102,14 +117,14 @@ class ModuleFactory: ModuleFactoryProtocol {
         return vc
     }
     
-    func makeReviewDetailVC() -> ReviewDetailVC {
-        let vc = ReviewDetailVC.controllerFromStoryboard(.reviewDetail)
+    func makeReviewWriteNavigationController() -> ReviewWriteNavigationController {
+        let nc = ReviewWriteNavigationController.controllerFromStoryboard(.reviewWrite)
         
-        return vc
+        return nc
     }
     
-    func makeReviewWriteVC() -> ReviewWriteVC {
-        let vc = ReviewWriteVC.controllerFromStoryboard(.reviewWrite)
+    func makeReviewDetailVC() -> ReviewDetailVC {
+        let vc = ReviewDetailVC.controllerFromStoryboard(.reviewDetail)
         
         return vc
     }
