@@ -113,6 +113,40 @@ extension ReviewDetailVC {
         self.blogReviewData = blogReviewResult
     }
     
+    private func cutReviewContents(_ reviewDataContents: String) -> String {
+        var reviewContentsList: String = ""
+        var lineCount: Int = 0
+        var previousHeight: CGFloat = 0
+        var eraseCount: Int = 0
+        
+        for char in reviewDataContents {
+            reviewContentsList += String(char)
+            if (previousHeight != calculateReviewHeight(reviewContentsList)) {
+                previousHeight = calculateReviewHeight(reviewContentsList)
+                lineCount += 1
+            }
+            if lineCount == 4 {
+                break
+            }
+        }
+        
+        if lineCount > 3 {
+            for char in reviewContentsList {
+                eraseCount += 1
+                reviewContentsList.popLast()
+                if eraseCount > 7 {
+                    reviewContentsList.append("   더보기")
+                    break
+                } else {
+                    if char == " " {
+                        continue
+                    }
+                }
+            }
+        }        
+        return reviewContentsList
+    }
+    
     private func calculateReviewHeight(_ text: String) -> CGFloat {
         let textView = UITextView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 40, height: 0))
         textView.textContainer.lineFragmentPadding = .zero
@@ -163,7 +197,7 @@ extension ReviewDetailVC: UICollectionViewDataSource {
             return header
         case 1:
             if selectedCustomSegment == 0 {
-                if ReviewDataModel.sampleData.count == 0 {
+                if reviewData.count == 0 {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewEmptyViewCVC.className, for: indexPath) as? ReviewEmptyViewCVC else { return UICollectionViewCell() }
                     return cell
                 } else {
@@ -171,11 +205,12 @@ extension ReviewDetailVC: UICollectionViewDataSource {
                     cell.reviewSeperatorView.isHidden = indexPath.item == 0
                     cell.setData(reviewData: reviewData[indexPath.row].data)
                     cell.setEnumValue = setEnumValue(data: reviewData[indexPath.row].data)
+                    cell.changeContents(cutReviewContents(reviewData[indexPath.row].data.reviewContents ?? ""))
                     cell.setLayout()
                     return cell
                 }
             } else {
-                if BlogReviewDataModel.sampleData.count == 0 {
+                if blogReviewData.count == 0 {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewEmptyViewCVC.className, for: indexPath) as? ReviewEmptyViewCVC else { return UICollectionViewCell() }
                     return cell
                 } else {
