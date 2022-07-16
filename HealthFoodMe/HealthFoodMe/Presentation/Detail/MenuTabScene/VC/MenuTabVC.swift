@@ -47,7 +47,6 @@ final class MenuTabVC: UIViewController {
 		setLayout()
 		setDelegate()
 		registerCell()
-		
 	}
 }
 
@@ -74,9 +73,6 @@ extension MenuTabVC {
 	
 	private func registerCell() {
 		MenuCellCVC.register(target: menuCV)
-		menuCV.register(HeaderView.self,
-						forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-						withReuseIdentifier: HeaderView.className)
 	}
 	
 	private func lockCollectionView() {
@@ -112,21 +108,6 @@ extension MenuTabVC: UICollectionViewDataSource {
 		return MenuDataModel.sampleMenuData.count
 	}
 	
-	func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		
-		switch kind {
-			case UICollectionView.elementKindSectionHeader :
-				let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderView.className, for: indexPath)
-				return headerView
-			default :
-				return UICollectionReusableView()
-		}
-	}
-	
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-		return CGSize(width: UIScreen.main.bounds.width, height: 68)
-	}
-	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let cell = menuCV.dequeueReusableCell(withReuseIdentifier: MenuCellCVC.className, for: indexPath) as? MenuCellCVC
 		else { return UICollectionViewCell() }
@@ -147,7 +128,7 @@ extension MenuTabVC: UICollectionViewDelegateFlowLayout {
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-		return UIEdgeInsets(top: 0, left: 20, bottom: 60, right: 20)
+		return UIEdgeInsets(top: 20, left: 20, bottom: 60, right: 20)
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
