@@ -35,6 +35,6 @@ extension MenuDataModel {
             menuKcal: 219, carbohydrates: 74, protein: 17, fat: 56),
         MenuDataModel(restaurantID: "3", isPick: false, memuImageURL: "", menuName: "멕시칸랩", menuPrice: 6300,
             menuKcal: 565, carbohydrates: 84, protein: 18, fat: 45),
-        MenuDataModel(restaurantID: "4", isPick: false, memuImageURL: "", menuName: "존맛탱", menuPrice: 6300, menuKcal: nil, carbohydrates: nil, protein: nil, fat: nil)
+        MenuDataModel(restaurantID: "4", isPick: false, memuImageURL: "", menuName: "일반식 일반식 일반식 일반식 일반식", menuPrice: 6300, menuKcal: nil, carbohydrates: nil, protein: nil, fat: nil)
      ]
 }
