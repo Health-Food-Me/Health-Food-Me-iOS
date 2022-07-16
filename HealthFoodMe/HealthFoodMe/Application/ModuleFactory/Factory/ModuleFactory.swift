@@ -10,6 +10,7 @@ import Foundation
 protocol ModuleFactoryProtocol {
     
     // MARK: - Auth
+    func makeLoginVC() -> SocialLoginVC
     func makeNicknameChangeVC() -> NicknameChangeVC
     func makeUserWithdrawlVC() -> UserWithdrawalVC
 
@@ -23,6 +24,8 @@ protocol ModuleFactoryProtocol {
     func makeMenuTabVC() -> MenuTabVC
     func makeCopingTabVC() -> CopingTabVC
     func makeReviewDetailVC() -> ReviewDetailVC
+    func makeReviewWriteVC() -> ReviewWriteVC
+    func makeReviewWriteNavigationController() -> ReviewWriteNavigationController
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC
@@ -33,6 +36,8 @@ protocol ModuleFactoryProtocol {
     
     // MARK: - Spalsh
     func makeSplashVC() -> SplashVC
+    // MARK: - Setting
+    func makeSettingVC() -> SettingVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -42,6 +47,11 @@ class ModuleFactory: ModuleFactoryProtocol {
     }
   
     // MARK: - Auth
+    func makeLoginVC() -> SocialLoginVC {
+        let vc = SocialLoginVC.controllerFromStoryboard(.socialLogin)
+        return vc
+    }
+    
     func makeNicknameChangeVC() -> NicknameChangeVC {
         let repository = DefaultNicknameRepository()
         let useCase = DefaultNicknameChangeUseCase(repository: repository)
@@ -61,9 +71,21 @@ class ModuleFactory: ModuleFactoryProtocol {
         
         return vc
     }
+    
+    func makeReviewWriteVC() -> ReviewWriteVC {
+        let vc = ReviewWriteVC.controllerFromStoryboard(.reviewWrite)
+
+        return vc
+    }
+
 
     
     // MARK: - Map
+    func makeMainMapNavigationController() -> MainMapNavigationController {
+        print("")
+        return MainMapNavigationController.controllerFromStoryboard(.mainMap)
+    }
+    
     func makeMainMapVC() -> MainMapVC {
         let repository = DefaultMainMapRepository()
         let useCase = DefaultMainMapUseCase(repository: repository)
@@ -112,14 +134,14 @@ class ModuleFactory: ModuleFactoryProtocol {
         return vc
     }
     
-    func makeReviewDetailVC() -> ReviewDetailVC {
-        let vc = ReviewDetailVC.controllerFromStoryboard(.reviewDetail)
+    func makeReviewWriteNavigationController() -> ReviewWriteNavigationController {
+        let nc = ReviewWriteNavigationController.controllerFromStoryboard(.reviewWrite)
         
-        return vc
+        return nc
     }
     
-    func makeReviewWriteVC() -> ReviewWriteVC {
-        let vc = ReviewWriteVC.controllerFromStoryboard(.reviewWrite)
+    func makeReviewDetailVC() -> ReviewDetailVC {
+        let vc = ReviewDetailVC.controllerFromStoryboard(.reviewDetail)
         
         return vc
     }
@@ -155,6 +177,10 @@ class ModuleFactory: ModuleFactoryProtocol {
         let vc = SplashVC.controllerFromStoryboard(.splash)
         
         return vc
+    }
+    // MARK: - Setting
+    func makeSettingVC() -> SettingVC {
+        return SettingVC.controllerFromStoryboard(.setting)
     }
 
     // MARK: - Plan

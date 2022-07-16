@@ -287,6 +287,7 @@ extension HamburgerBarVC {
         
         settingButton.press {
             self.dismiss(animated: false)
+            
             self.delegate?.HamburgerbarVCDidTap(hamburgerType: .setting)
         }
         
