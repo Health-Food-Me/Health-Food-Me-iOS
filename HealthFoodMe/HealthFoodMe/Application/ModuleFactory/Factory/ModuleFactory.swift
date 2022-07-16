@@ -9,6 +9,10 @@ import Foundation
 
 protocol ModuleFactoryProtocol {
     
+    // MARK: - Auth
+    func makeNicknameChangeVC() -> NicknameChangeVC
+    func makeUserWithdrawlVC() -> UserWithdrawalVC
+
     // MARK: - Map
     func makeMainMapVC() -> MainMapVC
     func makeHamburgerBarVC() -> HamburgerBarVC
@@ -16,10 +20,15 @@ protocol ModuleFactoryProtocol {
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
     func makeMenuTabVC() -> MenuTabVC
+//    func makeReviewTabVC() -> ReviewTabVC
+    func makeReviewDetailVC() -> ReviewDetailVC
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC
     func makeSearchResultVC() -> SearchResultVC
+    
+    // MARK: - Scrap
+    func makeScrapVC() -> ScrapVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -27,6 +36,28 @@ class ModuleFactory: ModuleFactoryProtocol {
     static func resolve() -> ModuleFactory {
         return ModuleFactory()
     }
+  
+    // MARK: - Auth
+    func makeNicknameChangeVC() -> NicknameChangeVC {
+        let repository = DefaultNicknameRepository()
+        let useCase = DefaultNicknameChangeUseCase(repository: repository)
+        let viewModel = NicknameChangeViewModel(useCase: useCase)
+        let vc = NicknameChangeVC.controllerFromStoryboard(.nicknameChange)
+        vc.viewModel = viewModel
+        
+        return vc
+    }
+    
+    func makeUserWithdrawlVC() -> UserWithdrawalVC {
+        let repository = DefaultNicknameRepository()
+        let useCase = DefaultUserWithdrawlUseCase(repository: repository)
+        let viewModel = UserWithdrawalViewModel(useCase: useCase)
+        let vc = UserWithdrawalVC.controllerFromStoryboard(.userWithdrawal)
+        vc.viewModel = viewModel
+        
+        return vc
+    }
+
     
     // MARK: - Map
     func makeMainMapVC() -> MainMapVC {
@@ -62,6 +93,13 @@ class ModuleFactory: ModuleFactoryProtocol {
         return vc
     }
     
+    func makeReviewDetailVC() -> ReviewDetailVC {
+        let vc = ReviewDetailVC.controllerFromStoryboard(.reviewDetail)
+        
+        return vc
+    }
+    
+    
     // MARK: - Search
     func makeSearchVC() -> SearchVC {
         let vc = SearchVC.controllerFromStoryboard(.search)
@@ -71,6 +109,20 @@ class ModuleFactory: ModuleFactoryProtocol {
     
     func makeSearchResultVC() -> SearchResultVC {
         let vc = SearchResultVC.controllerFromStoryboard(.searchResult)
+        
+        return vc
+    }
+    
+    // MARK: - Scrap
+    func makeScrapVC() -> ScrapVC {
+        let vc = ScrapVC.controllerFromStoryboard(.scrap)
+        
+        return vc
+    }
+    
+    // MARK: - HelfmeAlert
+    func makeHelfmeAlertVC() -> HelfmeAlertVC {
+        let vc = HelfmeAlertVC.controllerFromStoryboard(.helfmeAlert)
         
         return vc
     }

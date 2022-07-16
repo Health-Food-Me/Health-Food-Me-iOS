@@ -2,8 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>사용자의 위치를 받습니다</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>사용자의 위치를 받습니다</string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>NSCameraUsageDescription</key>
+	<string>리뷰 사진 촬영을 위해 시스템 카메라에 접근합니다</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>리뷰를 작성하기 위해 사용자의 갤러리에 접근합니다</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Bold.otf</string>
@@ -28,8 +38,10 @@
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>kakaomap</string>
 		<string>kakaokompassauth</string>
 		<string>kakaolink</string>
+		<string>nmap</string>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
@@ -49,8 +61,6 @@
 					<string>Default Configuration</string>
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
-					<key>UISceneStoryboardFile</key>
-					<string>BlogReviewTab</string>
 				</dict>
 			</array>
 		</dict>

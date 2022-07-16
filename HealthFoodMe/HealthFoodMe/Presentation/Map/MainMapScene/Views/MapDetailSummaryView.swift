@@ -67,7 +67,6 @@ final class MapDetailSummaryView: UIView {
     
     private let starRateView: StarRatingView = {
         let st = StarRatingView(starScale: 14)
-        st.spacing = 4
         st.rate = 4.3
         return st
     }()
@@ -147,7 +146,7 @@ extension MapDetailSummaryView {
         starRateStackView.addArrangedSubviews(starRateView, rateLabel)
         
         starRateView.snp.makeConstraints { make in
-            make.width.equalTo(87)
+            make.width.equalTo(70)
             make.centerY.equalToSuperview()
         }
         

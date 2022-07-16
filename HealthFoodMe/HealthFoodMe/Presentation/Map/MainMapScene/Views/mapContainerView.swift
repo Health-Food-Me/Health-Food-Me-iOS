@@ -16,6 +16,7 @@ final class NaverMapContainerView: UIView {
     private var markers = [NMFMarker]()
     private var previousMarker: NMFMarker?
     private var selectedMarker: NMFMarker?
+    private var selectedMarkerType: MapPointDataModel?
     var naverMapView = NMFNaverMapView()
     var delegate: NMFMapViewTouchDelegate?
     var pointList = PublishRelay<[MapPointDataModel]>()
@@ -40,8 +41,9 @@ final class NaverMapContainerView: UIView {
 extension NaverMapContainerView {
     private func setUI() {
         naverMapView = NMFNaverMapView(frame: self.frame)
-        naverMapView.showLocationButton = true
-        naverMapView.mapView.positionMode = .compass
+        naverMapView.mapView.positionMode = .direction
+        naverMapView.mapView.locationOverlay.hidden = true
+        naverMapView.showZoomControls = false
         
         addSubview(naverMapView)
         
@@ -51,7 +53,7 @@ extension NaverMapContainerView {
         
     }
     
-    private func moveCameraPosition(_ point: NMGLatLng) {
+    func moveCameraPosition(_ point: NMGLatLng) {
         let cameraUpdate = NMFCameraUpdate(scrollTo: point)
         cameraUpdate.animation = .fly
         cameraUpdate.animationDuration = 2
@@ -79,15 +81,31 @@ extension NaverMapContainerView {
             for point in points {
                 let marker = NMFMarker()
                 marker.position = NMGLatLng.init(lat: point.latitude, lng: point.longtitude)
-                self.setMarkState(mark: marker, selectState: false)
-                marker.touchHandler = { _ in
-                    if let seletedMark = self.selectedMarker {
-                        self.setMarkState(mark: seletedMark, selectState: false)
+                switch point.type {
+                case .normalFood:
+                    self.setNormalMarkState(mark: marker, selectState: false)
+                    marker.touchHandler = { _ in
+                        if let seletedMark = self.selectedMarker {
+                            self.setNormalMarkState(mark: seletedMark, selectState: false)
+                        }
+                        self.setNormalMarkState(mark: marker, selectState: true)
+                        self.setSelectPoint.accept(point)
+                        self.selectedMarker = marker
+                        self.selectedMarkerType = point
+                        return true
                     }
-                    self.setMarkState(mark: marker, selectState: true)
-                    self.setSelectPoint.accept(point)
-                    self.selectedMarker = marker
-                    return true
+                case .healthFood:
+                    self.setHealthMarkState(mark: marker, selectState: false)
+                    marker.touchHandler = { _ in
+                        if let seletedMark = self.selectedMarker {
+                            self.setHealthMarkState(mark: seletedMark, selectState: false)
+                        }
+                        self.setHealthMarkState(mark: marker, selectState: true)
+                        self.setSelectPoint.accept(point)
+                        self.selectedMarker = marker
+                        self.selectedMarkerType = point
+                        return true
+                    }
                 }
                 self.markers.append(marker)
             }
@@ -107,20 +125,42 @@ extension NaverMapContainerView {
             return point.position == NMGPosition
         }).first else { return }
         moveCameraPosition(NMGPosition)
-        if let seletedMark = self.selectedMarker {
-            setMarkState(mark: seletedMark, selectState: false)
+        if let seletedMark = self.selectedMarker,
+           let type = selectedMarkerType?.type {
+            switch type {
+            case .healthFood:
+                setHealthMarkState(mark: seletedMark, selectState: false)
+            case .normalFood:
+                setNormalMarkState(mark: seletedMark, selectState: false)
+            }
         }
-        setMarkState(mark: marker, selectState: true)
+        switch selectedPoint.type {
+        case .healthFood:
+            setHealthMarkState(mark: marker, selectState: true)
+        case .normalFood:
+            setNormalMarkState(mark: marker, selectState: true)
+        }
         self.selectedMarker = marker
+        self.selectedMarkerType = selectedPoint
     }
     
     private func disableAllMarker() {
-        guard selectedMarker != nil else { return }
-        setMarkState(mark: selectedMarker!, selectState: false)
+        guard selectedMarker != nil, let markerType = selectedMarkerType?.type else { return }
+        switch markerType {
+        case .healthFood:
+            setHealthMarkState(mark: selectedMarker!, selectState: false)
+        case .normalFood:
+            setNormalMarkState(mark: selectedMarker!, selectState: false)
+        }
     }
     
-    private func setMarkState(mark: NMFMarker, selectState: Bool) {
+    private func setNormalMarkState(mark: NMFMarker, selectState: Bool) {
         let iconName = selectState ? "icn_normal_seleted" : "icn_normal"
+        mark.iconImage = NMFOverlayImage.init(image: UIImage(named: iconName) ?? UIImage())
+    }
+    
+    private func setHealthMarkState(mark: NMFMarker, selectState: Bool) {
+        let iconName = selectState ? "icn_diet_selected" : "icn_diet"
         mark.iconImage = NMFOverlayImage.init(image: UIImage(named: iconName) ?? UIImage())
     }
 }

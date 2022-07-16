@@ -14,19 +14,22 @@ final class MenuCategoryCVC: UICollectionViewCell, UICollectionViewRegisterable 
     // MARK: - Properties
     
     static var isFromNib: Bool = false
-    
     override var isSelected: Bool {
         didSet {
-            
+            resetUI()
         }
     }
+    var isDietMenu: Bool = true
+    private var originalImage: UIImage = UIImage()
     
     // MARK: - UI Components
     
     private let menuImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .center
-        iv.image = ImageLiterals.Map.manifyingIcon
+        iv.image = UIImage()
+        iv.adjustsImageSizeForAccessibilityContentSizeCategory = true
+        iv.tintColor = .helfmeWhite
         return iv
     }()
     
@@ -60,18 +63,30 @@ extension MenuCategoryCVC {
         self.backgroundColor = .white
     }
     
+    private func resetUI() {
+        if isSelected {
+            menuNameLabel.textColor = .helfmeWhite
+            menuImageView.image = menuImageView.image?.withRenderingMode(.alwaysTemplate)
+            self.backgroundColor = isDietMenu ? .helfmeGreenSubDark : .mainRed
+        } else {
+            menuNameLabel.textColor = .helfmeBlack
+            menuImageView.image = originalImage
+            self.backgroundColor = .helfmeWhite
+        }
+    }
+    
     private func setLayout() {
         self.addSubviews(menuImageView, menuNameLabel)
         
         menuImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.width.height.equalTo(24)
-            make.leading.equalToSuperview().inset(4)
+            make.leading.equalToSuperview().inset(8)
         }
         
         menuNameLabel.snp.makeConstraints { make in
             make.centerY.equalTo(menuImageView.snp.centerY)
-            make.leading.equalTo(menuImageView.snp.trailing).offset(8)
+            make.leading.equalTo(menuImageView.snp.trailing).offset(5)
             make.trailing.equalToSuperview().inset(12)
         }
     }
@@ -79,5 +94,6 @@ extension MenuCategoryCVC {
     func setData(data: MainMapCategory) {
         self.menuNameLabel.text = data.menuName
         self.menuImageView.image = data.menuIcon
+        self.originalImage = data.menuIcon
     }
 }
