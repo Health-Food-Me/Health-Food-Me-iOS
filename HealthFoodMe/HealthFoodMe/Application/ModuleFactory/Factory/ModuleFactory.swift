@@ -20,6 +20,7 @@ protocol ModuleFactoryProtocol {
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
     func makeMenuTabVC() -> MenuTabVC
+    func makeCopingTabVC() -> CopingTabVC
     func makeReviewDetailVC() -> ReviewDetailVC
     
     // MARK: - Search
@@ -28,6 +29,9 @@ protocol ModuleFactoryProtocol {
     
     // MARK: - Scrap
     func makeScrapVC() -> ScrapVC
+    
+    // MARK: - Spalsh
+    func makeSplashVC() -> SplashVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -92,8 +96,20 @@ class ModuleFactory: ModuleFactoryProtocol {
         return vc
     }
     
+    func makeCopingTabVC() -> CopingTabVC {
+        let vc = CopingTabVC.controllerFromStoryboard(.copingTab)
+        
+        return vc
+    }
+    
     func makeReviewDetailVC() -> ReviewDetailVC {
         let vc = ReviewDetailVC.controllerFromStoryboard(.reviewDetail)
+        
+        return vc
+    }
+    
+    func makeReviewWriteVC() -> ReviewWriteVC {
+        let vc = ReviewWriteVC.controllerFromStoryboard(.reviewWrite)
         
         return vc
     }
@@ -124,17 +140,13 @@ class ModuleFactory: ModuleFactoryProtocol {
         
         return vc
     }
+    
+    func makeSplashVC() -> SplashVC {
+        let vc = SplashVC.controllerFromStoryboard(.splash)
+        
+        return vc
+    }
 
     // MARK: - Plan
-    
-//    func instantiatePlanPreviewVC(postID: Int) -> PlanPreviewVC {
-//        let repository = DefaultPlanPreviewRepository(service: BaseService.default)
-//        let useCase = DefaultPlanPreviewUseCase(repository: repository, postIdx: postID)
-//        let viewModel = PlanPreviewViewModel(useCase: useCase)
-//        let vc = PlanPreviewVC.controllerFromStoryboard(.planPreview)
-//        vc.viewModel = viewModel
-//
-//        return vc
-//    }
     
 }

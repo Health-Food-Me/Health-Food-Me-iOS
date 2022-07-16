@@ -21,6 +21,9 @@ class ReviewDetailVC: UIViewController {
     private let withContents = 2
     private let withoutImageAndContents = 3
     
+    private var reviewData: [ReviewCellViewModel] = []
+    weak var delegate: ScrollDeliveryDelegate?
+    var topScrollAnimationNotFinished: Bool = true
     private var reviewData: [ReviewCellViewModel] = [] { didSet {
         fetchCutStringList()
         fetchExpendStateList()
@@ -45,6 +48,7 @@ class ReviewDetailVC: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .helfmeWhite
         cv.showsVerticalScrollIndicator = false
+        cv.bounces = false
         
         return cv
     }()
@@ -193,6 +197,42 @@ extension ReviewDetailVC {
     }
 }
 
+extension ReviewDetailVC: UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        let yVelocity = scrollView.panGestureRecognizer.velocity(in: scrollView).y
+        print(yVelocity)
+        print(scrollView.contentOffset.y)
+        if yVelocity > 300 && scrollView.contentOffset.y == 0 {
+            delegate?.childViewScrollDidEnd(type: .menu)
+            return
+        }
+        
+        if yVelocity < 0 && topScrollAnimationNotFinished {
+            print(reviewCV.isScrollEnabled)
+            reviewCV.isScrollEnabled = false
+        }
+        delegate?.scrollStarted(velocity: yVelocity, scrollView: scrollView)
+    }
+    
+    // 손가락을 놓을때 처리하는 부분
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        print(reviewCV.isScrollEnabled)
+        reviewCV.isScrollEnabled = true
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("scrollViewCONTENTOFFSET",scrollView.contentOffset.y)
+        if scrollView.contentOffset.y <= 0{
+            delegate?.childViewScrollDidEnd(type: .menu)
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        delegate?.currentTabMenu(.review)
+    }
+}
+
 extension ReviewDetailVC: UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
@@ -287,9 +327,7 @@ extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
         let width = UIScreen.main.bounds.width
         switch indexPath.section {
         case 0:
-            let cellWidth = width * 226/375
-            let cellHeight = cellWidth * 40/335
-            return CGSize(width: cellWidth, height: cellHeight)
+            return CGSize(width: width, height: 58)
         case 1:
             if selectedCustomSegment == 0 {
                 if ReviewDataModel.sampleData.count == 0 {

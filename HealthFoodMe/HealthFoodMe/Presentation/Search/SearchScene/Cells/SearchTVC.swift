@@ -52,8 +52,8 @@ extension SearchTVC {
             searchImageView.image = ImageLiterals.Search.normalIcon
         }
         searchLabel.text = data.title
+        searchLabel.textColor = .helfmeBlack
         searchLabel.partColorChange(targetString: searchContent, textColor: .mainRed)
-        print(searchContent)
     }
     
     private func setUI() {

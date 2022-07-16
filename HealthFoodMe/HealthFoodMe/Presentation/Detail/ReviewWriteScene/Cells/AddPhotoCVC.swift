@@ -41,7 +41,7 @@ final class AddPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     lazy var photoCountLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "0/5"
+        lb.text = "0/3"
         lb.textColor = .helfmeTagGray
         lb.font = .NotoRegular(size: 14)
         return lb
@@ -85,7 +85,6 @@ extension AddPhotoCVC {
         
         addPhotoView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-//            make.width.height.equalTo(105)
         }
         
         addPhotoImageView.snp.makeConstraints { make in
