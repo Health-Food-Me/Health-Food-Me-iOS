@@ -58,6 +58,29 @@ struct I18N {
         아직 작성된 리뷰가 없습니다
         첫 리뷰를 작성해 주세요
         """
+            static let questionTaste = "맛은 어때요?"
+            static let questionTasteSub = "필수 한 개 선택해주세요!"
+            static let tagGood = "# 맛 최고"
+            static let tagSoso = "# 맛 그럭저럭"
+            static let tagBad = "# 맛 별로에요"
+            static let questionFeeling = "어떤 점이 좋았나요?"
+            static let questionFeelingSub = "식당을 방문하신 후 좋았던 부분에 체크해주세요! (중복가능)"
+            static let tagNoBurden = "# 약속 시 부담 없는"
+            static let tagEasy = "# 양 조절 쉬운"
+            static let tagStrong = "# 든든한"
+            static let questionReview = "후기를 남겨주세요."
+            static let questionReviewSub = "식당 이용 후기, 메뉴추천, 꿀팁 등 자유롭게 작성해주세요!"
+            static let reviewPlaceholder = "리뷰를 작성해주세요 (최대 500자)"
+            static let reviewTextCount = "0/500자"
+            static let questionPhoto = "사진을 올려주세요"
+            static let questionPhotoOption = "(선택)"
+            static let questionPhotoSub =  "해당 가게와 무관한 사진을 첨부하면 노출 제한 처리될 수 있습니다. \n사진첨부 시 개인정보가 노출되지 않도록 유의해주세요."
+            static let writeReview = "리뷰 쓰기"
+            static let checkReviewToast = "별점과 맛 평가는 필수입니다."
+            static let checkPhotoToast = "사진 첨부는 최대 3장까지만 가능합니다!"
+            
+            
+            
         }
     }
     

@@ -62,7 +62,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let questionTasteLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "맛은 어때요?"
+        lb.text = I18N.Detail.Review.questionTaste
         lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 14)
         return lb
@@ -70,7 +70,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let questionTasteSubLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "필수 한 개 선택해주세요! "
+        lb.text = I18N.Detail.Review.questionTasteSub
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 12)
         return lb
@@ -90,7 +90,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagGood: UIButton = {
         let btn = UIButton()
-        btn.setTitle("# 맛 최고", for: .normal)
+        btn.setTitle(I18N.Detail.Review.tagGood, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
@@ -104,7 +104,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagSoso: UIButton = {
         let btn = UIButton()
-        btn.setTitle("# 맛 그럭저럭", for: .normal)
+        btn.setTitle(I18N.Detail.Review.tagSoso, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
@@ -118,7 +118,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagBad: UIButton = {
         let btn = UIButton()
-        btn.setTitle("# 맛 별로에요", for: .normal)
+        btn.setTitle(I18N.Detail.Review.tagBad, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
@@ -141,7 +141,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let questionFeelingLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "어떤 점이 좋았나요?"
+        lb.text = I18N.Detail.Review.questionFeeling
         lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 14)
         return lb
@@ -149,7 +149,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let questionFeelingSubLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "식당을 방문하신 후 좋았던 부분에 체크해주세요! (중복가능)"
+        lb.text = I18N.Detail.Review.questionFeelingSub
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 12)
         return lb
@@ -166,7 +166,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagNoBurden: UIButton = {
         let btn = UIButton()
-        btn.setTitle("# 약속 시 부담 없는", for: .normal)
+        btn.setTitle(I18N.Detail.Review.tagNoBurden, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
@@ -180,7 +180,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagEasy: UIButton = {
         let btn = UIButton()
-        btn.setTitle("# 양 조절 쉬운", for: .normal)
+        btn.setTitle(I18N.Detail.Review.tagEasy, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
@@ -194,7 +194,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagStrong: UIButton = {
         let btn = UIButton()
-        btn.setTitle("# 든든한", for: .normal)
+        btn.setTitle(I18N.Detail.Review.tagStrong, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
@@ -217,7 +217,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let reviewLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "후기를 남겨주세요."
+        lb.text = I18N.Detail.Review.questionReview
         lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 14)
         return lb
@@ -225,7 +225,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let reviewSubLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "식당 이용 후기, 메뉴추천, 꿀팁 등 자유롭게 작성해주세요!"
+        lb.text = I18N.Detail.Review.questionReviewSub
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 12)
         return lb
@@ -249,7 +249,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var reviewTextView: UITextView = {
         let tv = UITextView()
-        tv.text = "리뷰를 작성해주세요 (최대 500자)"
+        tv.text = I18N.Detail.Review.reviewPlaceholder
         tv.font = .NotoRegular(size: 12)
         tv.textColor = .helfmeGray2
         tv.backgroundColor = .helfmeBgGray
@@ -259,7 +259,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var textCountLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "0/500자"
+        lb.text = I18N.Detail.Review.reviewTextCount
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 12)
         return lb
@@ -267,7 +267,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let pictureLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "사진을 올려주세요"
+        lb.text = I18N.Detail.Review.questionPhoto
         lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 14)
         return lb
@@ -275,7 +275,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let pictureOptionLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "(선택)"
+        lb.text = I18N.Detail.Review.questionPhotoOption
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 10)
         return lb
@@ -303,7 +303,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var photoSubLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "해당 가게와 무관한 사진을 첨부하면 노출 제한 처리될 수 있습니다. \n사진첨부 시 개인정보가 노출되지 않도록 유의해주세요."
+        lb.text = I18N.Detail.Review.questionPhotoSub
         lb.numberOfLines = 2
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 10)
@@ -312,7 +312,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var writeReviewButton: UIButton = {
         let btn = UIButton()
-        btn.setTitle("리뷰 쓰기", for: .normal)
+        btn.setTitle(I18N.Detail.Review.writeReview, for: .normal)
         btn.setTitleColor(UIColor.helfmeWhite, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoBold(size: 14)
         btn.backgroundColor = .mainRed
@@ -322,14 +322,14 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     }()
     
     private lazy var checkReviewToastView: UpperToastView = {
-        let toastView = UpperToastView(title: "별점과 맛 평가는 필수입니다.")
+        let toastView = UpperToastView(title: I18N.Detail.Review.checkReviewToast)
         toastView.layer.cornerRadius = 20
         toastView.alpha = 0
         return toastView
     }()
     
     private lazy var checkPhotoToastView: UpperToastView = {
-        let toastView = UpperToastView(title: "사진 첨부는 최대 3장까지만 가능합니다!")
+        let toastView = UpperToastView(title: I18N.Detail.Review.checkPhotoToast)
         toastView.layer.cornerRadius = 20
         toastView.alpha = 0
         return toastView
