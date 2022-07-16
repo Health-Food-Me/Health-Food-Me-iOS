@@ -8,11 +8,24 @@
 import UIKit
 
 import SnapKit
+import MessageUI
+
+enum HamburgerType {
+    case editName
+    case scrap
+    case myReview
+    case setting
+}
+
+protocol HamburgerbarVCDelegate: AnyObject {
+    func HamburgerbarVCDidTap(hamburgerType: HamburgerType)
+}
 
 class HamburgerBarVC: UIViewController {
     
     // MARK: - Properties
     
+    weak var delegate: HamburgerbarVCDelegate?
     var hambergurBarViewTranslation = CGPoint(x: 0, y: 0)
     var hambergurBarViewVelocity = CGPoint(x: 0, y: 0)
     var name: String? = "배부른 현우는 행복해요"
@@ -100,6 +113,7 @@ class HamburgerBarVC: UIViewController {
         setUI()
         setLayout()
         addHamburgerBarGesture()
+        addButtonAction()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -247,6 +261,44 @@ extension HamburgerBarVC {
         self.hamburgerBarView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(moveHamburgerBarWithGesture(_:))))
     }
     
+    private func addButtonAction() {
+        editNameButton.press {
+            self.dismiss(animated: false)
+            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .editName)
+        }
+        
+        menuButtons[0].press {  
+            self.dismiss(animated: false)
+            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .scrap)
+        }
+        
+        menuButtons[1].press {
+            self.dismiss(animated: false)
+            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .myReview)
+        }
+        
+        menuButtons[2].press {
+            self.presentReportMail(title: I18N.Map.HamburgerBar.reportStoreTitle, content: I18N.Map.HamburgerBar.reportStoreContent)
+        }
+        
+        menuButtons[3].press {
+            self.presentReportMail(title: I18N.Map.HamburgerBar.reportEditTitle, content: I18N.Map.HamburgerBar.reportEditContent)
+        }
+        
+        settingButton.press {
+            self.dismiss(animated: false)
+            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .setting)
+        }
+        
+        logoutButton.press {
+            self.makeAlert(alertType: .logoutAlert,
+                      title: I18N.HelfmeAlert.logout,
+                      subtitle: I18N.HelfmeAlert.logoutContent) {
+                self.makeAlert(title: "", message: "로그아웃 성공 ~ ~ !")
+            }
+        }
+    }
+    
     // MARK: - @objc Methods
     
     @objc func moveHamburgerBarWithGesture(_ sender: UIPanGestureRecognizer) {
@@ -285,3 +337,23 @@ extension HamburgerBarVC {
         }
     }
 }
+
+extension HamburgerBarVC: MFMailComposeViewControllerDelegate {
+    private func presentReportMail(title: String, content: String) {
+        let mailComposeVC = MFMailComposeViewController()
+        if MFMailComposeViewController.canSendMail() {
+            mailComposeVC.mailComposeDelegate = self
+            mailComposeVC.setToRecipients(["0inn1220@gmail.com"])
+            mailComposeVC.setSubject(title)
+            mailComposeVC.setMessageBody(content, isHTML: false)
+            self.present(mailComposeVC, animated: true, completion: nil)
+        } else {
+            makeAlert(title: "메세지 전송 실패", message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.")
+        }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
