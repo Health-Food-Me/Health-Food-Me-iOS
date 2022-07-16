@@ -12,12 +12,23 @@ import NMapsMap
 import RxSwift
 import SnapKit
 
+protocol SupplementMapVCDelegate: AnyObject {
+    func supplementMapClicked()
+    func supplementMapMarkerClicked()
+}
+
 class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
     
     // MARK: - Properties
     
+    enum SupplementMapType {
+        case scrap
+        case search
+    }
+    var mapType = SupplementMapType.scrap
     private let disposeBag = DisposeBag()
     private let locationManager = NMFLocationManager.sharedInstance()
+    weak var delegate: SupplementMapVCDelegate?
     
     // MARK: - UI Components
     
@@ -59,6 +70,15 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
     private var mapDetailSummaryView = MapDetailSummaryView()
     
     // MARK: - View Life Cycle
+    
+    init(mapType: SupplementMapType) {
+        super.init(nibName: nil, bundle: nil)
+        self.mapType = mapType
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,7 +124,7 @@ extension SupplementMapVC {
         
         mapDetailSummaryView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().inset(UIScreen.main.bounds.height - 189)
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
             make.height.equalTo(UIScreen.main.bounds.height + 300)
         }
         
@@ -167,27 +187,56 @@ extension SupplementMapVC {
     private func bindMapView() {
         mapView.rx.mapViewClicked
             .subscribe(onNext: { _ in
-                self.mapView.disableSelectPoint.accept(())
-                self.mapDetailSummaryView.snp.updateConstraints { make in
-                    make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
-                }
-                UIView.animate(withDuration: 0.3, delay: 0) {
-                    self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
-                    self.view.layoutIfNeeded()
+                switch self.mapType {
+                case .search:
+                    self.bindMapViewClickedForSearchVC()
+                case .scrap:
+                    self.bindMapViewClickedForScrapVC()
                 }
             }).disposed(by: self.disposeBag)
         
         mapView.setSelectPoint
             .subscribe(onNext: { [weak self] dataModel in
-                let summaryViewHeight: CGFloat = 189
-                self?.mapDetailSummaryView.snp.updateConstraints { make in
-                    make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
-                }
-                UIView.animate(withDuration: 0.3, delay: 0) {
-                    self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
-                    self?.view.layoutIfNeeded()
+                guard let self = self else { return }
+                switch self.mapType {
+                case .search:
+                    self.bindSetSelectPointForSearchVC()
+                case .scrap:
+                    self.bindSetSelectPointForScrapVC()
                 }
             }).disposed(by: self.disposeBag)
+    }
+    
+    private func bindMapViewClickedForSearchVC() {
+        self.mapView.disableSelectPoint.accept(())
+        self.mapDetailSummaryView.snp.updateConstraints { make in
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
+        }
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.delegate?.supplementMapClicked()
+        }
+    }
+    
+    private func bindMapViewClickedForScrapVC() {
+        self.mapView.disableSelectPoint.accept(())
+        self.mapDetailSummaryView.snp.updateConstraints { make in
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
+        }
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func bindSetSelectPointForSearchVC() {
+        delegate?.supplementMapMarkerClicked()
+    }
+    
+    private func bindSetSelectPointForScrapVC() {
+        showSummaryView()
     }
     
     private func sampleViewInputEvent() {
@@ -238,6 +287,38 @@ extension SupplementMapVC {
     
     private func popViewController() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func setSupplementMapType(mapType: SupplementMapType) {
+        switch mapType {
+        case .scrap:
+            break
+        case .search:
+            removeCustomNaviBar()
+        }
+    }
+    
+    private func removeCustomNaviBar() {
+        [statusTopView, customNavigationBar].forEach { view in
+            view.isHidden = true
+        }
+    }
+    
+    private func updateConstraints() {
+        myLocationButton.snp.updateConstraints { make in
+            make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-100)
+        }
+    }
+    
+    func showSummaryView() {
+        let summaryViewHeight: CGFloat = 189
+        self.mapDetailSummaryView.snp.updateConstraints { make in
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
+        }
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutIfNeeded()
+        }
     }
     
     @objc

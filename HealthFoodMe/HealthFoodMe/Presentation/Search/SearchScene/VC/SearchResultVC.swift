@@ -21,14 +21,12 @@ final class SearchResultVC: UIViewController {
     weak var delegate: SearchResultVCDelegate?
     private var isBottom: Bool = true
     var searchResultList: [SearchResultDataModel] = []
+    private let mapViewController: SupplementMapVC = {
+        let vc = ModuleFactory.resolve().makeSupplementMapVC(forSearchVC: true)
+        return vc
+    }()
     
     // MARK: - UI Components
-    
-    private let mapView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .mainGreen
-        return view
-    }()
     
     private let topView: UIView = {
         let view = UIView()
@@ -115,6 +113,7 @@ final class SearchResultVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setChildViewController()
         initUI()
         setUI()
         setLayout()
@@ -146,6 +145,14 @@ extension SearchResultVC {
 // MARK: - Methods
 
 extension SearchResultVC {
+    private func setChildViewController() {
+        self.addChild(mapViewController)
+        self.view.addSubview(mapViewController.view)
+        mapViewController.setSupplementMapType(mapType: .search)
+        mapViewController.delegate = self
+        mapViewController.didMove(toParent: self)
+    }
+    
     private func initUI() {
         UIView.animate(withDuration: 0.2, animations: {
             self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 585)
@@ -166,7 +173,6 @@ extension SearchResultVC {
         view.addSubviews(topView,
                          searchTextField,
                          lineView,
-                         mapView,
                          searchResultTableView)
         
         topView.snp.makeConstraints {
@@ -194,11 +200,6 @@ extension SearchResultVC {
             $0.top.equalTo(searchTextField.snp.bottom)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(1)
-        }
-        
-        mapView.snp.makeConstraints {
-            $0.top.equalTo(lineView.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
         }
         
         searchResultHeaderView.addSubviews(searchResultHeaderButton)
@@ -285,6 +286,22 @@ extension SearchResultVC: UIScrollViewDelegate {
         searchResultTableView.layer.shadowOpacity = 0
         searchResultLineView.isHidden = true
         searchResultTableView.isScrollEnabled = true
+    }
+}
+
+extension SearchResultVC: SupplementMapVCDelegate {
+    func supplementMapClicked() {
+        UIView.animate(withDuration: 0.2) {
+            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 585)
+        }
+    }
+    
+    func supplementMapMarkerClicked() {
+        UIView.animate(withDuration: 0.2) {
+            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
+        } completion: { _ in
+            self.mapViewController.showSummaryView()
+        }
     }
 }
 

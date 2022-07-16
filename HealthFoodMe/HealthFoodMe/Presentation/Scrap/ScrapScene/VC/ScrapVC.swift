@@ -132,7 +132,7 @@ extension ScrapVC {
 extension ScrapVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: false)
-        let vc = ModuleFactory.resolve().makeSupplementMapVC()
+        let vc = ModuleFactory.resolve().makeSupplementMapVC(forSearchVC: false)
         vc.navigationController?.isNavigationBarHidden = false
         vc.navigationController?.isToolbarHidden = false
         vc.navigationController?.setNavigationBarHidden(false, animated: false)
