@@ -21,7 +21,6 @@ class ReviewDetailVC: UIViewController {
     private let withContents = 2
     private let withoutImageAndContents = 3
     
-    private var reviewData: [ReviewCellViewModel] = []
     weak var delegate: ScrollDeliveryDelegate?
     var topScrollAnimationNotFinished: Bool = true
     private var reviewData: [ReviewCellViewModel] = [] { didSet {
@@ -138,7 +137,8 @@ extension ReviewDetailVC {
         for blogReviewData in blogReviewDataList {
             blogReviewResult.append(
                 BlogReviewDataModel.init(blogReviewTitle: blogReviewData.blogReviewTitle,
-                                         blogReviewContents: blogReviewData.blogReviewContents))
+                                         blogReviewContents: blogReviewData.blogReviewContents,
+                                         blogURL: blogReviewData.blogURL))
         }
         
         self.reviewData = reviewResult
@@ -222,7 +222,6 @@ extension ReviewDetailVC: UIScrollViewDelegate {
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("scrollViewCONTENTOFFSET",scrollView.contentOffset.y)
         if scrollView.contentOffset.y <= 0{
             delegate?.childViewScrollDidEnd(type: .menu)
         }
@@ -318,6 +317,16 @@ extension ReviewDetailVC: UICollectionViewDataSource {
             }
         default:
             return UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 1:
+            URLSchemeManager.shared.loadSafariApp(blogLink: blogReviewData[indexPath.row].blogURL)
+        default:
+            break
+            
         }
     }
 }
