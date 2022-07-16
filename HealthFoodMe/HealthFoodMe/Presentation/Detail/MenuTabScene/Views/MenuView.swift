@@ -110,7 +110,6 @@ final class MenuView: UIView {
         super.init(frame: frame)
         setUI()
         setLayout()
-        print(getTitleLabelHeight())
     }
     
     required init?(coder: NSCoder) {
@@ -171,5 +170,6 @@ extension MenuView {
     }
     
     private func updateLayout() {
-
+        
+    }
 }
