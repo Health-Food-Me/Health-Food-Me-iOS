@@ -7,9 +7,19 @@
 
 import UIKit
 
+import SnapKit
+
+protocol ScrapEmptyViewDelegate: AnyObject {
+    func scrapEmptyViewDidTap()
+}
+
 class ScrapEmptyView: UIView {
     
     // MARK: - Properties
+    
+    weak var delegate: ScrapEmptyViewDelegate?
+    
+    // MARK: - UI Components
     
     private let withHelpme: UILabel = {
         let lb = UILabel()
@@ -34,6 +44,7 @@ class ScrapEmptyView: UIView {
         btn.setTitleColor(UIColor.helfmeWhite, for: .normal)
         btn.titleLabel?.font = .NotoBold(size: 16)
         btn.layer.cornerRadius = 22
+        btn.addTarget(self, action: #selector(popToMainMapVC), for: .touchUpInside)
         return btn
     }()
     
@@ -58,6 +69,14 @@ class ScrapEmptyView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - @objc Methods
+
+extension ScrapEmptyView {
+    @objc func popToMainMapVC() {
+        delegate?.scrapEmptyViewDidTap()
     }
 }
 

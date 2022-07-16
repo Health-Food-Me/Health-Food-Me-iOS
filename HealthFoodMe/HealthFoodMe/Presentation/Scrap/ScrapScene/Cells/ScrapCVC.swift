@@ -97,7 +97,8 @@ extension ScrapCVC {
         
         storeImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.height.width.equalTo(160)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(160)
         }
         
         scrapButton.snp.makeConstraints {
