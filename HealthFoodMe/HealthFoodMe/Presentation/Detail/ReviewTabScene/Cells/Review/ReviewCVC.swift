@@ -20,10 +20,11 @@ class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         }
     }
     
-    var setEnumValue = 0
+    var layoutEnumValue = 0
     
     let width = UIScreen.main.bounds.width
-    
+    var clickedEvent: ((Int) -> Void)?
+    var isFolded: Bool = true
     // MARK: - UI Components
     
     private var nameLabel: UILabel = {
@@ -83,6 +84,16 @@ class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         return view
     }()
     
+    lazy var moreTapButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.press {
+            guard let index = self.getIndexPath() else { return }
+            self.clickedEvent?(index)
+        }
+        return button
+    }()
+    
     // MARK: - Life Cycle Part
     
     override init(frame: CGRect) {
@@ -121,7 +132,7 @@ extension ReviewCVC {
     
     func setDefaultLayout() {
         contentView.addSubviews(nameLabel, starView, tagCV,
-                                reviewPhotoCV, reviewContents, reviewSeperatorView)
+                                reviewPhotoCV, reviewContents, reviewSeperatorView,moreTapButton)
         
         let width = UIScreen.main.bounds.width
         
@@ -166,10 +177,19 @@ extension ReviewCVC {
             make.bottom.equalToSuperview().offset(-28)
             make.width.equalTo(width - 40)
         }
+        
+        moreTapButton.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-28)
+            make.trailing.equalToSuperview().offset(-30)
+            make.width.equalTo(width - 40)
+            make.height.equalToSuperview()
+        }
+        
+
     }
     
     func setLayout() {
-        switch setEnumValue {
+        switch layoutEnumValue {
         case 0:
             setLayoutWithImageAndContents()
         case 1:
@@ -253,14 +273,58 @@ extension ReviewCVC {
         }
     }
     
-    func setData(reviewData: ReviewDataModel) {
+    func setData(reviewData: ReviewDataModel,
+                 text: String,
+                 isFoldRequired: Bool,
+                 expanded: Bool) {
         nameLabel.text = reviewData.reviewer
         nameLabel.sizeToFit()
         starView.rate = CGFloat(reviewData.starLate)
         self.cellViewModel = reviewData
-        reviewContents.text = reviewData.reviewContents
+        reviewContents.text = text
         reviewContents.sizeToFit()
+        
+        if isFoldRequired {
+            moreTapButton.isHidden = false
+        } else {
+            moreTapButton.isHidden = true
+        }
+        
+        if !expanded {
+            setPartContentsAttributes()
+        } else {
+            let attributedString = NSMutableAttributedString(string: text)
+            reviewContents.attributedText = attributedString
+        }
+        
         self.contentView.layoutIfNeeded()
+    }
+    
+    private func getIndexPath() -> Int? {
+        guard let superView = self.superview as? UICollectionView else {
+            return nil
+        }
+        let indexPath = superView.indexPath(for: self)
+        return indexPath?.row
+    }
+    
+    func setPartContentsAttributes() {
+        var textCount = 0
+        var length = 0
+        if reviewContents.text?.count ?? 0 < 3 {
+            textCount = 3
+            length = reviewContents.text?.count ?? 0
+        } else {
+            textCount = reviewContents.text?.count ?? 0
+            length = 3
+        }
+        let fullText = reviewContents.text
+        let range = NSRange(location: textCount - 3, length: length)
+            
+        let attributedString = NSMutableAttributedString(string: fullText ?? "")
+        attributedString.addAttribute(.font, value: UIFont.NotoRegular(size: 12), range: range)
+        attributedString.addAttribute(.foregroundColor, value: UIColor.helfmeGray2, range: range)
+        reviewContents.attributedText = attributedString
     }
 }
 
