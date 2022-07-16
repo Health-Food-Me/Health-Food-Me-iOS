@@ -21,7 +21,6 @@ class ReviewDetailVC: UIViewController {
     private let withContents = 2
     private let withoutImageAndContents = 3
     
-    private var reviewData: [ReviewCellViewModel] = []
     weak var delegate: ScrollDeliveryDelegate?
     var topScrollAnimationNotFinished: Bool = true
     private var reviewData: [ReviewCellViewModel] = [] { didSet {

@@ -11,6 +11,7 @@ import UIKit
 import NMapsMap
 import RxSwift
 import SnapKit
+import RealmSwift
 
 protocol SupplementMapVCDelegate: AnyObject {
     func supplementMapClicked()
@@ -212,7 +213,11 @@ extension SupplementMapVC {
         self.mapDetailSummaryView.snp.updateConstraints { make in
             make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
         }
+        myLocationButton.snp.updateConstraints { make in
+            make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-166)
+        }
         UIView.animate(withDuration: 0.3, delay: 0) {
+            self.myLocationButton.transform = CGAffineTransform(translationX: 0, y: 0)
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.layoutIfNeeded()
         } completion: { _ in
@@ -233,6 +238,14 @@ extension SupplementMapVC {
     
     private func bindSetSelectPointForSearchVC() {
         delegate?.supplementMapMarkerClicked()
+        myLocationButton.snp.updateConstraints { make in
+            make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-12)
+        }
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.myLocationButton.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func bindSetSelectPointForScrapVC() {
@@ -295,6 +308,7 @@ extension SupplementMapVC {
             break
         case .search:
             removeCustomNaviBar()
+            updateConstraints()
         }
     }
     
@@ -306,7 +320,7 @@ extension SupplementMapVC {
     
     private func updateConstraints() {
         myLocationButton.snp.updateConstraints { make in
-            make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-100)
+            make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-166)
         }
     }
     
