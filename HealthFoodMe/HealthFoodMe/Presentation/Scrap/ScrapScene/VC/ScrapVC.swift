@@ -130,7 +130,9 @@ extension ScrapVC {
 // MARK: - UICollectionViewDelegate
 
 extension ScrapVC: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: false)
+    }
 }
 
 // MARK: - UICollectionViewDataSource
