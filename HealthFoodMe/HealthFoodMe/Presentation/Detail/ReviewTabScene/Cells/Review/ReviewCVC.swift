@@ -262,6 +262,11 @@ extension ReviewCVC {
         reviewContents.sizeToFit()
         self.contentView.layoutIfNeeded()
     }
+    
+    func changeContents(_ cutText: String) {
+        reviewContents.text = cutText
+        reviewContents.sizeToFit()
+    }
 }
 
 extension ReviewCVC: UICollectionViewDelegate {
