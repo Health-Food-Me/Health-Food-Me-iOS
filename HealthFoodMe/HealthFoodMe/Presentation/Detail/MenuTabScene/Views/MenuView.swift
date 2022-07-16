@@ -18,7 +18,8 @@ final class MenuView: UIView {
         view.backgroundColor = .helfmeWhite
         view.layer.borderWidth = 0.5
         view.layer.borderColor = UIColor.helfmeLineGray.cgColor
-        view.roundCorners(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMinXMaxYCorner])
+//        view.roundCorners(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMinXMaxYCorner])
+        view.layer.cornerRadius = 15
         return view
     }()
     
@@ -134,7 +135,7 @@ extension MenuView {
         
         menuView.snp.makeConstraints { make in
             make.top.leading.bottom.equalToSuperview()
-            make.trailing.equalTo(kcalView.snp.leading)
+            make.trailing.equalTo(kcalView.snp.trailing)
             make.height.equalTo(120)
         }
         
@@ -159,7 +160,7 @@ extension MenuView {
         
         menuStackView.snp.makeConstraints { make in
             make.leading.equalTo(menuImageView.snp.trailing).offset(20)
-            make.trailing.equalToSuperview().inset(42)
+            make.trailing.equalToSuperview().inset(97)
             make.top.equalTo(pickImageView).offset(24)
         }
         
