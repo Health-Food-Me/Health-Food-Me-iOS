@@ -100,4 +100,8 @@ struct ImageLiterals {
     struct MenuTab {
         static let emptyCard = UIImage(named: "img_empty_card")
     }
+    
+    struct ReviewDetail {
+        static let reviewEmptyIcon = UIImage(named: "img_review_empty")
+    }
 }
