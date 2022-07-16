@@ -36,6 +36,7 @@
 		695758C3287DF04400E36789 /* AddPhotoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758C2287DF04400E36789 /* AddPhotoCVC.swift */; };
 		695758C5287DF08800E36789 /* ListPhotoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758C4287DF08800E36789 /* ListPhotoCVC.swift */; };
 		695758C8287F1DCF00E36789 /* PhotoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758C7287F1DCF00E36789 /* PhotoDataModel.swift */; };
+		695758D02880ACF000E36789 /* addToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758CF2880ACF000E36789 /* addToolBar.swift */; };
 		695758D52881121900E36789 /* CopingTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758D42881121900E36789 /* CopingTabVC.swift */; };
 		695758D72881122800E36789 /* CopingTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758D62881122800E36789 /* CopingTab.storyboard */; };
 		695758DC2881128300E36789 /* ContentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758DB2881128300E36789 /* ContentTVC.swift */; };
@@ -43,7 +44,6 @@
 		695758E02881228700E36789 /* CopingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758DF2881228700E36789 /* CopingHeaderView.swift */; };
 		695758E328812B3100E36789 /* CopingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758E228812B3100E36789 /* CopingDataModel.swift */; };
 		695758E52881852F00E36789 /* CopingEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758E42881852E00E36789 /* CopingEmptyView.swift */; };
-		695758D02880ACF000E36789 /* addToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758CF2880ACF000E36789 /* addToolBar.swift */; };
 		75CF9028E2A4677BC9470A70 /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D3D3B2D1590CCD44253F6D /* Pods_HealthFoodMe.framework */; };
 		A9325274287D3065001EDF50 /* SearchResultTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9325273287D3065001EDF50 /* SearchResultTVC.swift */; };
 		A9325277287D4F10001EDF50 /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9325276287D4F10001EDF50 /* SearchResultModel.swift */; };
@@ -212,14 +212,14 @@
 		695758C2287DF04400E36789 /* AddPhotoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCVC.swift; sourceTree = "<group>"; };
 		695758C4287DF08800E36789 /* ListPhotoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPhotoCVC.swift; sourceTree = "<group>"; };
 		695758C7287F1DCF00E36789 /* PhotoDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDataModel.swift; sourceTree = "<group>"; };
+		695758CF2880ACF000E36789 /* addToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addToolBar.swift; sourceTree = "<group>"; };
 		695758D42881121900E36789 /* CopingTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingTabVC.swift; sourceTree = "<group>"; };
 		695758D62881122800E36789 /* CopingTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CopingTab.storyboard; sourceTree = "<group>"; };
 		695758DB2881128300E36789 /* ContentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTVC.swift; sourceTree = "<group>"; };
-		695758DD28811E9D00E36789 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = ../../../../../../../../Downloads/Config.swift; sourceTree = "<group>"; };
+		695758DD28811E9D00E36789 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		695758DF2881228700E36789 /* CopingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingHeaderView.swift; sourceTree = "<group>"; };
 		695758E228812B3100E36789 /* CopingDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingDataModel.swift; sourceTree = "<group>"; };
 		695758E42881852E00E36789 /* CopingEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingEmptyView.swift; sourceTree = "<group>"; };
-		695758CF2880ACF000E36789 /* addToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addToolBar.swift; sourceTree = "<group>"; };
 		6E596B9EBEC8B18D4DE266B6 /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
 		A9325273287D3065001EDF50 /* SearchResultTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTVC.swift; sourceTree = "<group>"; };
 		A9325276287D4F10001EDF50 /* SearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
@@ -1736,7 +1736,6 @@
 				3BC01F7F287E9225006C2181 /* BlogReviewTabVC.swift in Sources */,
 				A9E593C72874266200B0F8B5 /* SearchRecent.swift in Sources */,
 				695758E328812B3100E36789 /* CopingDataModel.swift in Sources */,
-				FDC1028C2880B13D001F0125 /* UpperToastView.swift in Sources */,
 				EBF66AF2287227F500DE0ED1 /* buttonPress.swift in Sources */,
 				EBF66ADF287227F500DE0ED1 /* AuthRouter.swift in Sources */,
 				EBF66ADC287227F500DE0ED1 /* AppDelegate.swift in Sources */,
