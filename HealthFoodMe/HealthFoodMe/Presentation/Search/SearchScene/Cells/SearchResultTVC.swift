@@ -36,7 +36,6 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
     private var foodLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .mainGreen
-        lb.text = "샐러드"
         lb.font = .NotoMedium(size: 10)
         return lb
     }()
@@ -44,7 +43,6 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
     private var storeNameLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
-        lb.text = "써브웨이 동대문역사문화공원역점"
         lb.setLineSpacingWithChaining(lineSpacing: 2)
           .lineBreakStrategy = .hangulWordPriority
         lb.font = .NotoBold(size: 14)
@@ -52,16 +50,30 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
         return lb
     }()
     
-    private var starView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .mainGreen
-        return view
+    private var starView: StarRatingView = {
+        let st = StarRatingView(starScale: 14, spacing: 0)
+        return st
+    }()
+    
+    private var starLabel: UILabel = {
+        let lb = UILabel()
+        lb.textColor = .helfmeGray2
+        lb.font = .NotoRegular(size: 8)
+        return lb
+    }()
+    
+    private lazy var starStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.addArrangedSubviews(starView, starLabel)
+        sv.alignment = .top
+        sv.axis = .horizontal
+        sv.spacing = 4
+        return sv
     }()
     
     private var distanceLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeGray1
-        lb.text = "거리: 50m"
         lb.font = .NotoMedium(size: 10)
         return lb
     }()
@@ -70,7 +82,7 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
         let sv = UIStackView()
         sv.addArrangedSubviews(foodLabel,
                                storeNameLabel,
-                               starView,
+                               starStackView,
                                distanceLabel)
         sv.alignment = .leading
         sv.axis = .vertical
@@ -94,8 +106,12 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
 // MARK: - Methods
 
 extension SearchResultTVC {
-    func setData(data: [String]) {
-        
+    func setData(data: SearchResultDataModel) {
+        foodLabel.text = data.foodCategory
+        storeNameLabel.text = data.storeName
+        starView.rate = data.starRate
+        starLabel.text = "(\(data.starRate))"
+        distanceLabel.text = "거리: \(data.distance)m"
     }
     
     private func setUI() {
@@ -118,15 +134,17 @@ extension SearchResultTVC {
             $0.width.height.equalTo(91)
             $0.top.bottom.equalTo(storeView).inset(12)
         }
-        
+
         storeStackView.snp.makeConstraints {
             $0.leading.equalTo(storeImageView.snp.trailing).offset(20)
             $0.centerY.equalTo(storeView)
         }
         
         starView.snp.makeConstraints {
-            $0.width.equalTo(91)
-            $0.height.equalTo(14)
+            let width = UIScreen.main.bounds.width * (70/375)
+            $0.leading.equalTo(storeStackView.snp.leading)
+            $0.width.equalTo(width)
+            $0.height.equalTo(width * (14/70))
         }
         
         storeNameLabel.snp.makeConstraints {

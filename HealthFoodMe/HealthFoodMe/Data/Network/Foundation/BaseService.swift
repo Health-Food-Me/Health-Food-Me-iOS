@@ -6,9 +6,13 @@
 //
 
 import Foundation
+
 import Alamofire
+import RxSwift
 
 class BaseService {
+    
+    var disposeBag = DisposeBag()
 
     @frozen enum DecodingMode {
         case model
@@ -18,6 +22,16 @@ class BaseService {
     
     let AFManager: Session = {
         var session = AF
+        let configuration = URLSessionConfiguration.af.default
+        configuration.timeoutIntervalForRequest = NetworkEnvironment.requestTimeOut
+        configuration.timeoutIntervalForResource = NetworkEnvironment.resourceTimeOut
+        let eventLogger = APIEventLogger()
+        session = Session(configuration: configuration, eventMonitors: [eventLogger])
+        return session
+    }()
+    
+    let RxAFManager: Session = {
+        var session = Session.default
         let configuration = URLSessionConfiguration.af.default
         configuration.timeoutIntervalForRequest = NetworkEnvironment.requestTimeOut
         configuration.timeoutIntervalForResource = NetworkEnvironment.resourceTimeOut
@@ -53,6 +67,21 @@ class BaseService {
             
         default:
             return .networkFail
+        }
+    }
+    
+    func requestObject<T: Codable>(_ target: BaseRouter, type: T.Type, decodingMode: DecodingMode, completion: @escaping (NetworkResult<Any>) -> Void) {
+        AFManager.request(target).responseData { response in
+            switch response.result {
+            case .success:
+                guard let statusCode = response.response?.statusCode else { return }
+                guard let data = response.data else { return}
+                let networkResult = self.judgeStatus(by: statusCode, data, type: type, decodingMode: decodingMode)
+                completion(networkResult)
+                
+            case .failure(let err):
+                print(err.localizedDescription)
+            }
         }
     }
 }
