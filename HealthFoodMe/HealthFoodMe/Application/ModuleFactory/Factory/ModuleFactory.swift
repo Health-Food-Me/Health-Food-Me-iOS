@@ -20,6 +20,8 @@ protocol ModuleFactoryProtocol {
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
     func makeMenuTabVC() -> MenuTabVC
+//    func makeReviewTabVC() -> ReviewTabVC
+    func makeReviewDetailVC() -> ReviewDetailVC
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC
@@ -90,6 +92,13 @@ class ModuleFactory: ModuleFactoryProtocol {
         
         return vc
     }
+    
+    func makeReviewDetailVC() -> ReviewDetailVC {
+        let vc = ReviewDetailVC.controllerFromStoryboard(.reviewDetail)
+        
+        return vc
+    }
+    
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC {
