@@ -1,5 +1,5 @@
 //
-//  AuthRouter.swift
+//  ReviewRouter.swift
 //  HealthFoodMe
 //
 //  Created by Junho Lee on 2022/07/16.
@@ -7,15 +7,13 @@
 
 import Alamofire
 
-enum AuthRouter {
-    case postSocialLogin(socialType: String, token: String)
+enum ReviewRouter {
+    
 }
 
-extension AuthRouter: BaseRouter {
+extension ReviewRouter: BaseRouter {
     var method: HTTPMethod {
         switch self {
-        case .postSocialLogin:
-            return .post
         default :
             return .get
         }
@@ -34,14 +32,4 @@ extension AuthRouter: BaseRouter {
             return .requestPlain
         }
     }
-    
-    var hedaer: HeaderType {
-        switch self {
-        case .postSocialLogin:
-            return .default
-        default:
-            return .withToken
-        }
-    }
 }
-

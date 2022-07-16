@@ -1,5 +1,5 @@
 //
-//  SearchRouter.swift
+//  RestaurantRouter.swift
 //  HealthFoodMe
 //
 //  Created by Junho Lee on 2022/07/16.
@@ -7,18 +7,15 @@
 
 import Alamofire
 
-enum SearchRouter {
+enum RestaurantRouter {
     case requestRestaurantSearch(query: String)
-    case postSocialLogin(socialType: String, token: String)
 }
 
-extension SearchRouter: BaseRouter {
+extension RestaurantRouter: BaseRouter {
     var method: HTTPMethod {
         switch self {
         case .requestRestaurantSearch:
             return .get
-        case .postSocialLogin:
-            return .post
         default :
             return .get
         }
@@ -28,8 +25,6 @@ extension SearchRouter: BaseRouter {
         switch self {
         case .requestRestaurantSearch:
             return "/restaurant/search"
-        case .postSocialLogin(_, let token):
-            return "/auth"
         default:
             return ""
         }
@@ -42,23 +37,9 @@ extension SearchRouter: BaseRouter {
                 "query": query
             ]
             return .query(requestQuery)
-        case .postSocialLogin(let socialType, let token):
-            let requestBody: [String: Any] = [
-                "social": socialType,
-                "token": token
-            ]
-            return .requestBody(requestBody)
         default:
             return .requestPlain
         }
     }
-    
-    var hedaer: HeaderType {
-        switch self {
-        case .postSocialLogin:
-            return .default
-        default:
-            return .withToken
-        }
-    }
 }
+
