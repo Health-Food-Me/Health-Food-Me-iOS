@@ -95,8 +95,20 @@ class ModuleFactory: ModuleFactoryProtocol {
         return vc
     }
     
+    func makeCopingTabVC() -> CopingTabVC {
+        let vc = CopingTabVC.controllerFromStoryboard(.copingTab)
+        
+        return vc
+    }
+    
     func makeReviewDetailVC() -> ReviewDetailVC {
         let vc = ReviewDetailVC.controllerFromStoryboard(.reviewDetail)
+        
+        return vc
+    }
+    
+    func makeReviewWriteVC() -> ReviewWriteVC {
+        let vc = ReviewWriteVC.controllerFromStoryboard(.reviewWrite)
         
         return vc
     }
