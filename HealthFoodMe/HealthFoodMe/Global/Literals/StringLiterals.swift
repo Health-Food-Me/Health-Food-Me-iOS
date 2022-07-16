@@ -108,6 +108,11 @@ struct I18N {
             static let scrapList = "스크랩한 식당"
             static let buttonTitles = ["스크랩한 식당", "내가 쓴 리뷰", "가게 제보하기",
                                        "수정사항 제보하기"]
+            
+            static let reportStoreTitle = "가게 제보하기"
+            static let reportStoreContent = "제보할 가게를 적어주세요."
+            static let reportEditTitle = "수정 사항 제보"
+            static let reportEditContent = "몬의할 내용을 입력해주세요."
         }
     }
     
