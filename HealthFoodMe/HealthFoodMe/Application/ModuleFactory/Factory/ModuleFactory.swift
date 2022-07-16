@@ -21,7 +21,6 @@ protocol ModuleFactoryProtocol {
     func makeMainDetailVC() -> MainDetailVC
     func makeMenuTabVC() -> MenuTabVC
     func makeReviewDetailVC() -> ReviewDetailVC
-    func makeReviewEmptyViewVC() -> ReviewEmptyViewVC
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC
@@ -95,13 +94,6 @@ class ModuleFactory: ModuleFactoryProtocol {
     
     func makeReviewDetailVC() -> ReviewDetailVC {
         let vc = ReviewDetailVC.controllerFromStoryboard(.reviewDetail)
-        
-        return vc
-    }
-    
-    
-    func makeReviewEmptyViewVC() -> ReviewEmptyViewVC {
-        let vc = ReviewEmptyViewVC.controllerFromStoryboard(.reviewEmptyView)
         
         return vc
     }
