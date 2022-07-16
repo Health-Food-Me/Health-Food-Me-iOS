@@ -14,7 +14,7 @@ class ScrapVC: UIViewController {
     // MARK: - Properties
     
     private let scrapEmptyView = ScrapEmptyView()
-    private var isEmpty: Bool = false
+    private var scrapList: [ScrapDataModel] = []
     
     // MARK: - UI Components
     
@@ -30,9 +30,10 @@ class ScrapVC: UIViewController {
         return view
     }()
     
-    private let scrapBackButton: UIButton = {
+    private lazy var scrapBackButton: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Scrap.beforeIcon, for: .normal)
+        btn.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
         return btn
     }()
     
@@ -57,7 +58,7 @@ class ScrapVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        isScrapEmpty()
+        fetchData()
         setUI()
         setLayout()
         setDelegate()
@@ -65,11 +66,24 @@ class ScrapVC: UIViewController {
     }
 }
 
+// MARK: - @objc Methods
+
+extension ScrapVC {
+    @objc func didTapBackButton() {
+        navigationController?.popViewController(animated: true)
+    }
+}
+
 // MARK: - Methods
 
 extension ScrapVC {
+    private func fetchData() {
+        scrapList = ScrapDataModel.sampleScrapData
+        isScrapEmpty()
+    }
+    
     private func isScrapEmpty() {
-        scrapEmptyView.isHidden = !isEmpty
+        scrapEmptyView.isHidden = !scrapList.isEmpty
     }
     
     private func setUI() {
@@ -120,6 +134,7 @@ extension ScrapVC {
     private func setDelegate() {
         scrapCollectionView.delegate = self
         scrapCollectionView.dataSource = self
+        scrapEmptyView.delegate = self
     }
     
     private func registerCell() {
@@ -137,12 +152,12 @@ extension ScrapVC: UICollectionViewDelegate {
 
 extension ScrapVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ScrapDataModel.sampleScrapData.count
+        return scrapList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrapCVC.className, for: indexPath) as? ScrapCVC else { return UICollectionViewCell() }
-        cell.setData(data: ScrapDataModel.sampleScrapData[indexPath.row])
+        cell.setData(data: scrapList[indexPath.row])
         cell.index = indexPath.row
         cell.delegate = self
         return cell
@@ -173,6 +188,12 @@ extension ScrapVC: UICollectionViewDelegateFlowLayout {
 extension ScrapVC: ScrapCVCDelegate {
     func scrapCVCButtonDidTap(index: Int, isSelected: Bool) {
         print("\(index) 번 스크랩 \(isSelected) 상태")
+    }
+}
+
+extension ScrapVC: ScrapEmptyViewDelegate {
+    func scrapEmptyViewDidTap() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
