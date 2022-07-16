@@ -93,6 +93,8 @@
 		EB6A451B2875365B00749582 /* TabIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A451A2875365B00749582 /* TabIndicator.swift */; };
 		EB6A45262875C3A000749582 /* TabContainerCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A45252875C3A000749582 /* TabContainerCVC.swift */; };
 		EB6A4528287664D600749582 /* ExpandableInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A4527287664D600749582 /* ExpandableInfoTVC.swift */; };
+		EBA8C14628828B10009DBA49 /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8C14528828B10009DBA49 /* SearchRouter.swift */; };
+		EBA8C14828828E64009DBA49 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8C14728828E64009DBA49 /* SearchService.swift */; };
 		EBD1925D287DBBD300EA053E /* MenuCategoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD1925C287DBBD300EA053E /* MenuCategoryCVC.swift */; };
 		EBD1925F287DBBFC00EA053E /* TagSummaryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD1925E287DBBFC00EA053E /* TagSummaryCVC.swift */; };
 		EBD19262287DBC1800EA053E /* MapDetailSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD19261287DBC1800EA053E /* MapDetailSummaryView.swift */; };
@@ -276,6 +278,8 @@
 		EB6A451A2875365B00749582 /* TabIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabIndicator.swift; sourceTree = "<group>"; };
 		EB6A45252875C3A000749582 /* TabContainerCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabContainerCVC.swift; sourceTree = "<group>"; };
 		EB6A4527287664D600749582 /* ExpandableInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableInfoTVC.swift; sourceTree = "<group>"; };
+		EBA8C14528828B10009DBA49 /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
+		EBA8C14728828E64009DBA49 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		EBD1925C287DBBD300EA053E /* MenuCategoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCategoryCVC.swift; sourceTree = "<group>"; };
 		EBD1925E287DBBFC00EA053E /* TagSummaryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSummaryCVC.swift; sourceTree = "<group>"; };
 		EBD19261287DBC1800EA053E /* MapDetailSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDetailSummaryView.swift; sourceTree = "<group>"; };
@@ -383,14 +387,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		249B65B6BB21EF77F0C03089 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				547BCF0E14A343DF6F4A29EC /* Pods_HealthFoodMe.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		3B089C4C287DDD8900DA80B9 /* ReviewTabScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -811,7 +807,6 @@
 			children = (
 				EB6A44C928737C4600749582 /* MainDetailScene */,
 				695758D12881109600E36789 /* CopingTabScene */,
-				3BC01F7C287E91F7006C2181 /* BlogReviewTabScene */,
 				695758BA287DA4A400E36789 /* ReviewWriteScene */,
 				3B089C4C287DDD8900DA80B9 /* ReviewTabScene */,
 				697074FB28737D78001A607F /* MenuTabScene */,
@@ -1262,6 +1257,7 @@
 			children = (
 				EBF66A83287227F500DE0ED1 /* HomeRouter.swift */,
 				EBF66A84287227F500DE0ED1 /* AuthRouter.swift */,
+				EBA8C14528828B10009DBA49 /* SearchRouter.swift */,
 			);
 			path = Routers;
 			sourceTree = "<group>";
@@ -1292,6 +1288,7 @@
 			children = (
 				EBF66A8E287227F500DE0ED1 /* AuthService.swift */,
 				EBF66A8F287227F500DE0ED1 /* HomeService.swift */,
+				EBA8C14728828E64009DBA49 /* SearchService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1731,6 +1728,7 @@
 				3B723C8B287FF81800822B7C /* TagCVC.swift in Sources */,
 				FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */,
 				EBF66AF0287227F500DE0ED1 /* BaseVC.swift in Sources */,
+				EBA8C14628828B10009DBA49 /* SearchRouter.swift in Sources */,
 				EBF66B082872AF5B00DE0ED1 /* SampleEntity.swift in Sources */,
 				EBF66B03287227F500DE0ED1 /* SignUp.swift in Sources */,
 				EBF66B04287227F500DE0ED1 /* SignIn.swift in Sources */,
@@ -1812,6 +1810,7 @@
 				EB6A44EF2873BED500749582 /* MainMapRepository.swift in Sources */,
 				EBF66AC9287227F500DE0ED1 /* UIColor+.swift in Sources */,
 				EBF66B00287227F500DE0ED1 /* Adjusted+.swift in Sources */,
+				EBA8C14828828E64009DBA49 /* SearchService.swift in Sources */,
 				A9E593C42874104200B0F8B5 /* SearchRecentTVC.swift in Sources */,
 				EBD1925D287DBBD300EA053E /* MenuCategoryCVC.swift in Sources */,
 			);
