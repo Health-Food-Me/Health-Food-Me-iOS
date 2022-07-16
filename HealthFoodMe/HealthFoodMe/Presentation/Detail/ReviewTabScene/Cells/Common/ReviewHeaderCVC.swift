@@ -46,6 +46,7 @@ extension ReviewHeaderCVC {
         
         reviewSegmentControl.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview()
             make.width.equalTo(226)
             make.height.equalTo(40)
         }

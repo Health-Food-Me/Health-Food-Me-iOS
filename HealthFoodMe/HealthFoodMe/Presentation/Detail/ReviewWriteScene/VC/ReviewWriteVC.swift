@@ -62,7 +62,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let questionTasteLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "맛은 어때요?"
+        lb.text = I18N.Detail.Review.questionTaste
         lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 14)
         return lb
@@ -70,7 +70,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let questionTasteSubLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "필수 한 개 선택해주세요! "
+        lb.text = I18N.Detail.Review.questionTasteSub
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 12)
         return lb
@@ -90,7 +90,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagGood: UIButton = {
         let btn = UIButton()
-        btn.setTitle("# 맛 최고", for: .normal)
+        btn.setTitle(I18N.Detail.Review.tagGood, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
@@ -104,7 +104,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagSoso: UIButton = {
         let btn = UIButton()
-        btn.setTitle("# 맛 그럭저럭", for: .normal)
+        btn.setTitle(I18N.Detail.Review.tagSoso, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
@@ -118,7 +118,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagBad: UIButton = {
         let btn = UIButton()
-        btn.setTitle("# 맛 별로에요", for: .normal)
+        btn.setTitle(I18N.Detail.Review.tagBad, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
@@ -141,7 +141,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let questionFeelingLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "어떤 점이 좋았나요?"
+        lb.text = I18N.Detail.Review.questionFeeling
         lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 14)
         return lb
@@ -149,7 +149,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let questionFeelingSubLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "식당을 방문하신 후 좋았던 부분에 체크해주세요! (중복가능)"
+        lb.text = I18N.Detail.Review.questionFeelingSub
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 12)
         return lb
@@ -166,7 +166,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagNoBurden: UIButton = {
         let btn = UIButton()
-        btn.setTitle("# 약속 시 부담 없는", for: .normal)
+        btn.setTitle(I18N.Detail.Review.tagNoBurden, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
@@ -180,7 +180,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagEasy: UIButton = {
         let btn = UIButton()
-        btn.setTitle("# 양 조절 쉬운", for: .normal)
+        btn.setTitle(I18N.Detail.Review.tagEasy, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
@@ -194,7 +194,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var tagStrong: UIButton = {
         let btn = UIButton()
-        btn.setTitle("# 든든한", for: .normal)
+        btn.setTitle(I18N.Detail.Review.tagStrong, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoRegular(size: 14)
         btn.backgroundColor = .helfmeWhite
@@ -217,7 +217,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let reviewLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "후기를 남겨주세요."
+        lb.text = I18N.Detail.Review.questionReview
         lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 14)
         return lb
@@ -225,7 +225,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let reviewSubLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "식당 이용 후기, 메뉴추천, 꿀팁 등 자유롭게 작성해주세요!"
+        lb.text = I18N.Detail.Review.questionReviewSub
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 12)
         return lb
@@ -249,7 +249,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var reviewTextView: UITextView = {
         let tv = UITextView()
-        tv.text = "리뷰를 작성해주세요 (최대 500자)"
+        tv.text = I18N.Detail.Review.reviewPlaceholder
         tv.font = .NotoRegular(size: 12)
         tv.textColor = .helfmeGray2
         tv.backgroundColor = .helfmeBgGray
@@ -259,7 +259,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var textCountLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "0/500자"
+        lb.text = I18N.Detail.Review.reviewTextCount
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 12)
         return lb
@@ -267,7 +267,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let pictureLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "사진을 올려주세요"
+        lb.text = I18N.Detail.Review.questionPhoto
         lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 14)
         return lb
@@ -275,7 +275,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private let pictureOptionLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "(선택)"
+        lb.text = I18N.Detail.Review.questionPhotoOption
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 10)
         return lb
@@ -303,7 +303,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var photoSubLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "해당 가게와 무관한 사진을 첨부하면 노출 제한 처리될 수 있습니다. \n사진첨부 시 개인정보가 노출되지 않도록 유의해주세요."
+        lb.text = I18N.Detail.Review.questionPhotoSub
         lb.numberOfLines = 2
         lb.textColor = .helfmeGray2
         lb.font = .NotoRegular(size: 10)
@@ -312,7 +312,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var writeReviewButton: UIButton = {
         let btn = UIButton()
-        btn.setTitle("리뷰 쓰기", for: .normal)
+        btn.setTitle(I18N.Detail.Review.writeReview, for: .normal)
         btn.setTitleColor(UIColor.helfmeWhite, for: UIControl.State.normal)
         btn.titleLabel?.font = .NotoBold(size: 14)
         btn.backgroundColor = .mainRed
@@ -322,7 +322,14 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     }()
     
     private lazy var checkReviewToastView: UpperToastView = {
-        let toastView = UpperToastView(title: "별점과 맛 평가는 필수입니다.")
+        let toastView = UpperToastView(title: I18N.Detail.Review.checkReviewToast)
+        toastView.layer.cornerRadius = 20
+        toastView.alpha = 0
+        return toastView
+    }()
+    
+    private lazy var checkPhotoToastView: UpperToastView = {
+        let toastView = UpperToastView(title: I18N.Detail.Review.checkPhotoToast)
         toastView.layer.cornerRadius = 20
         toastView.alpha = 0
         return toastView
@@ -367,6 +374,22 @@ extension ReviewWriteVC {
     
     private func setNavigation() {
         self.navigationItem.title = "리뷰 작성"
+        DispatchQueue.main.async {
+            self.navigationController?.isNavigationBarHidden = false
+        }
+        view.backgroundColor = .white
+        
+        let backButton = UIButton()
+        backButton.setImage(ImageLiterals.MainDetail.beforeIcon, for: .normal)
+        backButton.tintColor = .helfmeBlack
+        backButton.addAction(UIAction(handler: { _ in
+            self.makeAlert(alertType: .logoutAlert,
+                           title: "리뷰작성을 취소하시겠습니까?",
+                           subtitle: "작성취소 시,\n 작성된 글은 저장되지 않습니다.") {
+                self.makeAlert(title: "취소", message: "리뷰 작성 취소")
+            }
+        }), for: .touchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
     private func setLayout() {
@@ -382,7 +405,7 @@ extension ReviewWriteVC {
             make.width.equalTo(scrollView.snp.width)
         }
         
-        contentView.addSubviews(restaurantTitleLabel, sliderView, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView, photoSubLabel, writeReviewButton, checkReviewToastView)
+        contentView.addSubviews(restaurantTitleLabel, sliderView, lineView, questionTasteStackView, tagTasteStackView, questionFeelingStackView, tagHelpfulStackView, reviewStackView, reviewView, pictureStackView, photoCollectionView, photoSubLabel, writeReviewButton, checkReviewToastView, checkPhotoToastView)
         
         restaurantTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
@@ -501,6 +524,13 @@ extension ReviewWriteVC {
             make.bottom.equalToSuperview().offset(40)
             make.height.equalTo(40)
         }
+        
+        checkPhotoToastView.snp.updateConstraints { make in
+            make.leading.equalToSuperview().offset(63)
+            make.trailing.equalToSuperview().offset(-63)
+            make.bottom.equalToSuperview().offset(40)
+            make.height.equalTo(40)
+        }
     }
     
     private func setAddTargets() {
@@ -550,7 +580,7 @@ extension ReviewWriteVC {
         ListPhotoCVC.register(target: photoCollectionView)
     }
     
-    @objc private func showStatusActionSheet(_ sender: UITapGestureRecognizer) {
+    private func showStatusActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let takePictureAction = UIAlertAction(title: "사진 찍기", style: .default) {_ in
@@ -574,12 +604,20 @@ extension ReviewWriteVC {
         self.present(actionSheet, animated: true)
     }
     
+    @objc private func isAbledPhoto(_ sender: UITapGestureRecognizer) {
+        if photoModel.userSelectedImages.count == 3 {
+            showPhotoToast()
+        } else {
+            showStatusActionSheet()
+        }
+    }
+    
     private func didTapimageAlbum() {
         selectedAssets.removeAll()
         userSelectedImages.removeAll()
         
         let imagePicker = ImagePickerController()
-        imagePicker.settings.selection.max = 5
+        imagePicker.settings.selection.max = 3 - photoModel.userSelectedImages.count
         imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
         
         self.presentImagePicker(imagePicker, select: { (asset) in
@@ -633,7 +671,7 @@ extension ReviewWriteVC {
     
     @objc private func didTapWriteReview(_ sender: UIButton) {
         if !checkReview() {
-            showToast()
+            showReviewToast()
         } else {
             makeAlert(title: "알림", message: "작성완료!")
         }
@@ -657,7 +695,7 @@ extension ReviewWriteVC {
 }
 
 extension ReviewWriteVC {
-    private func showToast() {
+    private func showReviewToast() {
         makeVibrate()
         checkReviewToastView.snp.remakeConstraints { make in
             make.leading.equalToSuperview().offset(63)
@@ -672,12 +710,12 @@ extension ReviewWriteVC {
             
         } completion: { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                self.hideToast()
+                self.hideReviewToast()
             }
         }
     }
     
-    private func hideToast() {
+    private func hideReviewToast() {
         checkReviewToastView.snp.remakeConstraints { make in
             make.leading.equalToSuperview().offset(63)
             make.trailing.equalToSuperview().offset(-63)
@@ -687,6 +725,40 @@ extension ReviewWriteVC {
         
         UIView.animate(withDuration: 0.5, delay: 0) {
             self.checkReviewToastView.alpha = 0
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func showPhotoToast() {
+        makeVibrate()
+        checkPhotoToastView.snp.remakeConstraints { make in
+            make.leading.equalToSuperview().offset(63)
+            make.trailing.equalToSuperview().offset(-63)
+            make.bottom.equalTo(writeReviewButton.snp.top).offset(-10)
+            make.height.equalTo(40)
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.view.layoutIfNeeded()
+            self.checkPhotoToastView.alpha = 1
+            
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.hidePhotoToast()
+            }
+        }
+    }
+    
+    private func hidePhotoToast() {
+        checkPhotoToastView.snp.remakeConstraints { make in
+            make.leading.equalToSuperview().offset(63)
+            make.trailing.equalToSuperview().offset(-63)
+            make.bottom.equalToSuperview().offset(40)
+            make.height.equalTo(40)
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.checkPhotoToastView.alpha = 0
             self.view.layoutIfNeeded()
         }
     }
@@ -708,8 +780,8 @@ extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         case Cell.addCell.rawValue:
             guard let addPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCVC.className, for: indexPath) as? AddPhotoCVC else { fatalError("Failed to dequeue cell for AddPhotoCVC") }
             addPhotoCell.delegate = self
-            addPhotoCell.photoCountLabel.text = "\(photoModel.userSelectedImages.count)/5"
-            addPhotoCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showStatusActionSheet(_:))))
+            addPhotoCell.photoCountLabel.text = "\(photoModel.userSelectedImages.count)/3"
+            addPhotoCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(isAbledPhoto(_:))))
             
             let borderLayer = CAShapeLayer()
             borderLayer.strokeColor = UIColor.helfmeTagGray.cgColor
