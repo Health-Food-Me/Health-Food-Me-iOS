@@ -174,6 +174,9 @@
 		FD39FAD02880C32B00A01CDA /* NicknameChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E203287F27860007D4F9 /* NicknameChangeViewModel.swift */; };
 		FD39FAD12880C35000A01CDA /* UpperToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20A287F3C360007D4F9 /* UpperToastView.swift */; };
 		FD58291A287DC39A00CE62E8 /* mapContainerViewTouchDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582917287DC39A00CE62E8 /* mapContainerViewTouchDelegateProxy.swift */; };
+		FD39FAD62880C63E00A01CDA /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD39FAD52880C63E00A01CDA /* Setting.storyboard */; };
+		FD39FAD82880C69400A01CDA /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD39FAD72880C69400A01CDA /* SettingVC.swift */; };
+		FD58291A287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582917287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift */; };
 		FD58291B287DC39A00CE62E8 /* mapContainerView + Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582918287DC39A00CE62E8 /* mapContainerView + Reactive.swift */; };
 		FD58291C287DC39A00CE62E8 /* mapContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD582919287DC39A00CE62E8 /* mapContainerView.swift */; };
 		FD59028D288338D700D59D57 /* ReviewWriteNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59028C288338D700D59D57 /* ReviewWriteNavigationController.swift */; };
@@ -359,6 +362,10 @@
 		EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleEntity.swift; sourceTree = "<group>"; };
 		EBF66B092872B21F00DE0ED1 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		EBF66B0B2872B4FE00DE0ED1 /* StoryboardLiterals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardLiterals.swift; sourceTree = "<group>"; };
+		F3FFC8B608A27EA9662A18AB /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
+		FD39FAD52880C63E00A01CDA /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
+		FD39FAD72880C69400A01CDA /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
+		FD582917287DC39A00CE62E8 /* mapContainerViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerViewDelegateProxy.swift; sourceTree = "<group>"; };
 		FD582917287DC39A00CE62E8 /* mapContainerViewTouchDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerViewTouchDelegateProxy.swift; sourceTree = "<group>"; };
 		FD582918287DC39A00CE62E8 /* mapContainerView + Reactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "mapContainerView + Reactive.swift"; sourceTree = "<group>"; };
 		FD582919287DC39A00CE62E8 /* mapContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerView.swift; sourceTree = "<group>"; };
@@ -1354,6 +1361,7 @@
 			isa = PBXGroup;
 			children = (
 				695758E628830C3100E36789 /* Splash */,
+				FD39FAD22880C62600A01CDA /* Setting */,
 				A93252AE287F2AD7001EDF50 /* Scrap */,
 				A9325272287D24CD001EDF50 /* Search */,
 				3BCC441A28745FA900661A12 /* Auth */,
@@ -1454,7 +1462,32 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		FDA3AEEC288060E800D6CCB4 /* UserWithdrawlScene */ = {
+		FD39FAD22880C62600A01CDA /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				FD39FAD42880C63100A01CDA /* VC */,
+				FD39FAD32880C62E00A01CDA /* Views */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		FD39FAD32880C62E00A01CDA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FD39FAD52880C63E00A01CDA /* Setting.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FD39FAD42880C63100A01CDA /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				FD39FAD72880C69400A01CDA /* SettingVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		FD924374288007E00034876B /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				FDA3AEEF2880610200D6CCB4 /* Views */,
@@ -1644,6 +1677,7 @@
 				695758B9287D7C0B00E36789 /* MenuTab.storyboard in Resources */,
 				3B0B25542876BBE400950539 /* NotoSansCJKkr-Regular.otf in Resources */,
 				3B089C4B287D877F00DA80B9 /* GodoB.otf in Resources */,
+				FD39FAD62880C63E00A01CDA /* Setting.storyboard in Resources */,
 				A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */,
 				695758BD287DA4CD00E36789 /* ReviewWrite.storyboard in Resources */,
 				A93252E22880CBB9001EDF50 /* HelfmeAlert.storyboard in Resources */,
@@ -1793,6 +1827,7 @@
 				EBF66ABD287227F500DE0ED1 /* UIDevice+.swift in Sources */,
 				3BC01F7B287E89D2006C2181 /* ReviewCVC.swift in Sources */,
 				EBF66AE1287227F500DE0ED1 /* BaseService.swift in Sources */,
+				FD39FAD82880C69400A01CDA /* SettingVC.swift in Sources */,
 				EBF66AE2287227F500DE0ED1 /* BaseRouter.swift in Sources */,
 				3B723C912880037100822B7C /* ReviewPhotoCVC.swift in Sources */,
 				EBF66AE3287227F500DE0ED1 /* NetworkResult.swift in Sources */,

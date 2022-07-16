@@ -30,6 +30,7 @@ enum Storyboards: String {
     case hamburgerBar = "HamburgerBar"
     case reviewDetail = "ReviewDetail"
     case nicknameChange = "NicknameChange"
+    case setting = "Setting"
     case userWithdrawal = "UserWithdrawal"
     case copingTab = "CopingTab"
     case reviewEmptyView = "ReviewEmptyView"
