@@ -1,5 +1,5 @@
 //
-//  AuthService.swift
+//  ReviewService.swift
 //  HealthFoodMe
 //
 //  Created by Junho Lee on 2022/07/16.
@@ -7,12 +7,12 @@
 
 import Alamofire
 
-class AuthService: BaseService {
-    static let shared = AuthService()
+class ReviewService: BaseService {
+    static let shared = ReviewService()
     
     private override init() {}
 }
 
-extension AuthService {
+extension ReviewService {
     
 }
