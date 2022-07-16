@@ -7,6 +7,13 @@
 
 import UIKit
 
+enum ReviewDetailCellLayoutType: Int {
+    case withImageAndContents = 1
+    case withImage = 2
+    case withContents = 3
+    case withoutImageAndContents = 4
+}
+
 class ReviewDetailVC: UIViewController {
 
     private let withImageAndContents = 0
@@ -17,6 +24,14 @@ class ReviewDetailVC: UIViewController {
     private var reviewData: [ReviewCellViewModel] = []
     weak var delegate: ScrollDeliveryDelegate?
     var topScrollAnimationNotFinished: Bool = true
+    private var reviewData: [ReviewCellViewModel] = [] { didSet {
+        fetchCutStringList()
+        fetchExpendStateList()
+    }}
+    private var blogReviewData: [BlogReviewDataModel] = []
+    private var cutLabelList: [String] = []
+    private var expendStateList: [Bool] = []
+    var moreContentsButtonRect: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     
     var selectedCustomSegment = 0 {
         didSet {
@@ -42,6 +57,7 @@ class ReviewDetailVC: UIViewController {
         setLayout()
         setDelegate()
         registerCell()
+        fetchData()
     }
 }
 
@@ -87,20 +103,87 @@ extension ReviewDetailVC {
         }
     }
     
-    private func fetchData() {
-        // 데이터를 서버에서 받아와야 함
-        let data = ReviewDataModel.sampleData // 서버에서 받아와야 할 데이터
-        processViewModel(data)
+    private func fetchCutStringList() {
+        for viewModel in reviewData {
+            if let reviewText = viewModel.data.reviewContents {
+                let cutText = cutReviewContents(reviewText)
+                cutLabelList.append(cutText)
+            } else {
+                cutLabelList.append("")
+            }
+        }
     }
     
-    private func processViewModel(_ dataList: [ReviewDataModel]) {
-        var result: [ReviewCellViewModel] = []
-        for data in dataList {
-            let height = calculateReviewHeight(data.reviewContents ?? "")
-            result.append(ReviewCellViewModel.init(data: data,
+    private func fetchExpendStateList() {
+        expendStateList = Array<Bool>(repeating: false, count: reviewData.count)
+    }
+    
+    private func fetchData() {
+        // 데이터를 서버에서 받아와야 함
+        let reviewData = ReviewDataModel.sampleData // 서버에서 받아와야 할 데이터
+        let blogReviewData = BlogReviewDataModel.sampleData
+        processViewModel(reviewData, blogReviewData)
+    }
+    
+    private func processViewModel(_ reviewDataList: [ReviewDataModel],
+                                  _ blogReviewDataList: [BlogReviewDataModel]) {
+        var reviewResult: [ReviewCellViewModel] = []
+        var blogReviewResult: [BlogReviewDataModel] = []
+        for reviewData in reviewDataList {
+            let height = calculateReviewHeight(reviewData.reviewContents ?? "")
+            reviewResult.append(ReviewCellViewModel.init(data: reviewData,
                                                    foldRequired: height > 55))
         }
-        self.reviewData = result
+        
+        for blogReviewData in blogReviewDataList {
+            blogReviewResult.append(
+                BlogReviewDataModel.init(blogReviewTitle: blogReviewData.blogReviewTitle,
+                                         blogReviewContents: blogReviewData.blogReviewContents))
+        }
+        
+        self.reviewData = reviewResult
+        self.blogReviewData = blogReviewResult
+    }
+    
+    private func calculateTextInSize(review: String) -> (Int,String) {
+        var calculatedText: String = ""
+        var previousHeight: CGFloat = 0
+        var lineCount: Int = 0
+
+        for char in review {
+            calculatedText += String(char)
+            if (previousHeight != calculateReviewHeight(calculatedText)) {
+                previousHeight = calculateReviewHeight(calculatedText)
+                lineCount += 1
+            }
+            if lineCount == 4 {
+                return (4,calculatedText)
+            }
+        }
+        return (lineCount,calculatedText)
+    }
+    
+    private func cutReviewContents(_ reviewDataContents: String) -> String {
+        var eraseCount: Int = 0
+        
+        var (lineCount,cutText) = calculateTextInSize(review: reviewDataContents)
+        if lineCount > 3 {
+            
+            for char in cutText {
+                eraseCount += 1
+                cutText.popLast()
+                if eraseCount > 7 {
+                    cutText.append("  더보기")
+                    break
+                } else {
+                    if char == " " {
+                        continue
+                    }
+                }
+            }
+        }
+        
+        return cutText
     }
     
     private func calculateReviewHeight(_ text: String) -> CGFloat {
@@ -163,16 +246,16 @@ extension ReviewDetailVC: UICollectionViewDataSource {
             return 1
         case 1:
             if selectedCustomSegment == 0 {
-                if ReviewDataModel.sampleData.count == 0 {
+                if reviewData.count == 0 {
                     return 1
                 } else {
-                    return ReviewDataModel.sampleData.count
+                    return reviewData.count
                 }
             } else {
-                if BlogReviewDataModel.sampleData.count == 0 {
+                if blogReviewData.count == 0 {
                     return 1
                 } else {
-                    return BlogReviewDataModel.sampleData.count
+                    return blogReviewData.count
                 }
             }
         default:
@@ -189,26 +272,47 @@ extension ReviewDetailVC: UICollectionViewDataSource {
             return header
         case 1:
             if selectedCustomSegment == 0 {
-                if ReviewDataModel.sampleData.count == 0 {
+                if reviewData.count == 0 {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewEmptyViewCVC.className, for: indexPath) as? ReviewEmptyViewCVC else { return UICollectionViewCell() }
                     return cell
                 } else {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCVC.className, for: indexPath) as? ReviewCVC else { return UICollectionViewCell() }
                     cell.reviewSeperatorView.isHidden = indexPath.item == 0
-                    cell.setData(reviewData: ReviewDataModel.sampleData[indexPath.row])
-                    cell.setEnumValue = setEnumValue(data: ReviewDataModel.sampleData[indexPath.row])
+                    cell.clickedEvent = { clickedIndex in
+                        self.expendStateList[clickedIndex].toggle()
+                        self.reviewCV.reloadData()
+                    }
+                    
+                    let isFoldRequired = reviewData[indexPath.row].foldRequired
+                    if isFoldRequired {
+                        let originalText = reviewData[indexPath.row].data.reviewContents
+                        let cutText = cutLabelList[indexPath.row]
+                        let reviewText = expendStateList[indexPath.row] ? originalText : cutText
+                        cell.setData(reviewData: reviewData[indexPath.row].data,
+                                     text: reviewText ?? "",
+                                     isFoldRequired: true,
+                                     expanded: expendStateList[indexPath.row])
+
+                    } else {
+                        cell.setData(reviewData: reviewData[indexPath.row].data,
+                                     text: reviewData[indexPath.row].data.reviewContents ?? "",
+                        isFoldRequired: false, expanded: false)
+                    }
+
+                    // 레이아웃 분기처리 코드
+                    cell.layoutEnumValue = setEnumValue(data: reviewData[indexPath.row].data)
                     cell.setLayout()
                     return cell
                 }
             } else {
-                if BlogReviewDataModel.sampleData.count == 0 {
+                if blogReviewData.count == 0 {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewEmptyViewCVC.className, for: indexPath) as? ReviewEmptyViewCVC else { return UICollectionViewCell() }
                     return cell
                 } else {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BlogReviewCVC.className, for: indexPath) as? BlogReviewCVC
                     else { return UICollectionViewCell() }
                     cell.reviewSeperatorView.isHidden = indexPath.item == 0
-                    cell.setData(blogReviewData: BlogReviewDataModel.sampleData[indexPath.row])
+                    cell.setData(blogReviewData: blogReviewData[indexPath.row])
                     return cell
                 }
             }
@@ -232,12 +336,14 @@ extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
                     return CGSize(width: cellWidth, height: cellHeight)
                 } else {
                     let cellWidth = width
-                    let cellHeight = calculateReviewCellHeight(containsPhoto: ReviewDataModel.sampleData[indexPath.row].reviewImageURLList?.count != 0,
-                                                               reviewText: ReviewDataModel.sampleData[indexPath.row].reviewContents)
+                    let cellHeight = calculateReviewCellHeight(containsPhoto: reviewData[indexPath.row].data.reviewImageURLList?.count != 0,
+                                                               reviewText: reviewData[indexPath.row].data.reviewContents,
+                                                               isExpandState: expendStateList[indexPath.row])
+                    
                     return CGSize(width: cellWidth, height: cellHeight)
                 }
             } else {
-                if BlogReviewDataModel.sampleData.count == 0 {
+                if blogReviewData.count == 0 {
                     let cellWidth = width
                     let cellHeight = width * 200/width
                     return CGSize(width: cellWidth, height: cellHeight)
@@ -252,7 +358,7 @@ extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
         }
     }
     
-    private func calculateReviewCellHeight(containsPhoto: Bool, reviewText: String? ) -> CGFloat {
+    private func calculateReviewCellHeight(containsPhoto: Bool, reviewText: String?,isExpandState: Bool) -> CGFloat {
         var cellHeight: CGFloat = 0
         let topPadding: CGFloat = 28
         let nameLabelHeight: CGFloat = 20
@@ -276,7 +382,11 @@ extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
         
         let textViewHeight = calculateReviewHeight(reviewText ?? "")
         if textViewHeight >= threeLineHeight {
-            cellHeight += (threeLineHeight + bottomPadding)
+            if !isExpandState {
+                cellHeight += (threeLineHeight + bottomPadding)
+            } else {
+                cellHeight += (textViewHeight + bottomPadding)
+            }
         } else {
             cellHeight += (textViewHeight + bottomPadding)
         }
