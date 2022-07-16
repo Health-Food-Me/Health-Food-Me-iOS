@@ -41,6 +41,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
             self.makeVibrate()
             let nextVC = ModuleFactory.resolve().makeHamburgerBarVC()
             nextVC.modalPresentationStyle = .overFullScreen
+            nextVC.delegate = self
             self.present(nextVC, animated: false)
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
@@ -423,5 +424,24 @@ extension MainMapVC: UICollectionViewDataSource {
         cell.setData(data: MainMapCategory.categorySample[indexPath.row])
         cell.isSelected = selectedCategories[indexPath.row]
         return cell
+    }
+}
+
+extension MainMapVC: HamburgerbarVCDelegate {
+    func HamburgerbarVCDidTap(hamburgerType: HamburgerType) {
+        switch hamburgerType {
+        case .editName:
+            navigationController?.pushViewController(ModuleFactory.resolve().makeNicknameChangeVC(), animated: true)
+        case .scrap:
+            navigationController?.pushViewController(ModuleFactory.resolve().makeScrapVC(), animated: true)
+        case .myReview:
+            navigationController?.pushViewController(ModuleFactory.resolve().makeScrapVC(), animated: true)
+        case .reportStore:
+            present(UIViewController(), animated: true)
+        case .reportEdit:
+            present(UIViewController(), animated: true)
+        case .setting:
+            navigationController?.pushViewController(ModuleFactory.resolve().makeScrapVC(), animated: true)
+        }
     }
 }

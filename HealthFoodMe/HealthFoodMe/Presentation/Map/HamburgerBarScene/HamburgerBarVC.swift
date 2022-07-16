@@ -9,10 +9,24 @@ import UIKit
 
 import SnapKit
 
+enum HamburgerType {
+    case editName
+    case scrap
+    case myReview
+    case reportStore
+    case reportEdit
+    case setting
+}
+
+protocol HamburgerbarVCDelegate: AnyObject {
+    func HamburgerbarVCDidTap(hamburgerType: HamburgerType)
+}
+
 class HamburgerBarVC: UIViewController {
     
     // MARK: - Properties
     
+    weak var delegate: HamburgerbarVCDelegate?
     var hambergurBarViewTranslation = CGPoint(x: 0, y: 0)
     var hambergurBarViewVelocity = CGPoint(x: 0, y: 0)
     var name: String? = "배부른 현우는 행복해요"
@@ -100,6 +114,7 @@ class HamburgerBarVC: UIViewController {
         setUI()
         setLayout()
         addHamburgerBarGesture()
+        addButtonAction()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -245,6 +260,46 @@ extension HamburgerBarVC {
     
     private func addHamburgerBarGesture() {
         self.hamburgerBarView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(moveHamburgerBarWithGesture(_:))))
+    }
+    
+    private func addButtonAction() {
+        editNameButton.press {
+            self.dismiss(animated: false)
+            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .editName)
+        }
+        
+        menuButtons[0].press {  
+            self.dismiss(animated: false)
+            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .scrap)
+        }
+        
+        menuButtons[1].press {
+            self.dismiss(animated: false)
+            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .myReview)
+        }
+        
+        menuButtons[2].press {
+            self.dismiss(animated: false)
+            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .reportStore)
+        }
+        
+        menuButtons[3].press {
+            self.dismiss(animated: false)
+            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .reportEdit)
+        }
+        
+        settingButton.press {
+            self.dismiss(animated: false)
+            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .setting)
+        }
+        
+        logoutButton.press {
+            self.makeAlert(alertType: .logoutAlert,
+                      title: I18N.HelfmeAlert.logout,
+                      subtitle: I18N.HelfmeAlert.logoutContent) {
+                print("로그아웃 구현해주세요")
+            }
+        }
     }
     
     // MARK: - @objc Methods
