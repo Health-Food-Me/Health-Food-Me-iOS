@@ -52,18 +52,24 @@ extension MenuCellCVC {
     }
     
     func setData(menuData: MenuDataModel) {
-        menuView.menuImageView.image = UIImage(named: "Image")
+        menuView.menuImageView.image =  menuData.memuImageURL == nil ?  ImageLiterals.MenuTab.emptyCard : UIImage(named: "Image")
         menuView.titleLabel.text = menuData.menuName
         menuView.pickImageView.image = menuData.isPick ? UIImage(named: "icn_pick") : .none
         
         menuView.priceLabel.text = "\(menuData.menuPrice)원"
-        menuView.kcalLabel.text = "\(menuData.menuKcal)"
-        
-        menuDetailView.titleLabel.text = menuData.menuName
-        menuDetailView.pickImageView.image = menuData.isPick ? UIImage(named: "icn_pick") : .none
-        menuDetailView.carbohydrateAmountLabel.text = "\(menuData.carbohydrates)g"
-        menuDetailView.proteinAmountLabel.text = "\(menuData.protein)g"
-        menuDetailView.fatsAmountLabel.text = "\(menuData.fat)g"
-        menuDetailView.kcalLabel.text = "\(menuData.menuKcal)"
+        if menuData.menuKcal == nil {
+            menuView.kcalView.isHidden = true
+        } else {
+            guard let menuKcal = menuData.menuKcal else { return }
+            menuView.kcalLabel.text = "\(menuKcal)"
+        }
+
+//        영양정보 부분
+//        menuDetailView.titleLabel.text = menuData.menuName
+//        menuDetailView.pickImageView.image = menuData.isPick ? UIImage(named: "icn_pick") : .none
+//        menuDetailView.carbohydrateAmountLabel.text = "\(menuData.carbohydrates)g"
+//        menuDetailView.proteinAmountLabel.text = "\(menuData.protein)g"
+//        menuDetailView.fatsAmountLabel.text = "\(menuData.fat)g"
+//        menuDetailView.kcalLabel.text = "\(menuData.menuKcal)"
     }
 }

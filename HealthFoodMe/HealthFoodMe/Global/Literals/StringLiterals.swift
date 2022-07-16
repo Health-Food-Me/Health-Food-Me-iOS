@@ -45,6 +45,7 @@ struct I18N {
         struct Menu {
             static let segmentTitle = ["메뉴", "영양정보"]
             static let kcalUnit = "kcal"
+            static let gUnit = "(-g당)"
             static let standard = "1인분 (50g)"
             static let carbohydrate = "탄수화물"
             static let protein = "단백질"
@@ -99,6 +100,13 @@ struct I18N {
         static let withHelfme = "헬푸미와 외식 걱정을 날려보세요!"
         static let dietStore = "다이어터도 즐길 수 있는 식당"
         static let goScrap = "스크랩하러 가기"
+    }
+    
+    struct Coping {
+        static let recommendHeader = "추천하는 이유!"
+        static let eatingHeader = "이렇게 드셔보세요!"
+        static let copingEmpty = "해당되는 카테고리에\n 관련된 외식대처법은 준비중입니다"
+        static let copingWait = "조금만 기다려 주세요!"
     }
     
     struct HelfmeAlert {
