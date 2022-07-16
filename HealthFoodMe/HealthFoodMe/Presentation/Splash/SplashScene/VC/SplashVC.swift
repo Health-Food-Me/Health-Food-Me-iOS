@@ -47,7 +47,7 @@ extension SplashVC {
     
     private func presentToMainMap() {
         DispatchQueue.main.asyncAfter(deadline: .now()+3) {
-            let vc = ModuleFactory.resolve().makeLoginVC()
+            let vc = ModuleFactory.resolve().makeMainMapVC()
             vc.modalPresentationStyle = .overFullScreen
             self.present(vc, animated: false)
         }

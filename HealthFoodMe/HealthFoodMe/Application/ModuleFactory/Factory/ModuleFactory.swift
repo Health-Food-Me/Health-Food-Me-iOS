@@ -35,6 +35,8 @@ protocol ModuleFactoryProtocol {
     
     // MARK: - Spalsh
     func makeSplashVC() -> SplashVC
+    // MARK: - Setting
+    func makeSettingVC() -> SettingVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -160,6 +162,10 @@ class ModuleFactory: ModuleFactoryProtocol {
         let vc = SplashVC.controllerFromStoryboard(.splash)
         
         return vc
+    }
+    // MARK: - Setting
+    func makeSettingVC() -> SettingVC {
+        return SettingVC.controllerFromStoryboard(.setting)
     }
 
     // MARK: - Plan
