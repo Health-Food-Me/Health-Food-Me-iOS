@@ -47,7 +47,6 @@ final class MenuTabVC: UIViewController {
 		setLayout()
 		setDelegate()
 		registerCell()
-		
 	}
 }
 

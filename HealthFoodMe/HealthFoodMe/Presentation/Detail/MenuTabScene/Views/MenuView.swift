@@ -46,6 +46,7 @@ final class MenuView: UIView {
     lazy var titleLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
+        lb.numberOfLines = 2
         lb.font = .NotoBold(size: 14)
         return lb
     }()
@@ -81,6 +82,16 @@ final class MenuView: UIView {
         lb.font = .NotoRegular(size: 10)
         return lb
     }()
+    
+    lazy var gLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = I18N.Detail.Menu.gUnit
+        lb.textColor = .helfmeWhite
+        lb.font = .PretendardRegular(size: 8)
+//        lb.partFontChange(targetString: "(", font: .NotoBold(size: 10))
+        lb.partFontChange(targetString: "당)", font: .NotoRegular(size: 8))
+        return lb
+    }()
    
     lazy var kcalStackView: UIStackView = {
         let sv = UIStackView()
@@ -89,6 +100,7 @@ final class MenuView: UIView {
         sv.spacing = 0
         sv.addArrangedSubview(kcalLabel)
         sv.addArrangedSubview(unitLabel)
+        sv.addArrangedSubview(gLabel)
         return sv
     }()
     
@@ -98,6 +110,7 @@ final class MenuView: UIView {
         super.init(frame: frame)
         setUI()
         setLayout()
+        print(getTitleLabelHeight())
     }
     
     required init?(coder: NSCoder) {
@@ -147,6 +160,7 @@ extension MenuView {
         
         menuStackView.snp.makeConstraints { make in
             make.leading.equalTo(menuImageView.snp.trailing).offset(20)
+            make.trailing.equalToSuperview().inset(42)
             make.top.equalTo(pickImageView).offset(24)
         }
         
@@ -155,4 +169,7 @@ extension MenuView {
             make.centerX.centerY.equalToSuperview()
         }
     }
+    
+    private func updateLayout() {
+
 }

@@ -45,6 +45,7 @@ struct I18N {
         struct Menu {
             static let segmentTitle = ["메뉴", "영양정보"]
             static let kcalUnit = "kcal"
+            static let gUnit = "(-g당)"
             static let standard = "1인분 (50g)"
             static let carbohydrate = "탄수화물"
             static let protein = "단백질"
