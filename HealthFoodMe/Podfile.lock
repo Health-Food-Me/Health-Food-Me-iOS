@@ -117,7 +117,7 @@ PODS:
   - KakaoSDKUser (2.11.0):
     - KakaoSDKAuth (= 2.11.0)
   - Kingfisher (7.2.4)
-  - lottie-ios (3.4.0)
+  - lottie-ios (3.3.0)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -207,7 +207,7 @@ SPEC CHECKSUMS:
   KakaoSDKCommon: 0f59f2c1aead6012d92758e8ca46b63ea11c408b
   KakaoSDKUser: 5dbefe494c50dfdc87e4072710e503d39b41a609
   Kingfisher: 2457be2121734e69e54a2312ecc0150eb9ae70b3
-  lottie-ios: 69495122151a378fdc7d1bb4c5930347e37baf1f
+  lottie-ios: 6ac74dcc09904798f59b18cb3075c089d76be9ae
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   NMapsMap: f151761c088d6516064c59da03ab6503769486e6
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb

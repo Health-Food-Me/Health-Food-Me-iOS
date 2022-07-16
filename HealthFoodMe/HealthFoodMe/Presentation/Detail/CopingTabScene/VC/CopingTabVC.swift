@@ -7,12 +7,22 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
+protocol CopingGestureDelegate {
+    func panGestureSwipe(isRight: Bool)
+}
+
 class CopingTabVC: UIViewController {
     
     // MARK: - Properties
-    
+    private let disposeBag = DisposeBag()
     private var copingHeader = CopingHeaderView()
     private var copingEmptyView = CopingEmptyView()
+    var topScrollAnimationNotFinished: Bool = true
+    weak var delegate: ScrollDeliveryDelegate?
+    var panDelegate: CopingGestureDelegate?
     var recommendList: [String] = []
     var eatingList: [String] = []
     
@@ -59,6 +69,7 @@ class CopingTabVC: UIViewController {
         setLayout()
         setDelegate()
         registerCell()
+        addPanGesture()
     }
 }
 
@@ -116,6 +127,32 @@ extension CopingTabVC {
         eatingList = CopingDataModel.sampleCopingData.eating ?? []
         copingTableView.reloadData()
     }
+    
+    private func addPanGesture() {
+        let panGesture = UIPanGestureRecognizer()
+        view.addGestureRecognizer(panGesture)
+        panGesture.rx.event.asDriver { _ in .never() }
+            .drive(onNext: { [weak self] sender in
+                let velocity = sender.velocity(in: self?.view)
+                let isVertical = abs(velocity.y) > abs(velocity.x)
+                switch (isVertical, velocity.x, velocity.y) {
+                case (true, _, let y) where y < 0:
+                    self?.delegate?.scrollStarted(velocity: -10, scrollView: UIScrollView())
+
+                case (true, _, let y) where y > 0:
+                    self?.delegate?.childViewScrollDidEnd(type: .coping)
+                        
+                case (false, let x, _) where x > 0:
+                    self?.panDelegate?.panGestureSwipe(isRight: false)
+                        
+                case (false, let x, _) where x < 0:
+                    self?.panDelegate?.panGestureSwipe(isRight: true)
+
+                default: return
+                }
+            }).disposed(by: disposeBag)
+
+    }
 }
 
 // MARK: - Network
@@ -123,8 +160,8 @@ extension CopingTabVC {
 extension CopingTabVC {
     
 }
-
 extension CopingTabVC: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 38
     }
@@ -134,13 +171,16 @@ extension CopingTabVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: CopingHeaderView.className) as? CopingHeaderView else { return nil }
+        guard let topHeaderCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: CopingHeaderView.className) as? CopingHeaderView else { return nil }
+        guard let bottomHeaderCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: CopingHeaderView.className) as? CopingHeaderView else { return nil }
+        
         if section == 0 {
-            headerCell.setHeaderData(section: 0)
+            topHeaderCell.setHeaderData(section: 0)
+            return topHeaderCell
         } else {
-            headerCell.setHeaderData(section: 1)
+            bottomHeaderCell.setHeaderData(section: 1)
+            return bottomHeaderCell
         }
-        return headerCell
     }
 }
 

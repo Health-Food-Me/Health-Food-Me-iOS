@@ -27,7 +27,7 @@ final class DetailTabTVC: UITableViewCell, UITableViewRegisterable {
     
     // MARK: - UI Components
     
-    private lazy var containerCollectionView: UICollectionView = {
+    lazy var containerCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-104)
