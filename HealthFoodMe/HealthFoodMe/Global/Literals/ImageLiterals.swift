@@ -35,7 +35,7 @@ struct ImageLiterals {
     }
     
     struct Search {
-        static let deleteBtn = UIImage(named: "btn_delete")
+        static let deleteBtn = UIImage(named: "btn_search_delete")
         static let textDeleteBtn = UIImage(named: "btn_textdelete")
         static let dietIcon = UIImage(named: "icn_diet")
         static let normalIcon = UIImage(named: "icn_normal")
@@ -89,11 +89,16 @@ struct ImageLiterals {
         static let deletePhotoBtn = UIImage(named: "btn_delete")
     }
     
+<<<<<<< HEAD
     struct Coping {
         static let icnTipGreen = UIImage(named: "icn_tip_check_green")
         static let icnTipPink = UIImage(named: "icn_tip_check_pink")
         static let imageEmpty = UIImage(named: "img_tip_empty")
         static let imageRecommend = UIImage(named: "img_tip_recommend")
         static let imagetasteIt = UIImage(named: "img_tip_tasteit")
+=======
+    struct MenuTab {
+        static let emptyCard = UIImage(named: "img_empty_card")
+>>>>>>> 0d6efb7f6088ae496a3e08af17070f41145eadca
     }
 }

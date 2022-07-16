@@ -124,9 +124,10 @@ extension MainDetailVC {
                 print(windowTranslation)
                 switch sender.state {
                 case .changed:
-                    self?.view.backgroundColor = .clear
                     UIView.animate(withDuration: 0.1) {
+                      if windowTranslation.y > 0 {
                         self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
+                      }
                     }
                 case .ended:
                     if windowTranslation.y > 130 {
@@ -265,14 +266,20 @@ extension MainDetailVC: UITableViewDataSource {
 
 extension MainDetailVC: ScrollDeliveryDelegate {
     
-    // TODO: - 이 부분 touchesBegan으로 해보자
+    func childViewScrollDidEnd() {
+        self.mainTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        childVC.topScrollAnimationNotFinished = true
+    }
     
     func scrollStarted(velocity: CGFloat, scrollView: UIScrollView) {
         if velocity < 0 {
-            self.mainTableView.setContentOffset(CGPoint(x: 0, y: 240), animated: true)
-            if mainTableView.contentOffset.y < 230 {
-                scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-            }
+            self.mainTableView.scrollToRow(at: IndexPath.init(row: 0, section: 1), at: .top, animated: true)
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 50 {
+            childVC.topScrollAnimationNotFinished = false
         }
     }
 }
