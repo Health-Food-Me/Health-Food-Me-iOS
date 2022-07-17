@@ -23,6 +23,8 @@ class CopingTabVC: UIViewController {
     var topScrollAnimationNotFinished: Bool = true
     weak var delegate: ScrollDeliveryDelegate?
     var panDelegate: CopingGestureDelegate?
+    var copingDataModel: CopingDataModel?
+    var restaurantId = "62d26c9bd11146a81ef18ea6"
     var recommendList: [String] = []
     var eatingList: [String] = []
     
@@ -123,8 +125,9 @@ extension CopingTabVC {
     }
     
     private func fetchData() {
-        recommendList = CopingDataModel.sampleCopingData.recommend ?? []
-        eatingList = CopingDataModel.sampleCopingData.eating ?? []
+        //        recommendList = CopingDataModel.sampleCopingData.recommend ?? []
+        //        eatingList = CopingDataModel.sampleCopingData.eating ?? []
+        getMenuPrescription()
         copingTableView.reloadData()
     }
     
@@ -138,26 +141,40 @@ extension CopingTabVC {
                 switch (isVertical, velocity.x, velocity.y) {
                 case (true, _, let y) where y < 0:
                     self?.delegate?.scrollStarted(velocity: -10, scrollView: UIScrollView())
-
+                    
                 case (true, _, let y) where y > 0:
                     self?.delegate?.childViewScrollDidEnd(type: .coping)
-                        
+                    
                 case (false, let x, _) where x > 0:
                     self?.panDelegate?.panGestureSwipe(isRight: false)
-                        
+                    
                 case (false, let x, _) where x < 0:
                     self?.panDelegate?.panGestureSwipe(isRight: true)
-
+                    
                 default: return
                 }
             }).disposed(by: disposeBag)
-
+        
     }
 }
 
 // MARK: - Network
 
 extension CopingTabVC {
+    func getMenuPrescription() {
+        RestaurantService.shared.getMenuPrescription(restaurantId: restaurantId) { networkResult in
+            print(networkResult)
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? CopingDataModel {
+                    print(data, "성공")
+                    self.copingDataModel = data
+                }
+            default:
+                break;
+            }
+        }
+    }
     
 }
 extension CopingTabVC: UITableViewDelegate {

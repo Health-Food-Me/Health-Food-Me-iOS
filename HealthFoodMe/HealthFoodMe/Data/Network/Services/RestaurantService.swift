@@ -20,4 +20,9 @@ extension RestaurantService {
     func requestRestaurantSearch(query: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         requestObject(RestaurantRouter.requestRestaurantSearch(query: query), type: SearchDataModel.self, decodingMode: .general, completion: completion)
     }
+    
+    func getMenuPrescription(restaurantId: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+        
+        requestObject(RestaurantRouter.getMenuPrescription(restaurantId: restaurantId), type: CopingDataModel.self, decodingMode: .model, completion: completion)
+    }
 }

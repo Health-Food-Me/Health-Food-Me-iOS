@@ -9,6 +9,7 @@ import Alamofire
 
 enum RestaurantRouter {
     case requestRestaurantSearch(query: String)
+    case getMenuPrescription(restaurantId: String)
 }
 
 extension RestaurantRouter: BaseRouter {
@@ -25,6 +26,8 @@ extension RestaurantRouter: BaseRouter {
         switch self {
         case .requestRestaurantSearch:
             return "/restaurant/search"
+        case .getMenuPrescription(let restaurantId):
+            return "/restaurant/\(restaurantId)/prescription"
         default:
             return ""
         }
