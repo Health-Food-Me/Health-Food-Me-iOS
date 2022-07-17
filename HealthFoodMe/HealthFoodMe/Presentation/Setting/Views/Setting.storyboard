@@ -9,39 +9,20 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Review WriteVC-->
+        <!--SettingVC-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="ReviewWriteVC" id="Y6W-OH-hqX" customClass="ReviewWriteVC" customModule="HealthFoodMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingVC" id="Y6W-OH-hqX" customClass="SettingVC" customModule="HealthFoodMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="p4R-Ig-xl6"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="976.81159420289862" y="53.571428571428569"/>
-        </scene>
-        <!--Review Write Navigation Controller-->
-        <scene sceneID="UTx-th-1MQ">
-            <objects>
-                <navigationController storyboardIdentifier="ReviewWriteNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="62h-Rd-ydA" customClass="ReviewWriteNavigationController" customModule="HealthFoodMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Zx-p8-S8E">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="Unk-T3-iUr"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VAR-lF-ELR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="66.666666666666671" y="53.571428571428569"/>
+            <point key="canvasLocation" x="-16" y="85"/>
         </scene>
     </scenes>
     <resources>
