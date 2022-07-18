@@ -65,6 +65,7 @@ class SocialLoginVC: UIViewController {
 // MARK: - extension
 extension SocialLoginVC {
     private func presentToMainMap() {
+        print("!@#")
         let mainVC = ModuleFactory.resolve().makeMainMapNavigationController()
         mainVC.modalPresentationStyle = .overFullScreen
         self.present(mainVC, animated: false)
@@ -103,14 +104,13 @@ extension SocialLoginVC {
     }
     
     private func postSocialLoginData() {
+        print("!!!!")
         AuthService.shared.requestAuth(social: social,
                                        token: accessToken) { networkResult in
             switch networkResult {
             case .success(let data):
-                if let data = data as? SocialLoginEntity {
-                    print("로그인 성공!!")
-                    self.presentToMainMap()
-                }
+                print("로그인 성공!!")
+                self.presentToMainMap()
             case .networkFail:
                 self.makeAlert(title: "로그인 실패", message: "실패 했어유")
             default:

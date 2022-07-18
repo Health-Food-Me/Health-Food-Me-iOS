@@ -8,11 +8,11 @@
 import Foundation
 
 struct SocialLoginEntity: Codable {
-    let user: User
+    let user: UserAuth
     let accessToken, refreshToken: String
 }
 
-struct User: Codable {
+struct UserAuth: Codable {
     let _id: String
     let name: String
     let social: String
