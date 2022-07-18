@@ -15,6 +15,9 @@ import SnapKit
 
 class SocialLoginVC: UIViewController {
 
+    var social: String = ""
+    var accessToken: String = ""
+
     // MARK: - Properties
     
     private var titleLabel: UILabel = {
@@ -57,11 +60,13 @@ class SocialLoginVC: UIViewController {
         setLayout()
         setAddTarget()
     }
-    
 }
 
 // MARK: - extension
 extension SocialLoginVC {
+    func requestSocialLogin() {
+    }
+    
     private func kakaoLogin() {
         if UserApi.isKakaoTalkLoginAvailable() {
             // 카카오톡 로그인. api 호출 결과를 클로저로 전달.
@@ -69,9 +74,12 @@ extension SocialLoginVC {
                 if error != nil { self.showKakaoLoginFailMessage() } else {
                     if let accessToken = oauthToken?.accessToken {
                         // 엑세스 토큰 받아와서 서버에게 넘겨주는 로직 작성
-
+                        self.accessToken = accessToken
+                        self.social = "kakao"
+                        
                         print("TOKEN", accessToken)
-                        self.postSocialLoginData(socialToken: accessToken, socialType: "KAKAO")
+                        self.postSocialLoginData()
+                        
                     }
                 }
             }
@@ -80,9 +88,10 @@ extension SocialLoginVC {
                 if error != nil { self.showKakaoLoginFailMessage() } else {
                     if let accessToken = oauthToken?.accessToken {
                         print("TOKEN", accessToken)
-                        self.postSocialLoginData(socialToken: accessToken, socialType: "KAKAO")
+                        self.postSocialLoginData()
                     }
                     // 성공해서 성공 VC로 이동
+                    
                 }
             }
         }
@@ -92,8 +101,17 @@ extension SocialLoginVC {
         self.makeAlert(title: I18N.Alert.error, message: I18N.Auth.kakaoLoginError, okAction: nil, completion: nil)
     }
     
-    private func postSocialLoginData(socialToken: String, socialType: String) {
-
+    private func postSocialLoginData() {
+        AuthService.shared.requestAuth(social: social,
+                                       token: accessToken) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? SocialLoginEntity {
+                }
+            default:
+                break
+            }
+        }
     }
     
     private func appleLogin() {
@@ -148,7 +166,7 @@ extension SocialLoginVC {
         let vc = ModuleFactory.resolve().makeMainMapNavigationController()
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: false)
-//        appleLogin()
+        appleLogin()
     }
 }
 
@@ -176,8 +194,12 @@ extension SocialLoginVC: ASAuthorizationControllerDelegate {
             let tokenString = String(data: identityToken!, encoding: .utf8)
             
             if let token = tokenString {
-                postSocialLoginData(socialToken: token, socialType: "APPLE")
+                self.accessToken = token
+                self.social = "apple"
+                postSocialLoginData()
             }
+            
+            
         default:
             // 실패 시 실패VC로 이동
             print("애플아이디 로그인 실패")
