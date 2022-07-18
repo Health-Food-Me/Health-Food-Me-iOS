@@ -27,11 +27,15 @@ class ReviewDetailVC: UIViewController {
     private var reviewData: [ReviewCellViewModel] = [] { didSet {
         fetchCutStringList()
         fetchExpendStateList()
+        reviewCV.reloadData()
     }}
+    private var reviewServerData: [ReviewDataModel] = []
     private var blogReviewData: [BlogReviewDataModel] = []
     private var cutLabelList: [String] = []
     private var expendStateList: [Bool] = []
     var moreContentsButtonRect: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
+    
+    var restaurantId: String = "62d26c9bd11146a81ef18ea6"
     
     var selectedCustomSegment = 0 {
         didSet {
@@ -120,9 +124,7 @@ extension ReviewDetailVC {
     
     private func fetchData() {
         // 데이터를 서버에서 받아와야 함
-        let reviewData = ReviewDataModel.sampleData // 서버에서 받아와야 할 데이터
-        let blogReviewData = BlogReviewDataModel.sampleData
-        processViewModel(reviewData, blogReviewData)
+        requestReviewListWithAPI()
     }
     
     private func processViewModel(_ reviewDataList: [ReviewDataModel],
@@ -195,6 +197,30 @@ extension ReviewDetailVC {
         textView.text = text
         textView.sizeToFit()
         return textView.frame.height
+    }
+    
+    private func requestReviewListWithAPI() {
+        print("!!!!!!!!!!!")
+        ReviewService.shared.requestReviewList(restaurantId: restaurantId) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                self.reviewServerData.removeAll()
+                if let data = data as? [ReviewListEntity] {
+                    for da in data {
+                        self.reviewServerData.append(da.toDomain())
+                    }
+                    let blogReviewData = BlogReviewDataModel.sampleData
+                    self.processViewModel(self.reviewServerData, blogReviewData)
+
+                    print(data, "성공")
+                }
+            case .networkFail:
+                print("실패")
+            default:
+                break
+            }
+            self.reviewCV.reloadData()
+        }
     }
 }
 
@@ -331,7 +357,7 @@ extension ReviewDetailVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if selectedCustomSegment == 0 {
+        if selectedCustomSegment == 1 {
             URLSchemeManager.shared.loadSafariApp(blogLink: blogReviewData[indexPath.row].blogURL)
         }
             
@@ -346,7 +372,7 @@ extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
             return CGSize(width: width, height: 58)
         case 1:
             if selectedCustomSegment == 0 {
-                if ReviewDataModel.sampleData.count == 0 {
+                if reviewData.count == 0 {
                     let cellWidth = width
                     let cellHeight = width * 200/width
                     return CGSize(width: cellWidth, height: cellHeight)

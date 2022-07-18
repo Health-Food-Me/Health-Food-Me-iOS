@@ -127,6 +127,7 @@ iOSInjectionProject/
 ## Xcode 8 and earlier
 
 HealthFoodMe/HealthFoodMe/Data/Network/Environment/Config.swift
+HealthFoodMe/HealthFoodMe/GoogleService-Info.plist
 
 ### Xcode Patch ###
 *.xcodeproj/*
