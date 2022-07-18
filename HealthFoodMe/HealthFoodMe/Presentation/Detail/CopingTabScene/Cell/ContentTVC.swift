@@ -24,10 +24,10 @@ class ContentTVC: UITableViewCell, UITableViewRegisterable {
     
     lazy var contentLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "먹는 속도가 자연스럽게 느려져요"
         lb.textColor = .helfmeBlack
         lb.font = .NotoRegular(size: 12)
         lb.numberOfLines = 0
+        lb.lineBreakMode = .byCharWrapping
         return lb
     }()
     
@@ -69,10 +69,12 @@ extension ContentTVC {
         
         contentLabel.snp.makeConstraints { make in
             make.width.equalTo(228)
+            make.trailing.equalTo(contentStackView.snp.trailing)
         }
         
         contentStackView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(9)
+            make.bottom.equalToSuperview().inset(9)
             make.centerX.equalToSuperview()
         }
     }

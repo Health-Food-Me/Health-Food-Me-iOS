@@ -43,8 +43,6 @@ final class UserManager {
     func reissuanceAccessToken() {
         guard let accessToken = self.accessToken   else { return }
         guard let refreshToken = self.refreshToken else { return }
-        
-        AuthService.shared.reissuanceAccessToken()
     }
 }
 
