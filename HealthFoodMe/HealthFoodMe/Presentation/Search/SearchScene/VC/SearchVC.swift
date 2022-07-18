@@ -27,9 +27,8 @@ final class SearchVC: UIViewController {
         }
     }
     var searchRecentList: [String] = []
-    var searchList: [SearchDataModel] = []
-    var searchResultList: [SearchResultDataModel] = []
-    private var isEmpty: Bool = false
+    var searchList: [SearchEntity] = []
+    var searchResultList: [SearchResultEntity] = []
     private var searchEmptyView = SearchEmptyView()
     
     // MARK: - UI Components
@@ -130,7 +129,6 @@ final class SearchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setData()
-        fetchData()
         setUI()
         setLayout()
         setDelegate()
@@ -196,11 +194,6 @@ extension SearchVC {
         savedSearchRecent?.forEach { object in
             searchRecentList.insert(object.title, at: 0)
         }
-    }
-    
-    private func fetchData() {
-        searchList = SearchDataModel.sampleSearchData
-        searchResultList = SearchResultDataModel.sampleSearchResultData
     }
     
     private func setUI() {
@@ -311,6 +304,9 @@ extension SearchVC {
     }
     
     private func isSearch() {
+        if let text = searchTextField.text {
+            requestRestaurantSearch(query: text)
+        }
         searchTextField.rightView = clearButton
         searchTextField.becomeFirstResponder()
         searchTableView.tableHeaderView = nil
@@ -319,14 +315,13 @@ extension SearchVC {
     }
     
     private func isSearchResult() {
-        // 결과 검색 서버 연동 (여기서 해당 텍스트필드의 검색어 서버에 넘겨줌)
-        if searchList.isEmpty {
-            isEmpty = true
-            isSearchEmpty()
+        if !searchList.isEmpty {
+            searchEmptyView.isHidden = false
         } else {
+            searchEmptyView.isHidden = true
             searchTextField.resignFirstResponder()
             if let text = searchTextField.text {
-                if !SearchDataModel.sampleSearchData.isEmpty {
+                if !searchList.isEmpty {
                     addSearchRecent(title: text)
                 }
             }
@@ -339,22 +334,16 @@ extension SearchVC {
             searchType = .searchResult
         }
     }
-    
-    private func isSearchEmpty() {
-        if isEmpty {
-            searchEmptyView.isHidden = false
-        } else {
-            searchEmptyView.isHidden = true
-        }
-    }
 }
 
 // MARK: - UITextFieldDelegate
 
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        isSearchResult()
-        isSearchEmpty()
+        if let text = searchTextField.text {
+            requestRestaurantSearchList(searchRequest: SearchRequestEntity(longtitude: 1, latitude: 1, zoom: 0,
+                                                                           keyword: text))
+        }
         return true
     }
     
@@ -426,11 +415,11 @@ extension SearchVC: UITableViewDataSource {
             isSearchResult()
         case .search:
             // 화면 전환 코드 추가해야 됨
-            print("\(searchList[indexPath.row].title) 식당 상세 페이지로 이동")
-            addSearchRecent(title: SearchDataModel.sampleSearchData[indexPath.row].title)
+            print("\(searchList[indexPath.row].name) 식당 상세 페이지로 이동")
+            addSearchRecent(title: searchList[indexPath.row].name)
         case .searchResult:
             // 화면 전환 코드 추가해야 됨
-            print("\(searchResultList[indexPath.row].storeName) 식당 상세 페이지로 이동")
+            print("\(searchResultList[indexPath.row].name) 식당 상세 페이지로 이동")
         }
     }
 }
@@ -463,3 +452,37 @@ extension SearchVC: SearchResultVCDelegate {
 }
 
 // MARK: - Network
+
+extension SearchVC {
+    private func requestRestaurantSearch(query: String) {
+        RestaurantService.shared.requestRestaurantSearch(query: query) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? [SearchEntity] {
+                    self.searchList = data
+                    self.searchTableView.reloadData()
+                }
+            default:
+                break;
+            }
+        }
+    }
+    
+    private func requestRestaurantSearchList(searchRequest: SearchRequestEntity) {
+        RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: searchRequest.longtitude,
+                                                                                                  latitude: searchRequest.latitude,
+                                                                                                  zoom: searchRequest.zoom,
+                                                                                                  keyword: searchRequest.keyword)) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? [SearchResultEntity] {
+                    self.searchResultList = data
+                    self.isSearchResult()
+                    self.searchTableView.reloadData()
+                }
+            default:
+                break;
+            }
+        }
+    }
+}

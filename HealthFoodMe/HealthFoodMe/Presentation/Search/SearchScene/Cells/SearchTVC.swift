@@ -45,13 +45,13 @@ final class SearchTVC: UITableViewCell, UITableViewRegisterable {
 // MARK: - Methods
 
 extension SearchTVC {
-    func setData(data: SearchDataModel) {
-        if data.isDiet {
+    func setData(data: SearchEntity) {
+        if data.isDietRestaurant {
             searchImageView.image = ImageLiterals.Search.dietIcon
         } else {
             searchImageView.image = ImageLiterals.Search.normalIcon
         }
-        searchLabel.text = data.title
+        searchLabel.text = data._id
         searchLabel.textColor = .helfmeBlack
         searchLabel.partColorChange(targetString: searchContent, textColor: .mainRed)
     }
