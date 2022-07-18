@@ -17,7 +17,7 @@ extension ReviewService {
     func requestReviewList(restaurantId: String,
                            completion: @escaping(NetworkResult<Any>) -> Void) {
         requestObject(ReviewRouter.getReviewList(restaurantId: restaurantId),
-                      type: ReviewListEntity.self,
+                      type: [ReviewListEntity].self,
                       decodingMode: .model,
                       completion: completion)
     }
