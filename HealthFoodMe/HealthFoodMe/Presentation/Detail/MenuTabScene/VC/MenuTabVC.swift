@@ -15,10 +15,10 @@ protocol ScrollDeliveryDelegate: AnyObject {
 	func currentTabMenu(_ type: TabMenuCase)
 }
 
-enum TabMenuCase {
-	case menu
-	case coping
-	case review
+enum TabMenuCase: Int {
+	case menu = 0
+	case coping = 1
+	case review = 2
 }
 
 final class MenuTabVC: UIViewController {

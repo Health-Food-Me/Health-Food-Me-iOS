@@ -18,6 +18,7 @@ final class DetailTabTVC: UITableViewCell, UITableViewRegisterable {
     static var isFromNib: Bool = false
     let disposeBag = DisposeBag()
     let scrollRatio = PublishRelay<CGFloat>()
+    let scrollStart = PublishRelay<Int>()
     let scrollEnded = PublishRelay<Int>()
     var childControllers = [UIViewController]() {
         didSet {

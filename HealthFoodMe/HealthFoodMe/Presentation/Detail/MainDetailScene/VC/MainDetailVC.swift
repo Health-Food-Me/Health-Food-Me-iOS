@@ -305,13 +305,17 @@ extension MainDetailVC: UITableViewDataSource {
                         self.menuCase = .review
                         self.reviewTabVC.topScrollAnimationNotFinished = true
                     }
+                    
+                    if ratio == 0 {
+                        self.detailTabTitleHeader.setSelectedButton(buttonIndex: 0)
+                    } else if ratio == 1/3 {
+                        self.detailTabTitleHeader.setSelectedButton(buttonIndex: 1)
+                    } else if ratio == 2/3 {
+                        self.detailTabTitleHeader.setSelectedButton(buttonIndex: 2)
+                    }
                     self.detailTabTitleHeader.moveWithContinuousRatio(ratio: ratio)
                 }.disposed(by: cell.disposeBag)
-            cell.scrollEnded.asDriver(onErrorJustReturn: 0)
-                .drive { pageIndex in
 
-                    self.detailTabTitleHeader.setSelectedButton(buttonIndex: pageIndex)
-                }.disposed(by: cell.disposeBag)
             return cell
         }
     }
@@ -382,7 +386,6 @@ extension MainDetailVC: ScrollDeliveryDelegate {
 extension MainDetailVC: CopingGestureDelegate {
     func panGestureSwipe(isRight: Bool) {
         let index = isRight ? 2 : 0
-        detailTabTitleHeader.setSelectedButton(buttonIndex: index)
         detailTabTVC.containerCollectionView.scrollToItem(at: IndexPath.init(row: index, section: 0), at: .centeredVertically, animated: true)
     }
 }
