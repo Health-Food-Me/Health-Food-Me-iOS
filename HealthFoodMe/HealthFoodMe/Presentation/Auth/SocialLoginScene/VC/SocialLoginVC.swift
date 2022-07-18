@@ -83,7 +83,6 @@ extension SocialLoginVC {
                         
                         print("TOKEN", accessToken)
                         self.postSocialLoginData()
-                        self.presentToMainMap()
                     }
                 }
             }
@@ -93,10 +92,7 @@ extension SocialLoginVC {
                     if let accessToken = oauthToken?.accessToken {
                         print("TOKEN", accessToken)
                         self.postSocialLoginData()
-                        self.presentToMainMap()
                     }
-                    // 성공해서 성공 VC로 이동
-                    
                 }
             }
         }
@@ -113,7 +109,10 @@ extension SocialLoginVC {
             case .success(let data):
                 if let data = data as? SocialLoginEntity {
                     print("로그인 성공!!")
+                    self.presentToMainMap()
                 }
+            case .networkFail:
+                self.makeAlert(title: "로그인 실패", message: "실패 했어유")
             default:
                 break
             }
@@ -200,7 +199,6 @@ extension SocialLoginVC: ASAuthorizationControllerDelegate {
                 self.accessToken = token
                 self.social = "apple"
                 postSocialLoginData()
-                presentToMainMap()
             }
             
             
