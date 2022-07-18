@@ -392,7 +392,6 @@
 		FD72FCB928834A190092746F /* NicknameChangeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NicknameChangeVC.swift; sourceTree = "<group>"; };
 		FD72FCBB28834A190092746F /* NicknameChange.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NicknameChange.storyboard; sourceTree = "<group>"; };
 		FD72FCBF28834AB60092746F /* MainMapNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapNavigationController.swift; sourceTree = "<group>"; };
-		FD924375288007ED0034876B /* NicknameChange.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NicknameChange.storyboard; sourceTree = "<group>"; };
 		FDA3AEF22880612300D6CCB4 /* UserWithdrawalUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWithdrawalUseCase.swift; sourceTree = "<group>"; };
 		FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegementControl.swift; sourceTree = "<group>"; };
 		FDC46A24288326AB00F62D20 /* splash_ios.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_ios.json; sourceTree = "<group>"; };
@@ -697,7 +696,6 @@
 			isa = PBXGroup;
 			children = (
 				C321ED365502C47A4E65A10E /* Pods_HealthFoodMe.framework */,
-				FD924375288007ED0034876B /* NicknameChange.storyboard */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
