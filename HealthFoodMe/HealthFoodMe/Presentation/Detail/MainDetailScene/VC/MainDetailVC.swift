@@ -23,6 +23,7 @@ class MainDetailVC: UIViewController {
     private var copingTabVC = ModuleFactory.resolve().makeCopingTabVC()
     private var reviewTabVC = ModuleFactory.resolve().makeReviewDetailVC()
     private var menuCase: TabMenuCase = .menu
+    private var navigationTitle: String = "서브웨이 테스트"
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
     
@@ -106,6 +107,10 @@ extension MainDetailVC {
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: scrapButton)
+    }
+    
+    private func setNavigationTitle(isShown: Bool) {
+        self.navigationItem.title = isShown ? navigationTitle : ""
     }
     
     private func setLayout() {
@@ -339,6 +344,7 @@ extension MainDetailVC: ScrollDeliveryDelegate {
     
     func childViewScrollDidEnd(type: TabMenuCase) {
         self.mainTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        setNavigationTitle(isShown: false)
         switch(type) {
             case .menu:     menuTabVC.topScrollAnimationNotFinished = true
             case .coping:   copingTabVC.topScrollAnimationNotFinished = true
@@ -350,6 +356,7 @@ extension MainDetailVC: ScrollDeliveryDelegate {
     func scrollStarted(velocity: CGFloat, scrollView: UIScrollView) {
         if velocity < 0 {
             self.mainTableView.scrollToRow(at: IndexPath.init(row: 0, section: 1), at: .top, animated: true)
+            setNavigationTitle(isShown: true)
         }
     }
     
