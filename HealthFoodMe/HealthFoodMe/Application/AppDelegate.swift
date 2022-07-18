@@ -8,6 +8,7 @@
 import UIKit
 
 import AuthenticationServices
+import FirebaseCore
 import KakaoSDKCommon
 import NMapsMap
 
@@ -21,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        FirebaseApp.configure()
         
         KakaoSDK.initSDK(appKey : IDLiterals.kakaoSDKAPPKey)
         
