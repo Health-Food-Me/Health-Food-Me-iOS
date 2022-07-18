@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch userManager.isAppleLoginned {
             case true:
                 let appleIDProvider = ASAuthorizationAppleIDProvider()
-                appleIDProvider.getCredentialState(forUserID: "00000.abcabcabcabc.0000(로그인에 사용한 UserIdentifier)") { (credentialState, error) in
+                appleIDProvider.getCredentialState(forUserID: userManager.userIdentifier ?? "") { (credentialState, error) in
                     switch credentialState {
                     case .authorized: // 이미 증명이 된 경우 (정상)
                         print("authorized")
@@ -50,7 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                 }
             case false:
-                print("저기")
                 if AuthApi.hasToken() {
                     UserApi.shared.accessTokenInfo { d, error in
                         if let error = error {
@@ -61,9 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         } else {
                             // 토큰 유효성이 확인된 경우
                             userManager.setLoginStatus(isLoginned: true)
-                            UserApi.shared.me { user, e in
-                                
-                            }
                         }
                     }
                 } else {
@@ -73,7 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         } else {
             // access token 이 없는 경우.
-            print("dfdf")
             userManager.setLoginStatus(isLoginned: false)
         }
         

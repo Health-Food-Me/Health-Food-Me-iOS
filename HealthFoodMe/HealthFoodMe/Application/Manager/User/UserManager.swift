@@ -29,6 +29,7 @@ final class UserManager {
     var isLogin: Bool { return self.currentLoginStatus ?? false }
     var getSocialToken: String { return self.socialToken ?? "" }
     var getAccessToken: String { return self.accessToken ?? "" }
+    var getRefreshToken: String { return self.refreshToken ?? "" }
     
     private init() {}
     
@@ -63,10 +64,20 @@ final class UserManager {
         self.currentUser = nil
     }
     
-    func reissuanceAccessToken() {
-        guard let accessToken = self.accessToken else { return }
-        guard let refreshToken = self.refreshToken else { return }
-        
-        
+    func reissuanceAccessToken(completion: @escaping(Bool) -> Void) {
+        AuthService.shared.reissuanceAccessToken { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? ReissunaceEntity?,
+                   let access = data?.accessToken,
+                   let refresh = data?.refreshToken {
+                    self.updateAuthToken(access, refresh)
+                }
+                completion(true)
+            default:
+                completion(false)
+                print("토큰 재발급 에러")
+            }
+        }
     }
 }
