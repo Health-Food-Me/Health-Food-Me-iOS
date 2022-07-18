@@ -8,17 +8,25 @@
 import Foundation
 
 struct SocialLoginEntity: Codable {
-    let user: UserAuth
-    let accessToken, refreshToken: String
+    let accessToken: String
+    let user: User
+    let refreshToken: String
 }
 
-struct UserAuth: Codable {
-    let _id: String
-    let name: String
-    let social: String
-    let socialId: String
-    let email: String
-    let scrapRestaurants: [String]
+// MARK: - User
+struct User: Codable {
+    let id, social: String
+    let v: Int
     let refreshToken: String
-    let __v: Int
+    let scrapRestaurants: [String]
+    let socialID, name: String
+
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case social
+        case v = "__v"
+        case refreshToken, scrapRestaurants
+        case socialID = "socialId"
+        case name
+    }
 }

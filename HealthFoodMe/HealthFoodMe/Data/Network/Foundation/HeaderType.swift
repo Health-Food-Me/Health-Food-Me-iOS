@@ -12,11 +12,14 @@ enum HeaderType {
     case withToken
     case multiPart
     case multiPartWithToken
+    case reissuance
 }
 
 enum HTTPHeaderField: String {
     case contentType = "Content-Type"
     case accesstoken = "token"
+    case refreshtoken = "refreshtoken"
+    case accesstokenForReissuance = "accesstoken"
 }
 
 enum HeaderContent: String {

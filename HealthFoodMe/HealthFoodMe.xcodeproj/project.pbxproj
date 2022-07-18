@@ -185,6 +185,7 @@
 		EBFAEB0F28856424009C569C /* AnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB0E28856424009C569C /* AnalyticsType.swift */; };
 		EBFAEB112885642C009C569C /* AppLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB102885642C009C569C /* AppLog.swift */; };
 		EBFAEB132885643D009C569C /* FirebaseConfigureServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB122885643D009C569C /* FirebaseConfigureServiceProtocol.swift */; };
+		EBFAEB172885DE83009C569C /* Reissuance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB162885DE83009C569C /* Reissuance.swift */; };
 		FD39FACE2880C30100A01CDA /* NicknameChangeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20E287F5D080007D4F9 /* NicknameChangeUseCase.swift */; };
 		FD39FACF2880C31000A01CDA /* CTAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E208287F30770007D4F9 /* CTAButton.swift */; };
 		FD39FAD12880C35000A01CDA /* UpperToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20A287F3C360007D4F9 /* UpperToastView.swift */; };
@@ -398,6 +399,7 @@
 		EBFAEB0E28856424009C569C /* AnalyticsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsType.swift; sourceTree = "<group>"; };
 		EBFAEB102885642C009C569C /* AppLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLog.swift; sourceTree = "<group>"; };
 		EBFAEB122885643D009C569C /* FirebaseConfigureServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConfigureServiceProtocol.swift; sourceTree = "<group>"; };
+		EBFAEB162885DE83009C569C /* Reissuance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reissuance.swift; sourceTree = "<group>"; };
 		FD39FAD52880C63E00A01CDA /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		FD39FAD72880C69400A01CDA /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		FD582917287DC39A00CE62E8 /* mapContainerViewTouchDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerViewTouchDelegateProxy.swift; sourceTree = "<group>"; };
@@ -1248,8 +1250,8 @@
 		EBF66A4F287227F500DE0ED1 /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				EBF66A68287227F500DE0ED1 /* Resources */,
 				EBF66A63287227F500DE0ED1 /* Literals */,
+				EBF66A68287227F500DE0ED1 /* Resources */,
 				EBF66A50287227F500DE0ED1 /* Extension */,
 				EBF66A6C287227F500DE0ED1 /* Supporting Files */,
 				EBF66A6F287227F500DE0ED1 /* Protocols */,
@@ -1599,6 +1601,14 @@
 			path = User;
 			sourceTree = "<group>";
 		};
+		EBFAEB152885DE73009C569C /* Reissuance */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEB162885DE83009C569C /* Reissuance.swift */,
+			);
+			path = Reissuance;
+			sourceTree = "<group>";
+		};
 		EC921F0D619DA4E9C0CE8F2B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1737,6 +1747,7 @@
 		FDF2E21A287F5D7F0007D4F9 /* Author */ = {
 			isa = PBXGroup;
 			children = (
+				EBFAEB152885DE73009C569C /* Reissuance */,
 				3B9EF0EE28854039009DEEDE /* SocialLoginScene */,
 				FDF2E21B287F5D880007D4F9 /* ChangeNicknameScene */,
 			);
@@ -2008,6 +2019,7 @@
 				EB6A44D328737CC400749582 /* MainDetailModel.swift in Sources */,
 				A93252B5287F2CA6001EDF50 /* ScrapCVC.swift in Sources */,
 				EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */,
+				EBFAEB172885DE83009C569C /* Reissuance.swift in Sources */,
 				EBF66AD5287227F500DE0ED1 /* ViewModelType.swift in Sources */,
 				69028BB02874A60E00373984 /* HeaderView.swift in Sources */,
 				EBFAEB0A2885636E009C569C /* FirebaseAnalyticsProvider.swift in Sources */,
