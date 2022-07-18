@@ -45,7 +45,8 @@ class MainDetailVC: UIViewController {
     
     private var bottomView: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
+        view.isHidden = true
         return view
     }()
     
@@ -131,11 +132,10 @@ extension MainDetailVC {
             make.bottom.equalToSuperview()
         }
         
-        
         mainTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(bottomView.snp.top)
+            make.bottom.equalToSuperview()
         }
     }
     
@@ -306,6 +306,8 @@ extension MainDetailVC: UITableViewDataSource {
                     } else if ratio == 2/3 {
                         self.detailTabTitleHeader.setSelectedButton(buttonIndex: 2)
                     }
+                    self.bottomView.isHidden = !(ratio == 2/3)
+                    
                     self.detailTabTitleHeader.moveWithContinuousRatio(ratio: ratio)
                 }.disposed(by: cell.disposeBag)
 
