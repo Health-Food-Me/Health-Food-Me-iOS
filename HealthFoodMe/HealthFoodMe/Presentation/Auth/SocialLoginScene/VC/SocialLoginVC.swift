@@ -104,7 +104,6 @@ extension SocialLoginVC {
     }
     
     private func postSocialLoginData() {
-        print("!!!!")
         AuthService.shared.requestAuth(social: social,
                                        token: accessToken) { networkResult in
             switch networkResult {
