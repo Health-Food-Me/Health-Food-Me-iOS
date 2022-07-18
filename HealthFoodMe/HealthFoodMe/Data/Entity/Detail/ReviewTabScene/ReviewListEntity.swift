@@ -9,9 +9,33 @@ import Foundation
 
 struct ReviewListEntity: Codable {
     let id, writer, content: String
-    let score: Double
+    let score: Float
     let image: [Image]
     let hashtag: Hashtag
+    
+    func toDomain() -> [ReviewDataModel] {
+        
+        var hashTagList = [String]()
+        hashTagList.append(hashtag.taste)
+        for tag in hashtag.good {
+            hashTagList.append(tag)
+        }
+        
+        var imageList = [String]()
+        for img in self.image {
+            imageList.append(img.url)
+        }
+        
+        let ReviewModelList = self.content.map { entity in
+            ReviewDataModel.init(reviewer: writer,
+                                 starLate: score,
+                                 tagList: hashTagList,
+                                 reviewImageURLList: imageList,
+                                 reviewContents: content)
+        }
+        
+        return ReviewModelList
+    }
 }
 
 struct Hashtag: Codable {
