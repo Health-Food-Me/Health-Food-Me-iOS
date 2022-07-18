@@ -1237,8 +1237,8 @@
 		EBF66A4F287227F500DE0ED1 /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				EBF66A68287227F500DE0ED1 /* Resources */,
 				EBF66A63287227F500DE0ED1 /* Literals */,
+				EBF66A68287227F500DE0ED1 /* Resources */,
 				EBF66A50287227F500DE0ED1 /* Extension */,
 				EBF66A6C287227F500DE0ED1 /* Supporting Files */,
 				EBF66A6F287227F500DE0ED1 /* Protocols */,
