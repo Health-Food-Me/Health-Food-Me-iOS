@@ -23,6 +23,8 @@ extension AuthRouter: BaseRouter {
     
     var path: String {
         switch self {
+        case .postSocialLogin:
+            return "/auth"
         default:
             return ""
         }
@@ -30,12 +32,18 @@ extension AuthRouter: BaseRouter {
     
     var parameters: RequestParams {
         switch self {
+        case .postSocialLogin(let social, let token):
+            let requestBody: [String: Any] = [
+                "social": social,
+                "token": token
+            ]
+            return .requestBody(requestBody)
         default:
             return .requestPlain
         }
     }
     
-    var hedaer: HeaderType {
+    var header: HeaderType {
         switch self {
         case .postSocialLogin:
             return .default

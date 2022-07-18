@@ -321,13 +321,10 @@ extension ReviewDetailVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 1:
+        if selectedCustomSegment == 0 {
             URLSchemeManager.shared.loadSafariApp(blogLink: blogReviewData[indexPath.row].blogURL)
-        default:
-            break
-            
         }
+            
     }
 }
 

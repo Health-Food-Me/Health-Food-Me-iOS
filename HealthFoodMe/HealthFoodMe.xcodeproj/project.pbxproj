@@ -22,6 +22,7 @@
 		3B723C932880074200822B7C /* ReviewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B723C922880074200822B7C /* ReviewDataModel.swift */; };
 		3B723CA32881AB8A00822B7C /* ReviewDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B723CA22881AB8A00822B7C /* ReviewDetailVC.swift */; };
 		3B723CA52881B36F00822B7C /* ReviewDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B723CA42881B36F00822B7C /* ReviewDetail.storyboard */; };
+		3B9EF0F028854053009DEEDE /* SocialLoginEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF0EF28854053009DEEDE /* SocialLoginEntity.swift */; };
 		3BC01F7B287E89D2006C2181 /* ReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */; };
 		3BC01F84287EAE48006C2181 /* BlogReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */; };
 		3BC01F87287EBB8E006C2181 /* BlogReviewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F86287EBB8E006C2181 /* BlogReviewDataModel.swift */; };
@@ -53,6 +54,7 @@
 		695758E52881852F00E36789 /* CopingEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758E42881852E00E36789 /* CopingEmptyView.swift */; };
 		695758EC28830E3000E36789 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758EB28830E3000E36789 /* SplashVC.swift */; };
 		695758EE28830E3F00E36789 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758ED28830E3F00E36789 /* Splash.storyboard */; };
+		695758F4288545CC00E36789 /* CopingTabEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758F3288545CC00E36789 /* CopingTabEntity.swift */; };
 		A9325274287D3065001EDF50 /* SearchResultTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9325273287D3065001EDF50 /* SearchResultTVC.swift */; };
 		A9325277287D4F10001EDF50 /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9325276287D4F10001EDF50 /* SearchResultModel.swift */; };
 		A932527E287DD261001EDF50 /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A932527D287DD261001EDF50 /* SearchResultVC.swift */; };
@@ -172,6 +174,9 @@
 		EBF66B082872AF5B00DE0ED1 /* SampleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */; };
 		EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B092872B21F00DE0ED1 /* StringLiterals.swift */; };
 		EBF66B0C2872B4FE00DE0ED1 /* StoryboardLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B0B2872B4FE00DE0ED1 /* StoryboardLiterals.swift */; };
+		EBFAEAFC2884DCF0009C569C /* RestaurantSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFB2884DCF0009C569C /* RestaurantSummaryModel.swift */; };
+		EBFAEAFE28851C09009C569C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFD28851C09009C569C /* UserManager.swift */; };
+		EBFAEB0028851C9E009C569C /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFF28851C9E009C569C /* UserDefaultWrapper.swift */; };
 		EBFAEB03288555E3009C569C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBFAEB02288555E3009C569C /* GoogleService-Info.plist */; };
 		EBFAEB072885632E009C569C /* RuntimeProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB062885632E009C569C /* RuntimeProviderType.swift */; };
 		EBFAEB0A2885636E009C569C /* FirebaseAnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB092885636E009C569C /* FirebaseAnalyticsProvider.swift */; };
@@ -225,6 +230,7 @@
 		3B723C922880074200822B7C /* ReviewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDataModel.swift; sourceTree = "<group>"; };
 		3B723CA22881AB8A00822B7C /* ReviewDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailVC.swift; sourceTree = "<group>"; };
 		3B723CA42881B36F00822B7C /* ReviewDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReviewDetail.storyboard; sourceTree = "<group>"; };
+		3B9EF0EF28854053009DEEDE /* SocialLoginEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginEntity.swift; sourceTree = "<group>"; };
 		3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCVC.swift; sourceTree = "<group>"; };
 		3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewCVC.swift; sourceTree = "<group>"; };
 		3BC01F86287EBB8E006C2181 /* BlogReviewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewDataModel.swift; sourceTree = "<group>"; };
@@ -255,6 +261,7 @@
 		695758E42881852E00E36789 /* CopingEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingEmptyView.swift; sourceTree = "<group>"; };
 		695758EB28830E3000E36789 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		695758ED28830E3F00E36789 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
+		695758F3288545CC00E36789 /* CopingTabEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingTabEntity.swift; sourceTree = "<group>"; };
 		A9325273287D3065001EDF50 /* SearchResultTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTVC.swift; sourceTree = "<group>"; };
 		A9325276287D4F10001EDF50 /* SearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
 		A932527D287DD261001EDF50 /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
@@ -319,7 +326,7 @@
 		EBD1925E287DBBFC00EA053E /* TagSummaryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSummaryCVC.swift; sourceTree = "<group>"; };
 		EBD19261287DBC1800EA053E /* MapDetailSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDetailSummaryView.swift; sourceTree = "<group>"; };
 		EBD19264287DC33900EA053E /* TagCVCFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCVCFlowLayout.swift; sourceTree = "<group>"; };
-		EBD19272287F0CC600EA053E /* URLSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemeManager.swift; sourceTree = "<group>"; };
+		EBD19272287F0CC600EA053E /* URLSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLSchemeManager.swift; path = HealthFoodMe/Application/Manager/URLScheme/URLSchemeManager.swift; sourceTree = SOURCE_ROOT; };
 		EBD19274287F256000EA053E /* EncodeURLKorean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodeURLKorean.swift; sourceTree = "<group>"; };
 		EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		EBF66A53287227F500DE0ED1 /* UIDevice+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
@@ -379,6 +386,9 @@
 		EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleEntity.swift; sourceTree = "<group>"; };
 		EBF66B092872B21F00DE0ED1 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		EBF66B0B2872B4FE00DE0ED1 /* StoryboardLiterals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardLiterals.swift; sourceTree = "<group>"; };
+		EBFAEAFB2884DCF0009C569C /* RestaurantSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSummaryModel.swift; sourceTree = "<group>"; };
+		EBFAEAFD28851C09009C569C /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		EBFAEAFF28851C9E009C569C /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		EBFAEB02288555E3009C569C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EBFAEB062885632E009C569C /* RuntimeProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeProviderType.swift; sourceTree = "<group>"; };
 		EBFAEB092885636E009C569C /* FirebaseAnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsProvider.swift; sourceTree = "<group>"; };
@@ -493,6 +503,14 @@
 				3B723CA42881B36F00822B7C /* ReviewDetail.storyboard */,
 			);
 			path = VC;
+			sourceTree = "<group>";
+		};
+		3B9EF0EE28854039009DEEDE /* SocialLoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				3B9EF0EF28854053009DEEDE /* SocialLoginEntity.swift */,
+			);
+			path = SocialLoginScene;
 			sourceTree = "<group>";
 		};
 		3BC01F79287E8917006C2181 /* Cells */ = {
@@ -637,6 +655,14 @@
 				695758ED28830E3F00E36789 /* Splash.storyboard */,
 			);
 			path = VC;
+			sourceTree = "<group>";
+		};
+		695758F2288544A900E36789 /* CopingTabScene */ = {
+			isa = PBXGroup;
+			children = (
+				695758F3288545CC00E36789 /* CopingTabEntity.swift */,
+			);
+			path = CopingTabScene;
 			sourceTree = "<group>";
 		};
 		697074FB28737D78001A607F /* MenuTabScene */ = {
@@ -977,6 +1003,7 @@
 		EB6A44DC28737DFA00749582 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				695758F2288544A900E36789 /* CopingTabScene */,
 				EB6A44DD28737DFF00749582 /* MainDetailScene */,
 			);
 			path = Detail;
@@ -1075,6 +1102,7 @@
 			isa = PBXGroup;
 			children = (
 				EB6A44EA2873BED500749582 /* MainMapModel.swift */,
+				EBFAEAFB2884DCF0009C569C /* RestaurantSummaryModel.swift */,
 			);
 			path = MainMapScene;
 			sourceTree = "<group>";
@@ -1199,6 +1227,7 @@
 		EBD19271287F0C7A00EA053E /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				EBFAEB1428859823009C569C /* User */,
 				EBFAEB0528856318009C569C /* Analytics */,
 				EBFAEB0428856301009C569C /* URLScheme */,
 			);
@@ -1478,6 +1507,7 @@
 				EBF66AB1287227F500DE0ED1 /* makeAlert.swift */,
 				EBF66AB2287227F500DE0ED1 /* Adjusted+.swift */,
 				FDF2E206287F2CAA0007D4F9 /* addTextFieldPadding.swift */,
+				EBFAEAFF28851C9E009C569C /* UserDefaultWrapper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1548,6 +1578,14 @@
 				EBFAEB0C28856388009C569C /* LogEventType.swift */,
 			);
 			path = EventType;
+			sourceTree = "<group>";
+		};
+		EBFAEB1428859823009C569C /* User */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEAFD28851C09009C569C /* UserManager.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		EC921F0D619DA4E9C0CE8F2B /* Frameworks */ = {
@@ -1688,6 +1726,7 @@
 		FDF2E21A287F5D7F0007D4F9 /* Author */ = {
 			isa = PBXGroup;
 			children = (
+				3B9EF0EE28854039009DEEDE /* SocialLoginScene */,
 				FDF2E21B287F5D880007D4F9 /* ChangeNicknameScene */,
 			);
 			path = Author;
@@ -1919,6 +1958,7 @@
 				695758C3287DF04400E36789 /* AddPhotoCVC.swift in Sources */,
 				EBF66AC3287227F500DE0ED1 /* UILabel+.swift in Sources */,
 				695758BF287DA50000E36789 /* ReviewWriteVC.swift in Sources */,
+				EBFAEAFE28851C09009C569C /* UserManager.swift in Sources */,
 				FD72FC9D288346480092746F /* UserWithdrawlModel.swift in Sources */,
 				EBF66AFE287227F500DE0ED1 /* makeVibrate.swift in Sources */,
 				FDF2E1FC287EFC710007D4F9 /* StarRatingSlider.swift in Sources */,
@@ -1968,6 +2008,7 @@
 				EBF66AE1287227F500DE0ED1 /* BaseService.swift in Sources */,
 				FD39FAD82880C69400A01CDA /* SettingVC.swift in Sources */,
 				EBF66AE2287227F500DE0ED1 /* BaseRouter.swift in Sources */,
+				EBFAEB0028851C9E009C569C /* UserDefaultWrapper.swift in Sources */,
 				3B723C912880037100822B7C /* ReviewPhotoCVC.swift in Sources */,
 				EBF66AE3287227F500DE0ED1 /* NetworkResult.swift in Sources */,
 				EB6A45262875C3A000749582 /* TabContainerCVC.swift in Sources */,
@@ -2027,8 +2068,10 @@
 				695758EC28830E3000E36789 /* SplashVC.swift in Sources */,
 				EBF66ACC287227F500DE0ED1 /* BaseNotiList.swift in Sources */,
 				EBF66AD8287227F500DE0ED1 /* BaseControllable.swift in Sources */,
+				695758F4288545CC00E36789 /* CopingTabEntity.swift in Sources */,
 				EBF66ABF287227F500DE0ED1 /* UITabBar+.swift in Sources */,
 				69028BAA287467F100373984 /* MenuDetailView.swift in Sources */,
+				3B9EF0F028854053009DEEDE /* SocialLoginEntity.swift in Sources */,
 				FDF2E1FA287EFA5B0007D4F9 /* SampleStarVC.swift in Sources */,
 				EB6A44F12873BED500749582 /* MainMapVC.swift in Sources */,
 				EB6A44EE2873BED500749582 /* MainMapUseCase.swift in Sources */,
@@ -2041,6 +2084,7 @@
 				EB6A44EF2873BED500749582 /* MainMapRepository.swift in Sources */,
 				EBF66AC9287227F500DE0ED1 /* UIColor+.swift in Sources */,
 				EBF66B00287227F500DE0ED1 /* Adjusted+.swift in Sources */,
+				EBFAEAFC2884DCF0009C569C /* RestaurantSummaryModel.swift in Sources */,
 				EBA8C14828828E64009DBA49 /* RestaurantService.swift in Sources */,
 				A9E593C42874104200B0F8B5 /* SearchRecentTVC.swift in Sources */,
 				EBD1925D287DBBD300EA053E /* MenuCategoryCVC.swift in Sources */,
@@ -2191,10 +2235,16 @@
 				DEVELOPMENT_TEAM = FY8N9XTH66;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HealthFoodMe/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "헬푸미";
+				INFOPLIST_KEY_NSCameraUsageDescription = "리뷰 사진 촬영을 위해 시스템 카메라에 접근합니다";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받습니다";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "리뷰를 작성하기 위해 사용자의 갤러리에 접근합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2203,7 +2253,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
+				PROVISIONING_PROFILE_SPECIFIER = HealthFoodMe_Dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2223,10 +2273,16 @@
 				DEVELOPMENT_TEAM = FY8N9XTH66;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HealthFoodMe/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "헬푸미";
+				INFOPLIST_KEY_NSCameraUsageDescription = "리뷰 사진 촬영을 위해 시스템 카메라에 접근합니다";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받습니다";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "리뷰를 작성하기 위해 사용자의 갤러리에 접근합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
