@@ -85,7 +85,6 @@ extension ScrapVC {
     
     private func isScrapEmpty() {
         scrapEmptyView.isHidden = !scrapList.isEmpty
-        print(scrapList.isEmpty)
     }
     
     private func setUI() {
@@ -167,7 +166,7 @@ extension ScrapVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrapCVC.className, for: indexPath) as? ScrapCVC else { return UICollectionViewCell() }
         cell.setData(data: scrapList[indexPath.row])
-        cell.index = indexPath.row
+        cell.restaurantId = scrapList[indexPath.row]._id
         cell.delegate = self
         return cell
     }
@@ -195,8 +194,8 @@ extension ScrapVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension ScrapVC: ScrapCVCDelegate {
-    func scrapCVCButtonDidTap(index: Int, isSelected: Bool) {
-        print("\(index) 번 스크랩 \(isSelected) 상태")
+    func scrapCVCButtonDidTap(restaurantId: String) {
+        putScrap(userId: "62d4e93f0ff2f900ea88bed1", restaurantId: restaurantId)
     }
 }
 
@@ -218,6 +217,17 @@ extension ScrapVC {
                     self.isScrapEmpty()
                     self.scrapCollectionView.reloadData()
                 }
+            default:
+                break;
+            }
+        }
+    }
+    
+    func putScrap(userId: String, restaurantId: String) {
+        UserService.shared.putScrap(userId: userId, restaurantId: restaurantId) { networkResult in
+            switch networkResult {
+            case .success(let message):
+                print(message)
             default:
                 break;
             }
