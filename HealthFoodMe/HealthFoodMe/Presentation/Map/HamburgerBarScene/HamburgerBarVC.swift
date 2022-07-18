@@ -55,10 +55,9 @@ class HamburgerBarVC: UIViewController {
         lb.textColor = .helfmeBlack
         lb.font = UIFont.NotoRegular(size: 18)
         lb.numberOfLines = 3
-        lb.setLineSpacing(lineSpacing: 10)
         var text: String = name ?? ""
+        lb.setLineSpacing(lineSpacing: 3)
         lb.partFontChange(targetString: text, font: .NotoMedium(size: 18))
-        
         
         return lb
     }()
