@@ -53,6 +53,7 @@
 		695758E52881852F00E36789 /* CopingEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758E42881852E00E36789 /* CopingEmptyView.swift */; };
 		695758EC28830E3000E36789 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758EB28830E3000E36789 /* SplashVC.swift */; };
 		695758EE28830E3F00E36789 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758ED28830E3F00E36789 /* Splash.storyboard */; };
+		695758F4288545CC00E36789 /* CopingTabEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758F3288545CC00E36789 /* CopingTabEntity.swift */; };
 		A9325274287D3065001EDF50 /* SearchResultTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9325273287D3065001EDF50 /* SearchResultTVC.swift */; };
 		A9325277287D4F10001EDF50 /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9325276287D4F10001EDF50 /* SearchResultModel.swift */; };
 		A932527E287DD261001EDF50 /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A932527D287DD261001EDF50 /* SearchResultVC.swift */; };
@@ -251,6 +252,7 @@
 		695758E42881852E00E36789 /* CopingEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingEmptyView.swift; sourceTree = "<group>"; };
 		695758EB28830E3000E36789 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		695758ED28830E3F00E36789 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
+		695758F3288545CC00E36789 /* CopingTabEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingTabEntity.swift; sourceTree = "<group>"; };
 		A9325273287D3065001EDF50 /* SearchResultTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTVC.swift; sourceTree = "<group>"; };
 		A9325276287D4F10001EDF50 /* SearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
 		A932527D287DD261001EDF50 /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
@@ -647,6 +649,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		695758F2288544A900E36789 /* CopingTabScene */ = {
+			isa = PBXGroup;
+			children = (
+				695758F3288545CC00E36789 /* CopingTabEntity.swift */,
+			);
+			path = CopingTabScene;
+			sourceTree = "<group>";
+		};
 		697074FB28737D78001A607F /* MenuTabScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -984,6 +994,7 @@
 		EB6A44DC28737DFA00749582 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				695758F2288544A900E36789 /* CopingTabScene */,
 				EB6A44DD28737DFF00749582 /* MainDetailScene */,
 			);
 			path = Detail;
@@ -1975,6 +1986,7 @@
 				695758EC28830E3000E36789 /* SplashVC.swift in Sources */,
 				EBF66ACC287227F500DE0ED1 /* BaseNotiList.swift in Sources */,
 				EBF66AD8287227F500DE0ED1 /* BaseControllable.swift in Sources */,
+				695758F4288545CC00E36789 /* CopingTabEntity.swift in Sources */,
 				EBF66ABF287227F500DE0ED1 /* UITabBar+.swift in Sources */,
 				69028BAA287467F100373984 /* MenuDetailView.swift in Sources */,
 				FDF2E1FA287EFA5B0007D4F9 /* SampleStarVC.swift in Sources */,
@@ -2157,7 +2169,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
+				PROVISIONING_PROFILE_SPECIFIER = HealthFoodMe_Dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
