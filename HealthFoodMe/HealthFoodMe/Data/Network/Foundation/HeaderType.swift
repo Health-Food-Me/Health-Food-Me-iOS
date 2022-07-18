@@ -16,11 +16,11 @@ enum HeaderType {
 
 enum HTTPHeaderField: String {
     case contentType = "Content-Type"
-    case accesstoken = "accesstoken"
+    case accesstoken = "token"
 }
 
 enum HeaderContent: String {
-    case json = "Application/json"
+    case json = "application/json"
     case multiPart = "multipart/form-data"
-    case tokenSerial = ""
+    case tokenSerial = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZDFjMDgxYzRiZWFmMWUzOTdiNWQ0MCIsImlhdCI6MTY1ODAxMjU4MSwiZXhwIjoxNjU4MDE2MTgxfQ.L-I5JldjffkdNLWVvZb7XYRvRDD2yy98lZvQPoShV_0"
 }
