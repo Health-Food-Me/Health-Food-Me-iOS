@@ -340,7 +340,7 @@ extension SearchVC {
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let text = searchTextField.text {
-            requestRestaurantSearchList(searchRequest: SearchRequestEntity(longtitude: 1, latitude: 1, zoom: 0,
+            requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: 1, latitude: 1, zoom: 0,
                                                                            keyword: text))
         }
         return true
@@ -413,8 +413,9 @@ extension SearchVC: UITableViewDataSource {
         switch searchType {
         case .recent:
             searchTextField.text = searchRecentList[indexPath.row]
+            requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: 0, latitude: 0, zoom: 0,
+                                                                             keyword: searchRecentList[indexPath.row]))
             addSearchRecent(title: searchRecentList[indexPath.row])
-            isSearchResult()
         case .search:
             // 화면 전환 코드 추가해야 됨
             print("\(searchList[indexPath.row].name) 식당 상세 페이지로 이동")
@@ -471,7 +472,7 @@ extension SearchVC {
         }
     }
     
-    private func requestRestaurantSearchList(searchRequest: SearchRequestEntity) {
+    private func requestRestaurantSearchResult(searchRequest: SearchRequestEntity) {
         RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: searchRequest.longtitude,
                                                                                                   latitude: searchRequest.latitude,
                                                                                                   zoom: searchRequest.zoom,
