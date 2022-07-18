@@ -173,6 +173,8 @@
 		EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B092872B21F00DE0ED1 /* StringLiterals.swift */; };
 		EBF66B0C2872B4FE00DE0ED1 /* StoryboardLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B0B2872B4FE00DE0ED1 /* StoryboardLiterals.swift */; };
 		EBFAEAFC2884DCF0009C569C /* RestaurantSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFB2884DCF0009C569C /* RestaurantSummaryModel.swift */; };
+		EBFAEAFE28851C09009C569C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFD28851C09009C569C /* UserManager.swift */; };
+		EBFAEB0028851C9E009C569C /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFF28851C9E009C569C /* UserDefaultWrapper.swift */; };
 		FD39FACE2880C30100A01CDA /* NicknameChangeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20E287F5D080007D4F9 /* NicknameChangeUseCase.swift */; };
 		FD39FACF2880C31000A01CDA /* CTAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E208287F30770007D4F9 /* CTAButton.swift */; };
 		FD39FAD12880C35000A01CDA /* UpperToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20A287F3C360007D4F9 /* UpperToastView.swift */; };
@@ -374,6 +376,8 @@
 		EBF66B092872B21F00DE0ED1 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		EBF66B0B2872B4FE00DE0ED1 /* StoryboardLiterals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardLiterals.swift; sourceTree = "<group>"; };
 		EBFAEAFB2884DCF0009C569C /* RestaurantSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSummaryModel.swift; sourceTree = "<group>"; };
+		EBFAEAFD28851C09009C569C /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		EBFAEAFF28851C9E009C569C /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		FD39FAD52880C63E00A01CDA /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		FD39FAD72880C69400A01CDA /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		FD582917287DC39A00CE62E8 /* mapContainerViewTouchDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerViewTouchDelegateProxy.swift; sourceTree = "<group>"; };
@@ -1204,6 +1208,7 @@
 			isa = PBXGroup;
 			children = (
 				EBD19272287F0CC600EA053E /* URLSchemeManager.swift */,
+				EBFAEAFD28851C09009C569C /* UserManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1481,6 +1486,7 @@
 				EBF66AB1287227F500DE0ED1 /* makeAlert.swift */,
 				EBF66AB2287227F500DE0ED1 /* Adjusted+.swift */,
 				FDF2E206287F2CAA0007D4F9 /* addTextFieldPadding.swift */,
+				EBFAEAFF28851C9E009C569C /* UserDefaultWrapper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1864,6 +1870,7 @@
 				695758C3287DF04400E36789 /* AddPhotoCVC.swift in Sources */,
 				EBF66AC3287227F500DE0ED1 /* UILabel+.swift in Sources */,
 				695758BF287DA50000E36789 /* ReviewWriteVC.swift in Sources */,
+				EBFAEAFE28851C09009C569C /* UserManager.swift in Sources */,
 				FD72FC9D288346480092746F /* UserWithdrawlModel.swift in Sources */,
 				EBF66AFE287227F500DE0ED1 /* makeVibrate.swift in Sources */,
 				FDF2E1FC287EFC710007D4F9 /* StarRatingSlider.swift in Sources */,
@@ -1912,6 +1919,7 @@
 				EBF66AE1287227F500DE0ED1 /* BaseService.swift in Sources */,
 				FD39FAD82880C69400A01CDA /* SettingVC.swift in Sources */,
 				EBF66AE2287227F500DE0ED1 /* BaseRouter.swift in Sources */,
+				EBFAEB0028851C9E009C569C /* UserDefaultWrapper.swift in Sources */,
 				3B723C912880037100822B7C /* ReviewPhotoCVC.swift in Sources */,
 				EBF66AE3287227F500DE0ED1 /* NetworkResult.swift in Sources */,
 				EB6A45262875C3A000749582 /* TabContainerCVC.swift in Sources */,
