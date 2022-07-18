@@ -34,7 +34,7 @@ class ReviewDetailVC: UIViewController {
     private var expendStateList: [Bool] = []
     var moreContentsButtonRect: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     
-    var restaurantId: String = "62d26c9bd11146a81ef18ea6"
+    var restaurantId: String = "62d26c9bd11146a81ef18ebb"
     
     var selectedCustomSegment = 0 {
         didSet {
@@ -199,7 +199,6 @@ extension ReviewDetailVC {
     }
     
     private func requestReviewListWithAPI() {
-        print("!!!!!!!!!!!")
         ReviewService.shared.requestReviewList(restaurantId: restaurantId) { networkResult in
             switch networkResult {
             case .success(let data):
