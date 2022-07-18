@@ -23,7 +23,9 @@ class MainDetailVC: UIViewController {
     private var copingTabVC = ModuleFactory.resolve().makeCopingTabVC()
     private var reviewTabVC = ModuleFactory.resolve().makeReviewDetailVC()
     private var menuCase: TabMenuCase = .menu
+    private var phoneMenuTouched: Bool = false
     private var navigationTitle: String = "서브웨이 테스트"
+    private var isOpenned: Bool = false
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
     
@@ -258,16 +260,25 @@ extension MainDetailVC: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MainInfoTVC.className, for: indexPath) as? MainInfoTVC else { return UITableViewCell() }
             cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
                 .drive(onNext: {
+                    self.isOpenned.toggle()
                     self.mainTableView.reloadData()
                 }).disposed(by: disposeBag)
             cell.directionButtonTapped.asDriver(onErrorJustReturn: ())
                 .drive(onNext: {
                     self.presentFindDirectionSheet()
                 }).disposed(by: disposeBag)
-            cell.telePhoneLabelTapped.asDriver(onErrorJustReturn: "")
-                .drive { phoneNumber in
-                    URLSchemeManager.shared.loadTelephoneApp(phoneNumber: phoneNumber)
-                }.disposed(by: disposeBag)
+            cell.telePhoneLabelTapped
+                .asDriver(onErrorJustReturn: "")
+                .drive(onNext: { [weak self] phoneNumber in
+                    guard let self = self else { return }
+                    if !self.phoneMenuTouched {
+                        self.phoneMenuTouched = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            self.phoneMenuTouched = false
+                        }
+                        URLSchemeManager.shared.loadTelephoneApp(phoneNumber: phoneNumber)
+                    }
+                }).disposed(by: disposeBag)
             mainInfoTVC = cell
             return cell
         } else {

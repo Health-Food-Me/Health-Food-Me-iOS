@@ -79,6 +79,7 @@ extension DetailTabTVC {
         }
     }
     
+    
     // MARK: - Initializer
     
     func scrollToSelectedIndex(index: Int) {
