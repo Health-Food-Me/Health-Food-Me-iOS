@@ -8,28 +8,35 @@
 import Alamofire
 
 enum UserRouter {
-    
+    case getScrapList(userId: String)
 }
 
 extension UserRouter: BaseRouter {
     var method: HTTPMethod {
         switch self {
-        default :
+        case .getScrapList:
             return .get
         }
     }
     
     var path: String {
         switch self {
-        default:
-            return ""
+        case .getScrapList(let userId):
+            return "/user/\(userId)/scrapList"
         }
     }
     
     var parameters: RequestParams {
         switch self {
-        default:
+        case .getScrapList:
             return .requestPlain
+        }
+    }
+    
+    var header: HeaderType {
+        switch self {
+        case .getScrapList:
+            return .withToken
         }
     }
 }
