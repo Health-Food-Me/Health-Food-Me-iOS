@@ -13,7 +13,7 @@ struct ReviewListEntity: Codable {
     let image: [Image]
     let hashtag: Hashtag
     
-    func toDomain() -> [ReviewDataModel] {
+    func toDomain() -> ReviewDataModel {
         
         var hashTagList = [String]()
         hashTagList.append(hashtag.taste)
@@ -25,16 +25,11 @@ struct ReviewListEntity: Codable {
         for img in self.image {
             imageList.append(img.url)
         }
-        
-        let ReviewModelList = self.content.map { entity in
-            ReviewDataModel.init(reviewer: writer,
-                                 starLate: score,
-                                 tagList: hashTagList,
-                                 reviewImageURLList: imageList,
-                                 reviewContents: content)
-        }
-        
-        return ReviewModelList
+        return ReviewDataModel.init(reviewer: writer,
+                                    starRate: score,
+                                    tagList: hashTagList,
+                                    reviewImageURLList: imageList,
+                                    reviewContents: content)
     }
 }
 
