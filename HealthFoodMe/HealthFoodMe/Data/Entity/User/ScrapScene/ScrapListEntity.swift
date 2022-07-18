@@ -11,7 +11,7 @@ struct ScrapListEntity: Codable {
     let _id, name, logo: String
     let score: Int
     let category: String
-    let hashtag: String
-    //let location: String
+    let hashtag: [String]
+    let address: String
     let latitude, longtitude: Double
 }

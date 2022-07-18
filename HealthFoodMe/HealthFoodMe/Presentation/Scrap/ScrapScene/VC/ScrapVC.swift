@@ -85,6 +85,7 @@ extension ScrapVC {
     
     private func isScrapEmpty() {
         scrapEmptyView.isHidden = !scrapList.isEmpty
+        print(scrapList.isEmpty)
     }
     
     private func setUI() {
@@ -212,8 +213,10 @@ extension ScrapVC {
         UserService.shared.getScrapList(userId: userId) { networkResult in
             switch networkResult {
             case .success(let data):
-                if let data = data as? ScrapListEntity {
-                    
+                if let data = data as? [ScrapListEntity] {
+                    self.scrapList = data
+                    self.isScrapEmpty()
+                    self.scrapCollectionView.reloadData()
                 }
             default:
                 break;

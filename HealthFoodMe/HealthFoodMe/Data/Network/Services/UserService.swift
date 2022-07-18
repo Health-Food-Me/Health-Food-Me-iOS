@@ -15,6 +15,6 @@ class UserService: BaseService {
 
 extension UserService {
     func getScrapList(userId: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        requestObject(UserRouter.getScrapList(userId: userId), type: ScrapListEntity.self, decodingMode: .model, completion: completion)
+        requestObject(UserRouter.getScrapList(userId: userId), type: [ScrapListEntity].self, decodingMode: .model, completion: completion)
     }
 }
