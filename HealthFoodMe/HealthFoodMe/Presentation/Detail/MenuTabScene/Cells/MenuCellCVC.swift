@@ -56,7 +56,6 @@ extension MenuCellCVC {
         self.isPick = menuData.isPick
         menuView.isPick = self.isPick
         menuView.updateLayout()
-        print("1111\(menuView.isPick)")
         menuView.menuImageView.image =  menuData.memuImageURL == nil ?  ImageLiterals.MenuTab.emptyCard : UIImage(named: "Image")
         menuView.titleLabel.text = menuData.menuName
         menuView.pickImageView.image = menuData.isPick ? UIImage(named: "icn_pick") : .none

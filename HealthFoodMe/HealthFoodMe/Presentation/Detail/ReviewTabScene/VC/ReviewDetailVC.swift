@@ -22,6 +22,7 @@ class ReviewDetailVC: UIViewController {
     private let withoutImageAndContents = 3
     
     weak var delegate: ScrollDeliveryDelegate?
+    var swipeDismissDelegate: SwipeDismissDelegate?
     var topScrollAnimationNotFinished: Bool = true
     private var reviewData: [ReviewCellViewModel] = [] { didSet {
         fetchCutStringList()
@@ -198,6 +199,15 @@ extension ReviewDetailVC {
 }
 
 extension ReviewDetailVC: UIScrollViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        print(velocity)
+        print(targetContentOffset.pointee.y)
+        if velocity.x == 0 &&
+            velocity.y < 0 {
+            self.swipeDismissDelegate?.swipeToDismiss()
+        }
+    }
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
         let yVelocity = scrollView.panGestureRecognizer.velocity(in: scrollView).y

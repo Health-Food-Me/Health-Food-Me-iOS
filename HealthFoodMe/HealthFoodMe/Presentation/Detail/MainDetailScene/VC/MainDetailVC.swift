@@ -11,6 +11,11 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+protocol SwipeDismissDelegate {
+    func swipeToDismiss()
+}
+
+
 class MainDetailVC: UIViewController {
     
     // MARK: - Properties
@@ -286,10 +291,12 @@ extension MainDetailVC: UITableViewDataSource {
             detailTabTVC = cell
             
             menuTabVC.delegate = self
+            menuTabVC.swipeDismissDelegate = self
             copingTabVC.delegate = self
             copingTabVC.panDelegate = self
+            copingTabVC.swipeDelegate = self
             reviewTabVC.delegate = self
-            
+            reviewTabVC.swipeDismissDelegate = self
             
             self.addChild(menuTabVC)
             self.addChild(copingTabVC)
@@ -390,8 +397,58 @@ extension MainDetailVC: ScrollDeliveryDelegate {
 }
 
 extension MainDetailVC: CopingGestureDelegate {
+    func downPanGestureSwipe(panGesture: ControlEvent<UIPanGestureRecognizer>.Element) {
+        panGesture.rx.event.asDriver { _ in .never() }
+            .drive(onNext: { [weak self] sender in
+            
+                let windowTranslation = sender.translation(in: self?.view)
+                print(windowTranslation)
+                switch sender.state {
+                case .changed:
+                        self?.mainTableView.isScrollEnabled = false
+                        if self?.mainTableView.contentOffset.y == 0 {
+                            UIView.animate(withDuration: 0.1) {
+                              if windowTranslation.y > 0 {
+                                self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
+                              }
+                            }
+                        }
+
+                    case .ended:
+                        self?.mainTableView.isScrollEnabled = true
+                        if windowTranslation.y > 130 &&
+                            self?.mainTableView.contentOffset.y ?? 0 < 30 {
+                            self?.dismiss(animated: false) {
+                                self?.translationClosure?()
+                            }
+                        } else {
+                            self?.view.snp.updateConstraints { make in
+                                make.edges.equalToSuperview()
+                            }
+                            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                                self?.view.transform = CGAffineTransform(translationX: 0, y: 0)
+                                self?.view.layoutIfNeeded()
+                            }
+                        }
+                default:
+                    break
+                }
+            }).disposed(by: disposeBag)
+    }
+    
     func panGestureSwipe(isRight: Bool) {
         let index = isRight ? 2 : 0
         detailTabTVC.containerCollectionView.scrollToItem(at: IndexPath.init(row: index, section: 0), at: .centeredVertically, animated: true)
+    }
+}
+
+extension MainDetailVC: SwipeDismissDelegate {
+    func swipeToDismiss() {
+        print("swipeToDismiss")
+        if mainTableView.contentOffset.y == 0 {
+            self.dismiss(animated: false) {
+                self.translationClosure?()
+            }
+        }
     }
 }
