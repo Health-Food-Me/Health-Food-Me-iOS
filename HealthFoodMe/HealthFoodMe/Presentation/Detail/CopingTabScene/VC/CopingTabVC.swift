@@ -40,6 +40,9 @@ class CopingTabVC: UIViewController {
             updateTableViewLayout()
         }
     }
+    private let headerHeight = 130
+    private let rowHeight = 38
+    private let bottomMargin = 120
     
     // MARK: - UI Components
     
@@ -115,7 +118,7 @@ extension CopingTabVC {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(36)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(130 * 2 + 38 * (recommendList.count + eatingList.count) + 120)
+            make.height.equalTo(headerHeight * 2 + rowHeight * (recommendList.count + eatingList.count) + bottomMargin)
         }
         
         copingEmptyView.snp.makeConstraints { make in
@@ -143,7 +146,7 @@ extension CopingTabVC {
     
     private func updateTableViewLayout() {
         copingTableView.snp.updateConstraints { make in
-            make.height.equalTo(130 * 2 + 38 * (recommendList.count + eatingList.count) + 120)
+            make.height.equalTo(headerHeight * 2 + rowHeight * (recommendList.count + eatingList.count) + bottomMargin)
         }
     }
     

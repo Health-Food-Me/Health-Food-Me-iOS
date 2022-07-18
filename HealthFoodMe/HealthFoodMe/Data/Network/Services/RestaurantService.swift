@@ -22,7 +22,6 @@ extension RestaurantService {
     }
     
     func getMenuPrescription(restaurantId: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        
         requestObject(RestaurantRouter.getMenuPrescription(restaurantId: restaurantId), type: CopingTabEntity.self, decodingMode: .model, completion: completion)
     }
 }
