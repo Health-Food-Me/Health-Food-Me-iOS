@@ -9,6 +9,7 @@ import Alamofire
 
 enum AuthRouter {
     case postSocialLogin(socialType: String, token: String)
+    case reissuanceAccessToken
 }
 
 extension AuthRouter: BaseRouter {
@@ -25,6 +26,8 @@ extension AuthRouter: BaseRouter {
         switch self {
         case .postSocialLogin:
             return "/auth"
+        case .reissuanceAccessToken:
+            return "/auth/token"
         default:
             return ""
         }
@@ -47,6 +50,8 @@ extension AuthRouter: BaseRouter {
         switch self {
         case .postSocialLogin:
             return .default
+        case .reissuanceAccessToken:
+            return .reissuance
         default:
             return .withToken
         }
