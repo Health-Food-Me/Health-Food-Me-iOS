@@ -274,18 +274,11 @@ extension MainDetailVC: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTabTVC.className, for: indexPath) as? DetailTabTVC else { return UITableViewCell() }
             detailTabTVC = cell
             
-            if menuTabVC is MenuTabVC {
-                menuTabVC.delegate = self
-            }
+            menuTabVC.delegate = self
+            copingTabVC.delegate = self
+            copingTabVC.panDelegate = self
+            reviewTabVC.delegate = self
             
-            if copingTabVC is CopingTabVC {
-                copingTabVC.delegate = self
-                copingTabVC.panDelegate = self
-            }
-            
-            if reviewTabVC is ReviewDetailVC {
-                reviewTabVC.delegate = self
-            }
             
             self.addChild(menuTabVC)
             self.addChild(copingTabVC)
