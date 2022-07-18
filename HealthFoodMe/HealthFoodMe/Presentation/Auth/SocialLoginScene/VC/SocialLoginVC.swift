@@ -64,8 +64,12 @@ class SocialLoginVC: UIViewController {
 
 // MARK: - extension
 extension SocialLoginVC {
-    func requestSocialLogin() {
+    private func presentToMainMap() {
+        let mainVC = ModuleFactory.resolve().makeMainMapNavigationController()
+        mainVC.modalPresentationStyle = .overFullScreen
+        self.present(mainVC, animated: false)
     }
+    
     
     private func kakaoLogin() {
         if UserApi.isKakaoTalkLoginAvailable() {
@@ -79,7 +83,7 @@ extension SocialLoginVC {
                         
                         print("TOKEN", accessToken)
                         self.postSocialLoginData()
-                        
+                        self.presentToMainMap()
                     }
                 }
             }
@@ -89,6 +93,7 @@ extension SocialLoginVC {
                     if let accessToken = oauthToken?.accessToken {
                         print("TOKEN", accessToken)
                         self.postSocialLoginData()
+                        self.presentToMainMap()
                     }
                     // 성공해서 성공 VC로 이동
                     
@@ -107,6 +112,7 @@ extension SocialLoginVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? SocialLoginEntity {
+                    print("로그인 성공!!")
                 }
             default:
                 break
@@ -163,9 +169,6 @@ extension SocialLoginVC {
     }
     
     @objc func doAppleLogin() {
-        let vc = ModuleFactory.resolve().makeMainMapNavigationController()
-        vc.modalPresentationStyle = .overFullScreen
-        self.present(vc, animated: false)
         appleLogin()
     }
 }
@@ -197,6 +200,7 @@ extension SocialLoginVC: ASAuthorizationControllerDelegate {
                 self.accessToken = token
                 self.social = "apple"
                 postSocialLoginData()
+                presentToMainMap()
             }
             
             
