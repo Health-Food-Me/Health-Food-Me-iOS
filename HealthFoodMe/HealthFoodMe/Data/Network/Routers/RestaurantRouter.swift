@@ -27,7 +27,7 @@ extension RestaurantRouter: BaseRouter {
     var path: String {
         switch self {
         case .requestRestaurantSearch:
-            return "/restaurant/search"
+            return "/restaurant/search/auto"
         case .requestRestaurantSearchResult:
             return "/restaurant/search/card"
         case .getMenuPrescription(let restaurantId):

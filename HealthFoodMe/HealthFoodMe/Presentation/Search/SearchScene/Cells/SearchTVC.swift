@@ -51,7 +51,7 @@ extension SearchTVC {
         } else {
             searchImageView.image = ImageLiterals.Search.normalIcon
         }
-        searchLabel.text = data._id
+        searchLabel.text = data.name
         searchLabel.textColor = .helfmeBlack
         searchLabel.partColorChange(targetString: searchContent, textColor: .mainRed)
     }

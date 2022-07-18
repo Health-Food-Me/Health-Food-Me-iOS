@@ -161,7 +161,9 @@ extension SearchVC {
             isSearchRecent()
         } else {
             searchTextField.rightViewMode = .always
-            isSearch()
+            if let text = searchTextField.text {
+                requestRestaurantSearch(query: text)
+            }
         }
     }
     
@@ -304,9 +306,6 @@ extension SearchVC {
     }
     
     private func isSearch() {
-        if let text = searchTextField.text {
-            requestRestaurantSearch(query: text)
-        }
         searchTextField.rightView = clearButton
         searchTextField.becomeFirstResponder()
         searchTableView.tableHeaderView = nil
@@ -315,7 +314,7 @@ extension SearchVC {
     }
     
     private func isSearchResult() {
-        if !searchList.isEmpty {
+        if searchList.isEmpty {
             searchEmptyView.isHidden = false
         } else {
             searchEmptyView.isHidden = true
@@ -349,6 +348,9 @@ extension SearchVC: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if searchType == .searchResult {
+            if let text = searchTextField.text {
+                requestRestaurantSearch(query: text)
+            }
             isSearch()
         }
     }
@@ -460,6 +462,7 @@ extension SearchVC {
             case .success(let data):
                 if let data = data as? [SearchEntity] {
                     self.searchList = data
+                    self.isSearch()
                     self.searchTableView.reloadData()
                 }
             default:
