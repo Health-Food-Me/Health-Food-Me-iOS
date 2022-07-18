@@ -9,7 +9,9 @@ import UIKit
 
 import AuthenticationServices
 import FirebaseCore
+import KakaoSDKAuth
 import KakaoSDKCommon
+import KakaoSDKUser
 import NMapsMap
 
 @main
@@ -27,22 +29,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         KakaoSDK.initSDK(appKey : IDLiterals.kakaoSDKAPPKey)
         
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        appleIDProvider.getCredentialState(forUserID: "00000.abcabcabcabc.0000(로그인에 사용한 UserIdentifier)") { (credentialState, error) in
-            switch credentialState {
-            case .authorized: // 이미 증명이 된 경우 (정상)
-                print("authorized")
-            // The Apple ID credential is valid.
-            case .revoked:    // 증명을 취소했을 때,
-                print("revoked")
-                                // 로그인뷰로 이동하기
-            case .notFound:   // 증명이 존재하지 않을 경우
-                print("notFound")
-                                // 로그인뷰로 이동하기
-                
-            default:
-                break
+        let userManager = UserManager.shared
+        if userManager.hasAccessToken {
+            switch userManager.isAppleLoginned {
+            case true:
+                let appleIDProvider = ASAuthorizationAppleIDProvider()
+                appleIDProvider.getCredentialState(forUserID: userManager.userIdentifier ?? "") { (credentialState, error) in
+                    switch credentialState {
+                    case .authorized: // 이미 증명이 된 경우 (정상)
+                        print("authorized")
+                        userManager.setLoginStatus(isLoginned: true)
+                    case .revoked:    // 증명을 취소했을 때,
+                        print("revoked")
+                        userManager.setLoginStatus(isLoginned: false)
+                    case .notFound:   // 증명이 존재하지 않을 경우
+                        print("notFound")
+                        userManager.setLoginStatus(isLoginned: false)
+                    default:
+                        break
+                    }
+                }
+            case false:
+                if AuthApi.hasToken() {
+                    UserApi.shared.accessTokenInfo { d, error in
+                        if let error = error {
+                            if let sdkError = error as? SdkError,
+                               sdkError.isInvalidTokenError() == true {
+                                userManager.setLoginStatus(isLoginned: false)
+                            }
+                        } else {
+                            // 토큰 유효성이 확인된 경우
+                            userManager.setLoginStatus(isLoginned: true)
+                        }
+                    }
+                } else {
+                    //유효한 토큰이 없는 경우
+                    userManager.setLoginStatus(isLoginned: false)
+                }
             }
+        } else {
+            // access token 이 없는 경우.
+            userManager.setLoginStatus(isLoginned: false)
         }
         
         NMFAuthManager.shared().clientId = IDLiterals.naverMapsClientID
@@ -60,7 +87,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         
     }
-    
-    
 }
 

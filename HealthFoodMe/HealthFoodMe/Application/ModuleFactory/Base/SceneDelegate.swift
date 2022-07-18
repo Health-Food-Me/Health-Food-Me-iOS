@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             navigationBarAppearance.configureWithTransparentBackground()
             navigationBarAppearance.backgroundColor = .white
             navigationBarAppearance.shadowColor = .helfmeGray1.withAlphaComponent(0.3)
-
+            
             UINavigationBar.appearance().standardAppearance = navigationBarAppearance
             UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
         }
