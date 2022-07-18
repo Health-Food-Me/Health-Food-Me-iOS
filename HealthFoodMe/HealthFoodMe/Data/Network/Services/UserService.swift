@@ -14,7 +14,11 @@ class UserService: BaseService {
 }
 
 extension UserService {
-    func getScrapList(userId: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func getScrapList(userId: String, completion: @escaping(NetworkResult<Any>) -> Void) {
         requestObject(UserRouter.getScrapList(userId: userId), type: [ScrapListEntity].self, decodingMode: .model, completion: completion)
+    }
+    
+    func putScrap(userId: String, restaurantId: String, completion: @escaping(NetworkResult<Any>) -> Void) {
+        requestObject(UserRouter.putScrap(userId: userId, restaurantId: restaurantId), type: ScrapEntity.self, decodingMode: .message, completion: completion)
     }
 }

@@ -9,6 +9,7 @@ import Alamofire
 
 enum UserRouter {
     case getScrapList(userId: String)
+    case putScrap(userId: String, restaurantId: String)
 }
 
 extension UserRouter: BaseRouter {
@@ -16,6 +17,8 @@ extension UserRouter: BaseRouter {
         switch self {
         case .getScrapList:
             return .get
+        case .putScrap:
+            return .put
         }
     }
     
@@ -23,6 +26,8 @@ extension UserRouter: BaseRouter {
         switch self {
         case .getScrapList(let userId):
             return "/user/\(userId)/scrapList"
+        case .putScrap(let userId, let restaurantId):
+            return "/user/\(userId)/scrap/\(restaurantId)"
         }
     }
     
@@ -30,12 +35,16 @@ extension UserRouter: BaseRouter {
         switch self {
         case .getScrapList:
             return .requestPlain
+        case .putScrap:
+            return .requestPlain
         }
     }
     
     var header: HeaderType {
         switch self {
         case .getScrapList:
+            return .withToken
+        case .putScrap:
             return .withToken
         }
     }
