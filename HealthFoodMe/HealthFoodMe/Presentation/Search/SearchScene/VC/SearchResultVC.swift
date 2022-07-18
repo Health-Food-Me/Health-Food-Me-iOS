@@ -72,7 +72,7 @@ final class SearchResultVC: UIViewController {
     
     private let searchResultHeaderView: UIView = UIView()
     
-    private lazy var searchResultHeaderButton: UIButton = {
+    private lazy var viewMapButton: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Search.viewMapBtn, for: .normal)
         btn.setTitle(I18N.Search.searchMap, for: .normal)
@@ -94,12 +94,8 @@ final class SearchResultVC: UIViewController {
         tv.keyboardDismissMode = .onDrag
         tv.tableHeaderView = searchResultHeaderView
         tv.tableHeaderView?.frame.size.height = 42
-        tv.layer.applyShadow(color: .black,
-                             alpha: 0.1,
-                             x: 0,
-                             y: -3,
-                             blur: 4,
-                             spread: 0)
+        tv.layer.applyShadow(color: .black, alpha: 0.1, x: 0,
+                             y: -3, blur: 4, spread: 0)
         return tv
     }()
     
@@ -115,7 +111,7 @@ final class SearchResultVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setChildViewController()
-        initUI()
+        viewMap()
         setUI()
         setLayout()
         setDelegate()
@@ -132,7 +128,7 @@ extension SearchResultVC {
     }
     
     @objc func moveSearchResultView() {
-        initUI()
+        viewMap()
     }
     
     @objc func popToMainMapVC() {
@@ -154,12 +150,12 @@ extension SearchResultVC {
         mapViewController.didMove(toParent: self)
     }
     
-    private func initUI() {
+    private func viewMap() {
         UIView.animate(withDuration: 0.2, animations: {
-            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: self.height - self.height/3.3)
+            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 585)
         })
         searchResultTableView.layer.shadowOpacity = 0.1
-        searchResultHeaderButton.isHidden = true
+        viewMapButton.isHidden = true
         searchResultLineView.isHidden = false
         searchResultTableView.layer.cornerRadius = 15
         isBottom = true
@@ -171,9 +167,7 @@ extension SearchResultVC {
     }
     
     private func setLayout() {
-        view.addSubviews(topView,
-                         searchTextField,
-                         lineView,
+        view.addSubviews(topView,searchTextField, lineView,
                          searchResultTableView)
         
         topView.snp.makeConstraints {
@@ -203,9 +197,9 @@ extension SearchResultVC {
             $0.height.equalTo(1)
         }
         
-        searchResultHeaderView.addSubviews(searchResultHeaderButton)
+        searchResultHeaderView.addSubviews(viewMapButton)
         
-        searchResultHeaderButton.snp.makeConstraints {
+        viewMapButton.snp.makeConstraints {
             $0.trailing.equalTo(searchResultHeaderView.snp.trailing).inset(20)
             $0.centerY.equalTo(searchResultHeaderView)
             $0.width.equalTo(105)
@@ -276,7 +270,7 @@ extension SearchResultVC: UIScrollViewDelegate {
             self.searchResultTableView.isScrollEnabled = false
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear) {
                 self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 0)
-                self.searchResultHeaderButton.isHidden = false
+                self.viewMapButton.isHidden = false
             } completion: { _ in
                 self.view.bringSubviewToFront(self.topView)
                 self.view.bringSubviewToFront(self.searchTextField)
