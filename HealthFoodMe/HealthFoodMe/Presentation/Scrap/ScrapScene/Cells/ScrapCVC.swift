@@ -77,10 +77,10 @@ extension ScrapCVC {
 // MARK: - Methods
 
 extension ScrapCVC {
-    func setData(data: ScrapDataModel) {
-        storeImageView.image = UIImage(named: data.scrapimageUrl)
-        storeNameLabel.text = data.storeName
-        locationLabel.text = data.storeLocation
+    func setData(data: ScrapListEntity) {
+        storeImageView.image = UIImage(named: data.logo)
+        storeNameLabel.text = data.name
+        locationLabel.text = data.name
     }
     
     private func setUI() {

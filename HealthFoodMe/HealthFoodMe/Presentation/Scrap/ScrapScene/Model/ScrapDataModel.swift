@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 struct ScrapDataModel: Codable {
     let scrapimageUrl: String

@@ -8,13 +8,14 @@
 import UIKit
 
 import SnapKit
+import RealmSwift
 
 class ScrapVC: UIViewController {
     
     // MARK: - Properties
     
     private let scrapEmptyView = ScrapEmptyView()
-    private var scrapList: [ScrapDataModel] = []
+    private var scrapList: [ScrapListEntity] = []
     
     // MARK: - UI Components
     
@@ -78,7 +79,7 @@ extension ScrapVC {
 
 extension ScrapVC {
     private func fetchData() {
-        scrapList = ScrapDataModel.sampleScrapData
+        getScrapList(userId: "62d4e93f0ff2f900ea88bed1")
         isScrapEmpty()
     }
     
@@ -207,5 +208,16 @@ extension ScrapVC: ScrapEmptyViewDelegate {
 // MARK: - Network
 
 extension ScrapVC {
-    
+    func getScrapList(userId: String) {
+        UserService.shared.getScrapList(userId: userId) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? ScrapListEntity {
+                    
+                }
+            default:
+                break;
+            }
+        }
+    }
 }
