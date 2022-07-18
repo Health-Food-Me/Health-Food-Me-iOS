@@ -23,6 +23,8 @@
 		3B723CA32881AB8A00822B7C /* ReviewDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B723CA22881AB8A00822B7C /* ReviewDetailVC.swift */; };
 		3B723CA52881B36F00822B7C /* ReviewDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B723CA42881B36F00822B7C /* ReviewDetail.storyboard */; };
 		3B9EF0F028854053009DEEDE /* SocialLoginEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF0EF28854053009DEEDE /* SocialLoginEntity.swift */; };
+		3B9EF0FB2885D340009DEEDE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B9EF0FA2885D340009DEEDE /* GoogleService-Info.plist */; };
+		3B9EF0FE2885D372009DEEDE /* ReviewListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF0FD2885D372009DEEDE /* ReviewListEntity.swift */; };
 		3BC01F7B287E89D2006C2181 /* ReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */; };
 		3BC01F84287EAE48006C2181 /* BlogReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */; };
 		3BC01F87287EBB8E006C2181 /* BlogReviewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F86287EBB8E006C2181 /* BlogReviewDataModel.swift */; };
@@ -177,7 +179,6 @@
 		EBFAEAFC2884DCF0009C569C /* RestaurantSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFB2884DCF0009C569C /* RestaurantSummaryModel.swift */; };
 		EBFAEAFE28851C09009C569C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFD28851C09009C569C /* UserManager.swift */; };
 		EBFAEB0028851C9E009C569C /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFF28851C9E009C569C /* UserDefaultWrapper.swift */; };
-		EBFAEB03288555E3009C569C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBFAEB02288555E3009C569C /* GoogleService-Info.plist */; };
 		EBFAEB072885632E009C569C /* RuntimeProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB062885632E009C569C /* RuntimeProviderType.swift */; };
 		EBFAEB0A2885636E009C569C /* FirebaseAnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB092885636E009C569C /* FirebaseAnalyticsProvider.swift */; };
 		EBFAEB0D28856388009C569C /* LogEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB0C28856388009C569C /* LogEventType.swift */; };
@@ -232,6 +233,8 @@
 		3B723CA22881AB8A00822B7C /* ReviewDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailVC.swift; sourceTree = "<group>"; };
 		3B723CA42881B36F00822B7C /* ReviewDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReviewDetail.storyboard; sourceTree = "<group>"; };
 		3B9EF0EF28854053009DEEDE /* SocialLoginEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginEntity.swift; sourceTree = "<group>"; };
+		3B9EF0FA2885D340009DEEDE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3B9EF0FD2885D372009DEEDE /* ReviewListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListEntity.swift; sourceTree = "<group>"; };
 		3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCVC.swift; sourceTree = "<group>"; };
 		3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewCVC.swift; sourceTree = "<group>"; };
 		3BC01F86287EBB8E006C2181 /* BlogReviewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewDataModel.swift; sourceTree = "<group>"; };
@@ -390,7 +393,6 @@
 		EBFAEAFB2884DCF0009C569C /* RestaurantSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSummaryModel.swift; sourceTree = "<group>"; };
 		EBFAEAFD28851C09009C569C /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		EBFAEAFF28851C9E009C569C /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
-		EBFAEB02288555E3009C569C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EBFAEB062885632E009C569C /* RuntimeProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeProviderType.swift; sourceTree = "<group>"; };
 		EBFAEB092885636E009C569C /* FirebaseAnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsProvider.swift; sourceTree = "<group>"; };
 		EBFAEB0C28856388009C569C /* LogEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEventType.swift; sourceTree = "<group>"; };
@@ -513,6 +515,14 @@
 				3B9EF0EF28854053009DEEDE /* SocialLoginEntity.swift */,
 			);
 			path = SocialLoginScene;
+			sourceTree = "<group>";
+		};
+		3B9EF0FC2885D361009DEEDE /* ReviewTabScene */ = {
+			isa = PBXGroup;
+			children = (
+				3B9EF0FD2885D372009DEEDE /* ReviewListEntity.swift */,
+			);
+			path = ReviewTabScene;
 			sourceTree = "<group>";
 		};
 		3BC01F79287E8917006C2181 /* Cells */ = {
@@ -922,7 +932,7 @@
 				EBF66A90287227F500DE0ED1 /* Presentation */,
 				EBF66AA2287227F500DE0ED1 /* Utils */,
 				EB085EE728716E1B00361837 /* Info.plist */,
-				EBFAEB02288555E3009C569C /* GoogleService-Info.plist */,
+				3B9EF0FA2885D340009DEEDE /* GoogleService-Info.plist */,
 				EB6A44C6287366DF00749582 /* .swiftlint.yml */,
 			);
 			path = HealthFoodMe;
@@ -1005,6 +1015,7 @@
 		EB6A44DC28737DFA00749582 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				3B9EF0FC2885D361009DEEDE /* ReviewTabScene */,
 				695758F2288544A900E36789 /* CopingTabScene */,
 				EB6A44DD28737DFF00749582 /* MainDetailScene */,
 			);
@@ -1853,7 +1864,7 @@
 				3B0B25562876BBE400950539 /* Pretendard-Regular.otf in Resources */,
 				EBF66AD0287227F500DE0ED1 /* Assets.xcassets in Resources */,
 				EBF66AD2287227F500DE0ED1 /* LaunchScreen.storyboard in Resources */,
-				EBFAEB03288555E3009C569C /* GoogleService-Info.plist in Resources */,
+				3B9EF0FB2885D340009DEEDE /* GoogleService-Info.plist in Resources */,
 				A9E593CF2876C26900B0F8B5 /* Color.xcassets in Resources */,
 				EB6A44FD2873BF8800749582 /* MainMap.storyboard in Resources */,
 				EBF66AD1287227F500DE0ED1 /* NotoSansSC-Bold.otf in Resources */,
@@ -1944,6 +1955,7 @@
 				EBF66AF9287227F500DE0ED1 /* setDefaultFonts.swift in Sources */,
 				EBF66ADD287227F500DE0ED1 /* SceneDelegate.swift in Sources */,
 				EBF66AC2287227F500DE0ED1 /* UIViewController+.swift in Sources */,
+				3B9EF0FE2885D372009DEEDE /* ReviewListEntity.swift in Sources */,
 				EBF66AD6287227F500DE0ED1 /* UITableViewRegisterable.swift in Sources */,
 				EBF66AC5287227F500DE0ED1 /* UITextField+.swift in Sources */,
 				EBF66AFB287227F500DE0ED1 /* setImage.swift in Sources */,
