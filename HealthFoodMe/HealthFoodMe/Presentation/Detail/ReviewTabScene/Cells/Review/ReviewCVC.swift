@@ -279,7 +279,7 @@ extension ReviewCVC {
                  expanded: Bool) {
         nameLabel.text = reviewData.reviewer
         nameLabel.sizeToFit()
-        starView.rate = CGFloat(reviewData.starLate)
+        starView.rate = CGFloat(reviewData.starRate)
         self.cellViewModel = reviewData
         reviewContents.text = text
         reviewContents.sizeToFit()

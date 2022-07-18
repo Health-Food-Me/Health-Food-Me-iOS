@@ -48,6 +48,6 @@ extension ReviewPhotoCVC {
     }
     
     func setData(photoData: String) {
-//        reviewImageView.setImage(with: )
+        reviewImageView.setImage(with: photoData)
     }
 }
