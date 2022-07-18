@@ -10,16 +10,22 @@ import Foundation
 protocol ModuleFactoryProtocol {
     
     // MARK: - Auth
+    func makeLoginVC() -> SocialLoginVC
     func makeNicknameChangeVC() -> NicknameChangeVC
     func makeUserWithdrawlVC() -> UserWithdrawalVC
 
     // MARK: - Map
     func makeMainMapVC() -> MainMapVC
     func makeHamburgerBarVC() -> HamburgerBarVC
+    func makeSupplementMapVC(forSearchVC: Bool) -> SupplementMapVC
     
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
     func makeMenuTabVC() -> MenuTabVC
+    func makeCopingTabVC() -> CopingTabVC
+    func makeReviewDetailVC() -> ReviewDetailVC
+    func makeReviewWriteVC() -> ReviewWriteVC
+    func makeReviewWriteNavigationController() -> ReviewWriteNavigationController
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC
@@ -27,6 +33,11 @@ protocol ModuleFactoryProtocol {
     
     // MARK: - Scrap
     func makeScrapVC() -> ScrapVC
+    
+    // MARK: - Spalsh
+    func makeSplashVC() -> SplashVC
+    // MARK: - Setting
+    func makeSettingVC() -> SettingVC
 }
 
 class ModuleFactory: ModuleFactoryProtocol {
@@ -36,6 +47,11 @@ class ModuleFactory: ModuleFactoryProtocol {
     }
   
     // MARK: - Auth
+    func makeLoginVC() -> SocialLoginVC {
+        let vc = SocialLoginVC.controllerFromStoryboard(.socialLogin)
+        return vc
+    }
+    
     func makeNicknameChangeVC() -> NicknameChangeVC {
         let repository = DefaultNicknameRepository()
         let useCase = DefaultNicknameChangeUseCase(repository: repository)
@@ -55,9 +71,21 @@ class ModuleFactory: ModuleFactoryProtocol {
         
         return vc
     }
+    
+    func makeReviewWriteVC() -> ReviewWriteVC {
+        let vc = ReviewWriteVC.controllerFromStoryboard(.reviewWrite)
+
+        return vc
+    }
+
 
     
     // MARK: - Map
+    func makeMainMapNavigationController() -> MainMapNavigationController {
+        print("")
+        return MainMapNavigationController.controllerFromStoryboard(.mainMap)
+    }
+    
     func makeMainMapVC() -> MainMapVC {
         let repository = DefaultMainMapRepository()
         let useCase = DefaultMainMapUseCase(repository: repository)
@@ -70,6 +98,15 @@ class ModuleFactory: ModuleFactoryProtocol {
     
     func makeHamburgerBarVC() -> HamburgerBarVC {
         let vc = HamburgerBarVC.controllerFromStoryboard(.hamburgerBar)
+        
+        return vc
+    }
+    
+    func makeSupplementMapVC(forSearchVC: Bool) -> SupplementMapVC {
+        var vc = SupplementMapVC(mapType: .scrap)
+        if forSearchVC {
+            vc = SupplementMapVC(mapType: .search)
+        }
         
         return vc
     }
@@ -87,6 +124,24 @@ class ModuleFactory: ModuleFactoryProtocol {
     
     func makeMenuTabVC() -> MenuTabVC {
         let vc = MenuTabVC.controllerFromStoryboard(.menuTab)
+        
+        return vc
+    }
+    
+    func makeCopingTabVC() -> CopingTabVC {
+        let vc = CopingTabVC.controllerFromStoryboard(.copingTab)
+        
+        return vc
+    }
+    
+    func makeReviewWriteNavigationController() -> ReviewWriteNavigationController {
+        let nc = ReviewWriteNavigationController.controllerFromStoryboard(.reviewWrite)
+        
+        return nc
+    }
+    
+    func makeReviewDetailVC() -> ReviewDetailVC {
+        let vc = ReviewDetailVC.controllerFromStoryboard(.reviewDetail)
         
         return vc
     }
@@ -117,17 +172,17 @@ class ModuleFactory: ModuleFactoryProtocol {
         
         return vc
     }
+    
+    func makeSplashVC() -> SplashVC {
+        let vc = SplashVC.controllerFromStoryboard(.splash)
+        
+        return vc
+    }
+    // MARK: - Setting
+    func makeSettingVC() -> SettingVC {
+        return SettingVC.controllerFromStoryboard(.setting)
+    }
 
     // MARK: - Plan
-    
-//    func instantiatePlanPreviewVC(postID: Int) -> PlanPreviewVC {
-//        let repository = DefaultPlanPreviewRepository(service: BaseService.default)
-//        let useCase = DefaultPlanPreviewUseCase(repository: repository, postIdx: postID)
-//        let viewModel = PlanPreviewViewModel(useCase: useCase)
-//        let vc = PlanPreviewVC.controllerFromStoryboard(.planPreview)
-//        vc.viewModel = viewModel
-//
-//        return vc
-//    }
     
 }

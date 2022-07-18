@@ -11,6 +11,9 @@ import SnapKit
 
 final class MenuView: UIView {
     
+    // MARK: - Properties
+    
+    var isPick = false
     // MARK: - UI Components
     
     let menuView: UIView = {
@@ -18,7 +21,7 @@ final class MenuView: UIView {
         view.backgroundColor = .helfmeWhite
         view.layer.borderWidth = 0.5
         view.layer.borderColor = UIColor.helfmeLineGray.cgColor
-        view.roundCorners(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMinXMaxYCorner])
+        view.layer.cornerRadius = 15
         return view
     }()
     
@@ -31,6 +34,7 @@ final class MenuView: UIView {
     
     lazy var menuImageView: UIImageView = {
         let iv = UIImageView()
+        iv.image = ImageLiterals.MenuTab.emptyCard
         iv.layer.cornerRadius = 8
         iv.contentMode = .scaleAspectFill
         return iv
@@ -45,6 +49,7 @@ final class MenuView: UIView {
     lazy var titleLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
+        lb.numberOfLines = 2
         lb.font = .NotoBold(size: 14)
         return lb
     }()
@@ -55,14 +60,21 @@ final class MenuView: UIView {
         lb.font = .NotoRegular(size: 12)
         return lb
     }()
-   
+    
     lazy var menuStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
         sv.alignment = .leading
         sv.spacing = 3
-        sv.addArrangedSubview(titleLabel)
-        sv.addArrangedSubview(priceLabel)
+        sv.addArrangedSubviews(titleLabel, priceLabel)
+        return sv
+    }()
+    
+    lazy var allMenuStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.alignment = .leading
+        sv.spacing = 3
         return sv
     }()
     
@@ -80,7 +92,16 @@ final class MenuView: UIView {
         lb.font = .NotoRegular(size: 10)
         return lb
     }()
-   
+    
+    lazy var gLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = I18N.Detail.Menu.gUnit
+        lb.textColor = .helfmeWhite
+        lb.font = .PretendardRegular(size: 8)
+        lb.setAttributedText(targetFontList: ["당)" : .NotoRegular(size: 8), "(" : .NotoRegular(size: 8)], targetColorList: ["":.helfmeWhite])
+        return lb
+    }()
+    
     lazy var kcalStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
@@ -88,6 +109,7 @@ final class MenuView: UIView {
         sv.spacing = 0
         sv.addArrangedSubview(kcalLabel)
         sv.addArrangedSubview(unitLabel)
+        sv.addArrangedSubview(gLabel)
         return sv
     }()
     
@@ -121,7 +143,7 @@ extension MenuView {
         
         menuView.snp.makeConstraints { make in
             make.top.leading.bottom.equalToSuperview()
-            make.trailing.equalTo(kcalView.snp.leading)
+            make.trailing.equalTo(kcalView.snp.trailing)
             make.height.equalTo(120)
         }
         
@@ -130,7 +152,7 @@ extension MenuView {
             make.width.equalTo(55)
         }
         
-        menuView.addSubviews(menuImageView, pickImageView, menuStackView)
+        menuView.addSubviews(menuImageView, menuStackView, allMenuStackView)
         
         menuImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(15)
@@ -139,19 +161,37 @@ extension MenuView {
         }
         
         pickImageView.snp.makeConstraints { make in
-            make.leading.equalTo(menuImageView.snp.trailing).offset(20)
-            make.top.equalToSuperview().offset(24)
             make.height.equalTo(20)
         }
         
         menuStackView.snp.makeConstraints { make in
             make.leading.equalTo(menuImageView.snp.trailing).offset(20)
-            make.top.equalTo(pickImageView).offset(24)
+            make.trailing.equalToSuperview().inset(97)
+            make.centerY.equalTo(menuImageView.snp.centerY)
         }
-        
+    
         kcalView.addSubview(kcalStackView)
         kcalStackView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
+        }
+    }
+    
+    func updateLayout() {
+        if !isPick {
+            menuStackView.isHidden = false
+            allMenuStackView.isHidden = true
+        } else {
+         
+            allMenuStackView.addArrangedSubviews(pickImageView, titleLabel, priceLabel)
+            
+            allMenuStackView.snp.makeConstraints { make in
+                make.leading.equalTo(menuImageView.snp.trailing).offset(20)
+                make.trailing.equalToSuperview().inset(97)
+                make.centerY.equalTo(menuImageView.snp.centerY)
+            }
+            
+            allMenuStackView.isHidden = false
+            menuStackView.isHidden = true
         }
     }
 }

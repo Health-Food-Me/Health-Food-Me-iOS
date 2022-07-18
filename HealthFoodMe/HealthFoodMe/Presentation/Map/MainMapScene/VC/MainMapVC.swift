@@ -17,6 +17,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     // MARK: - Properties
     
     private let disposeBag = DisposeBag()
+    private var isInitialPoint = false
     private let locationManager = NMFLocationManager.sharedInstance()
     private var selectedCategories: [Bool] = [false, false, false,
                                               false, false, false,
@@ -26,6 +27,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         }
     }
     var viewModel: MainMapViewModel!
+    
     
     // MARK: - UI Components
     
@@ -41,6 +43,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
             self.makeVibrate()
             let nextVC = ModuleFactory.resolve().makeHamburgerBarVC()
             nextVC.modalPresentationStyle = .overFullScreen
+            nextVC.delegate = self
             self.present(nextVC, animated: false)
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
@@ -110,7 +113,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
             self.makeVibrate()
             let NMGPosition = self.locationManager?.currentLatLng()
             if let position = NMGPosition {
-                self.mapView.moveCameraPosition(position)
+              self.mapView.moveCameraPositionWithZoom(position, 200)
             }
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
@@ -141,6 +144,10 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         resetUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setIntitialMapPoint()
     }
 }
 
@@ -206,9 +213,10 @@ extension MainMapVC {
             make.width.height.equalTo(56)
         }
         
+        let bottomSafeArea = safeAreaBottomInset()
         myLocationButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(20)
-            make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-12)
+            make.bottom.equalTo(mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
             make.width.height.equalTo(56)
         }
     }
@@ -245,30 +253,36 @@ extension MainMapVC {
                         self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: summaryViewTranslation.y)
                     }
                 case .ended:
+                        guard let self = self else { return }
                     if summaryViewTranslation.y < -90
-                        || (self?.mapDetailSummaryView.frame.origin.y ?? 40 < 30) {
-                        self?.mapDetailSummaryView.snp.updateConstraints { make in
+                        || (self.mapDetailSummaryView.frame.origin.y ?? 40 < 30) {
+                        self.mapDetailSummaryView.snp.updateConstraints { make in
                             make.top.equalToSuperview().inset(44)
                         }
                         
+                        let bottomSafeArea = self.safeAreaBottomInset()
+                        self.myLocationButton.snp.updateConstraints { make in
+                            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+20) * (-1))
+                        }
+                        
                         UIView.animate(withDuration: 0.3, delay: 0) {
-                            self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
-                            self?.view.layoutIfNeeded()
+                            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+                            self.view.layoutIfNeeded()
                         } completion: { _ in
-                            self?.transitionAndPresentMainDetailVC()
+                            self.transitionAndPresentMainDetailVC()
                         }
                         
                     } else {
                         let summaryViewHeight: CGFloat = 189
-                        self?.mapDetailSummaryView.snp.updateConstraints { make in
+                        self.mapDetailSummaryView.snp.updateConstraints { make in
                             make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
                         }
                         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
-                            self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
-                            self?.view.layoutIfNeeded()
+                            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+                            self.view.layoutIfNeeded()
                         } completion: { _ in
-                            self?.scrapButton.isHidden = false
-                            self?.myLocationButton.isHidden = false
+                            self.scrapButton.isHidden = false
+                            self.myLocationButton.isHidden = false
                         }
                     }
                 default:
@@ -286,6 +300,18 @@ extension MainMapVC {
         navigationController?.isNavigationBarHidden =  true
     }
     
+    private func setIntitialMapPoint() {
+            
+            let NMGPosition = self.locationManager?.currentLatLng()
+            if let position = NMGPosition {
+                self.mapView.moveCameraPositionWithZoom(position, 2000)
+            } else {
+                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
+            }
+            isInitialPoint = true
+
+    }
+    
     private func setMapView() {
         locationManager?.add(self)
     }
@@ -297,18 +323,35 @@ extension MainMapVC {
                 self.mapDetailSummaryView.snp.updateConstraints { make in
                     make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
                 }
+                let bottomSafeArea = self.safeAreaBottomInset()
+                self.myLocationButton.snp.updateConstraints { make in
+                    make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
+                }
                 UIView.animate(withDuration: 0.3, delay: 0) {
                     self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                     self.view.layoutIfNeeded()
                 }
             }).disposed(by: self.disposeBag)
-        
+      
+      mapView.zoomLevelChange
+        .subscribe(onNext: { [weak self] zoomLevel in
+          guard let self = self else { return }
+            let accumulate = MapAccumulationCalculator.zoomLevelToDistance(level: zoomLevel)
+            print(accumulate)
+        }).disposed(by: self.disposeBag)
+              
         mapView.setSelectPoint
             .subscribe(onNext: { [weak self] dataModel in
                 let summaryViewHeight: CGFloat = 189
                 self?.mapDetailSummaryView.snp.updateConstraints { make in
                     make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
                 }
+                if let mapDetailViewTopCosntraint = self?.mapDetailSummaryView.snp.top {
+                    self?.myLocationButton.snp.updateConstraints { make in
+                        make.bottom.equalTo(mapDetailViewTopCosntraint).offset(-12)
+                    }
+                }
+
                 UIView.animate(withDuration: 0.3, delay: 0) {
                     self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                     self?.view.layoutIfNeeded()
@@ -383,7 +426,7 @@ extension MainMapVC {
         self.mapDetailSummaryView.snp.updateConstraints { make in
             make.top.equalToSuperview().inset(44)
         }
-        
+
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.layoutIfNeeded()
@@ -423,5 +466,20 @@ extension MainMapVC: UICollectionViewDataSource {
         cell.setData(data: MainMapCategory.categorySample[indexPath.row])
         cell.isSelected = selectedCategories[indexPath.row]
         return cell
+    }
+}
+
+extension MainMapVC: HamburgerbarVCDelegate {
+    func HamburgerbarVCDidTap(hamburgerType: HamburgerType) {
+        switch hamburgerType {
+        case .editName:
+            navigationController?.pushViewController(ModuleFactory.resolve().makeNicknameChangeVC(), animated: true)
+        case .scrap:
+            navigationController?.pushViewController(ModuleFactory.resolve().makeScrapVC(), animated: true)
+        case .myReview:
+            navigationController?.pushViewController(ModuleFactory.resolve().makeScrapVC(), animated: true)
+        case .setting:
+            navigationController?.pushViewController(ModuleFactory.resolve().makeSettingVC(), animated: true)
+        }
     }
 }

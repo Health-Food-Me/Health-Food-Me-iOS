@@ -19,7 +19,10 @@ class MainDetailVC: UIViewController {
     private var mainInfoTVC = MainInfoTVC()
     private var detailTabTVC = DetailTabTVC()
     private var detailTabTitleHeader = DetailTabTitleHeader()
-    private var childVC = ModuleFactory.resolve().makeMenuTabVC()
+    private var menuTabVC = ModuleFactory.resolve().makeMenuTabVC()
+    private var copingTabVC = ModuleFactory.resolve().makeCopingTabVC()
+    private var reviewTabVC = ModuleFactory.resolve().makeReviewDetailVC()
+    private var menuCase: TabMenuCase = .menu
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
     
@@ -39,6 +42,18 @@ class MainDetailVC: UIViewController {
         return tv
     }()
     
+    private var bottomView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
+    
+    private var reviewWriteCTAButton: CTAButton = {
+        let button = CTAButton(enableState: true, title: I18N.Detail.Main.reviewWriteCTATitle)
+        button.isEnabled = true
+        return button
+    }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -48,6 +63,7 @@ class MainDetailVC: UIViewController {
         registerCell()
         setDelegate()
         bindViewModels()
+        setButtonAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,16 +102,35 @@ extension MainDetailVC {
             scrapButton.isSelected.toggle()
         }), for: .touchUpInside)
         
+        reviewWriteCTAButton.layer.cornerRadius = 20
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: scrapButton)
     }
     
     private func setLayout() {
-        view.addSubviews(mainTableView)
+        bottomView.addSubviews(reviewWriteCTAButton)
+        view.addSubviews(mainTableView,bottomView)
+        let bottomSafeArea = safeAreaBottomInset()
+        
+        reviewWriteCTAButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(4)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+            make.height.equalTo(40)
+        }
+        
+        bottomView.snp.makeConstraints { make in
+            make.height.equalTo(bottomSafeArea + 48)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        
         
         mainTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.top)
         }
     }
     
@@ -108,6 +143,14 @@ extension MainDetailVC {
     private func setDelegate() {
         mainTableView.delegate = self
         mainTableView.dataSource = self
+    }
+    
+    private func setButtonAction() {
+        reviewWriteCTAButton.press {
+            let writeVC = ModuleFactory.resolve().makeReviewWriteNavigationController()
+            writeVC.modalPresentationStyle = .overCurrentContext
+            self.present(writeVC, animated: true)
+        }
     }
     
     private func bindViewModels() {
@@ -124,9 +167,10 @@ extension MainDetailVC {
                 print(windowTranslation)
                 switch sender.state {
                 case .changed:
-                    self?.view.backgroundColor = .clear
                     UIView.animate(withDuration: 0.1) {
+                      if windowTranslation.y > 0 {
                         self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
+                      }
                     }
                 case .ended:
                     if windowTranslation.y > 130 {
@@ -146,6 +190,7 @@ extension MainDetailVC {
                     break
                 }
             }).disposed(by: disposeBag)
+        
     }
 }
 
@@ -224,18 +269,42 @@ extension MainDetailVC: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTabTVC.className, for: indexPath) as? DetailTabTVC else { return UITableViewCell() }
             detailTabTVC = cell
             
-            if childVC is MenuTabVC {
-                childVC.delegate = self
+            if menuTabVC is MenuTabVC {
+                menuTabVC.delegate = self
             }
             
-            self.addChild(childVC)
-            cell.receiveChildVC(childVC: childVC)
+            if copingTabVC is CopingTabVC {
+                copingTabVC.delegate = self
+                copingTabVC.panDelegate = self
+            }
+            
+            if reviewTabVC is ReviewDetailVC {
+                reviewTabVC.delegate = self
+            }
+            
+            self.addChild(menuTabVC)
+            self.addChild(copingTabVC)
+            self.addChild(reviewTabVC)
+            cell.receiveChildVC(childVC: menuTabVC)
+            cell.receiveChildVC(childVC: copingTabVC)
+            cell.receiveChildVC(childVC: reviewTabVC)
             cell.scrollRatio.asDriver(onErrorJustReturn: 0)
                 .drive { ratio in
+                    if ratio < 1/3{
+                        self.menuCase = .menu
+                        self.menuTabVC.topScrollAnimationNotFinished = true
+                    } else if ratio < 2/3 {
+                        self.menuCase = .coping
+                        self.copingTabVC.topScrollAnimationNotFinished = true
+                    } else {
+                        self.menuCase = .review
+                        self.reviewTabVC.topScrollAnimationNotFinished = true
+                    }
                     self.detailTabTitleHeader.moveWithContinuousRatio(ratio: ratio)
                 }.disposed(by: cell.disposeBag)
             cell.scrollEnded.asDriver(onErrorJustReturn: 0)
                 .drive { pageIndex in
+
                     self.detailTabTitleHeader.setSelectedButton(buttonIndex: pageIndex)
                 }.disposed(by: cell.disposeBag)
             return cell
@@ -264,15 +333,49 @@ extension MainDetailVC: UITableViewDataSource {
 }
 
 extension MainDetailVC: ScrollDeliveryDelegate {
+    func currentTabMenu(_ type: TabMenuCase) {
+        self.menuCase = type
+    }
     
-    // TODO: - 이 부분 touchesBegan으로 해보자
+    func childViewScrollDidEnd(type: TabMenuCase) {
+        self.mainTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        switch(type) {
+            case .menu:     menuTabVC.topScrollAnimationNotFinished = true
+            case .coping:   copingTabVC.topScrollAnimationNotFinished = true
+            case .review:
+                reviewTabVC.topScrollAnimationNotFinished = true
+        }
+    }
     
     func scrollStarted(velocity: CGFloat, scrollView: UIScrollView) {
         if velocity < 0 {
-            self.mainTableView.setContentOffset(CGPoint(x: 0, y: 240), animated: true)
-            if mainTableView.contentOffset.y < 230 {
-                scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            self.mainTableView.scrollToRow(at: IndexPath.init(row: 0, section: 1), at: .top, animated: true)
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < 10 {
+            switch(menuCase) {
+                case .menu: menuTabVC.topScrollAnimationNotFinished = true
+                case .coping: copingTabVC.topScrollAnimationNotFinished = true
+                case .review: reviewTabVC.topScrollAnimationNotFinished = true
             }
         }
+        
+        if scrollView.contentOffset.y > 50 {
+            switch(menuCase) {
+                case .menu: menuTabVC.topScrollAnimationNotFinished = false
+                case .coping: copingTabVC.topScrollAnimationNotFinished = false
+                case .review: reviewTabVC.topScrollAnimationNotFinished = false
+            }
+        }
+    }
+}
+
+extension MainDetailVC: CopingGestureDelegate {
+    func panGestureSwipe(isRight: Bool) {
+        let index = isRight ? 2 : 0
+        detailTabTitleHeader.setSelectedButton(buttonIndex: index)
+        detailTabTVC.containerCollectionView.scrollToItem(at: IndexPath.init(row: index, section: 0), at: .centeredVertically, animated: true)
     }
 }

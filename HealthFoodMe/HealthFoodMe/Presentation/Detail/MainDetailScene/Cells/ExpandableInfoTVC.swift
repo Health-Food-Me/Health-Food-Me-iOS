@@ -40,6 +40,15 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
         return lb
     }()
     
+    private lazy var toggleButtonInfnoLabel: UIButton = {
+        let bt = UIButton()
+        bt.addAction(UIAction(handler: { _ in
+            bt.isSelected.toggle()
+            self.toggleButtonTapped.accept(())
+        }), for: .touchUpInside)
+        return bt
+    }()
+    
     private lazy var toggleButton: UIButton = {
         let bt = UIButton()
         bt.setImage(ImageLiterals.MainDetail.showdownIcon, for: .normal)
@@ -72,7 +81,7 @@ extension ExpandableInfoTVC {
     }
     
     private func setLayout() {
-        self.contentView.addSubviews(iconImageView, infoLabel, toggleButton)
+        self.contentView.addSubviews(iconImageView, infoLabel, toggleButton, toggleButtonInfnoLabel)
         
         iconImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
@@ -83,6 +92,12 @@ extension ExpandableInfoTVC {
         infoLabel.snp.makeConstraints { make in
             make.leading.equalTo(iconImageView.snp.trailing).offset(12.5)
             make.centerY.equalTo(iconImageView.snp.centerY)
+        }
+        
+        toggleButtonInfnoLabel.snp.makeConstraints { make in
+            make.center.equalTo(infoLabel)
+            make.width.equalTo(infoLabel.snp.width)
+            make.height.equalTo(infoLabel.snp.height)
         }
         
         toggleButton.snp.makeConstraints { make in

@@ -16,6 +16,7 @@ import UIKit
  */
 
 enum Storyboards: String {
+    case splash = "Splash"
     case mainMap = "MainMap"
     case mainDetail = "MainDetail"
     case search = "Search"
@@ -27,9 +28,13 @@ enum Storyboards: String {
     case reviewWrite = "ReviewWrite"
     case socialLogin = "SocialLogin"
     case hamburgerBar = "HamburgerBar"
-    case blogReviewTab = "BlogReviewTab"
+    case reviewDetail = "ReviewDetail"
     case nicknameChange = "NicknameChange"
+    case setting = "Setting"
     case userWithdrawal = "UserWithdrawal"
+    case copingTab = "CopingTab"
+    case reviewEmptyView = "ReviewEmptyView"
+    case supplementMap = "SupplementMap"
 }
 
 extension UIStoryboard {
