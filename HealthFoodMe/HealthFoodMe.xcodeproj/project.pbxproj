@@ -54,6 +54,7 @@
 		695758EC28830E3000E36789 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758EB28830E3000E36789 /* SplashVC.swift */; };
 		695758EE28830E3F00E36789 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758ED28830E3F00E36789 /* Splash.storyboard */; };
 		A90CFDB528852C960018AB94 /* ScrapListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90CFDB428852C960018AB94 /* ScrapListEntity.swift */; };
+		A90CFDBA28856BCB0018AB94 /* ScrapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90CFDB928856BCB0018AB94 /* ScrapEntity.swift */; };
 		A9325274287D3065001EDF50 /* SearchResultTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9325273287D3065001EDF50 /* SearchResultTVC.swift */; };
 		A9325277287D4F10001EDF50 /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9325276287D4F10001EDF50 /* SearchResultModel.swift */; };
 		A932527E287DD261001EDF50 /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A932527D287DD261001EDF50 /* SearchResultVC.swift */; };
@@ -63,7 +64,6 @@
 		A93252B5287F2CA6001EDF50 /* ScrapCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252B4287F2CA6001EDF50 /* ScrapCVC.swift */; };
 		A93252B7287F3272001EDF50 /* Scrap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A93252B6287F3272001EDF50 /* Scrap.storyboard */; };
 		A93252BA287F3E73001EDF50 /* ScrapEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252B9287F3E73001EDF50 /* ScrapEmptyView.swift */; };
-		A93252BD287F52E4001EDF50 /* ScrapDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252BC287F52E4001EDF50 /* ScrapDataModel.swift */; };
 		A93252C628808B82001EDF50 /* ReviewDeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252C528808B82001EDF50 /* ReviewDeleteAlertView.swift */; };
 		A93252CD28808BE2001EDF50 /* LogoutAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252CC28808BE2001EDF50 /* LogoutAlertView.swift */; };
 		A93252CF2880913F001EDF50 /* HelfmeAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93252CE2880913F001EDF50 /* HelfmeAlertVC.swift */; };
@@ -253,6 +253,7 @@
 		695758EB28830E3000E36789 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		695758ED28830E3F00E36789 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		A90CFDB428852C960018AB94 /* ScrapListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapListEntity.swift; sourceTree = "<group>"; };
+		A90CFDB928856BCB0018AB94 /* ScrapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapEntity.swift; sourceTree = "<group>"; };
 		A9325273287D3065001EDF50 /* SearchResultTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTVC.swift; sourceTree = "<group>"; };
 		A9325276287D4F10001EDF50 /* SearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
 		A932527D287DD261001EDF50 /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
@@ -262,7 +263,6 @@
 		A93252B4287F2CA6001EDF50 /* ScrapCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapCVC.swift; sourceTree = "<group>"; };
 		A93252B6287F3272001EDF50 /* Scrap.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Scrap.storyboard; sourceTree = "<group>"; };
 		A93252B9287F3E73001EDF50 /* ScrapEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapEmptyView.swift; sourceTree = "<group>"; };
-		A93252BC287F52E4001EDF50 /* ScrapDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapDataModel.swift; sourceTree = "<group>"; };
 		A93252C528808B82001EDF50 /* ReviewDeleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDeleteAlertView.swift; sourceTree = "<group>"; };
 		A93252CC28808BE2001EDF50 /* LogoutAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutAlertView.swift; sourceTree = "<group>"; };
 		A93252CE2880913F001EDF50 /* HelfmeAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelfmeAlertVC.swift; sourceTree = "<group>"; };
@@ -716,6 +716,7 @@
 			isa = PBXGroup;
 			children = (
 				A90CFDB428852C960018AB94 /* ScrapListEntity.swift */,
+				A90CFDB928856BCB0018AB94 /* ScrapEntity.swift */,
 			);
 			path = ScrapScene;
 			sourceTree = "<group>";
@@ -755,7 +756,6 @@
 		A93252AF287F2ADB001EDF50 /* ScrapScene */ = {
 			isa = PBXGroup;
 			children = (
-				A93252BB287F52B0001EDF50 /* Model */,
 				A93252B2287F2AFE001EDF50 /* VC */,
 				A93252B3287F2B36001EDF50 /* Cells */,
 				A93252B8287F3E4D001EDF50 /* View */,
@@ -786,14 +786,6 @@
 				A93252B9287F3E73001EDF50 /* ScrapEmptyView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		A93252BB287F52B0001EDF50 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A93252BC287F52E4001EDF50 /* ScrapDataModel.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		A93252BE288086BA001EDF50 /* HelpmeAlerts */ = {
@@ -1851,6 +1843,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A90CFDBA28856BCB0018AB94 /* ScrapEntity.swift in Sources */,
 				EBF66AFF287227F500DE0ED1 /* makeAlert.swift in Sources */,
 				EBF66AF3287227F500DE0ED1 /* applyShadow.swift in Sources */,
 				EB6A44D628737CC400749582 /* MainDetailEntity.swift in Sources */,
@@ -1898,7 +1891,6 @@
 				EBD19262287DBC1800EA053E /* MapDetailSummaryView.swift in Sources */,
 				EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */,
 				EB6A45172874276B00749582 /* DetailTabTitleHeader.swift in Sources */,
-				A93252BD287F52E4001EDF50 /* ScrapDataModel.swift in Sources */,
 				FD39FACE2880C30100A01CDA /* NicknameChangeUseCase.swift in Sources */,
 				EB6A451B2875365B00749582 /* TabIndicator.swift in Sources */,
 				A93252BA287F3E73001EDF50 /* ScrapEmptyView.swift in Sources */,
