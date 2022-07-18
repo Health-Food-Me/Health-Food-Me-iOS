@@ -178,6 +178,13 @@
 		EBFAEAFC2884DCF0009C569C /* RestaurantSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFB2884DCF0009C569C /* RestaurantSummaryModel.swift */; };
 		EBFAEAFE28851C09009C569C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFD28851C09009C569C /* UserManager.swift */; };
 		EBFAEB0028851C9E009C569C /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFF28851C9E009C569C /* UserDefaultWrapper.swift */; };
+		EBFAEB03288555E3009C569C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBFAEB02288555E3009C569C /* GoogleService-Info.plist */; };
+		EBFAEB072885632E009C569C /* RuntimeProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB062885632E009C569C /* RuntimeProviderType.swift */; };
+		EBFAEB0A2885636E009C569C /* FirebaseAnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB092885636E009C569C /* FirebaseAnalyticsProvider.swift */; };
+		EBFAEB0D28856388009C569C /* LogEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB0C28856388009C569C /* LogEventType.swift */; };
+		EBFAEB0F28856424009C569C /* AnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB0E28856424009C569C /* AnalyticsType.swift */; };
+		EBFAEB112885642C009C569C /* AppLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB102885642C009C569C /* AppLog.swift */; };
+		EBFAEB132885643D009C569C /* FirebaseConfigureServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB122885643D009C569C /* FirebaseConfigureServiceProtocol.swift */; };
 		FD39FACE2880C30100A01CDA /* NicknameChangeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20E287F5D080007D4F9 /* NicknameChangeUseCase.swift */; };
 		FD39FACF2880C31000A01CDA /* CTAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E208287F30770007D4F9 /* CTAButton.swift */; };
 		FD39FAD12880C35000A01CDA /* UpperToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20A287F3C360007D4F9 /* UpperToastView.swift */; };
@@ -321,7 +328,7 @@
 		EBD1925E287DBBFC00EA053E /* TagSummaryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSummaryCVC.swift; sourceTree = "<group>"; };
 		EBD19261287DBC1800EA053E /* MapDetailSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDetailSummaryView.swift; sourceTree = "<group>"; };
 		EBD19264287DC33900EA053E /* TagCVCFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCVCFlowLayout.swift; sourceTree = "<group>"; };
-		EBD19272287F0CC600EA053E /* URLSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemeManager.swift; sourceTree = "<group>"; };
+		EBD19272287F0CC600EA053E /* URLSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLSchemeManager.swift; path = HealthFoodMe/Application/Manager/URLScheme/URLSchemeManager.swift; sourceTree = SOURCE_ROOT; };
 		EBD19274287F256000EA053E /* EncodeURLKorean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodeURLKorean.swift; sourceTree = "<group>"; };
 		EBF66A51287227F500DE0ED1 /* UserDefaults+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		EBF66A53287227F500DE0ED1 /* UIDevice+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
@@ -354,7 +361,7 @@
 		EBF66A7B287227F500DE0ED1 /* controllerFromStoryBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = controllerFromStoryBoard.swift; sourceTree = "<group>"; };
 		EBF66A7D287227F500DE0ED1 /* LaunchInstructor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchInstructor.swift; sourceTree = "<group>"; };
 		EBF66A7E287227F500DE0ED1 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EBF66A7F287227F500DE0ED1 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		EBF66A7F287227F500DE0ED1 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = ModuleFactory/Base/SceneDelegate.swift; sourceTree = "<group>"; };
 		EBF66A86287227F500DE0ED1 /* EventLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventLogger.swift; sourceTree = "<group>"; };
 		EBF66A87287227F500DE0ED1 /* BaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseService.swift; sourceTree = "<group>"; };
 		EBF66A88287227F500DE0ED1 /* BaseRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRouter.swift; sourceTree = "<group>"; };
@@ -384,6 +391,13 @@
 		EBFAEAFB2884DCF0009C569C /* RestaurantSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSummaryModel.swift; sourceTree = "<group>"; };
 		EBFAEAFD28851C09009C569C /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		EBFAEAFF28851C9E009C569C /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
+		EBFAEB02288555E3009C569C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EBFAEB062885632E009C569C /* RuntimeProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeProviderType.swift; sourceTree = "<group>"; };
+		EBFAEB092885636E009C569C /* FirebaseAnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsProvider.swift; sourceTree = "<group>"; };
+		EBFAEB0C28856388009C569C /* LogEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEventType.swift; sourceTree = "<group>"; };
+		EBFAEB0E28856424009C569C /* AnalyticsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsType.swift; sourceTree = "<group>"; };
+		EBFAEB102885642C009C569C /* AppLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLog.swift; sourceTree = "<group>"; };
+		EBFAEB122885643D009C569C /* FirebaseConfigureServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConfigureServiceProtocol.swift; sourceTree = "<group>"; };
 		FD39FAD52880C63E00A01CDA /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		FD39FAD72880C69400A01CDA /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		FD582917287DC39A00CE62E8 /* mapContainerViewTouchDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerViewTouchDelegateProxy.swift; sourceTree = "<group>"; };
@@ -643,20 +657,6 @@
 				695758ED28830E3F00E36789 /* Splash.storyboard */,
 			);
 			path = VC;
-			sourceTree = "<group>";
-		};
-		695758E928830D1D00E36789 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		695758EA28830D3400E36789 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		695758F2288544A900E36789 /* CopingTabScene */ = {
@@ -930,6 +930,7 @@
 				EBF66A90287227F500DE0ED1 /* Presentation */,
 				EBF66AA2287227F500DE0ED1 /* Utils */,
 				EB085EE728716E1B00361837 /* Info.plist */,
+				EBFAEB02288555E3009C569C /* GoogleService-Info.plist */,
 				EB6A44C6287366DF00749582 /* .swiftlint.yml */,
 			);
 			path = HealthFoodMe;
@@ -1236,8 +1237,9 @@
 		EBD19271287F0C7A00EA053E /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				EBD19272287F0CC600EA053E /* URLSchemeManager.swift */,
-				EBFAEAFD28851C09009C569C /* UserManager.swift */,
+				EBFAEB1428859823009C569C /* User */,
+				EBFAEB0528856318009C569C /* Analytics */,
+				EBFAEB0428856301009C569C /* URLScheme */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1357,6 +1359,7 @@
 				EBD19271287F0C7A00EA053E /* Manager */,
 				EBF66A75287227F500DE0ED1 /* ModuleFactory */,
 				EBF66A7E287227F500DE0ED1 /* AppDelegate.swift */,
+				EBF66A7F287227F500DE0ED1 /* SceneDelegate.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1364,7 +1367,6 @@
 		EBF66A75287227F500DE0ED1 /* ModuleFactory */ = {
 			isa = PBXGroup;
 			children = (
-				EBF66A7F287227F500DE0ED1 /* SceneDelegate.swift */,
 				EBF66A76287227F500DE0ED1 /* Protocol */,
 				EBF66A79287227F500DE0ED1 /* Factory */,
 				EBF66A7C287227F500DE0ED1 /* Base */,
@@ -1552,6 +1554,51 @@
 			path = Entity;
 			sourceTree = "<group>";
 		};
+		EBFAEB0428856301009C569C /* URLScheme */ = {
+			isa = PBXGroup;
+			children = (
+				EBD19272287F0CC600EA053E /* URLSchemeManager.swift */,
+			);
+			path = URLScheme;
+			sourceTree = "<group>";
+		};
+		EBFAEB0528856318009C569C /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEB0B2885637C009C569C /* EventType */,
+				EBFAEB082885635B009C569C /* Provider */,
+				EBFAEB0E28856424009C569C /* AnalyticsType.swift */,
+				EBFAEB102885642C009C569C /* AppLog.swift */,
+				EBFAEB122885643D009C569C /* FirebaseConfigureServiceProtocol.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
+		EBFAEB082885635B009C569C /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEB062885632E009C569C /* RuntimeProviderType.swift */,
+				EBFAEB092885636E009C569C /* FirebaseAnalyticsProvider.swift */,
+			);
+			path = Provider;
+			sourceTree = "<group>";
+		};
+		EBFAEB0B2885637C009C569C /* EventType */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEB0C28856388009C569C /* LogEventType.swift */,
+			);
+			path = EventType;
+			sourceTree = "<group>";
+		};
+		EBFAEB1428859823009C569C /* User */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEAFD28851C09009C569C /* UserManager.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		EC921F0D619DA4E9C0CE8F2B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1732,6 +1779,7 @@
 				EB085ED328716E1900361837 /* Frameworks */,
 				EB085ED428716E1900361837 /* Resources */,
 				6382E1C6D0A6A9AEE6381C8B /* [CP] Embed Pods Frameworks */,
+				EBFAEB012885551B009C569C /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -1805,6 +1853,7 @@
 				3B0B25562876BBE400950539 /* Pretendard-Regular.otf in Resources */,
 				EBF66AD0287227F500DE0ED1 /* Assets.xcassets in Resources */,
 				EBF66AD2287227F500DE0ED1 /* LaunchScreen.storyboard in Resources */,
+				EBFAEB03288555E3009C569C /* GoogleService-Info.plist in Resources */,
 				A9E593CF2876C26900B0F8B5 /* Color.xcassets in Resources */,
 				EB6A44FD2873BF8800749582 /* MainMap.storyboard in Resources */,
 				EBF66AD1287227F500DE0ED1 /* NotoSansSC-Bold.otf in Resources */,
@@ -1856,6 +1905,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		EBFAEB012885551B009C569C /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" != \"Debug\" ]; then\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n\"${PODS_ROOT}/FirebaseCrashlytics/upload-symbols\" -gsp ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1868,6 +1935,7 @@
 				EBF66AF3287227F500DE0ED1 /* applyShadow.swift in Sources */,
 				EB6A44D628737CC400749582 /* MainDetailEntity.swift in Sources */,
 				EB6A4515287425F900749582 /* DetailTabTVC.swift in Sources */,
+				EBFAEB072885632E009C569C /* RuntimeProviderType.swift in Sources */,
 				EB6A44F32873BED500749582 /* MainMapEntity.swift in Sources */,
 				EBF66AC8287227F500DE0ED1 /* UIFont+.swift in Sources */,
 				EBF66AF4287227F500DE0ED1 /* calculatePastTime.swift in Sources */,
@@ -1942,6 +2010,7 @@
 				EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */,
 				EBF66AD5287227F500DE0ED1 /* ViewModelType.swift in Sources */,
 				69028BB02874A60E00373984 /* HeaderView.swift in Sources */,
+				EBFAEB0A2885636E009C569C /* FirebaseAnalyticsProvider.swift in Sources */,
 				695758D52881121900E36789 /* CopingTabVC.swift in Sources */,
 				EBF66ADA287227F500DE0ED1 /* controllerFromStoryBoard.swift in Sources */,
 				3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */,
@@ -1967,13 +2036,16 @@
 				69028BA82874675800373984 /* MenuView.swift in Sources */,
 				A9E593C72874266200B0F8B5 /* SearchRecent.swift in Sources */,
 				695758E328812B3100E36789 /* CopingDataModel.swift in Sources */,
+				EBFAEB132885643D009C569C /* FirebaseConfigureServiceProtocol.swift in Sources */,
 				EBF66AF2287227F500DE0ED1 /* buttonPress.swift in Sources */,
+				EBFAEB0F28856424009C569C /* AnalyticsType.swift in Sources */,
 				EBF66ADC287227F500DE0ED1 /* AppDelegate.swift in Sources */,
 				690AB5492875C1B200DE72D4 /* MenuDataModel.swift in Sources */,
 				FDF2E215287F5D080007D4F9 /* NicknameRepository.swift in Sources */,
 				A9E593D1287818E900B0F8B5 /* SearchTVC.swift in Sources */,
 				EBF66AC6287227F500DE0ED1 /* UIImage+.swift in Sources */,
 				69028BA62874673600373984 /* MenuCellCVC.swift in Sources */,
+				EBFAEB0D28856388009C569C /* LogEventType.swift in Sources */,
 				EBF66AFD287227F500DE0ED1 /* calculateTopInset.swift in Sources */,
 				EBF66ACF287227F500DE0ED1 /* Result+.swift in Sources */,
 				A93252C628808B82001EDF50 /* ReviewDeleteAlertView.swift in Sources */,
@@ -1983,6 +2055,7 @@
 				EBD19275287F256000EA053E /* EncodeURLKorean.swift in Sources */,
 				EB033E84287B5BE300C48FB9 /* StarRatingView.swift in Sources */,
 				FDCD5B472882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift in Sources */,
+				EBFAEB112885642C009C569C /* AppLog.swift in Sources */,
 				695758D02880ACF000E36789 /* addToolBar.swift in Sources */,
 				EB6A451128740CFF00749582 /* MainInfoTVC.swift in Sources */,
 				695758DC2881128300E36789 /* ContentTVC.swift in Sources */,
@@ -2170,6 +2243,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = FY8N9XTH66;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HealthFoodMe/Info.plist;
