@@ -93,7 +93,7 @@ extension BaseRouter {
     }
     
     var header: HeaderType {
-        return HeaderType.default
+        return HeaderType.withToken
     }
     
     var multipart: MultipartFormData {
