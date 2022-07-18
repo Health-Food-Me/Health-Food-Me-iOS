@@ -30,10 +30,15 @@ final class SearchVC: UIViewController {
     var searchList: [SearchDataModel] = []
     var searchResultList: [SearchResultDataModel] = []
     private var isEmpty: Bool = false
-    private var isFromSearchResult: Bool = false
     private var searchEmptyView = SearchEmptyView()
     
     // MARK: - UI Components
+    
+    private let searchView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .mainRed
+        return view
+    }()
     
     private lazy var searchTextField: UITextField = {
         let tf = UITextField()
@@ -141,11 +146,7 @@ extension SearchVC {
         case .recent:
             navigationController?.popViewController(animated: true)
         case .search:
-            if isFromSearchResult {
-                isSearchResult()
-            } else {
-                navigationController?.popViewController(animated: true)
-            }
+            navigationController?.popViewController(animated: true)
         case .searchResult:
             isSearchRecent()
             initTextField()
@@ -188,7 +189,6 @@ extension SearchVC {
         if searchType == .recent {
             searchTextField.text?.removeAll()
         }
-        searchTextField.becomeFirstResponder()
     }
     
     private func setData() {
@@ -212,7 +212,9 @@ extension SearchVC {
     }
     
     private func setLayout() {
-        view.addSubviews(searchTextField,lineView,searchTableView,
+        view.addSubviews(searchTextField,
+                         lineView,
+                         searchView,
                          searchEmptyView)
         
         searchTextField.snp.makeConstraints {
@@ -255,9 +257,15 @@ extension SearchVC {
             $0.height.equalTo(20)
         }
         
-        searchTableView.snp.makeConstraints {
+        searchView.snp.makeConstraints {
             $0.top.equalTo(lineView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        searchView.addSubviews(searchTableView)
+        
+        searchTableView.snp.makeConstraints {
+            $0.edges.equalTo(searchView)
         }
         
         searchEmptyView.snp.makeConstraints {
@@ -328,7 +336,6 @@ extension SearchVC {
             searchTableView.tableHeaderView?.frame.size.height = 42
             recentHeaderLabel.isHidden = true
             resultHeaderButton.isHidden = false
-            isFromSearchResult = true
             searchType = .searchResult
         }
     }
@@ -450,7 +457,7 @@ extension SearchVC: SearchResultVCDelegate {
             clearButton.isHidden = false
             searchTextField.becomeFirstResponder()
         } else {
-            isSearchResult()
+            isSearchRecent()
         }
     }
 }
