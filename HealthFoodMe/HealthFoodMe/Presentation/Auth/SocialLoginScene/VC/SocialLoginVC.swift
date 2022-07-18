@@ -111,7 +111,7 @@ extension SocialLoginVC {
         view.addSubviews(titleLabel, subTitleLabel, kakaoLoginButton, appleLoginButton)
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(163)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(140)
             make.centerX.equalToSuperview()
         }
         
@@ -145,7 +145,10 @@ extension SocialLoginVC {
     }
     
     @objc func doAppleLogin() {
-        appleLogin()
+        let vc = ModuleFactory.resolve().makeMainMapNavigationController()
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: false)
+//        appleLogin()
     }
 }
 

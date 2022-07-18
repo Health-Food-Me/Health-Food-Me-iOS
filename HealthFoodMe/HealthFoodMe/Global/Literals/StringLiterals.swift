@@ -40,6 +40,7 @@ struct I18N {
     struct Detail {
         struct Main {
             static let buttonTitles = ["메뉴", "외식대처법", "리뷰"]
+            static let reviewWriteCTATitle = "리뷰 쓰기"
         }
         
         struct Menu {
@@ -95,7 +96,7 @@ struct I18N {
     
     struct Map {
         struct Main {
-            static let searchBar = "식당, 음식 검색"
+            static let searchBar = "식당 검색"
         }
         
         struct HamburgerBar {
@@ -107,11 +108,16 @@ struct I18N {
             static let scrapList = "스크랩한 식당"
             static let buttonTitles = ["스크랩한 식당", "내가 쓴 리뷰", "가게 제보하기",
                                        "수정사항 제보하기"]
+            
+            static let reportStoreTitle = "가게 제보하기"
+            static let reportStoreContent = "제보할 가게를 적어주세요."
+            static let reportEditTitle = "수정 사항 제보"
+            static let reportEditContent = "몬의할 내용을 입력해주세요."
         }
     }
     
     struct Search {
-        static let search = "식당, 음식 검색"
+        static let search = "식당 검색"
         static let searchRecent = "최근 검색어"
         static let searchMap = "지도 뷰로 보기"
         static let searchEmpty = "해당되는 검색 결과가 없습니다"
@@ -123,6 +129,16 @@ struct I18N {
         static let withHelfme = "헬푸미와 외식 걱정을 날려보세요!"
         static let dietStore = "다이어터도 즐길 수 있는 식당"
         static let goScrap = "스크랩하러 가기"
+    }
+  
+    struct Setting {
+        static let customerServiceTitle = "고객지원"
+        static let askButtonTitle = "문의하기"
+        static let userWithdrawalTitle = "회원탈퇴"
+        static let termsTitle = "약관 및 정책"
+        static let openSourceButtonTitle = "오픈 소스 정보"
+        static let naverMapTerms = "네이버 지도 법적 공지"
+        static let naverMapLicense = "네이버 지도 오픈 소스 라이선스"
     }
     
     struct Coping {

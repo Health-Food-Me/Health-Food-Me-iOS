@@ -17,14 +17,32 @@ protocol CopingGestureDelegate {
 class CopingTabVC: UIViewController {
     
     // MARK: - Properties
+    
     private let disposeBag = DisposeBag()
     private var copingHeader = CopingHeaderView()
     private var copingEmptyView = CopingEmptyView()
     var topScrollAnimationNotFinished: Bool = true
     weak var delegate: ScrollDeliveryDelegate?
     var panDelegate: CopingGestureDelegate?
-    var recommendList: [String] = []
-    var eatingList: [String] = []
+    var copingDataModel: CopingTabEntity?
+    var restaurantId = "62d26c9bd11146a81ef18ea6" //임시로 넣어준 식당ID
+    var recommendList: [String] = [] {
+        didSet {
+            copingTableView.reloadData()
+            checkEmptyView()
+            updateTableViewLayout()
+        }
+    }
+    var eatingList: [String] = [] {
+        didSet {
+            copingTableView.reloadData()
+            checkEmptyView()
+            updateTableViewLayout()
+        }
+    }
+    private let headerHeight = 130
+    private let rowHeight = 38
+    private let bottomMargin = 120
     
     // MARK: - UI Components
     
@@ -38,7 +56,6 @@ class CopingTabVC: UIViewController {
     private let categoryLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeWhite
-        lb.text = "#샤브샤브"
         lb.font = .NotoBold(size: 15)
         return lb
     }()
@@ -65,7 +82,7 @@ class CopingTabVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchData()
-        setUI()
+        checkEmptyView()
         setLayout()
         setDelegate()
         registerCell()
@@ -76,7 +93,7 @@ class CopingTabVC: UIViewController {
 // MARK: - Methods
 
 extension CopingTabVC {
-    private func setUI() {
+    private func checkEmptyView() {
         copingEmptyView.isHidden = !(recommendList.isEmpty && eatingList.isEmpty)
         copingTableView.isHidden = (recommendList.isEmpty && eatingList.isEmpty)
     }
@@ -101,7 +118,7 @@ extension CopingTabVC {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(36)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(130 * 2 + 38 * (recommendList.count + eatingList.count) + 56)
+            make.height.equalTo(headerHeight * 2 + rowHeight * (recommendList.count + eatingList.count) + bottomMargin)
         }
         
         copingEmptyView.snp.makeConstraints { make in
@@ -123,9 +140,14 @@ extension CopingTabVC {
     }
     
     private func fetchData() {
-        recommendList = CopingDataModel.sampleCopingData.recommend ?? []
-        eatingList = CopingDataModel.sampleCopingData.eating ?? []
+        getMenuPrescription()
         copingTableView.reloadData()
+    }
+    
+    private func updateTableViewLayout() {
+        copingTableView.snp.updateConstraints { make in
+            make.height.equalTo(headerHeight * 2 + rowHeight * (recommendList.count + eatingList.count) + bottomMargin)
+        }
     }
     
     private func addPanGesture() {
@@ -138,32 +160,49 @@ extension CopingTabVC {
                 switch (isVertical, velocity.x, velocity.y) {
                 case (true, _, let y) where y < 0:
                     self?.delegate?.scrollStarted(velocity: -10, scrollView: UIScrollView())
-
+                    
                 case (true, _, let y) where y > 0:
                     self?.delegate?.childViewScrollDidEnd(type: .coping)
-                        
+                    
                 case (false, let x, _) where x > 0:
                     self?.panDelegate?.panGestureSwipe(isRight: false)
-                        
+                    
                 case (false, let x, _) where x < 0:
                     self?.panDelegate?.panGestureSwipe(isRight: true)
-
+                    
                 default: return
                 }
             }).disposed(by: disposeBag)
-
+        
     }
 }
 
 // MARK: - Network
 
 extension CopingTabVC {
-    
+    func getMenuPrescription() {
+        RestaurantService.shared.getMenuPrescription(restaurantId: restaurantId) { networkResult in
+            print(networkResult)
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? CopingTabEntity {
+                    print(data, "성공")
+                    self.categoryLabel.text = " # \(data.category)"
+                    self.recommendList = data.content.recommend
+                    self.eatingList = data.content.tip
+                }
+                self.copingTableView.reloadData()
+            default:
+                break;
+            }
+        }
+    }
 }
+
 extension CopingTabVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 38
+        return tableView.rowHeight
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

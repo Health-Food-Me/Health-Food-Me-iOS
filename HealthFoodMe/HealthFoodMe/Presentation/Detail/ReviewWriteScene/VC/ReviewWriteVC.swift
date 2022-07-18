@@ -383,10 +383,12 @@ extension ReviewWriteVC {
         backButton.setImage(ImageLiterals.MainDetail.beforeIcon, for: .normal)
         backButton.tintColor = .helfmeBlack
         backButton.addAction(UIAction(handler: { _ in
-            self.makeAlert(alertType: .logoutAlert,
-                           title: "리뷰작성을 취소하시겠습니까?",
-                           subtitle: "작성취소 시,\n 작성된 글은 저장되지 않습니다.") {
-                self.makeAlert(title: "취소", message: "리뷰 작성 취소")
+
+                self.makeAlert(alertType: .logoutAlert,
+                               title: "리뷰작성을 취소하시겠습니까?",
+                               subtitle: "작성취소 시,\n 작성된 글은 저장되지 않습니다.") {
+                    self.navigationController?.dismiss(animated: true)
+                
             }
         }), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)

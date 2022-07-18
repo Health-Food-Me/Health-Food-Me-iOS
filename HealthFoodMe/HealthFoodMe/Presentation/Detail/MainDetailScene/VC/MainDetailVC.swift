@@ -42,6 +42,18 @@ class MainDetailVC: UIViewController {
         return tv
     }()
     
+    private var bottomView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
+    
+    private var reviewWriteCTAButton: CTAButton = {
+        let button = CTAButton(enableState: true, title: I18N.Detail.Main.reviewWriteCTATitle)
+        button.isEnabled = true
+        return button
+    }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -51,6 +63,7 @@ class MainDetailVC: UIViewController {
         registerCell()
         setDelegate()
         bindViewModels()
+        setButtonAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,15 +102,35 @@ extension MainDetailVC {
             scrapButton.isSelected.toggle()
         }), for: .touchUpInside)
         
+        reviewWriteCTAButton.layer.cornerRadius = 20
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: scrapButton)
     }
     
     private func setLayout() {
-        view.addSubviews(mainTableView)
+        bottomView.addSubviews(reviewWriteCTAButton)
+        view.addSubviews(mainTableView,bottomView)
+        let bottomSafeArea = safeAreaBottomInset()
+        
+        reviewWriteCTAButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(4)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+            make.height.equalTo(40)
+        }
+        
+        bottomView.snp.makeConstraints { make in
+            make.height.equalTo(bottomSafeArea + 48)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        
+        
         mainTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.top)
         }
     }
     
@@ -110,6 +143,14 @@ extension MainDetailVC {
     private func setDelegate() {
         mainTableView.delegate = self
         mainTableView.dataSource = self
+    }
+    
+    private func setButtonAction() {
+        reviewWriteCTAButton.press {
+            let writeVC = ModuleFactory.resolve().makeReviewWriteNavigationController()
+            writeVC.modalPresentationStyle = .overCurrentContext
+            self.present(writeVC, animated: true)
+        }
     }
     
     private func bindViewModels() {

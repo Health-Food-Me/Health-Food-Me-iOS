@@ -14,5 +14,7 @@ class AuthService: BaseService {
 }
 
 extension AuthService {
-    
+    func reissuanceAccessToken() {
+        
+    }
 }

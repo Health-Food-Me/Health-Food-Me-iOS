@@ -50,4 +50,12 @@ final class URLSchemeManager: NSObject {
             UIApplication.shared.open(appStoreURL as URL, options: [:], completionHandler: nil)
         }
     }
+    
+    func loadSafariApp(blogLink: String) {
+        let blogURL: String = blogLink
+        if let url = NSURL(string: "https://" + "\(blogURL)"),
+           UIApplication.shared.canOpenURL(url as URL) {
+            UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+        }
+    }
 }
