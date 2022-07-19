@@ -18,6 +18,7 @@ protocol ModuleFactoryProtocol {
     func makeMainMapVC() -> MainMapVC
     func makeHamburgerBarVC() -> HamburgerBarVC
     func makeSupplementMapVC(forSearchVC: Bool) -> SupplementMapVC
+    func makeMyReviewVC() -> MyReviewVC
     
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
@@ -107,6 +108,16 @@ class ModuleFactory: ModuleFactoryProtocol {
         if forSearchVC {
             vc = SupplementMapVC(mapType: .search)
         }
+        
+        return vc
+    }
+    
+    func makeMyReviewVC() -> MyReviewVC {
+        let repository = DefaultMyReviewRepository()
+        let useCase = DefaultMyReviewUseCase(repository: repository)
+        let viewModel = MyReviewViewModel(useCase: useCase)
+        let vc = MyReviewVC.controllerFromStoryboard(.myReview)
+        vc.viewModel = viewModel
         
         return vc
     }

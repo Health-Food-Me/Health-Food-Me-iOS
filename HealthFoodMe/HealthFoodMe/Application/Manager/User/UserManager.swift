@@ -30,9 +30,16 @@ final class UserManager {
     var getSocialToken: String { return self.socialToken ?? "" }
     var getAccessToken: String { return self.accessToken ?? "" }
     var getRefreshToken: String { return self.refreshToken ?? "" }
+    var getUser: User? { return self.currentUser ?? nil }
+    
+    // MARK: - Life Cycles
     
     private init() {}
-    
+}
+
+// MARK: - Methods
+
+extension UserManager {
     func updateAuthToken(_ accessToken: String, _ refreshToken: String) {
         self.accessToken = accessToken
         self.refreshToken = refreshToken
@@ -62,6 +69,10 @@ final class UserManager {
         self.accessToken = nil
         self.refreshToken = nil
         self.currentUser = nil
+        self.currentLoginStatus = nil
+        self.userIdentifier = nil
+        self.socialToken = nil
+        self.isAppleLogin = nil
     }
     
     func reissuanceAccessToken(completion: @escaping(Bool) -> Void) {
