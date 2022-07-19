@@ -27,8 +27,8 @@ final class SearchVC: UIViewController {
         }
     }
     var searchRecentList: [String] = []
-    var searchList: [SearchEntity] = []
-    var searchResultList: [SearchResultEntity] = []
+    var searchList: [SearchDataModel] = []
+    var searchResultList: [SearchResultDataModel] = []
     private var searchEmptyView = SearchEmptyView()
     
     // MARK: - UI Components
@@ -313,8 +313,8 @@ extension SearchVC {
         searchType = .search
     }
     
-    private func isSearchResult() {
-        if searchList.isEmpty {
+    private func isSearchResult(fromRecent: Bool) {
+        if searchList.isEmpty && !fromRecent {
             searchEmptyView.isHidden = false
         } else {
             searchEmptyView.isHidden = true
@@ -341,7 +341,7 @@ extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let text = searchTextField.text {
             requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: 1, latitude: 1, zoom: 0,
-                                                                           keyword: text))
+                                                                           keyword: text), fromRecent: false)
         }
         return true
     }
@@ -414,15 +414,15 @@ extension SearchVC: UITableViewDataSource {
         case .recent:
             searchTextField.text = searchRecentList[indexPath.row]
             requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: 0, latitude: 0, zoom: 0,
-                                                                             keyword: searchRecentList[indexPath.row]))
+                                                                             keyword: searchRecentList[indexPath.row]), fromRecent: true)
             addSearchRecent(title: searchRecentList[indexPath.row])
         case .search:
             // 화면 전환 코드 추가해야 됨
-            print("\(searchList[indexPath.row].name) 식당 상세 페이지로 이동")
-            addSearchRecent(title: searchList[indexPath.row].name)
+            print("\(searchList[indexPath.row].title) 식당 상세 페이지로 이동")
+            addSearchRecent(title: searchList[indexPath.row].title)
         case .searchResult:
             // 화면 전환 코드 추가해야 됨
-            print("\(searchResultList[indexPath.row].name) 식당 상세 페이지로 이동")
+            print("\(searchResultList[indexPath.row].storeName) 식당 상세 페이지로 이동")
         }
     }
 }
@@ -462,7 +462,10 @@ extension SearchVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? [SearchEntity] {
-                    self.searchList = data
+                    self.searchList.removeAll()
+                    for searchData in data {
+                        self.searchList.append(searchData.toDomain())
+                    }
                     self.isSearch()
                     self.searchTableView.reloadData()
                 }
@@ -472,7 +475,7 @@ extension SearchVC {
         }
     }
     
-    private func requestRestaurantSearchResult(searchRequest: SearchRequestEntity) {
+    private func requestRestaurantSearchResult(searchRequest: SearchRequestEntity, fromRecent: Bool) {
         RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: searchRequest.longtitude,
                                                                                                   latitude: searchRequest.latitude,
                                                                                                   zoom: searchRequest.zoom,
@@ -480,8 +483,11 @@ extension SearchVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? [SearchResultEntity] {
-                    self.searchResultList = data
-                    self.isSearchResult()
+                    self.searchResultList.removeAll()
+                    for searchResultData in data {
+                        self.searchResultList.append(searchResultData.toDomain())
+                    }
+                    self.isSearchResult(fromRecent: fromRecent)
                     self.searchTableView.reloadData()
                 }
             default:

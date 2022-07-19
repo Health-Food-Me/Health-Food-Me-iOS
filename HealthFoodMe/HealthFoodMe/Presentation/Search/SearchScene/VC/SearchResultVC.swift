@@ -20,7 +20,7 @@ final class SearchResultVC: UIViewController {
     var searchContent: String = ""
     weak var delegate: SearchResultVCDelegate?
     private var isBottom: Bool = true
-    var searchResultList: [SearchResultEntity] = []
+    var searchResultList: [SearchResultDataModel] = []
     private let mapViewController: SupplementMapVC = {
         let vc = ModuleFactory.resolve().makeSupplementMapVC(forSearchVC: true)
         return vc

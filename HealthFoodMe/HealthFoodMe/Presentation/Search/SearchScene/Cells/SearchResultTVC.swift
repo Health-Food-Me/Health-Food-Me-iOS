@@ -106,11 +106,11 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
 // MARK: - Methods
 
 extension SearchResultTVC {
-    func setData(data: SearchResultEntity) {
-        foodLabel.text = data.category
-        storeNameLabel.text = data.name
-        starView.rate = data.score
-        starLabel.text = "(\(data.score))"
+    func setData(data: SearchResultDataModel) {
+        foodLabel.text = data.foodCategory
+        storeNameLabel.text = data.storeName
+        starView.rate = data.starRate
+        starLabel.text = "(\(data.starRate))"
         distanceLabel.text = "거리: \(data.distance)m"
     }
     
