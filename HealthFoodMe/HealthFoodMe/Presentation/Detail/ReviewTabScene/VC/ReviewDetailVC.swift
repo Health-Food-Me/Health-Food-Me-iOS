@@ -7,13 +7,6 @@
 
 import UIKit
 
-enum ReviewDetailCellLayoutType: Int {
-    case withImageAndContents = 1
-    case withImage = 2
-    case withContents = 3
-    case withoutImageAndContents = 4
-}
-
 class ReviewDetailVC: UIViewController {
 
     private let withImageAndContents = 0
@@ -34,7 +27,8 @@ class ReviewDetailVC: UIViewController {
     private var expendStateList: [Bool] = []
     var moreContentsButtonRect: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     
-    var restaurantId: String = "62d26c9bd11146a81ef18ebb"
+    var restaurantId: String = "62d26c9bd11146a81ef18ea6"
+    var restaurantName: String = "샐러디태릉입구"
     
     var selectedCustomSegment = 0 {
         didSet {
@@ -123,7 +117,10 @@ extension ReviewDetailVC {
     
     private func fetchData() {
         // 데이터를 서버에서 받아와야 함
-        requestReviewListWithAPI()
+        requestReviewListWithAPI() {
+            self.requestBlogReviewListWithAPI()
+            self.processViewModel(self.reviewServerData, self.blogReviewData)
+        }
     }
     
     private func processViewModel(_ reviewDataList: [ReviewDataModel],
@@ -198,7 +195,7 @@ extension ReviewDetailVC {
         return textView.frame.height
     }
     
-    private func requestReviewListWithAPI() {
+    private func requestReviewListWithAPI(completion: @escaping(()->Void)) {
         ReviewService.shared.requestReviewList(restaurantId: restaurantId) { networkResult in
             switch networkResult {
             case .success(let data):
@@ -207,10 +204,26 @@ extension ReviewDetailVC {
                     for da in data {
                         self.reviewServerData.append(da.toDomain())
                     }
-                    let blogReviewData = BlogReviewDataModel.sampleData
-                    self.processViewModel(self.reviewServerData, blogReviewData)
-
                     print(data, "성공")
+                }
+                
+            case .networkFail:
+                print("실패")
+            default:
+                break
+            }
+            completion()
+        }
+    }
+    
+    private func requestBlogReviewListWithAPI()  {
+        ReviewService.shared.requestBlogReviewList(restaurantName: restaurantName) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                self.blogReviewData.removeAll()
+                if let data = data as? BlogReviewListEntity {
+                    self.blogReviewData = data.toDomain()
+                    print("성공")
                 }
             case .networkFail:
                 print("실패")
