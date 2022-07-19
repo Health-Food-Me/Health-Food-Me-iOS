@@ -40,6 +40,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.menuIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
+            self.mapView.disableSelectPoint.accept(())
             self.makeVibrate()
             let nextVC = ModuleFactory.resolve().makeHamburgerBarVC()
             nextVC.modalPresentationStyle = .overFullScreen
@@ -203,7 +204,7 @@ extension MainMapVC {
         }
         
         manifyingImageView.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(15)
+            make.trailing.equalToSuperview().inset(16)
             make.width.height.equalTo(16)
             make.centerY.equalToSuperview()
         }
@@ -427,6 +428,7 @@ extension MainMapVC {
     
     @objc
     private func presentSearchVC() {
+        self.mapView.disableSelectPoint.accept(())
         self.makeVibrate()
         let nextVC = ModuleFactory.resolve().makeSearchVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
