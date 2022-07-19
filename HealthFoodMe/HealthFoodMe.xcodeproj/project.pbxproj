@@ -25,6 +25,7 @@
 		3B9EF0F028854053009DEEDE /* SocialLoginEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF0EF28854053009DEEDE /* SocialLoginEntity.swift */; };
 		3B9EF0FB2885D340009DEEDE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B9EF0FA2885D340009DEEDE /* GoogleService-Info.plist */; };
 		3B9EF0FE2885D372009DEEDE /* ReviewListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF0FD2885D372009DEEDE /* ReviewListEntity.swift */; };
+		3B9EF1062885F9EF009DEEDE /* withdrawalEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF1052885F9EF009DEEDE /* withdrawalEntity.swift */; };
 		3BC01F7B287E89D2006C2181 /* ReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */; };
 		3BC01F84287EAE48006C2181 /* BlogReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */; };
 		3BC01F87287EBB8E006C2181 /* BlogReviewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F86287EBB8E006C2181 /* BlogReviewDataModel.swift */; };
@@ -236,6 +237,7 @@
 		3B9EF0EF28854053009DEEDE /* SocialLoginEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginEntity.swift; sourceTree = "<group>"; };
 		3B9EF0FA2885D340009DEEDE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3B9EF0FD2885D372009DEEDE /* ReviewListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListEntity.swift; sourceTree = "<group>"; };
+		3B9EF1052885F9EF009DEEDE /* withdrawalEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = withdrawalEntity.swift; sourceTree = "<group>"; };
 		3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCVC.swift; sourceTree = "<group>"; };
 		3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewCVC.swift; sourceTree = "<group>"; };
 		3BC01F86287EBB8E006C2181 /* BlogReviewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewDataModel.swift; sourceTree = "<group>"; };
@@ -525,6 +527,14 @@
 				3B9EF0FD2885D372009DEEDE /* ReviewListEntity.swift */,
 			);
 			path = ReviewTabScene;
+			sourceTree = "<group>";
+		};
+		3B9EF1042885F974009DEEDE /* withdrawalScene */ = {
+			isa = PBXGroup;
+			children = (
+				3B9EF1052885F9EF009DEEDE /* withdrawalEntity.swift */,
+			);
+			path = withdrawalScene;
 			sourceTree = "<group>";
 		};
 		3BC01F79287E8917006C2181 /* Cells */ = {
@@ -1758,6 +1768,7 @@
 		FDF2E21A287F5D7F0007D4F9 /* Author */ = {
 			isa = PBXGroup;
 			children = (
+				3B9EF1042885F974009DEEDE /* withdrawalScene */,
 				EBFAEB152885DE73009C569C /* Reissuance */,
 				3B9EF0EE28854039009DEEDE /* SocialLoginScene */,
 				FDF2E21B287F5D880007D4F9 /* ChangeNicknameScene */,
@@ -2011,6 +2022,7 @@
 				3B18D8AC287AB7CD009AF9E7 /* HamburgerBarVC.swift in Sources */,
 				EBF66ACA287227F500DE0ED1 /* Reactive+.swift in Sources */,
 				EB6A44D228737CC400749582 /* MainDetailRepository.swift in Sources */,
+				3B9EF1062885F9EF009DEEDE /* withdrawalEntity.swift in Sources */,
 				EBF66B0C2872B4FE00DE0ED1 /* StoryboardLiterals.swift in Sources */,
 				A93252CD28808BE2001EDF50 /* LogoutAlertView.swift in Sources */,
 				EBA8C1552882ABB4009DBA49 /* AuthService.swift in Sources */,
