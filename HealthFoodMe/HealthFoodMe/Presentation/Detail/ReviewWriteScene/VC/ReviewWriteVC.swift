@@ -385,13 +385,11 @@ extension ReviewWriteVC {
         backButton.setImage(ImageLiterals.MainDetail.beforeIcon, for: .normal)
         backButton.tintColor = .helfmeBlack
         backButton.addAction(UIAction(handler: { _ in
-
                 self.makeAlert(alertType: .logoutAlert,
                                title: "리뷰작성을 취소하시겠습니까?",
                                subtitle: "작성취소 시,\n 작성된 글은 저장되지 않습니다.") {
                     self.navigationController?.dismiss(animated: true)
-                
-            }
+                }
         }), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
@@ -790,15 +788,19 @@ extension ReviewWriteVC {
             }
         }
 
+        if reviewTextView.text == I18N.Detail.Review.reviewPlaceholder{
+            reviewTextView.text = " "
+        }
         guard let content = reviewTextView.text else { return }
+        
         let image = photoModel.userSelectedImages
-        print("12\(image)")
         ReviewService.shared.requestReviewWrite(userId: userId, restaurantId: restaurantID, score: starScore, taste: taste, good: good, content: content, image: image) { networkResult in
             dump(networkResult)
             switch networkResult {
             case .success(let data):
                 if let data = data as? ReviewWriteEntity {
                     print(data, "성공")
+                    self.navigationController?.dismiss(animated: true)
                 }
             default:
                 break;
