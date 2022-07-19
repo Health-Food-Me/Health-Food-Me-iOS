@@ -74,6 +74,22 @@ extension UILabel {
         self.attributedText = attributedString
     }
     
+    func htmlToString(_ targetString: String) -> NSAttributedString? {
+        let text = targetString
+        
+        guard let data = text.data(using: .utf8) else {
+            return NSAttributedString()
+        }
+        do {
+            return try NSAttributedString(data: data,
+                                          options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding:String.Encoding.utf8.rawValue],
+                                          documentAttributes: nil)
+        } catch {
+          return NSAttributedString()
+        }
+    }
+
+    
     func setAttributedText(targetFontList: [String: UIFont],
                            targetColorList: [String: UIColor]) {
         let fullText = self.text ?? ""
