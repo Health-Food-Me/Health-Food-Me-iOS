@@ -477,7 +477,7 @@ extension MainMapVC: HamburgerbarVCDelegate {
         case .scrap:
             navigationController?.pushViewController(ModuleFactory.resolve().makeScrapVC(), animated: true)
         case .myReview:
-            navigationController?.pushViewController(ModuleFactory.resolve().makeScrapVC(), animated: true)
+            navigationController?.pushViewController(ModuleFactory.resolve().makeMyReviewVC(), animated: true)
         case .setting:
             navigationController?.pushViewController(ModuleFactory.resolve().makeSettingVC(), animated: true)
         }

@@ -128,6 +128,7 @@ extension SocialLoginVC {
                 self.userManager.setSocialToken(token: self.accessToken)
                 if let data = data as? SocialLoginEntity {
                     self.userManager.updateAuthToken(data.accessToken, data.refreshToken)
+                    self.userManager.setCurrentUser(data.user)
                 }
                 self.presentToMainMap()
             case .requestErr(let message):
