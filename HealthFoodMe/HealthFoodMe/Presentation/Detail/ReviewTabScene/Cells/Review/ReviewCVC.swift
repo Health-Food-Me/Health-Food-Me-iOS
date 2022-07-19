@@ -291,7 +291,9 @@ extension ReviewCVC {
         }
         
         if !expanded {
-            setPartContentsAttributes()
+            if isFoldRequired {
+                setPartContentsAttributes()
+            }
         } else {
             let attributedString = NSMutableAttributedString(string: text)
             reviewContents.attributedText = attributedString
