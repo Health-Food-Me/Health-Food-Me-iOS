@@ -9,6 +9,7 @@ import UIKit
 
 enum BaseNotiList: String {
   case moveHomeTab
+  case foldButtonClicked
   
   static func makeNotiName(list: BaseNotiList) -> NSNotification.Name {
     return Notification.Name(String(describing: list))

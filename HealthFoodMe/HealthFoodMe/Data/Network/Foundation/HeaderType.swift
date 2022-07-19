@@ -12,15 +12,18 @@ enum HeaderType {
     case withToken
     case multiPart
     case multiPartWithToken
+    case reissuance
 }
 
 enum HTTPHeaderField: String {
     case contentType = "Content-Type"
     case accesstoken = "token"
+    case refreshtoken = "refreshtoken"
+    case accesstokenForReissuance = "accesstoken"
 }
 
 enum HeaderContent: String {
     case json = "application/json"
     case multiPart = "multipart/form-data"
-    case tokenSerial = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZDFjMDgxYzRiZWFmMWUzOTdiNWQ0MCIsImlhdCI6MTY1ODAxMjU4MSwiZXhwIjoxNjU4MDE2MTgxfQ.L-I5JldjffkdNLWVvZb7XYRvRDD2yy98lZvQPoShV_0"
+    case tokenSerial = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZDRlZDI0MGZmMmY5MDBlYTg4YmVmNiIsImlhdCI6MTY1ODE2OTIwNywiZXhwIjoxNjU4MTcyODA3fQ.db5U6ro0LAVpquSHR2ICVpe4syK98VXAhwoc6vLsDOk"
 }

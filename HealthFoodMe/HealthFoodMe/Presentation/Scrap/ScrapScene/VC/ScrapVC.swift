@@ -8,13 +8,14 @@
 import UIKit
 
 import SnapKit
+import RealmSwift
 
 class ScrapVC: UIViewController {
     
     // MARK: - Properties
     
     private let scrapEmptyView = ScrapEmptyView()
-    private var scrapList: [ScrapDataModel] = []
+    private var scrapList: [ScrapListEntity] = []
     
     // MARK: - UI Components
     
@@ -78,7 +79,7 @@ extension ScrapVC {
 
 extension ScrapVC {
     private func fetchData() {
-        scrapList = ScrapDataModel.sampleScrapData
+        getScrapList(userId: "62d4e93f0ff2f900ea88bed1")
         isScrapEmpty()
     }
     
@@ -165,7 +166,7 @@ extension ScrapVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrapCVC.className, for: indexPath) as? ScrapCVC else { return UICollectionViewCell() }
         cell.setData(data: scrapList[indexPath.row])
-        cell.index = indexPath.row
+        cell.restaurantId = scrapList[indexPath.row]._id
         cell.delegate = self
         return cell
     }
@@ -193,8 +194,8 @@ extension ScrapVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension ScrapVC: ScrapCVCDelegate {
-    func scrapCVCButtonDidTap(index: Int, isSelected: Bool) {
-        print("\(index) 번 스크랩 \(isSelected) 상태")
+    func scrapCVCButtonDidTap(restaurantId: String) {
+        putScrap(userId: "62d4e93f0ff2f900ea88bed1", restaurantId: restaurantId)
     }
 }
 
@@ -207,5 +208,29 @@ extension ScrapVC: ScrapEmptyViewDelegate {
 // MARK: - Network
 
 extension ScrapVC {
+    func getScrapList(userId: String) {
+        UserService.shared.getScrapList(userId: userId) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? [ScrapListEntity] {
+                    self.scrapList = data
+                    self.isScrapEmpty()
+                    self.scrapCollectionView.reloadData()
+                }
+            default:
+                break;
+            }
+        }
+    }
     
+    func putScrap(userId: String, restaurantId: String) {
+        UserService.shared.putScrap(userId: userId, restaurantId: restaurantId) { networkResult in
+            switch networkResult {
+            case .success(let message):
+                print(message)
+            default:
+                break;
+            }
+        }
+    }
 }
