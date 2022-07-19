@@ -186,11 +186,10 @@ extension MyReviewVC {
         
         var (lineCount,cutText) = calculateTextInSize(review: reviewDataContents)
         if lineCount > 3 {
-            
             for char in cutText {
                 eraseCount += 1
                 cutText.popLast()
-                if eraseCount > 7 {
+                if eraseCount > 9 {
                     cutText.append("  더보기")
                     break
                 } else {
@@ -366,10 +365,10 @@ extension MyReviewVC: MyReviewCVCDelegate {
     }
     
     func editButtonTapped() {
-        
+        // TODO: - 수정 API 붙이기
     }
     
     func deleteButtonTapped() {
-        
+        // TODO: - 삭제 API 붙이기
     }
 }

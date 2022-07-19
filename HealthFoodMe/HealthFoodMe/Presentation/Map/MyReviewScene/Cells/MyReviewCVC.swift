@@ -32,6 +32,8 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     var layoutEnumValue = 0
     var clickedEvent: ((Int) -> Void)?
     var isFolded: Bool = true
+    var lineNumber: Int?
+    var entitleHeight: CGFloat?
     
     // MARK: - UI Components
     
@@ -75,7 +77,6 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         st.spacing = 8
         st.distribution = .equalSpacing
         st.isUserInteractionEnabled = true
-        st.addArrangedSubviews(editButton, verticalView, deleteButton)
         return st
     }()
     
@@ -87,10 +88,6 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         bt.addAction(UIAction(handler: { _ in
             self.delegate?.editButtonTapped()
         }), for: .touchUpInside)
-        bt.snp.makeConstraints { make in
-            make.height.equalTo(16)
-            make.width.equalTo(20)
-        }
         return bt
     }()
     
@@ -112,10 +109,6 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         bt.addAction(UIAction(handler: { _ in
             self.delegate?.deleteButtonTapped()
         }), for: .touchUpInside)
-        bt.snp.makeConstraints { make in
-            make.height.equalTo(16)
-            make.width.equalTo(20)
-        }
         return bt
     }()
     
@@ -225,6 +218,18 @@ extension MyReviewCVC {
         buttonStackView.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(20)
             make.centerY.equalTo(restaurantNameLabel.snp.centerY)
+        }
+        
+        buttonStackView.addArrangedSubviews(editButton, verticalView, deleteButton)
+        
+        editButton.snp.makeConstraints { make in
+            make.height.equalTo(16)
+            make.width.equalTo(20)
+        }
+        
+        deleteButton.snp.makeConstraints { make in
+            make.height.equalTo(16)
+            make.width.equalTo(20)
         }
         
         starView.snp.makeConstraints { make in
@@ -356,7 +361,9 @@ extension MyReviewCVC {
         }
         
         if !expanded {
-            setPartContentsAttributes()
+            if isFoldRequired {
+                setPartContentsAttributes()
+            }
         } else {
             let attributedString = NSMutableAttributedString(string: text)
             reviewContents.attributedText = attributedString
