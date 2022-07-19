@@ -71,13 +71,13 @@ extension HelfmeNaviBar {
         
         scrapBackButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
-            make.top.equalToSuperview().inset(10)
+            make.top.equalToSuperview().inset(13)
             make.width.height.equalTo(24)
         }
         
         titleView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(15)
+            make.top.equalToSuperview().inset(13)
         }
         
         lineView.snp.makeConstraints { make in
@@ -85,6 +85,11 @@ extension HelfmeNaviBar {
             make.bottom.equalToSuperview()
             make.leading.trailing.equalToSuperview()
         }
+    }
+    
+    func setTitleView(title: String) {
+        titleView.text = title
+        titleView.sizeToFit()
     }
 }
 

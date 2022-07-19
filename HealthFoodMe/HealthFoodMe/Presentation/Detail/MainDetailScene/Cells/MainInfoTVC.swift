@@ -16,7 +16,7 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
     // MARK: - Properties
     
     static var isFromNib: Bool = false
-    private var isOpenned: Bool = false
+    var isOpenned: Bool = false
     let toggleButtonTapped = PublishRelay<Void>()
     let directionButtonTapped = PublishRelay<Void>()
     let telePhoneLabelTapped = PublishRelay<String>()
@@ -167,7 +167,12 @@ extension MainInfoTVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ExpandableInfoTVC.className, for: indexPath) as? ExpandableInfoTVC else { return UITableViewCell() }
-        cell.setUIWithIndex(indexPath: indexPath)
+        if indexPath.row == 0 && indexPath.section == 1 {
+            cell.foldState = self.isOpenned
+            cell.setUIWithIndex(indexPath: indexPath, isOpenned: self.isOpenned)
+        } else {
+            cell.setUIWithIndex(indexPath: indexPath, isOpenned: false)
+        }
         cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
             .drive { _ in
                 self.toggleCells()

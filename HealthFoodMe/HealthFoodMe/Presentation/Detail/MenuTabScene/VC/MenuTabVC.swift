@@ -8,6 +8,7 @@
 import UIKit
 
 import SnapKit
+import RxSwift
 
 protocol ScrollDeliveryDelegate: AnyObject {
 	func scrollStarted(velocity: CGFloat, scrollView: UIScrollView)
@@ -15,10 +16,10 @@ protocol ScrollDeliveryDelegate: AnyObject {
 	func currentTabMenu(_ type: TabMenuCase)
 }
 
-enum TabMenuCase {
-	case menu
-	case coping
-	case review
+enum TabMenuCase: Int {
+	case menu = 0
+	case coping = 1
+	case review = 2
 }
 
 final class MenuTabVC: UIViewController {
@@ -27,7 +28,10 @@ final class MenuTabVC: UIViewController {
 	
 	var isMenu: Bool = true
 	var topScrollAnimationNotFinished: Bool = true
+	let panGesture = UIPanGestureRecognizer()
 	weak var delegate: ScrollDeliveryDelegate?
+	var swipeDismissDelegate: SwipeDismissDelegate?
+	private var disposeBag = DisposeBag()
 	
 	// MARK: - UI Components
 	
@@ -54,12 +58,20 @@ final class MenuTabVC: UIViewController {
 		setLayout()
 		setDelegate()
 		registerCell()
+		addGesture()
+		bindGesture()
 	}
 }
 
 // MARK: - Methods
 
 extension MenuTabVC {
+	
+	private func addGesture() {
+		menuCV.addGestureRecognizer(panGesture)
+		panGesture.isEnabled = false
+	}
+	
 	private func setDelegate() {
 		menuCV.delegate = self
 		menuCV.dataSource = self
@@ -82,41 +94,65 @@ extension MenuTabVC {
 		MenuCellCVC.register(target: menuCV)
 	}
 	
+	private func bindGesture() {
+		panGesture.rx.event.asDriver { _ in .never() }
+			.drive(onNext: { [weak self] sender in
+				let velocity = sender.velocity(in: self?.view)
+				print(velocity)
+			}).disposed(by: disposeBag)
+	}
+	
 	private func lockCollectionView() {
 		menuCV.isScrollEnabled = false
 	}
 }
 
 extension MenuTabVC: UICollectionViewDelegate {
+	
 	func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-		
 		let yVelocity = scrollView.panGestureRecognizer.velocity(in: scrollView).y
-		print(yVelocity)
-		print(scrollView.contentOffset.y)
+		panGesture.isEnabled = true
 		if yVelocity > 300 && scrollView.contentOffset.y == 0 {
+			panGesture.isEnabled = true
 			delegate?.childViewScrollDidEnd(type: .menu)
 			return
+		} else {
+			
 		}
 		
 		if yVelocity < 0 && topScrollAnimationNotFinished {
 			menuCV.isScrollEnabled = false
+		} else {
+			panGesture.isEnabled = true
 		}
 		delegate?.scrollStarted(velocity: yVelocity, scrollView: scrollView)
 	}
 	
 	// 손가락을 놓을때 처리하는 부분
 	func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+		panGesture.isEnabled = false
 		menuCV.isScrollEnabled = true
 	}
 	
-	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		print("scrollViewCONTENTOFFSET",scrollView.contentOffset.y)
-		if scrollView.contentOffset.y <= 0{
-			delegate?.childViewScrollDidEnd(type: .menu)
+	func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+		print(velocity)
+		print(targetContentOffset.pointee.y)
+		if velocity.x == 0 &&
+			velocity.y < 0 {
+			swipeDismissDelegate?.swipeToDismiss()
 		}
 	}
 	
+	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		if scrollView.contentOffset.y <= 0 {
+			delegate?.childViewScrollDidEnd(type: .menu)
+		}
+	}
+		
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		if scrollView.contentOffset.y == 0 {
+//			panGesture.isEnabled = true
+		}
 		delegate?.currentTabMenu(.menu)
 	}
 }

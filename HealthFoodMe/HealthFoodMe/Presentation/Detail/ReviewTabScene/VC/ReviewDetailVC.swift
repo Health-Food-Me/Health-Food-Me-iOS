@@ -15,6 +15,7 @@ class ReviewDetailVC: UIViewController {
     private let withoutImageAndContents = 3
     
     weak var delegate: ScrollDeliveryDelegate?
+    var swipeDismissDelegate: SwipeDismissDelegate?
     var topScrollAnimationNotFinished: Bool = true
     private var reviewData: [ReviewCellViewModel] = [] { didSet {
         fetchCutStringList()
@@ -171,7 +172,7 @@ extension ReviewDetailVC {
             for char in cutText {
                 eraseCount += 1
                 cutText.popLast()
-                if eraseCount > 7 {
+                if eraseCount > 9 {
                     cutText.append("  더보기")
                     break
                 } else {
@@ -236,6 +237,15 @@ extension ReviewDetailVC {
 }
 
 extension ReviewDetailVC: UIScrollViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        print(velocity)
+        print(targetContentOffset.pointee.y)
+        if velocity.x == 0 &&
+            velocity.y < 0 {
+            self.swipeDismissDelegate?.swipeToDismiss()
+        }
+    }
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
         let yVelocity = scrollView.panGestureRecognizer.velocity(in: scrollView).y
@@ -439,9 +449,13 @@ extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        if section == 0 {
+            return .zero
+        } else {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 90, right: 0)
+        }
     }
-    
+        
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }

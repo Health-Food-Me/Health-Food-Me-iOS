@@ -11,6 +11,11 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+protocol SwipeDismissDelegate {
+    func swipeToDismiss()
+}
+
+
 class MainDetailVC: UIViewController {
     
     // MARK: - Properties
@@ -23,6 +28,10 @@ class MainDetailVC: UIViewController {
     private var copingTabVC = ModuleFactory.resolve().makeCopingTabVC()
     private var reviewTabVC = ModuleFactory.resolve().makeReviewDetailVC()
     private var menuCase: TabMenuCase = .menu
+    private var phoneMenuTouched: Bool = false
+    private var navigationTitle: String = "서브웨이 테스트"
+    private var isOpenned: Bool = false
+    var panGestureEnabled = true
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
     
@@ -44,7 +53,8 @@ class MainDetailVC: UIViewController {
     
     private var bottomView: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
+        view.isHidden = true
         return view
     }()
     
@@ -90,8 +100,12 @@ extension MainDetailVC {
         backButton.setImage(ImageLiterals.MainDetail.beforeIcon, for: .normal)
         backButton.tintColor = .helfmeBlack
         backButton.addAction(UIAction(handler: { _ in
-            self.dismiss(animated: false) {
-                self.translationClosure?()
+            if self.panGestureEnabled {
+                self.dismiss(animated: false) {
+                    self.translationClosure?()
+                }
+            } else {
+                self.navigationController?.popViewController(animated: true)
             }
         }), for: .touchUpInside)
         
@@ -106,6 +120,10 @@ extension MainDetailVC {
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: scrapButton)
+    }
+    
+    private func setNavigationTitle(isShown: Bool) {
+        self.navigationItem.title = isShown ? navigationTitle : ""
     }
     
     private func setLayout() {
@@ -126,11 +144,10 @@ extension MainDetailVC {
             make.bottom.equalToSuperview()
         }
         
-        
         mainTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(bottomView.snp.top)
+            make.bottom.equalToSuperview()
         }
     }
     
@@ -160,37 +177,38 @@ extension MainDetailVC {
     
     private func setPanGesture() {
         let panGesture = UIPanGestureRecognizer()
-        mainInfoTVC.addGestureRecognizer(panGesture)
-        panGesture.rx.event.asDriver { _ in .never() }
-            .drive(onNext: { [weak self] sender in
-                let windowTranslation = sender.translation(in: self?.view)
-                print(windowTranslation)
-                switch sender.state {
-                case .changed:
-                    UIView.animate(withDuration: 0.1) {
-                      if windowTranslation.y > 0 {
-                        self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
-                      }
+        if panGestureEnabled {
+            mainInfoTVC.addGestureRecognizer(panGesture)
+            panGesture.rx.event.asDriver { _ in .never() }
+                .drive(onNext: { [weak self] sender in
+                    let windowTranslation = sender.translation(in: self?.view)
+                    print(windowTranslation)
+                    switch sender.state {
+                    case .changed:
+                        UIView.animate(withDuration: 0.1) {
+                          if windowTranslation.y > 0 {
+                            self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
+                          }
+                        }
+                    case .ended:
+                        if windowTranslation.y > 130 {
+                            self?.dismiss(animated: false) {
+                                self?.translationClosure?()
+                            }
+                        } else {
+                            self?.view.snp.updateConstraints { make in
+                                make.edges.equalToSuperview()
+                            }
+                            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                                self?.view.transform = CGAffineTransform(translationX: 0, y: 0)
+                                self?.view.layoutIfNeeded()
+                            }
+                        }
+                    default:
+                        break
                     }
-                case .ended:
-                    if windowTranslation.y > 130 {
-                        self?.dismiss(animated: false) {
-                            self?.translationClosure?()
-                        }
-                    } else {
-                        self?.view.snp.updateConstraints { make in
-                            make.edges.equalToSuperview()
-                        }
-                        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
-                            self?.view.transform = CGAffineTransform(translationX: 0, y: 0)
-                            self?.view.layoutIfNeeded()
-                        }
-                    }
-                default:
-                    break
-                }
-            }).disposed(by: disposeBag)
-        
+                }).disposed(by: disposeBag)
+        }
     }
 }
 
@@ -253,34 +271,38 @@ extension MainDetailVC: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MainInfoTVC.className, for: indexPath) as? MainInfoTVC else { return UITableViewCell() }
             cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
                 .drive(onNext: {
+                    self.isOpenned.toggle()
                     self.mainTableView.reloadData()
                 }).disposed(by: disposeBag)
             cell.directionButtonTapped.asDriver(onErrorJustReturn: ())
                 .drive(onNext: {
                     self.presentFindDirectionSheet()
                 }).disposed(by: disposeBag)
-            cell.telePhoneLabelTapped.asDriver(onErrorJustReturn: "")
-                .drive { phoneNumber in
-                    URLSchemeManager.shared.loadTelephoneApp(phoneNumber: phoneNumber)
-                }.disposed(by: disposeBag)
+            cell.telePhoneLabelTapped
+                .asDriver(onErrorJustReturn: "")
+                .drive(onNext: { [weak self] phoneNumber in
+                    guard let self = self else { return }
+                    if !self.phoneMenuTouched {
+                        self.phoneMenuTouched = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            self.phoneMenuTouched = false
+                        }
+                        URLSchemeManager.shared.loadTelephoneApp(phoneNumber: phoneNumber)
+                    }
+                }).disposed(by: disposeBag)
             mainInfoTVC = cell
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailTabTVC.className, for: indexPath) as? DetailTabTVC else { return UITableViewCell() }
             detailTabTVC = cell
             
-            if menuTabVC is MenuTabVC {
-                menuTabVC.delegate = self
-            }
-            
-            if copingTabVC is CopingTabVC {
-                copingTabVC.delegate = self
-                copingTabVC.panDelegate = self
-            }
-            
-            if reviewTabVC is ReviewDetailVC {
-                reviewTabVC.delegate = self
-            }
+            menuTabVC.delegate = self
+            menuTabVC.swipeDismissDelegate = self
+            copingTabVC.delegate = self
+            copingTabVC.panDelegate = self
+            copingTabVC.swipeDelegate = self
+            reviewTabVC.delegate = self
+            reviewTabVC.swipeDismissDelegate = self
             
             self.addChild(menuTabVC)
             self.addChild(copingTabVC)
@@ -300,13 +322,19 @@ extension MainDetailVC: UITableViewDataSource {
                         self.menuCase = .review
                         self.reviewTabVC.topScrollAnimationNotFinished = true
                     }
+                    
+                    if ratio == 0 {
+                        self.detailTabTitleHeader.setSelectedButton(buttonIndex: 0)
+                    } else if ratio == 1/3 {
+                        self.detailTabTitleHeader.setSelectedButton(buttonIndex: 1)
+                    } else if ratio == 2/3 {
+                        self.detailTabTitleHeader.setSelectedButton(buttonIndex: 2)
+                    }
+                    self.bottomView.isHidden = !(ratio == 2/3)
+                    
                     self.detailTabTitleHeader.moveWithContinuousRatio(ratio: ratio)
                 }.disposed(by: cell.disposeBag)
-            cell.scrollEnded.asDriver(onErrorJustReturn: 0)
-                .drive { pageIndex in
 
-                    self.detailTabTitleHeader.setSelectedButton(buttonIndex: pageIndex)
-                }.disposed(by: cell.disposeBag)
             return cell
         }
     }
@@ -339,6 +367,7 @@ extension MainDetailVC: ScrollDeliveryDelegate {
     
     func childViewScrollDidEnd(type: TabMenuCase) {
         self.mainTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        setNavigationTitle(isShown: false)
         switch(type) {
             case .menu:     menuTabVC.topScrollAnimationNotFinished = true
             case .coping:   copingTabVC.topScrollAnimationNotFinished = true
@@ -350,6 +379,7 @@ extension MainDetailVC: ScrollDeliveryDelegate {
     func scrollStarted(velocity: CGFloat, scrollView: UIScrollView) {
         if velocity < 0 {
             self.mainTableView.scrollToRow(at: IndexPath.init(row: 0, section: 1), at: .top, animated: true)
+            setNavigationTitle(isShown: true)
         }
     }
     
@@ -373,9 +403,62 @@ extension MainDetailVC: ScrollDeliveryDelegate {
 }
 
 extension MainDetailVC: CopingGestureDelegate {
+    func downPanGestureSwipe(panGesture: ControlEvent<UIPanGestureRecognizer>.Element) {
+        if panGestureEnabled {
+            panGesture.rx.event.asDriver { _ in .never() }
+                .drive(onNext: { [weak self] sender in
+                
+                    let windowTranslation = sender.translation(in: self?.view)
+                    print(windowTranslation)
+                    switch sender.state {
+                    case .changed:
+                            self?.mainTableView.isScrollEnabled = false
+                            if self?.mainTableView.contentOffset.y == 0 {
+                                UIView.animate(withDuration: 0.1) {
+                                  if windowTranslation.y > 0 {
+                                    self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
+                                  }
+                                }
+                            }
+
+                        case .ended:
+                            self?.mainTableView.isScrollEnabled = true
+                            if windowTranslation.y > 130 &&
+                                self?.mainTableView.contentOffset.y ?? 0 < 30 {
+                                self?.dismiss(animated: false) {
+                                    self?.translationClosure?()
+                                }
+                            } else {
+                                self?.view.snp.updateConstraints { make in
+                                    make.edges.equalToSuperview()
+                                }
+                                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                                    self?.view.transform = CGAffineTransform(translationX: 0, y: 0)
+                                    self?.view.layoutIfNeeded()
+                                }
+                            }
+                    default:
+                        break
+                    }
+                }).disposed(by: disposeBag)
+        }
+    }
+    
     func panGestureSwipe(isRight: Bool) {
         let index = isRight ? 2 : 0
-        detailTabTitleHeader.setSelectedButton(buttonIndex: index)
         detailTabTVC.containerCollectionView.scrollToItem(at: IndexPath.init(row: index, section: 0), at: .centeredVertically, animated: true)
+    }
+}
+
+extension MainDetailVC: SwipeDismissDelegate {
+    func swipeToDismiss() {
+        if panGestureEnabled {
+            print("swipeToDismiss")
+            if mainTableView.contentOffset.y == 0 {
+                self.dismiss(animated: false) {
+                    self.translationClosure?()
+                }
+            }
+        }
     }
 }
