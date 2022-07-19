@@ -9,6 +9,8 @@ import UIKit
 
 class ReviewDetailVC: UIViewController {
 
+    // MARK: - Properties
+    
     private let withImageAndContents = 0
     private let withImage = 1
     private let withContents = 2
@@ -37,6 +39,8 @@ class ReviewDetailVC: UIViewController {
         }
     }
     
+    // MARK: - UI Components
+    
     private lazy var reviewCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
@@ -50,6 +54,9 @@ class ReviewDetailVC: UIViewController {
         
         return cv
     }()
+    
+    // MARK: - Life Cycle Part
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
@@ -58,6 +65,8 @@ class ReviewDetailVC: UIViewController {
         fetchData()
     }
 }
+
+// MARK: - Extension
 
 extension ReviewDetailVC {
     func setDelegate() {
@@ -99,50 +108,6 @@ extension ReviewDetailVC {
                 return withoutImageAndContents
             }
         }
-    }
-    
-    private func fetchCutStringList() {
-        for viewModel in reviewData {
-            if let reviewText = viewModel.data.reviewContents {
-                let cutText = cutReviewContents(reviewText)
-                cutLabelList.append(cutText)
-            } else {
-                cutLabelList.append("")
-            }
-        }
-    }
-    
-    private func fetchExpendStateList() {
-        expendStateList = Array<Bool>(repeating: false, count: reviewData.count)
-    }
-    
-    private func fetchData() {
-        // 데이터를 서버에서 받아와야 함
-        requestReviewListWithAPI() {
-            self.requestBlogReviewListWithAPI()
-            self.processViewModel(self.reviewServerData, self.blogReviewData)
-        }
-    }
-    
-    private func processViewModel(_ reviewDataList: [ReviewDataModel],
-                                  _ blogReviewDataList: [BlogReviewDataModel]) {
-        var reviewResult: [ReviewCellViewModel] = []
-        var blogReviewResult: [BlogReviewDataModel] = []
-        for reviewData in reviewDataList {
-            let height = calculateReviewHeight(reviewData.reviewContents ?? "")
-            reviewResult.append(ReviewCellViewModel.init(data: reviewData,
-                                                   foldRequired: height > 55))
-        }
-        
-        for blogReviewData in blogReviewDataList {
-            blogReviewResult.append(
-                BlogReviewDataModel.init(blogReviewTitle: blogReviewData.blogReviewTitle,
-                                         blogReviewContents: blogReviewData.blogReviewContents,
-                                         blogURL: blogReviewData.blogURL))
-        }
-        
-        self.reviewData = reviewResult
-        self.blogReviewData = blogReviewResult
     }
     
     private func calculateTextInSize(review: String) -> (Int,String) {
@@ -194,6 +159,52 @@ extension ReviewDetailVC {
         textView.text = text
         textView.sizeToFit()
         return textView.frame.height
+    }
+    
+    // MARK: - Network
+    
+    private func fetchCutStringList() {
+        for viewModel in reviewData {
+            if let reviewText = viewModel.data.reviewContents {
+                let cutText = cutReviewContents(reviewText)
+                cutLabelList.append(cutText)
+            } else {
+                cutLabelList.append("")
+            }
+        }
+    }
+    
+    private func fetchExpendStateList() {
+        expendStateList = Array<Bool>(repeating: false, count: reviewData.count)
+    }
+    
+    private func fetchData() {
+        // 데이터를 서버에서 받아와야 함
+        requestReviewListWithAPI() {
+            self.requestBlogReviewListWithAPI()
+            self.processViewModel(self.reviewServerData, self.blogReviewData)
+        }
+    }
+    
+    private func processViewModel(_ reviewDataList: [ReviewDataModel],
+                                  _ blogReviewDataList: [BlogReviewDataModel]) {
+        var reviewResult: [ReviewCellViewModel] = []
+        var blogReviewResult: [BlogReviewDataModel] = []
+        for reviewData in reviewDataList {
+            let height = calculateReviewHeight(reviewData.reviewContents ?? "")
+            reviewResult.append(ReviewCellViewModel.init(data: reviewData,
+                                                   foldRequired: height > 55))
+        }
+        
+        for blogReviewData in blogReviewDataList {
+            blogReviewResult.append(
+                BlogReviewDataModel.init(blogReviewTitle: blogReviewData.blogReviewTitle,
+                                         blogReviewContents: blogReviewData.blogReviewContents,
+                                         blogURL: blogReviewData.blogURL))
+        }
+        
+        self.reviewData = reviewResult
+        self.blogReviewData = blogReviewResult
     }
     
     private func requestReviewListWithAPI(completion: @escaping(()->Void)) {

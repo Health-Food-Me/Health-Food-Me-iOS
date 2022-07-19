@@ -25,6 +25,7 @@ class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     let width = UIScreen.main.bounds.width
     var clickedEvent: ((Int) -> Void)?
     var isFolded: Bool = true
+    
     // MARK: - UI Components
     
     private var nameLabel: UILabel = {
