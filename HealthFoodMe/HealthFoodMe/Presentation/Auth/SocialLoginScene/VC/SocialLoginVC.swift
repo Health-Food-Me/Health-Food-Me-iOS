@@ -67,9 +67,8 @@ class SocialLoginVC: UIViewController {
 extension SocialLoginVC {
     private func presentToMainMap() {
         let mainVC = ModuleFactory.resolve().makeMainMapNavigationController()
-        let nav = UINavigationController(rootViewController: mainVC)
-        nav.modalPresentationStyle = .overFullScreen
-        self.present(nav, animated: false)
+        mainVC.modalPresentationStyle = .overFullScreen
+        self.present(mainVC, animated: false)
     }
     
     
@@ -129,6 +128,7 @@ extension SocialLoginVC {
                 self.userManager.setSocialToken(token: self.accessToken)
                 if let data = data as? SocialLoginEntity {
                     self.userManager.updateAuthToken(data.accessToken, data.refreshToken)
+                    self.userManager.setCurrentUser(data.user)
                 }
                 self.presentToMainMap()
             case .requestErr(let message):

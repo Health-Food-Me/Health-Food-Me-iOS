@@ -26,9 +26,6 @@ class MyReviewVC: UIViewController {
     private var reviewServerData: [ReviewDataModel] = []
     private var cutLabelList: [String] = []
     private var expendStateList: [Bool] = []
-    var moreContentsButtonRect: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
-    
-    var restaurantId: String = "62d26c9bd11146a81ef18ea6"
     
     private let disposeBag = DisposeBag()
     var viewModel: MyReviewViewModel!
@@ -40,6 +37,7 @@ class MyReviewVC: UIViewController {
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .vertical
         layout.sectionInset = .zero
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .helfmeWhite
@@ -89,7 +87,6 @@ extension MyReviewVC {
     
     private func registerCell() {
         MyReviewCVC.register(target: reviewCV)
-        ReviewHeaderCVC.register(target: reviewCV)
         ReviewEmptyViewCVC.register(target: reviewCV)
     }
     
@@ -125,7 +122,6 @@ extension MyReviewVC {
     }
     
     private func fetchData() {
-        // 데이터를 서버에서 받아와야 함
         requestReviewListWithAPI()
     }
     
@@ -192,7 +188,6 @@ extension MyReviewVC {
     }
     
     private func requestReviewListWithAPI() {
-        print("!!!!!!!!!!!")
         ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser?.id ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
@@ -202,11 +197,9 @@ extension MyReviewVC {
                         self.reviewServerData.append(da.toDomain())
                     }
                     self.processViewModel(self.reviewServerData)
-                    
-                    print(data, "성공")
                 }
             case .networkFail:
-                print("실패")
+                print("서버통신 실패")
             default:
                 break
             }
@@ -215,11 +208,7 @@ extension MyReviewVC {
     }
 }
 
-// MARK: - ScrollViewDelegate
-
-extension MyReviewVC: UIScrollViewDelegate {
-    
-}
+// MARK: - CollectionViewDelegate
 
 extension MyReviewVC: UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -227,9 +216,12 @@ extension MyReviewVC: UICollectionViewDelegate {
     }
 }
 
+// MARK: - CollectionViewDataSource
+
 extension MyReviewVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if reviewData.count == 0 {
+        let isEmptyView: Bool = reviewData.count == 0
+        if isEmptyView {
             return 1
         } else {
             return reviewData.count
@@ -237,7 +229,8 @@ extension MyReviewVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if reviewData.count == 0 {
+        let isEmptyView: Bool = reviewData.count == 0
+        if isEmptyView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewEmptyViewCVC.className, for: indexPath) as? ReviewEmptyViewCVC else { return UICollectionViewCell() }
             return cell
         } else {
@@ -264,7 +257,6 @@ extension MyReviewVC: UICollectionViewDataSource {
                              isFoldRequired: false, expanded: false)
             }
             
-            // 레이아웃 분기처리 코드
             cell.layoutEnumValue = setEnumValue(data: reviewData[indexPath.row].data)
             cell.setLayout()
             return cell
@@ -275,7 +267,8 @@ extension MyReviewVC: UICollectionViewDataSource {
 extension MyReviewVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = UIScreen.main.bounds.width
-        if reviewData.count == 0 {
+        let isEmptyView: Bool = reviewData.count == 0
+        if isEmptyView {
             let cellWidth = width
             let cellHeight = width * 200/width
             return CGSize(width: cellWidth, height: cellHeight)
@@ -323,13 +316,5 @@ extension MyReviewVC: UICollectionViewDelegateFlowLayout {
         }
         
         return cellHeight
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
     }
 }

@@ -69,6 +69,10 @@ extension UserManager {
         self.accessToken = nil
         self.refreshToken = nil
         self.currentUser = nil
+        self.currentLoginStatus = nil
+        self.userIdentifier = nil
+        self.socialToken = nil
+        self.isAppleLogin = nil
     }
     
     func reissuanceAccessToken(completion: @escaping(Bool) -> Void) {
