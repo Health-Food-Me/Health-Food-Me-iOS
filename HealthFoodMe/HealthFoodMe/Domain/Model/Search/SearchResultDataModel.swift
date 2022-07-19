@@ -8,10 +8,6 @@
 import Foundation
 
 struct SearchResultDataModel {
-    let content: [SearchResultContentDataModel]
-}
-
-struct SearchResultContentDataModel {
     let id: String
     let imgURL: String
     let foodCategory: String

@@ -14,4 +14,13 @@ struct SearchResultEntity: Codable {
     let score: Double
     let distance: Int
     let logo: String
+    
+    func toDomain() -> SearchResultDataModel {
+        return SearchResultDataModel.init(id: _id,
+                                          imgURL: logo,
+                                          foodCategory: category,
+                                          storeName: name,
+                                          starRate: score,
+                                          distance: distance)
+    }
 }

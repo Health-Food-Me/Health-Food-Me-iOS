@@ -8,10 +8,6 @@
 import Foundation
 
 struct SearchDataModel {
-    let content: [SearchContentDataModel]
-}
-
-struct SearchContentDataModel {
     let id: String
     let title: String
     let isDiet: Bool
