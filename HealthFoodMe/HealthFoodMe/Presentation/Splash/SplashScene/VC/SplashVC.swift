@@ -87,8 +87,11 @@ extension SplashVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? SocialLoginEntity?,
-                   let user = data?.user {
+                   let user = data?.user,
+                   let access = data?.accessToken,
+                   let refresh = data?.refreshToken {
                     self.userManager.setCurrentUser(user)
+                    self.userManager.updateAuthToken(access, refresh)
                     self.presentMainMapVC()
                 }
                 break

@@ -193,7 +193,7 @@ extension MyReviewVC {
     
     private func requestReviewListWithAPI() {
         print("!!!!!!!!!!!")
-        ReviewService.shared.requestReviewList(restaurantId: restaurantId) { networkResult in
+        ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser?.id ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
                 self.reviewServerData.removeAll()
@@ -241,7 +241,7 @@ extension MyReviewVC: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewEmptyViewCVC.className, for: indexPath) as? ReviewEmptyViewCVC else { return UICollectionViewCell() }
             return cell
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCVC.className, for: indexPath) as? ReviewCVC else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyReviewCVC.className, for: indexPath) as? MyReviewCVC else { return UICollectionViewCell() }
             cell.reviewSeperatorView.isHidden = indexPath.item == 0
             cell.clickedEvent = { clickedIndex in
                 self.expendStateList[clickedIndex].toggle()

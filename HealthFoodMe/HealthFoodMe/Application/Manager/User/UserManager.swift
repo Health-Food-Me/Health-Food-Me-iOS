@@ -30,6 +30,7 @@ final class UserManager {
     var getSocialToken: String { return self.socialToken ?? "" }
     var getAccessToken: String { return self.accessToken ?? "" }
     var getRefreshToken: String { return self.refreshToken ?? "" }
+    var getUser: User? { return self.currentUser ?? nil }
     
     // MARK: - Life Cycles
     
