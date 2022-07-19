@@ -113,6 +113,9 @@ struct I18N {
             static let reportStoreContent = "제보할 가게를 적어주세요."
             static let reportEditTitle = "수정 사항 제보"
             static let reportEditContent = "문의할 내용을 입력해주세요."
+            
+            static let hello = "안녕하세요!"
+            static let todayHelfume = "오늘도 헬푸미하세요"
         }
     }
     
