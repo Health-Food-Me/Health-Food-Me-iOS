@@ -16,4 +16,14 @@ struct MainMapEntity: Codable {
         case id = "_id"
         case name, longitude, latitude, isDietRestaurant
     }
+    
+    func toDomain() -> MapPointDataModel {
+        var pointerType: PointerType
+        if isDietRestaurant {
+            pointerType = .healthFood
+        } else {
+            pointerType = .normalFood
+        }
+        return MapPointDataModel.init(latitude: latitude, longtitude: longitude, type: pointerType)
+    }
 }

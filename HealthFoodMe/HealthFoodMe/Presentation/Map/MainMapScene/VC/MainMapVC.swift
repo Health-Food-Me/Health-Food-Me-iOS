@@ -18,9 +18,10 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
     private let disposeBag = DisposeBag()
     private var isInitialPoint = false
+    private var currentZoom: Double = 0
     private var currentCategory: String = "" {
         didSet {
-            print(currentCategory)
+            self.fetchRestaurantList(zoom: self.currentZoom)
         }
     }
     private let locationManager = NMFLocationManager.sharedInstance()
@@ -118,7 +119,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
             self.makeVibrate()
             let NMGPosition = self.locationManager?.currentLatLng()
             if let position = NMGPosition {
-              self.mapView.moveCameraPositionWithZoom(position, 200)
+                self.mapView.moveCameraPositionWithZoom(position, 200)
             }
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
@@ -142,7 +143,6 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         setPanGesture()
         setMapView()
         bindMapView()
-        sampleViewInputEvent()
         self.bindViewModels()
     }
     
@@ -258,7 +258,7 @@ extension MainMapVC {
                         self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: summaryViewTranslation.y)
                     }
                 case .ended:
-                        guard let self = self else { return }
+                    guard let self = self else { return }
                     if summaryViewTranslation.y < -90
                         || (self.mapDetailSummaryView.frame.origin.y ?? 40 < 30) {
                         self.mapDetailSummaryView.snp.updateConstraints { make in
@@ -306,15 +306,15 @@ extension MainMapVC {
     }
     
     private func setIntitialMapPoint() {
-            
-            let NMGPosition = self.locationManager?.currentLatLng()
-            if let position = NMGPosition {
-                self.mapView.moveCameraPositionWithZoom(position, 2000)
-            } else {
-                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
-            }
-            isInitialPoint = true
-
+        
+        let NMGPosition = self.locationManager?.currentLatLng()
+        if let position = NMGPosition {
+            self.mapView.moveCameraPositionWithZoom(position, 2000)
+        } else {
+            self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
+        }
+        isInitialPoint = true
+        
     }
     
     private func setMapView() {
@@ -337,16 +337,17 @@ extension MainMapVC {
                     self.view.layoutIfNeeded()
                 }
             }).disposed(by: self.disposeBag)
-      
-      mapView.zoomLevelChange
+        
+        mapView.zoomLevelChange
             .throttleOnMain(.seconds(1))
-        .subscribe(onNext: { [weak self] zoomLevel in
-          guard let self = self else { return }
-            let accumulate = MapAccumulationCalculator.zoomLevelToDistance(level: zoomLevel)
-            self.fetchRestaurantList(zoom: Double(accumulate))
-            
-        }).disposed(by: self.disposeBag)
-              
+            .subscribe(onNext: { [weak self] zoomLevel in
+                guard let self = self else { return }
+                let accumulate = MapAccumulationCalculator.zoomLevelToDistance(level: zoomLevel)
+                self.currentZoom = Double(accumulate)
+                self.fetchRestaurantList(zoom: Double(accumulate))
+                
+            }).disposed(by: self.disposeBag)
+        
         mapView.setSelectPoint
             .subscribe(onNext: { [weak self] dataModel in
                 let summaryViewHeight: CGFloat = 189
@@ -358,7 +359,7 @@ extension MainMapVC {
                         make.bottom.equalTo(mapDetailViewTopCosntraint).offset(-12)
                     }
                 }
-
+                
                 UIView.animate(withDuration: 0.3, delay: 0) {
                     self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                     self?.view.layoutIfNeeded()
@@ -366,25 +367,9 @@ extension MainMapVC {
             }).disposed(by: self.disposeBag)
     }
     
-    private func sampleViewInputEvent() {
-        makeDummyPoints()
-            .bind(to: mapView.rx.pointList)
-            .disposed(by: self.disposeBag)
-    }
-    
-    private func makeDummyPoints() -> Observable<[MapPointDataModel]> {
+    private func makePoints(points: [MapPointDataModel]) -> Observable<[MapPointDataModel]> {
         return .create { observer in
-            let pointList: [MapPointDataModel] = .init([
-                MapPointDataModel.init(latitude: 37.5666805, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.567, longtitude: 126.9784147, type: .healthFood),
-                MapPointDataModel.init(latitude: 37.568, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.569, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.557, longtitude: 126.9784147, type: .healthFood),
-                MapPointDataModel.init(latitude: 37.571, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.572, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.010, longtitude: 126.9784147, type: .normalFood)
-            ])
-            observer.onNext(pointList)
+            observer.onNext(points)
             return Disposables.create()
         }
     }
@@ -453,7 +438,7 @@ extension MainMapVC {
         self.mapDetailSummaryView.snp.updateConstraints { make in
             make.top.equalToSuperview().inset(44)
         }
-
+        
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.layoutIfNeeded()
@@ -524,7 +509,12 @@ extension MainMapVC {
                 switch networkResult {
                 case .success(let data):
                     if let data = data as? [MainMapEntity] {
-                        print(data, "성공입니다")
+                        var models = [MapPointDataModel]()
+                        models = data.map({ entity in
+                            entity.toDomain()
+                        })
+                        self.makePoints(points: models).bind(to: self.mapView.rx.pointList)
+                            .disposed(by: self.disposeBag)
                     }
                 default:
                     break
