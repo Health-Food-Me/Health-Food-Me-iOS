@@ -31,6 +31,7 @@ class MainDetailVC: UIViewController {
     private var phoneMenuTouched: Bool = false
     private var navigationTitle: String = "서브웨이 테스트"
     private var isOpenned: Bool = false
+    var panGestureEnabled = true
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
     
@@ -99,8 +100,12 @@ extension MainDetailVC {
         backButton.setImage(ImageLiterals.MainDetail.beforeIcon, for: .normal)
         backButton.tintColor = .helfmeBlack
         backButton.addAction(UIAction(handler: { _ in
-            self.dismiss(animated: false) {
-                self.translationClosure?()
+            if self.panGestureEnabled {
+                self.dismiss(animated: false) {
+                    self.translationClosure?()
+                }
+            } else {
+                self.navigationController?.popViewController(animated: true)
             }
         }), for: .touchUpInside)
         
@@ -172,37 +177,38 @@ extension MainDetailVC {
     
     private func setPanGesture() {
         let panGesture = UIPanGestureRecognizer()
-        mainInfoTVC.addGestureRecognizer(panGesture)
-        panGesture.rx.event.asDriver { _ in .never() }
-            .drive(onNext: { [weak self] sender in
-                let windowTranslation = sender.translation(in: self?.view)
-                print(windowTranslation)
-                switch sender.state {
-                case .changed:
-                    UIView.animate(withDuration: 0.1) {
-                      if windowTranslation.y > 0 {
-                        self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
-                      }
+        if panGestureEnabled {
+            mainInfoTVC.addGestureRecognizer(panGesture)
+            panGesture.rx.event.asDriver { _ in .never() }
+                .drive(onNext: { [weak self] sender in
+                    let windowTranslation = sender.translation(in: self?.view)
+                    print(windowTranslation)
+                    switch sender.state {
+                    case .changed:
+                        UIView.animate(withDuration: 0.1) {
+                          if windowTranslation.y > 0 {
+                            self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
+                          }
+                        }
+                    case .ended:
+                        if windowTranslation.y > 130 {
+                            self?.dismiss(animated: false) {
+                                self?.translationClosure?()
+                            }
+                        } else {
+                            self?.view.snp.updateConstraints { make in
+                                make.edges.equalToSuperview()
+                            }
+                            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                                self?.view.transform = CGAffineTransform(translationX: 0, y: 0)
+                                self?.view.layoutIfNeeded()
+                            }
+                        }
+                    default:
+                        break
                     }
-                case .ended:
-                    if windowTranslation.y > 130 {
-                        self?.dismiss(animated: false) {
-                            self?.translationClosure?()
-                        }
-                    } else {
-                        self?.view.snp.updateConstraints { make in
-                            make.edges.equalToSuperview()
-                        }
-                        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
-                            self?.view.transform = CGAffineTransform(translationX: 0, y: 0)
-                            self?.view.layoutIfNeeded()
-                        }
-                    }
-                default:
-                    break
-                }
-            }).disposed(by: disposeBag)
-        
+                }).disposed(by: disposeBag)
+        }
     }
 }
 
@@ -398,42 +404,44 @@ extension MainDetailVC: ScrollDeliveryDelegate {
 
 extension MainDetailVC: CopingGestureDelegate {
     func downPanGestureSwipe(panGesture: ControlEvent<UIPanGestureRecognizer>.Element) {
-        panGesture.rx.event.asDriver { _ in .never() }
-            .drive(onNext: { [weak self] sender in
-            
-                let windowTranslation = sender.translation(in: self?.view)
-                print(windowTranslation)
-                switch sender.state {
-                case .changed:
-                        self?.mainTableView.isScrollEnabled = false
-                        if self?.mainTableView.contentOffset.y == 0 {
-                            UIView.animate(withDuration: 0.1) {
-                              if windowTranslation.y > 0 {
-                                self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
-                              }
+        if panGestureEnabled {
+            panGesture.rx.event.asDriver { _ in .never() }
+                .drive(onNext: { [weak self] sender in
+                
+                    let windowTranslation = sender.translation(in: self?.view)
+                    print(windowTranslation)
+                    switch sender.state {
+                    case .changed:
+                            self?.mainTableView.isScrollEnabled = false
+                            if self?.mainTableView.contentOffset.y == 0 {
+                                UIView.animate(withDuration: 0.1) {
+                                  if windowTranslation.y > 0 {
+                                    self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
+                                  }
+                                }
                             }
-                        }
 
-                    case .ended:
-                        self?.mainTableView.isScrollEnabled = true
-                        if windowTranslation.y > 130 &&
-                            self?.mainTableView.contentOffset.y ?? 0 < 30 {
-                            self?.dismiss(animated: false) {
-                                self?.translationClosure?()
+                        case .ended:
+                            self?.mainTableView.isScrollEnabled = true
+                            if windowTranslation.y > 130 &&
+                                self?.mainTableView.contentOffset.y ?? 0 < 30 {
+                                self?.dismiss(animated: false) {
+                                    self?.translationClosure?()
+                                }
+                            } else {
+                                self?.view.snp.updateConstraints { make in
+                                    make.edges.equalToSuperview()
+                                }
+                                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                                    self?.view.transform = CGAffineTransform(translationX: 0, y: 0)
+                                    self?.view.layoutIfNeeded()
+                                }
                             }
-                        } else {
-                            self?.view.snp.updateConstraints { make in
-                                make.edges.equalToSuperview()
-                            }
-                            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
-                                self?.view.transform = CGAffineTransform(translationX: 0, y: 0)
-                                self?.view.layoutIfNeeded()
-                            }
-                        }
-                default:
-                    break
-                }
-            }).disposed(by: disposeBag)
+                    default:
+                        break
+                    }
+                }).disposed(by: disposeBag)
+        }
     }
     
     func panGestureSwipe(isRight: Bool) {
@@ -444,10 +452,12 @@ extension MainDetailVC: CopingGestureDelegate {
 
 extension MainDetailVC: SwipeDismissDelegate {
     func swipeToDismiss() {
-        print("swipeToDismiss")
-        if mainTableView.contentOffset.y == 0 {
-            self.dismiss(animated: false) {
-                self.translationClosure?()
+        if panGestureEnabled {
+            print("swipeToDismiss")
+            if mainTableView.contentOffset.y == 0 {
+                self.dismiss(animated: false) {
+                    self.translationClosure?()
+                }
             }
         }
     }

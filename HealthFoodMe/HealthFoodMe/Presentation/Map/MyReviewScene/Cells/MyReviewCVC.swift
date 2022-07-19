@@ -42,6 +42,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         lb.textColor = .helfmeBlack
         lb.font = UIFont.NotoMedium(size: 14)
         lb.text = ""
+        lb.isUserInteractionEnabled = true
         return lb
     }()
     

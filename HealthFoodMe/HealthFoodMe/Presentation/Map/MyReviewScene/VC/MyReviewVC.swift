@@ -71,6 +71,12 @@ class MyReviewVC: UIViewController {
         registerCell()
         fetchData()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        resetUI()
+    }
 }
 
 // MARK: - Methods
@@ -90,6 +96,10 @@ extension MyReviewVC {
     private func setUI() {
         view.backgroundColor = .helfmeWhite
         customNavigationBar.setTitleView(title: "내가 쓴 리뷰")
+    }
+    
+    private func resetUI() {
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     private func setLayout() {
@@ -359,8 +369,8 @@ extension MyReviewVC: UICollectionViewDelegateFlowLayout {
 
 extension MyReviewVC: MyReviewCVCDelegate {
     func restaurantNameTapped() {
-        print("됨?")
         let vc = ModuleFactory.resolve().makeMainDetailVC()
+        vc.panGestureEnabled = false
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
