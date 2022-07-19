@@ -26,6 +26,7 @@
 		3B9EF0FB2885D340009DEEDE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B9EF0FA2885D340009DEEDE /* GoogleService-Info.plist */; };
 		3B9EF0FE2885D372009DEEDE /* ReviewListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF0FD2885D372009DEEDE /* ReviewListEntity.swift */; };
 		3B9EF1062885F9EF009DEEDE /* withdrawalEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF1052885F9EF009DEEDE /* withdrawalEntity.swift */; };
+		3BB0FCE3288705E200C3862C /* BlogReviewListEnityt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB0FCE2288705E200C3862C /* BlogReviewListEnityt.swift */; };
 		3BC01F7B287E89D2006C2181 /* ReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */; };
 		3BC01F84287EAE48006C2181 /* BlogReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */; };
 		3BC01F87287EBB8E006C2181 /* BlogReviewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F86287EBB8E006C2181 /* BlogReviewDataModel.swift */; };
@@ -238,6 +239,7 @@
 		3B9EF0FA2885D340009DEEDE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3B9EF0FD2885D372009DEEDE /* ReviewListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListEntity.swift; sourceTree = "<group>"; };
 		3B9EF1052885F9EF009DEEDE /* withdrawalEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = withdrawalEntity.swift; sourceTree = "<group>"; };
+		3BB0FCE2288705E200C3862C /* BlogReviewListEnityt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewListEnityt.swift; sourceTree = "<group>"; };
 		3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCVC.swift; sourceTree = "<group>"; };
 		3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewCVC.swift; sourceTree = "<group>"; };
 		3BC01F86287EBB8E006C2181 /* BlogReviewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewDataModel.swift; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 			isa = PBXGroup;
 			children = (
 				3B9EF0FD2885D372009DEEDE /* ReviewListEntity.swift */,
+				3BB0FCE2288705E200C3862C /* BlogReviewListEnityt.swift */,
 			);
 			path = ReviewTabScene;
 			sourceTree = "<group>";
@@ -2084,6 +2087,7 @@
 				EBFAEB0D28856388009C569C /* LogEventType.swift in Sources */,
 				EBF66AFD287227F500DE0ED1 /* calculateTopInset.swift in Sources */,
 				EBF66ACF287227F500DE0ED1 /* Result+.swift in Sources */,
+				3BB0FCE3288705E200C3862C /* BlogReviewListEnityt.swift in Sources */,
 				A93252C628808B82001EDF50 /* ReviewDeleteAlertView.swift in Sources */,
 				EBF66AD7287227F500DE0ED1 /* Presentable.swift in Sources */,
 				FD72FC9C288346480092746F /* UserWithdrawalViewModel.swift in Sources */,
