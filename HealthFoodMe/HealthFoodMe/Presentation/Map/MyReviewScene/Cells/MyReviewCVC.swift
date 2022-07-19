@@ -144,7 +144,7 @@ extension MyReviewCVC {
     }
     
     func setDefaultLayout() {
-        contentView.addSubviews(restaurantNameLabel, arrowImageView, starView, tagCV,
+        contentView.addSubviews(arrowImageView, restaurantNameLabel, starView, tagCV,
                                 reviewPhotoCV, reviewContents, reviewSeperatorView, moreTapButton)
         
         let width = UIScreen.main.bounds.width
@@ -164,7 +164,7 @@ extension MyReviewCVC {
         
         arrowImageView.snp.makeConstraints { make in
             make.centerY.equalTo(restaurantNameLabel.snp.centerY)
-            make.leading.equalTo(restaurantNameLabel.snp.trailing).offset(3)
+            make.leading.equalTo(restaurantNameLabel.snp.trailing).offset(-8)
             make.width.height.equalTo(20)
         }
         
@@ -190,7 +190,7 @@ extension MyReviewCVC {
         }
         
         reviewContents.snp.makeConstraints { make in
-            make.top.equalTo(reviewPhotoCV.snp.bottom).offset(12)
+            make.top.equalTo(reviewPhotoCV.snp.bottom).offset(9)
             make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-28)
             make.width.equalTo(width - 40)
@@ -234,13 +234,6 @@ extension MyReviewCVC {
         addSubviews(reviewContents)
         reviewContents.isHidden = false
         
-        tagCV.snp.remakeConstraints { make in
-            make.top.equalTo(restaurantNameLabel.snp.bottom).offset(10)
-            make.leading.equalToSuperview()
-            make.width.equalTo(width)
-            make.height.equalTo(22)
-        }
-        
         reviewContents.snp.remakeConstraints { make in
             make.top.equalTo(tagCV.snp.bottom).offset(10)
             make.leading.equalTo(20)
@@ -253,8 +246,6 @@ extension MyReviewCVC {
     func setLayoutWithImage() {
         reviewContents.removeFromSuperview()
         contentView.addSubviews(reviewPhotoCV)
-        
-        let width = UIScreen.main.bounds.width
         
         reviewPhotoCV.snp.remakeConstraints { make in
             make.top.equalTo(tagCV.snp.bottom).offset(10)
@@ -282,8 +273,7 @@ extension MyReviewCVC {
         
         reviewContents.snp.remakeConstraints { make in
             make.top.equalTo(reviewPhotoCV.snp.bottom).offset(12)
-            make.leading.equalTo(20)
-            make.trailing.equalToSuperview().inset(20)
+            make.leading.bottom.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-28)
             make.width.equalTo(width - 40)
         }

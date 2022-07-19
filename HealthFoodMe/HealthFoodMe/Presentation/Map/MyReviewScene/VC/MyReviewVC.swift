@@ -315,8 +315,11 @@ extension MyReviewVC: UICollectionViewDelegateFlowLayout {
     
     private func calculateReviewCellHeight(containsPhoto: Bool, reviewText: String?,isExpandState: Bool) -> CGFloat {
         var cellHeight: CGFloat = 0
+        
         let topPadding: CGFloat = 28
         let nameLabelHeight: CGFloat = 20
+        let starViewTopPadding: CGFloat = 10
+        let starViewHeight: CGFloat = 18
         let tagHeight: CGFloat = 22
         let tagTopPadding: CGFloat = 10
         let tempPadding: CGFloat = 15
@@ -326,6 +329,8 @@ extension MyReviewVC: UICollectionViewDelegateFlowLayout {
         
         cellHeight += topPadding
         cellHeight += nameLabelHeight
+        cellHeight += starViewTopPadding
+        cellHeight += starViewHeight
         cellHeight += tagHeight
         cellHeight += tagTopPadding
         cellHeight += tempPadding
