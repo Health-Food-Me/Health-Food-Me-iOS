@@ -62,6 +62,12 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         return view
     }()
     
+    private var searchIconImageView: UIImageView = {
+        let imgView = UIImageView()
+        imgView.image = ImageLiterals.Map.searchIcon
+        return imgView
+    }()
+    
     private let searchLabel: UILabel = {
         let lb = UILabel()
         lb.text = I18N.Map.Main.searchBar
@@ -160,12 +166,19 @@ extension MainMapVC {
     }
     
     private func setLayout() {
+        searchBar.addSubview(searchIconImageView)
         view.addSubviews(mapView, hamburgerButton, searchBar,
                          categoryCollectionView, mapDetailSummaryView, scrapButton,
                          myLocationButton)
         
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        searchIconImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(20)
+            make.trailing.equalToSuperview().inset(16)
+            make.centerX.equalToSuperview()
         }
         
         hamburgerButton.snp.makeConstraints { make in
