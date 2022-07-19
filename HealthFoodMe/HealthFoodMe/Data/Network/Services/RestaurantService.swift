@@ -16,9 +16,12 @@ class RestaurantService: BaseService {
 }
 
 extension RestaurantService {
-    
     func requestRestaurantSearch(query: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        requestObject(RestaurantRouter.requestRestaurantSearch(query: query), type: SearchDataModel.self, decodingMode: .general, completion: completion)
+        requestObject(RestaurantRouter.requestRestaurantSearch(query: query), type: [SearchEntity].self, decodingMode: .model, completion: completion)
+    }
+    
+    func requestRestaurantSearchResult(searchRequest: SearchRequestEntity, completion: @escaping (NetworkResult<Any>) -> Void) {
+        requestObject(RestaurantRouter.requestRestaurantSearchResult(searchRequest: searchRequest), type: [SearchResultEntity].self, decodingMode: .model, completion: completion)
     }
     
     func fetchRestaurantSummary(completion: @escaping (NetworkResult<Any>) -> Void) {

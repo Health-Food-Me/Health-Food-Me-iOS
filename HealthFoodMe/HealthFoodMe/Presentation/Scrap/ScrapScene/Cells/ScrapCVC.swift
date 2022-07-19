@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol ScrapCVCDelegate: AnyObject {
-    func scrapCVCButtonDidTap(index: Int, isSelected: Bool)
+    func scrapCVCButtonDidTap(restaurantId: String)
 }
 
 class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
@@ -18,8 +18,8 @@ class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
     // MARK: - Properties
     
     static var isFromNib: Bool = false
-    var index: Int = 0
     weak var delegate: ScrapCVCDelegate?
+    var restaurantId: String = ""
   
     // MARK: - UI Components
     
@@ -70,17 +70,18 @@ class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
 extension ScrapCVC {
     @objc func didTapScrapButton(_ sender: UIButton) {
         sender.isSelected.toggle()
-        delegate?.scrapCVCButtonDidTap(index: index, isSelected: sender.isSelected)
+        delegate?.scrapCVCButtonDidTap(restaurantId: restaurantId)
     }
 }
 
 // MARK: - Methods
 
 extension ScrapCVC {
-    func setData(data: ScrapDataModel) {
-        storeImageView.image = UIImage(named: data.scrapimageUrl)
-        storeNameLabel.text = data.storeName
-        locationLabel.text = data.storeLocation
+    func setData(data: ScrapListEntity) {
+        storeImageView.image = UIImage(named: data.logo)
+        storeNameLabel.text = data.name
+        locationLabel.text = data.address
+        restaurantId = data._id
     }
     
     private func setUI() {
@@ -90,9 +91,7 @@ extension ScrapCVC {
     }
     
     private func setLayout() {
-        contentView.addSubviews(storeImageView,
-                                scrapButton,
-                                storeNameLabel,
+        contentView.addSubviews(storeImageView, scrapButton, storeNameLabel,
                                 locationLabel)
         
         storeImageView.snp.makeConstraints {

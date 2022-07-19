@@ -28,14 +28,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             navigationBarAppearance.configureWithTransparentBackground()
             navigationBarAppearance.backgroundColor = .white
             navigationBarAppearance.shadowColor = .helfmeGray1.withAlphaComponent(0.3)
-
+            
             UINavigationBar.appearance().standardAppearance = navigationBarAppearance
             UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
         }
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let rootViewController = ModuleFactory.resolve().makeCopingTabVC()
-//        let rootViewController = SocialLoginVC.controllerFromStoryboard(.socialLogin)
+        let rootViewController = ModuleFactory.resolve().makeSplashVC()
         let navigation = UINavigationController(rootViewController: rootViewController)
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = navigation
