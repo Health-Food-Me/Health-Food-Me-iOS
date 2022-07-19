@@ -31,8 +31,14 @@ final class UserManager {
     var getAccessToken: String { return self.accessToken ?? "" }
     var getRefreshToken: String { return self.refreshToken ?? "" }
     
-    private init() {}
+    // MARK: - Life Cycles
     
+    private init() {}
+}
+
+// MARK: - Methods
+
+extension UserManager {
     func updateAuthToken(_ accessToken: String, _ refreshToken: String) {
         self.accessToken = accessToken
         self.refreshToken = refreshToken

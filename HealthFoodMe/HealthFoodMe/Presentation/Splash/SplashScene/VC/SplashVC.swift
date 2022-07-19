@@ -51,8 +51,9 @@ extension SplashVC {
     
     private func presentMainMapVC() {
         let vc = ModuleFactory.resolve().makeMainMapVC()
-        vc.modalPresentationStyle = .overFullScreen
-        self.present(vc, animated: false)
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .overFullScreen
+        self.present(nav, animated: false)
     }
     
     private func presentSocialLoginVC() {
@@ -76,7 +77,6 @@ extension SplashVC {
 
 extension SplashVC {
     private func reissuanceToken() {
-        print("하이")
         userManager.reissuanceAccessToken() { success in
             if success {
                 self.presentMainMapVC()
