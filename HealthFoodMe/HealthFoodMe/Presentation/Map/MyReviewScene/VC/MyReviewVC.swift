@@ -18,12 +18,12 @@ class MyReviewVC: UIViewController {
     private let withContents = 2
     private let withoutImageAndContents = 3
     
-    private var reviewData: [ReviewCellViewModel] = [] { didSet {
+    private var reviewData: [MyReviewCellViewModel] = [] { didSet {
         fetchCutStringList()
         fetchExpendStateList()
         reviewCV.reloadData()
     }}
-    private var reviewServerData: [ReviewDataModel] = []
+    private var reviewServerData: [MyReviewModel] = []
     private var cutLabelList: [String] = []
     private var expendStateList: [Bool] = []
     
@@ -90,7 +90,7 @@ extension MyReviewVC {
         ReviewEmptyViewCVC.register(target: reviewCV)
     }
     
-    private func setEnumValue(data: ReviewDataModel) -> Int {
+    private func setEnumValue(data: MyReviewModel) -> Int {
         if data.reviewImageURLList?.isEmpty == false {
             if data.reviewContents != nil {
                 return withImageAndContents
@@ -125,11 +125,11 @@ extension MyReviewVC {
         requestReviewListWithAPI()
     }
     
-    private func processViewModel(_ reviewDataList: [ReviewDataModel]) {
-        var reviewResult: [ReviewCellViewModel] = []
+    private func processViewModel(_ reviewDataList: [MyReviewModel]) {
+        var reviewResult: [MyReviewCellViewModel] = []
         for reviewData in reviewDataList {
             let height = calculateReviewHeight(reviewData.reviewContents ?? "")
-            reviewResult.append(ReviewCellViewModel.init(data: reviewData,
+            reviewResult.append(MyReviewCellViewModel.init(data: reviewData,
                                                          foldRequired: height > 55))
         }
         
@@ -192,7 +192,7 @@ extension MyReviewVC {
             switch networkResult {
             case .success(let data):
                 self.reviewServerData.removeAll()
-                if let data = data as? [ReviewListEntity] {
+                if let data = data as? [MyReviewEntity] {
                     for da in data {
                         self.reviewServerData.append(da.toDomain())
                     }

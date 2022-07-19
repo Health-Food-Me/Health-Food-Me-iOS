@@ -7,32 +7,45 @@
 
 import UIKit
 
+protocol MyReviewCVCDelegate {
+    func restaurantNameTapped()
+    func editButtonTapped()
+    func deleteButtonTapped()
+}
+
 class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     // MARK: - Properties
     
     static var isFromNib = false
     
-    private var cellViewModel: ReviewDataModel? {
+    private var cellViewModel: MyReviewModel? {
         didSet {
             tagCV.reloadData()
             reviewPhotoCV.reloadData()
         }
     }
     
-    var layoutEnumValue = 0
-    
     let width = UIScreen.main.bounds.width
+    var layoutEnumValue = 0
     var clickedEvent: ((Int) -> Void)?
     var isFolded: Bool = true
+    
     // MARK: - UI Components
     
-    private var nameLabel: UILabel = {
+    private var restaurantNameLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
         lb.font = UIFont.NotoMedium(size: 14)
         lb.text = ""
         return lb
+    }()
+    
+    private let arrowImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .center
+        iv.image = ImageLiterals.Map.arrowRightIcon
+        return iv
     }()
     
     private var starView: StarRatingView = {
@@ -108,7 +121,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     }
     
     override func prepareForReuse() {
-        nameLabel.text = " "
+        restaurantNameLabel.text = " "
         reviewContents.text = " "
         reviewPhotoCV.isHidden = false
         reviewContents.isHidden = false
@@ -131,8 +144,8 @@ extension MyReviewCVC {
     }
     
     func setDefaultLayout() {
-        contentView.addSubviews(nameLabel, starView, tagCV,
-                                reviewPhotoCV, reviewContents, reviewSeperatorView,moreTapButton)
+        contentView.addSubviews(restaurantNameLabel, arrowImageView, starView, tagCV,
+                                reviewPhotoCV, reviewContents, reviewSeperatorView, moreTapButton)
         
         let width = UIScreen.main.bounds.width
         
@@ -143,21 +156,27 @@ extension MyReviewCVC {
             make.width.equalTo(width - 40)
         }
         
-        nameLabel.snp.makeConstraints { make in
+        restaurantNameLabel.snp.makeConstraints { make in
             make.leading.equalTo(20)
             make.top.equalTo(reviewSeperatorView.snp.bottom).offset(28)
-            make.height.equalTo(nameLabel.font.lineHeight)
+            make.height.equalTo(restaurantNameLabel.font.lineHeight)
+        }
+        
+        arrowImageView.snp.makeConstraints { make in
+            make.centerY.equalTo(restaurantNameLabel.snp.centerY)
+            make.leading.equalTo(restaurantNameLabel.snp.trailing).offset(3)
+            make.width.height.equalTo(20)
         }
         
         starView.snp.makeConstraints { make in
-            make.leading.equalTo(nameLabel.snp.trailing).offset(8)
-            make.centerY.equalTo(nameLabel)
+            make.leading.equalTo(restaurantNameLabel.snp.leading)
+            make.top.equalTo(restaurantNameLabel.snp.bottom).offset(8)
             make.height.equalTo(18)
             make.width.equalTo(86)
         }
         
         tagCV.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(10)
+            make.top.equalTo(starView.snp.bottom).offset(10)
             make.leading.equalToSuperview()
             make.width.equalTo(width)
             make.height.equalTo(22)
@@ -172,8 +191,7 @@ extension MyReviewCVC {
         
         reviewContents.snp.makeConstraints { make in
             make.top.equalTo(reviewPhotoCV.snp.bottom).offset(12)
-            make.leading.equalTo(20)
-            make.trailing.equalToSuperview().inset(20)
+            make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-28)
             make.width.equalTo(width - 40)
         }
@@ -184,8 +202,6 @@ extension MyReviewCVC {
             make.width.equalTo(width - 40)
             make.height.equalToSuperview()
         }
-        
-
     }
     
     func setLayout() {
@@ -219,7 +235,7 @@ extension MyReviewCVC {
         reviewContents.isHidden = false
         
         tagCV.snp.remakeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(10)
+            make.top.equalTo(restaurantNameLabel.snp.bottom).offset(10)
             make.leading.equalToSuperview()
             make.width.equalTo(width)
             make.height.equalTo(22)
@@ -273,12 +289,12 @@ extension MyReviewCVC {
         }
     }
     
-    func setData(reviewData: ReviewDataModel,
+    func setData(reviewData: MyReviewModel,
                  text: String,
                  isFoldRequired: Bool,
                  expanded: Bool) {
-        nameLabel.text = reviewData.reviewer
-        nameLabel.sizeToFit()
+        restaurantNameLabel.text = reviewData.restaurantName + "  "
+        restaurantNameLabel.sizeToFit()
         starView.rate = CGFloat(reviewData.starRate)
         self.cellViewModel = reviewData
         reviewContents.text = text
