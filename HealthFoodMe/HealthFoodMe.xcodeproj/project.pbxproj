@@ -749,7 +749,6 @@
 			isa = PBXGroup;
 			children = (
 				C321ED365502C47A4E65A10E /* Pods_HealthFoodMe.framework */,
-				FD924375288007ED0034876B /* NicknameChange.storyboard */,
 				A90CFDD22885C3050018AB94 /* SearchRequestEntity.swift */,
 				A90CFDC82885B1880018AB94 /* SearchEntity.swift */,
 				A90CFDCA2885B2730018AB94 /* SearchResultEntity.swift */,
@@ -2330,7 +2329,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
+				PROVISIONING_PROFILE_SPECIFIER = HealthFoodMe_Dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

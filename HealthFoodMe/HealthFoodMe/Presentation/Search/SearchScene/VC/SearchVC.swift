@@ -28,6 +28,8 @@ final class SearchVC: UIViewController {
             searchTableView.reloadData()
         }
     }
+    var searchContent: String = ""
+    var goToResult: Bool = false
     var searchRecentList: [String] = []
     var searchList: [SearchDataModel] = []
     var searchResultList: [SearchResultDataModel] = []
@@ -144,9 +146,26 @@ extension SearchVC {
     @objc func didTapBackButton() {
         switch searchType {
         case .recent:
-            navigationController?.popViewController(animated: true)
+            if goToResult {
+                searchTextField.text = searchContent
+                isSearchResult(fromRecent: false)
+                searchTableView.reloadData()
+            } else {
+                navigationController?.popViewController(animated: true)
+            }
         case .search:
-            navigationController?.popViewController(animated: true)
+            if searchList.isEmpty {
+                isSearchRecent()
+                initTextField()
+                break;
+            }
+            if goToResult {
+                searchTextField.text = searchContent
+                isSearchResult(fromRecent: false)
+                searchTableView.reloadData()
+            } else {
+                navigationController?.popViewController(animated: true)
+            }
         case .searchResult:
             isSearchRecent()
             initTextField()
@@ -211,8 +230,11 @@ extension SearchVC {
             lng = LocationLiterals.gangnamStation.lng
             lat = LocationLiterals.gangnamStation.lat
         }
-        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: lng, latitude: lat,
-                                                                       keyword: keyword), fromRecent: fromRecent)
+        if let text = searchTextField.text {
+            searchContent = text
+        }
+        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: lat, latitude: lng,
+                                                                         keyword: keyword), fromRecent: fromRecent)
     }
     
     private func setUI() {
@@ -348,8 +370,8 @@ extension SearchVC {
             searchTableView.tableHeaderView?.frame.size.height = 42
             recentHeaderLabel.isHidden = true
             viewMapButton.isHidden = false
-            searchType = .searchResult
         }
+        searchType = .searchResult
     }
 }
 
@@ -357,6 +379,7 @@ extension SearchVC {
 
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         if let text = searchTextField.text {
             fetchSearchResultData(keyword: text, fromRecent: false)
         }
@@ -368,6 +391,7 @@ extension SearchVC: UITextFieldDelegate {
             if let text = searchTextField.text {
                 requestRestaurantSearch(query: text)
             }
+            goToResult = true
             isSearch()
         }
     }
@@ -433,11 +457,11 @@ extension SearchVC: UITableViewDataSource {
             fetchSearchResultData(keyword: searchRecentList[indexPath.row], fromRecent: true)
             addSearchRecent(title: searchRecentList[indexPath.row])
         case .search:
-            // 화면 전환 코드 추가해야 됨
+            // 지도 눌러도 안바뀌는 화면으로 이동
             print("\(searchList[indexPath.row].title) 식당 상세 페이지로 이동")
             addSearchRecent(title: searchList[indexPath.row].title)
         case .searchResult:
-            // 화면 전환 코드 추가해야 됨
+            // 지도 누르면 리스트로 바뀌는 화면으로 이동
             print("\(searchResultList[indexPath.row].storeName) 식당 상세 페이지로 이동")
         }
     }
@@ -462,6 +486,7 @@ extension SearchVC: SearchRecentTVCDelegate {
 extension SearchVC: SearchResultVCDelegate {
     func searchResultVCSearchType(type: SearchType) {
         if type == .search {
+            goToResult = true
             clearButton.isHidden = false
             searchTextField.becomeFirstResponder()
         } else {
