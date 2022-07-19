@@ -34,7 +34,7 @@ class ReviewDetailVC: UIViewController {
     private var expendStateList: [Bool] = []
     var moreContentsButtonRect: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     
-    var restaurantId: String = "62d26c9bd11146a81ef18ebb"
+    var restaurantId: String = "62d26c9bd11146a81ef18ea6"
     
     var selectedCustomSegment = 0 {
         didSet {
@@ -174,7 +174,7 @@ extension ReviewDetailVC {
             for char in cutText {
                 eraseCount += 1
                 cutText.popLast()
-                if eraseCount > 7 {
+                if eraseCount > 9 {
                     cutText.append("  더보기")
                     break
                 } else {
