@@ -21,4 +21,12 @@ extension ReviewService {
                       decodingMode: .model,
                       completion: completion)
     }
+    
+    func requestBlogReviewList(restaurantName: String,
+                               completion: @escaping(NetworkResult<Any>) -> Void) {
+        requestObject(ReviewRouter.getBlogReviewList(restaurantName: restaurantName),
+                      type: [BlogReviewListEntity].self,
+                      decodingMode: .model,
+                      completion: completion)
+    }
 }
