@@ -763,7 +763,6 @@
 			isa = PBXGroup;
 			children = (
 				C321ED365502C47A4E65A10E /* Pods_HealthFoodMe.framework */,
-				FD924375288007ED0034876B /* NicknameChange.storyboard */,
 				A90CFDD22885C3050018AB94 /* SearchRequestEntity.swift */,
 				A90CFDC82885B1880018AB94 /* SearchEntity.swift */,
 				A90CFDCA2885B2730018AB94 /* SearchResultEntity.swift */,

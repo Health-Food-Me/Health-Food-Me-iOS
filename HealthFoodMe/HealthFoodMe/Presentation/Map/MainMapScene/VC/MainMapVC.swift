@@ -18,6 +18,11 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
     private let disposeBag = DisposeBag()
     private var isInitialPoint = false
+    private var currentCategory: String = "" {
+        didSet {
+            print(currentCategory)
+        }
+    }
     private let locationManager = NMFLocationManager.sharedInstance()
     private var selectedCategories: [Bool] = [false, false, false,
                                               false, false, false,
@@ -334,10 +339,12 @@ extension MainMapVC {
             }).disposed(by: self.disposeBag)
       
       mapView.zoomLevelChange
+            .throttleOnMain(.seconds(1))
         .subscribe(onNext: { [weak self] zoomLevel in
           guard let self = self else { return }
             let accumulate = MapAccumulationCalculator.zoomLevelToDistance(level: zoomLevel)
-            print(accumulate)
+            self.fetchRestaurantList(zoom: Double(accumulate))
+            
         }).disposed(by: self.disposeBag)
               
         mapView.setSelectPoint
@@ -412,6 +419,26 @@ extension MainMapVC {
         }
     }
     
+    private func setCurrentCategory(currentIndex: Int) {
+        if selectedCategories[currentIndex] {
+            for (index, item) in selectedCategories.enumerated() {
+                if (selectedCategories[index] == true) && (index != currentIndex) {
+                    selectedCategories[index] = false
+                }
+            }
+        }
+        var hasCurrent: Bool = false
+        for (index, item) in selectedCategories.enumerated() {
+            if item {
+                currentCategory = MainMapCategory.categorySample[index].menuName
+                hasCurrent = true
+            }
+        }
+        if !hasCurrent {
+            currentCategory = ""
+        }
+    }
+    
     @objc
     private func presentSearchVC() {
         self.makeVibrate()
@@ -439,12 +466,15 @@ extension MainMapVC {
 // MARK: - CollectionView Delegate
 
 extension MainMapVC: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        makeVibrate()
-    }
-    
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         selectedCategories[indexPath.row].toggle()
+        setCurrentCategory(currentIndex: indexPath.row)
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
+        selectedCategories[indexPath.row].toggle()
+        setCurrentCategory(currentIndex: indexPath.row)
         return true
     }
 }
@@ -480,6 +510,26 @@ extension MainMapVC: HamburgerbarVCDelegate {
             navigationController?.pushViewController(ModuleFactory.resolve().makeMyReviewVC(), animated: true)
         case .setting:
             navigationController?.pushViewController(ModuleFactory.resolve().makeSettingVC(), animated: true)
+        }
+    }
+}
+
+// MARK: - Network
+
+extension MainMapVC {
+    private func fetchRestaurantList(zoom: Double) {
+        if let lng = locationManager?.currentLatLng().lng,
+           let lat = locationManager?.currentLatLng().lat {
+            RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
+                switch networkResult {
+                case .success(let data):
+                    if let data = data as? [MainMapEntity] {
+                        print(data, "성공입니다")
+                    }
+                default:
+                    break
+                }
+            }
         }
     }
 }

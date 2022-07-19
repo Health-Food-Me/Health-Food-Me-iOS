@@ -8,6 +8,7 @@
 import Foundation
 
 import Alamofire
+import UIKit
 
 class RestaurantService: BaseService {
     static let shared = RestaurantService()
@@ -30,5 +31,9 @@ extension RestaurantService {
     
     func getMenuPrescription(restaurantId: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         requestObject(RestaurantRouter.getMenuPrescription(restaurantId: restaurantId), type: CopingTabEntity.self, decodingMode: .model, completion: completion)
+    }
+    
+    func fetchRestaurantList(longitude: Double, latitude: Double, zoom: Double, category: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+        requestObject(RestaurantRouter.fetchRestaurantList(longitude: longitude, latitude: latitude, zomm: zoom, category: category), type: [MainMapEntity].self, decodingMode: .model, completion: completion)
     }
 }

@@ -12,6 +12,7 @@ enum RestaurantRouter {
     case requestRestaurantSearchResult(searchRequest: SearchRequestEntity)
     case fetchRestaurantSummary(restaurantId: String, userId: String)
     case getMenuPrescription(restaurantId: String)
+    case fetchRestaurantList(longitude: Double, latitude: Double, zomm: Double, category: String)
 }
 
 extension RestaurantRouter: BaseRouter {
@@ -34,6 +35,8 @@ extension RestaurantRouter: BaseRouter {
             return "/restaurant/\(restaurantId)/prescription"
         case .fetchRestaurantSummary(let restaurantId, let userId):
             return "/restaurant/\(restaurantId)/\(userId)"
+        case .fetchRestaurantList:
+            return "/restaurant"
         default:
             return ""
         }
@@ -52,6 +55,14 @@ extension RestaurantRouter: BaseRouter {
                 "latitude": searchRequest.latitude,
                 "zoom": searchRequest.zoom,
                 "keyword": searchRequest.keyword
+            ]
+            return .query(requestQuery)
+        case .fetchRestaurantList(let lng, let lat, let zoom, let category):
+            let requestQuery: [String: Any] = [
+                "longtitude": lng,
+                "latitude": lat,
+                "zoom": zoom,
+                "category": category
             ]
             return .query(requestQuery)
         default:
