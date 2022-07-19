@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MyReviewCVCDelegate {
+protocol MyReviewCVCDelegate: AnyObject {
     func restaurantNameTapped()
     func editButtonTapped()
     func deleteButtonTapped()
@@ -18,6 +18,8 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     // MARK: - Properties
     
     static var isFromNib = false
+    
+    weak var delegate: MyReviewCVCDelegate?
     
     private var cellViewModel: MyReviewModel? {
         didSet {
@@ -67,6 +69,56 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         return cv
     }()
     
+    private lazy var buttonStackView: UIStackView = {
+        let st = UIStackView()
+        st.axis = .horizontal
+        st.spacing = 8
+        st.distribution = .equalSpacing
+        st.isUserInteractionEnabled = true
+        st.addArrangedSubviews(editButton, verticalView, deleteButton)
+        return st
+    }()
+    
+    private lazy var editButton: UIButton = {
+        let bt = UIButton()
+        bt.titleLabel?.font = .NotoRegular(size: 10)
+        bt.setTitle("편집", for: .normal)
+        bt.setTitleColor(UIColor.helfmeGray2, for: .normal)
+        bt.addAction(UIAction(handler: { _ in
+            self.delegate?.editButtonTapped()
+        }), for: .touchUpInside)
+        bt.snp.makeConstraints { make in
+            make.height.equalTo(16)
+            make.width.equalTo(20)
+        }
+        return bt
+    }()
+    
+    private let verticalView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .helfmeGray1.withAlphaComponent(0.3)
+        view.snp.makeConstraints { make in
+            make.height.equalTo(12)
+            make.width.equalTo(1)
+        }
+        return view
+    }()
+    
+    private lazy var deleteButton: UIButton = {
+        let bt = UIButton()
+        bt.titleLabel?.font = .NotoRegular(size: 10)
+        bt.setTitle("삭제", for: .normal)
+        bt.setTitleColor(UIColor.helfmeGray2, for: .normal)
+        bt.addAction(UIAction(handler: { _ in
+            self.delegate?.deleteButtonTapped()
+        }), for: .touchUpInside)
+        bt.snp.makeConstraints { make in
+            make.height.equalTo(16)
+            make.width.equalTo(20)
+        }
+        return bt
+    }()
+    
     private var reviewPhotoCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -77,7 +129,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .helfmeWhite
         cv.showsHorizontalScrollIndicator = false
-
+        
         return cv
     }()
     
@@ -114,6 +166,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         setDelegate()
         registerCell()
         setDefaultLayout()
+        setTapGesture()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -144,8 +197,9 @@ extension MyReviewCVC {
     }
     
     func setDefaultLayout() {
-        contentView.addSubviews(arrowImageView, restaurantNameLabel, starView, tagCV,
-                                reviewPhotoCV, reviewContents, reviewSeperatorView, moreTapButton)
+        contentView.addSubviews(arrowImageView, restaurantNameLabel, buttonStackView,
+                                starView, tagCV, reviewPhotoCV,
+                                reviewContents, reviewSeperatorView, moreTapButton)
         
         let width = UIScreen.main.bounds.width
         
@@ -166,6 +220,11 @@ extension MyReviewCVC {
             make.centerY.equalTo(restaurantNameLabel.snp.centerY)
             make.leading.equalTo(restaurantNameLabel.snp.trailing).offset(-8)
             make.width.height.equalTo(20)
+        }
+        
+        buttonStackView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(20)
+            make.centerY.equalTo(restaurantNameLabel.snp.centerY)
         }
         
         starView.snp.makeConstraints { make in
@@ -200,7 +259,7 @@ extension MyReviewCVC {
             make.bottom.equalToSuperview().offset(-28)
             make.trailing.equalToSuperview().offset(-30)
             make.width.equalTo(width - 40)
-            make.height.equalToSuperview()
+            make.height.equalTo(60)
         }
     }
     
@@ -255,7 +314,7 @@ extension MyReviewCVC {
             make.bottom.equalToSuperview().offset(-28)
         }
     }
-
+    
     func setLayoutWithImageAndContents() {
         
         addSubviews(reviewPhotoCV, reviewContents)
@@ -326,11 +385,21 @@ extension MyReviewCVC {
         }
         let fullText = reviewContents.text
         let range = NSRange(location: textCount - 3, length: length)
-            
+        
         let attributedString = NSMutableAttributedString(string: fullText ?? "")
         attributedString.addAttribute(.font, value: UIFont.NotoRegular(size: 12), range: range)
         attributedString.addAttribute(.foregroundColor, value: UIColor.helfmeGray2, range: range)
         reviewContents.attributedText = attributedString
+    }
+    
+    private func setTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pushMainDetailVC))
+        restaurantNameLabel.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc
+    private func pushMainDetailVC() {
+        delegate?.restaurantNameTapped()
     }
 }
 

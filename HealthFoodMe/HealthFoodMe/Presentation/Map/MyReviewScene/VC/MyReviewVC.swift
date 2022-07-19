@@ -290,6 +290,7 @@ extension MyReviewVC: UICollectionViewDataSource {
             
             cell.layoutEnumValue = setEnumValue(data: reviewData[indexPath.row].data)
             cell.setLayout()
+            cell.delegate = self
             return cell
         }
     }
@@ -352,5 +353,23 @@ extension MyReviewVC: UICollectionViewDelegateFlowLayout {
         }
         
         return cellHeight
+    }
+}
+
+// MARK: - MyReviewCVCDelegate
+
+extension MyReviewVC: MyReviewCVCDelegate {
+    func restaurantNameTapped() {
+        print("됨?")
+        let vc = ModuleFactory.resolve().makeMainDetailVC()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func editButtonTapped() {
+        
+    }
+    
+    func deleteButtonTapped() {
+        
     }
 }
