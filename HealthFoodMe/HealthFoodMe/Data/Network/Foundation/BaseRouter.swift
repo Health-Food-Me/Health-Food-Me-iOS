@@ -83,7 +83,6 @@ extension BaseRouter {
             
         case .requestPlain:
             break
-            
         }
         
         return request
