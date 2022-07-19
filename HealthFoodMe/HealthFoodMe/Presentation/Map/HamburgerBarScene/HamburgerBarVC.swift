@@ -34,7 +34,6 @@ class HamburgerBarVC: UIViewController {
     private let buttonTitles: [String] = ["스크랩한 식당", "내가 쓴 리뷰", "가게 제보하기",
                                           "수정사항 제보하기"]
     private var dividingLineViews: [UIView] = []
-    var fontHeight: CGFloat = 0
     
     private let hamburgerBarView: UIView = {
         let view = UIView()
