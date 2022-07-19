@@ -547,7 +547,7 @@ extension MainMapVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? RestaurantSummaryEntity {
-                    
+                    self.mapDetailSummaryView.setData(data: data)
                 }
             default:
                 break

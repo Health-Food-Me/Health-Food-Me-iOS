@@ -174,6 +174,10 @@ extension NaverMapContainerView {
   }
     
     private func resetMarkers(_ points: [MapPointDataModel]) {
+        markers.forEach { marker in
+            marker.mapView = nil
+        }
+        markers = [NMFMarker]()
 //        for point in points {
 //            let NMGPosition = NMGLatLng(lat: point.latitude,
 //                                        lng: point.longtitude)
