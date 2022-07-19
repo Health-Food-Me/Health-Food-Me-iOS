@@ -10,6 +10,7 @@ import Alamofire
 enum AuthRouter {
     case postSocialLogin(socialType: String, token: String)
     case reissuanceAccessToken
+    case withdrawal(userId: String)
 }
 
 extension AuthRouter: BaseRouter {
@@ -17,6 +18,8 @@ extension AuthRouter: BaseRouter {
         switch self {
         case .postSocialLogin:
             return .post
+        case .withdrawal:
+            return .delete
         default :
             return .get
         }
@@ -28,6 +31,8 @@ extension AuthRouter: BaseRouter {
             return "/auth"
         case .reissuanceAccessToken:
             return "/auth/token"
+        case .withdrawal(let userId):
+            return "/auth/withdrawal/\(userId)"
         default:
             return ""
         }
@@ -41,6 +46,11 @@ extension AuthRouter: BaseRouter {
                 "token": token
             ]
             return .requestBody(requestBody)
+        case .withdrawal(let userId):
+            let requestParams: [String: Any] = [
+                "userId": userId
+            ]
+            return .query(requestParams)
         default:
             return .requestPlain
         }
@@ -52,6 +62,8 @@ extension AuthRouter: BaseRouter {
             return .default
         case .reissuanceAccessToken:
             return .reissuance
+        case .withdrawal:
+            return .withToken
         default:
             return .withToken
         }

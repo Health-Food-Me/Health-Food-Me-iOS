@@ -16,6 +16,7 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     // MARK: - Properties
     
     static var isFromNib: Bool = false
+    var foldState: Bool = false
     let disposeBag = DisposeBag()
     let toggleButtonTapped = PublishRelay<Void>()
     let telePhoneLabelTapped = PublishRelay<String>()
@@ -45,7 +46,9 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
         bt.addAction(UIAction(handler: { _ in
             bt.isSelected.toggle()
             self.toggleButtonTapped.accept(())
+            self.postObserverAction(.foldButtonClicked,object: self.foldState)
         }), for: .touchUpInside)
+        bt.isHidden = true
         return bt
     }()
     
@@ -66,6 +69,8 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
         setLayout()
+        addObservers()
+
     }
     
     required init?(coder: NSCoder) {
@@ -106,7 +111,13 @@ extension ExpandableInfoTVC {
         }
     }
     
-    func setUIWithIndex(indexPath: IndexPath) {
+    private func addObservers() {
+        addObserverAction(.foldButtonClicked) { _ in
+            self.toggleButton.isSelected.toggle()
+        }
+    }
+    
+    func setUIWithIndex(indexPath: IndexPath,isOpenned: Bool) {
         let isFirstRow = indexPath.row == 0
         let isSecondSection = indexPath.section == 1
         
@@ -114,8 +125,11 @@ extension ExpandableInfoTVC {
         case 0:
             iconImageView.image = ImageLiterals.MainDetail.locationIcon
             infoLabel.text = "서울특별시 중랑구 상봉동"
+            toggleButtonInfnoLabel.isHidden = true
         case 1:
+            print(isOpenned,"isOpened",indexPath.row)
             iconImageView.image = ImageLiterals.MainDetail.timeIcon
+            toggleButtonInfnoLabel.isHidden = false
         default:
             iconImageView.image = ImageLiterals.MainDetail.phoneIcon
             let telephoneString = "02-123-123"
@@ -123,6 +137,8 @@ extension ExpandableInfoTVC {
             attributeString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: telephoneString.count))
             infoLabel.attributedText = attributeString
             setTapGesture()
+            toggleButtonInfnoLabel.isHidden = true
+
         }
         
         iconImageView.isHidden = !isFirstRow
