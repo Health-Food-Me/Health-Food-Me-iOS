@@ -21,4 +21,8 @@ extension ReviewService {
                       decodingMode: .model,
                       completion: completion)
     }
+    
+    func requestUserReivew(userId: String, completion: @escaping(NetworkResult<Any>) -> Void) {
+        requestObject(ReviewRouter.requestUserReview(userId: userId), type: [ReviewListEntity].self, decodingMode: .model, completion: completion)
+    }
 }
