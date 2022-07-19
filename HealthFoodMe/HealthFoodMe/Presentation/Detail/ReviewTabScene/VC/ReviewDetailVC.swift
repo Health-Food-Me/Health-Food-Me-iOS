@@ -62,6 +62,11 @@ class ReviewDetailVC: UIViewController {
         setLayout()
         setDelegate()
         registerCell()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("뷰 보일거야")
         fetchData()
     }
 }
