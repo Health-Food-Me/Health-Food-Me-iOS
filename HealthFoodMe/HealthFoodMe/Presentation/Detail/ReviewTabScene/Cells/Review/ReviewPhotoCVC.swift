@@ -18,6 +18,7 @@ class ReviewPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
     private lazy var reviewImageView: UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 5
+        iv.clipsToBounds = true
         return iv
     }()
   
@@ -48,6 +49,6 @@ extension ReviewPhotoCVC {
     }
     
     func setData(photoData: String) {
-        reviewImageView.image = UIImage(named: photoData)
+        reviewImageView.setImage(with: photoData)
     }
 }

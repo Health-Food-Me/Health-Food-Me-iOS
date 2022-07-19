@@ -10,6 +10,8 @@ import UIKit
 
 enum ReviewRouter {
     case requestReviewWrite(userId: String, restaurantId: String, score: Double, taste: String, good: [String], content: String, image: [UIImage])
+    case getReviewList(restaurantId: String)
+    case requestUserReview(userId: String)
 }
 
 extension ReviewRouter: BaseRouter {
@@ -17,6 +19,8 @@ extension ReviewRouter: BaseRouter {
         switch self {
         case .requestReviewWrite:
             return .post
+        default:
+            return .get
         }
     }
     
@@ -26,13 +30,33 @@ extension ReviewRouter: BaseRouter {
     
     var path: String {
         switch self {
+        case .getReviewList(let restaurantId):
+            return "review/restaurant/\(restaurantId)/"
+        case .requestUserReview(let userId):
+            return "/review/user/\(userId)"
         case .requestReviewWrite(let userId, let restaurantId,_,_,_,_,_):
             return "/review/user/\(userId)/restaurant/\(restaurantId)"
+        default:
+            return ""
+            
         }
     }
     
     var parameters: RequestParams {
-        return .requestPlain
+        switch self {
+        case .getReviewList(let restaurantId):
+            let requestParams: [String: Any] = [
+                "restaurantId": restaurantId
+            ]
+            return .query(requestParams)
+        case .requestUserReview(let userId):
+            let requestParams: [String: Any] = [
+                "userId": userId
+            ]
+            return .query(requestParams)
+        default:
+            return .requestPlain
+        }
     }
     
     var multipart: MultipartFormData {
@@ -55,6 +79,16 @@ extension ReviewRouter: BaseRouter {
             }
             
             return multiPart
+       default: return MultipartFormData()
+    }
+
+    
+    var header: HeaderType {
+        switch self {
+        default:
+            return .withToken
         }
     }
+    }
 }
+

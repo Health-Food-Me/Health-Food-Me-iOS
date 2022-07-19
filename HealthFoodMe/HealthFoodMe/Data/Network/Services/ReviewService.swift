@@ -14,6 +14,13 @@ class ReviewService: BaseService {
 }
 
 extension ReviewService {
+    func requestReviewList(restaurantId: String,
+                           completion: @escaping(NetworkResult<Any>) -> Void) {
+        requestObject(ReviewRouter.getReviewList(restaurantId: restaurantId),
+                      type: [ReviewListEntity].self,
+                      decodingMode: .model,
+                      completion: completion)
+    }
     
     func requestReviewWrite(userId: String, restaurantId: String, score: Double, taste: String, good: [String], content: String, image: [UIImage], completion: @escaping (NetworkResult<Any>) -> Void) {
         
@@ -39,5 +46,8 @@ extension ReviewService {
                 print("ERR")
             }
         }
+    }
+    func requestUserReview(userId: String, completion: @escaping(NetworkResult<Any>) -> Void) {
+        requestObject(ReviewRouter.requestUserReview(userId: userId), type: [MyReviewEntity].self, decodingMode: .model, completion: completion)
     }
 }

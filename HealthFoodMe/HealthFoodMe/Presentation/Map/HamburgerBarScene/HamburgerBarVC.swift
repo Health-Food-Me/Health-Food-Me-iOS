@@ -42,20 +42,53 @@ class HamburgerBarVC: UIViewController {
         return view
     }()
 
+    private var hellowStackView: UIStackView = {
+        let st = UIStackView()
+        st.axis = .vertical
+        st.spacing = 3
+        st.distribution = .equalSpacing
+        st.alignment = .leading
+        return st
+    }()
+    
+    private var nickNameStackView: UIStackView = {
+        let st = UIStackView()
+        st.axis = .horizontal
+        st.spacing = 2
+        st.distribution = .equalSpacing
+        st.alignment = .center
+        return st
+    }()
+    
     private lazy var helloLabel: UILabel = {
         let lb = UILabel()
+        lb.text = I18N.Map.HamburgerBar.hello
+        lb.textColor = .helfmeBlack
+        lb.font = UIFont.NotoRegular(size: 18)
+        
+        return lb
+    }()
+    
+    private lazy var nickNameLabel: UILabel = {
+        let lb = UILabel()
         if let name = name {
-            lb.text =
-    """
-    안녕하세요!
-    \(name)님
-    오늘도 헬푸미하세요
-    """
+            lb.text = "\(name)님"
         }
         lb.textColor = .helfmeBlack
-        lb.font = UIFont.PretendardRegular(size: 18)
-        lb.numberOfLines = 3
-        lb.setLineSpacing(lineSpacing: 3)
+        lb.font = UIFont.NotoRegular(size: 18)
+        
+        var text = name ?? ""
+        print(text)
+        lb.partFontChange(targetString: text, font: .NotoMedium(size: 18))
+        
+        return lb
+    }()
+    
+    private lazy var todayHelfmeLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = I18N.Map.HamburgerBar.todayHelfume
+        lb.textColor = .helfmeBlack
+        lb.font = UIFont.NotoRegular(size: 18)
         
         return lb
     }()
@@ -98,7 +131,7 @@ class HamburgerBarVC: UIViewController {
     private var reportButtonStackView: UIStackView = {
         let st = UIStackView()
         st.axis = .vertical
-        st.spacing = 20
+        st.spacing = 19
         st.distribution = .equalSpacing
         st.alignment = .leading
         
@@ -137,6 +170,7 @@ extension HamburgerBarVC {
     private func setUI() {
         setButtons()
         setDivindingView()
+        setHellowStackView()
         self.view.backgroundColor = .clear
     }
     
@@ -163,13 +197,18 @@ extension HamburgerBarVC {
             dividingLineViews.append(view)
         }
     }
+    
+    private func setHellowStackView() {
+        nickNameStackView.addArrangedSubviews(nickNameLabel, editNameButton)
+        hellowStackView.addArrangedSubviews(helloLabel, nickNameStackView, todayHelfmeLabel)
+    }
 
     private func setLayout() {
         view.addSubviews(hamburgerBarView
     )
         
-        hamburgerBarView.addSubviews(helloLabel,
-                                     editNameButton, storeButtonStackView, reportButtonStackView,
+        hamburgerBarView.addSubviews(hellowStackView,
+                                     storeButtonStackView, reportButtonStackView,
                                      settingButton, logoutButton, dividingLineViews[0],
                                      dividingLineViews[1], dividingLineViews[2])
         
@@ -180,19 +219,19 @@ extension HamburgerBarVC {
             make.trailing.equalToSuperview().inset(screenWidth)
         }
         
-        helloLabel.snp.makeConstraints { make in
+        hellowStackView.snp.makeConstraints { make in
             make.top.equalTo(hamburgerBarView).inset(96)
             make.leading.equalTo(hamburgerBarView).inset(20)
         }
         
-        editNameButton.snp.makeConstraints { make in
-            make.centerY.equalTo(helloLabel.snp.centerY)
-            make.leading.equalTo(helloLabel.snp.trailing).offset(8)
-        }
+//        editNameButton.snp.makeConstraints { make in
+//            make.centerY.equalTo(hellowStackView.snp.centerY)
+//            make.leading.equalTo(hellowStackView.snp.trailing).offset(8)
+//        }
         
         dividingLineViews[0].snp.makeConstraints { make in
             make.width.equalTo(hamburgerBarView)
-            make.top.equalTo(helloLabel.snp.bottom).offset(38)
+            make.top.equalTo(hellowStackView.snp.bottom).offset(38)
             make.height.equalTo(1)
             make.leading.equalTo(hamburgerBarView).inset(0)
         }

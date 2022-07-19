@@ -10,11 +10,15 @@ import UIKit
 import Lottie
 
 class SplashVC: UIViewController {
-  
+    
+    // MARK: - Properties
+    
+    let userManager = UserManager.shared
+    
     // MARK: - UI Components
     
     private let animationView: AnimationView = .init(name: "splash_ios")
-  
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -22,7 +26,7 @@ class SplashVC: UIViewController {
         setUI()
         setLayout()
         playAnimation()
-        presentToMainMap()
+        checkLoginStatusAndPresentVC()
     }
 }
 
@@ -35,7 +39,7 @@ extension SplashVC {
     
     private func setLayout() {
         self.view.addSubview(animationView)
-
+        
         animationView.frame = self.view.bounds
         animationView.center = self.view.center
         animationView.contentMode = .scaleAspectFit
@@ -45,11 +49,25 @@ extension SplashVC {
         animationView.play()
     }
     
-    private func presentToMainMap() {
+    private func presentMainMapVC() {
+        let nav = ModuleFactory.resolve().makeMainMapNavigationController()
+        nav.modalPresentationStyle = .overFullScreen
+        self.present(nav, animated: false)
+    }
+    
+    private func presentSocialLoginVC() {
+        let vc = ModuleFactory.resolve().makeLoginVC()
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: false)
+    }
+    
+    private func checkLoginStatusAndPresentVC() {
         DispatchQueue.main.asyncAfter(deadline: .now()+3) {
-            let vc = ModuleFactory.resolve().makeLoginVC()
-            vc.modalPresentationStyle = .overFullScreen
-            self.present(vc, animated: false)
+            if self.userManager.isLogin == true {
+                self.requestSocialLogin()
+            } else {
+                self.presentSocialLoginVC()
+            }
         }
     }
 }
@@ -57,5 +75,28 @@ extension SplashVC {
 // MARK: - Network
 
 extension SplashVC {
-
+    private func requestSocialLogin() {
+        var socialType = ""
+        if userManager.isAppleLoginned {
+            socialType = "apple"
+        } else {
+            socialType = "kakao"
+        }
+        AuthService.shared.requestAuth(social: socialType, token: userManager.getSocialToken) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? SocialLoginEntity?,
+                   let user = data?.user,
+                   let access = data?.accessToken,
+                   let refresh = data?.refreshToken {
+                    self.userManager.setCurrentUser(user)
+                    self.userManager.updateAuthToken(access, refresh)
+                    self.presentMainMapVC()
+                }
+                break
+            default:
+                print("소셜 토큰 에러")
+            }
+        }
+    }
 }

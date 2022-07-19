@@ -13,7 +13,7 @@ struct ReviewWriteEntity: Codable {
     let restaurant, writer: String
     let score: Int
     let content: String
-    let image: [Image]
+    let image: [ReviewWriteImage]
     let taste: String
     let good: [String]
     let id: String
@@ -27,7 +27,7 @@ struct ReviewWriteEntity: Codable {
 }
 
 // MARK: - Image
-struct Image: Codable {
+struct ReviewWriteImage: Codable {
     let name: String
     let url: String
     let id: String

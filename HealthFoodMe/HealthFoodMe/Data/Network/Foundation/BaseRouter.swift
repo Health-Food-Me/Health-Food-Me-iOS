@@ -41,14 +41,19 @@ extension BaseRouter {
             
         case .withToken:
             request.setValue(HeaderContent.json.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
-            request.setValue(HeaderContent.tokenSerial.rawValue, forHTTPHeaderField: HTTPHeaderField.accesstoken.rawValue)
+            request.setValue(UserManager.shared.getAccessToken, forHTTPHeaderField: HTTPHeaderField.accesstoken.rawValue)
             
         case .multiPart:
             request.setValue(HeaderContent.multiPart.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
             
         case .multiPartWithToken:
             request.setValue(HeaderContent.multiPart.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
-            request.setValue(HeaderContent.tokenSerial.rawValue, forHTTPHeaderField: HTTPHeaderField.accesstoken.rawValue)
+            request.setValue(UserManager.shared.getAccessToken, forHTTPHeaderField: HTTPHeaderField.accesstoken.rawValue)
+            
+        case .reissuance:
+            request.setValue(HeaderContent.json.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
+            request.setValue(UserManager.shared.getAccessToken, forHTTPHeaderField: HTTPHeaderField.accesstokenForReissuance.rawValue)
+            request.setValue(UserManager.shared.getRefreshToken, forHTTPHeaderField: HTTPHeaderField.refreshtoken.rawValue)
         }
         
         return request
@@ -78,7 +83,6 @@ extension BaseRouter {
             
         case .requestPlain:
             break
-            
         }
         
         return request
