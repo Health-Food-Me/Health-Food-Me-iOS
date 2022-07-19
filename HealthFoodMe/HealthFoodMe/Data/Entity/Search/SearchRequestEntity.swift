@@ -10,6 +10,5 @@ import Foundation
 struct SearchRequestEntity: Codable {
     let longtitude: Double
     let latitude: Double
-    let zoom: Double
     let keyword: String
 }
