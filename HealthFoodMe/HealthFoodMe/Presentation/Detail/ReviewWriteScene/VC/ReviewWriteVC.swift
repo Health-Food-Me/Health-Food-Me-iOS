@@ -26,6 +26,8 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     var userSelectedImages: [UIImage] = [UIImage]()
     var tasteSet = ""
     var feelingArray: [Bool] = [false, false, false]
+    var userId = "62d4e84f0ff2f900ea88bec3" //임시로 넣어준 userID
+    var restaurantID = "62d26c9bd11146a81ef18ea6" //임시로 넣어준 식당ID
     private var currentRate: Double = 0
     
     // MARK: - UI Components
@@ -46,7 +48,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var restaurantTitleLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "샐러디 태릉입구점"
+        lb.text = "샐러디 태릉입구점(임시)"
         lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 16)
         return lb
@@ -675,7 +677,7 @@ extension ReviewWriteVC {
         if !checkReview() {
             showReviewToast()
         } else {
-            makeAlert(title: "알림", message: "작성완료!")
+            requestReviewWrite()
         }
     }
     
@@ -769,7 +771,40 @@ extension ReviewWriteVC {
 // MARK: - Network
 
 extension ReviewWriteVC {
-    
+    func requestReviewWrite() {
+        let starScore = self.currentRate
+        let taste = tasteSet
+        var good : [String] = []
+        for i in 0...2 {
+            if feelingArray[i] == true{
+                switch i{
+                case 0:
+                    good.append("# 약속 시 부담없는")
+                case 1:
+                    good.append("# 양 조절 쉬운")
+                case 2:
+                    good.append("# 든든한")
+                default:
+                    print("음")
+                }
+            }
+        }
+
+        guard let content = reviewTextView.text else { return }
+        let image = photoModel.userSelectedImages
+        print("12\(image)")
+        ReviewService.shared.requestReviewWrite(userId: userId, restaurantId: restaurantID, score: starScore, taste: taste, good: good, content: content, image: image) { networkResult in
+            dump(networkResult)
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? ReviewWriteEntity {
+                    print(data, "성공")
+                }
+            default:
+                break;
+            }
+        }
+    }
 }
 
 extension ReviewWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
