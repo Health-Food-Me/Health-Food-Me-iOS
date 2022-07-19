@@ -53,7 +53,7 @@ final class URLSchemeManager: NSObject {
     
     func loadSafariApp(blogLink: String) {
         let blogURL: String = blogLink
-        if let url = NSURL(string: "https://" + "\(blogURL)"),
+        if let url = NSURL(string: "\(blogURL)"),
            UIApplication.shared.canOpenURL(url as URL) {
             UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
         }
