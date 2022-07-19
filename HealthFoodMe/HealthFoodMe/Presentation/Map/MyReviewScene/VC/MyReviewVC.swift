@@ -32,6 +32,20 @@ class MyReviewVC: UIViewController {
     
     // MARK: - UI Components
     
+    private let statusTopView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private lazy var customNavigationBar: HelfmeNaviBar = {
+        let view = HelfmeNaviBar()
+        view.buttonClosure = {
+            self.popViewController()
+        }
+        return view
+    }()
+    
     private lazy var reviewCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
@@ -75,13 +89,26 @@ extension MyReviewVC {
     
     private func setUI() {
         view.backgroundColor = .helfmeWhite
+        customNavigationBar.setTitleView(title: "내가 쓴 리뷰")
     }
     
     private func setLayout() {
-        view.addSubviews(reviewCV)
+        view.addSubviews(statusTopView, customNavigationBar, reviewCV)
+        
+        statusTopView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.bottom.equalTo(customNavigationBar.snp.top)
+            make.leading.trailing.equalToSuperview()
+        }
+        
+        customNavigationBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+        }
         
         reviewCV.snp.makeConstraints { make in
-            make.top.trailing.bottom.leading.equalToSuperview()
+            make.trailing.bottom.leading.equalToSuperview()
+            make.top.equalTo(customNavigationBar.snp.bottom)
         }
     }
     
@@ -205,6 +232,10 @@ extension MyReviewVC {
             }
             self.reviewCV.reloadData()
         }
+    }
+    
+    private func popViewController() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
