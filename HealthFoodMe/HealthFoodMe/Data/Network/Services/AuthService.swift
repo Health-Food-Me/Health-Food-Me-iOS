@@ -22,4 +22,12 @@ extension AuthService {
     func reissuanceAccessToken(completion: @escaping(NetworkResult<Any>) -> Void) {
         requestObject(AuthRouter.reissuanceAccessToken, type: ReissunaceEntity.self, decodingMode: .model, completion: completion)
     }
+    
+    func withdrawalAuth(userId: String,
+                        completion: @escaping(NetworkResult<Any>) -> Void) {
+        requestObject(AuthRouter.withdrawal(userId: userId),
+                      type: withdrawalEntity.self,
+                      decodingMode: .general,
+                      completion: completion)
+    }
 }
