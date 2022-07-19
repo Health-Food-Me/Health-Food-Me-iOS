@@ -177,6 +177,10 @@ extension MapDetailSummaryView {
     private func registerCell() {
         TagSummaryCVC.register(target: tagCollectionView)
     }
+    
+    func setData() {
+        
+    }
 }
 
 extension MapDetailSummaryView: UICollectionViewDelegate {

@@ -65,6 +65,12 @@ extension RestaurantRouter: BaseRouter {
                 "category": category
             ]
             return .query(requestQuery)
+        case .fetchRestaurantSummary(let restaurantId, let userId):
+            let requestQuery: [String: Any] = [
+                "restaurantId": restaurantId,
+                "userId": userId
+            ]
+            return .query(requestQuery)
         default:
             return .requestPlain
         }
@@ -72,8 +78,6 @@ extension RestaurantRouter: BaseRouter {
     
     var header: HeaderType {
         switch self{
-        case .requestRestaurantSearch:
-            return .withToken
         default:
             return .withToken
         }

@@ -11,6 +11,7 @@ import UIKit
 import NMapsMap
 import RxSwift
 import SnapKit
+import SwiftUI
 
 class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
@@ -32,6 +33,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
             categoryCollectionView.reloadData()
         }
     }
+    private var restaurantData: [MainMapEntity] = []
     var viewModel: MainMapViewModel!
     
     
@@ -345,11 +347,16 @@ extension MainMapVC {
                 let accumulate = MapAccumulationCalculator.zoomLevelToDistance(level: zoomLevel)
                 self.currentZoom = Double(accumulate)
                 self.fetchRestaurantList(zoom: Double(accumulate))
-                
             }).disposed(by: self.disposeBag)
         
         mapView.setSelectPoint
             .subscribe(onNext: { [weak self] dataModel in
+                let NMGPosition = NMGLatLng(lat: dataModel.latitude,
+                                            lng: dataModel.longtitude)
+                if let restaurantId = self?.matchRestaurantId(position: NMGPosition) {
+                    self?.fetchRestaurantSummary(id: restaurantId)
+                }
+                
                 let summaryViewHeight: CGFloat = 189
                 self?.mapDetailSummaryView.snp.updateConstraints { make in
                     make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
@@ -422,6 +429,17 @@ extension MainMapVC {
         if !hasCurrent {
             currentCategory = ""
         }
+    }
+    
+    private func matchRestaurantId(position: NMGLatLng) -> String {
+        var id = ""
+        restaurantData.forEach { entity in
+            if entity.latitude == position.lat,
+               entity.longitude == position.lng {
+                id = entity.id
+            }
+        }
+        return id
     }
     
     @objc
@@ -509,6 +527,7 @@ extension MainMapVC {
                 switch networkResult {
                 case .success(let data):
                     if let data = data as? [MainMapEntity] {
+                        self.restaurantData = data
                         var models = [MapPointDataModel]()
                         models = data.map({ entity in
                             entity.toDomain()
@@ -519,6 +538,19 @@ extension MainMapVC {
                 default:
                     break
                 }
+            }
+        }
+    }
+    
+    private func fetchRestaurantSummary(id: String) {
+        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser?.id ?? "") { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? RestaurantSummaryEntity {
+                    
+                }
+            default:
+                break
             }
         }
     }
