@@ -52,7 +52,6 @@ final class SearchResultVC: UIViewController {
         let btn = UIButton()
         btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 12)
         btn.setImage(ImageLiterals.Search.beforeIcon, for: .normal)
-        btn.addTarget(self, action: #selector(popToSearchVC), for: .touchUpInside)
         return btn
     }()
     
@@ -60,7 +59,6 @@ final class SearchResultVC: UIViewController {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Search.xIcon, for: .normal)
         btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
-        btn.addTarget(self, action: #selector(popToMainMapVC), for: .touchUpInside)
         return btn
     }()
     
@@ -72,16 +70,27 @@ final class SearchResultVC: UIViewController {
     
     private let searchResultHeaderView: UIView = UIView()
     
-    private lazy var searchResultHeaderButton: UIButton = {
+    private lazy var viewMapButton: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Search.viewMapBtn, for: .normal)
         btn.setTitle(I18N.Search.searchMap, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray1, for: .normal)
-        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.titleLabel?.font = .NotoRegular(size: 12)
         btn.isHidden = true
-        btn.addTarget(self, action: #selector(moveSearchResultView), for: .touchUpInside)
         btn.semanticContentAttribute = .forceLeftToRight
-        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 10)
+        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 6)
+        return btn
+    }()
+    
+    private lazy var viewListButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(ImageLiterals.Search.viewListBtn, for: .normal)
+        btn.setTitle(I18N.Search.searchList, for: .normal)
+        btn.setTitleColor(UIColor.helfmeGray1, for: .normal)
+        btn.titleLabel?.font = .NotoRegular(size: 12)
+        btn.isHidden = true
+        btn.semanticContentAttribute = .forceLeftToRight
+        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 6)
         return btn
     }()
     
@@ -93,7 +102,6 @@ final class SearchResultVC: UIViewController {
         tv.backgroundColor = .helfmeWhite
         tv.keyboardDismissMode = .onDrag
         tv.tableHeaderView = searchResultHeaderView
-        tv.tableHeaderView?.frame.size.height = 42
         tv.layer.applyShadow(color: .black,
                              alpha: 0.1,
                              x: 0,
@@ -115,31 +123,11 @@ final class SearchResultVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setChildViewController()
-        initUI()
         setUI()
+        addBtnAction()
         setLayout()
         setDelegate()
         registerCell()
-    }
-}
-
-// MARK: - @objc Methods
-
-extension SearchResultVC {
-    @objc func popToSearchVC() {
-        delegate?.searchResultVCSearchType(type: .recent)
-        navigationController?.popViewController(animated: false)
-    }
-    
-    @objc func moveSearchResultView() {
-        initUI()
-    }
-    
-    @objc func popToMainMapVC() {
-        guard let vcs = navigationController?.viewControllers else { return }
-        for vc in vcs {
-            navigationController?.popToViewController(vc, animated: true)
-        }
     }
 }
 
@@ -154,20 +142,32 @@ extension SearchResultVC {
         mapViewController.didMove(toParent: self)
     }
     
-    private func initUI() {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: self.height - self.height/3.3)
-        })
-        searchResultTableView.layer.shadowOpacity = 0.1
-        searchResultHeaderButton.isHidden = true
-        searchResultLineView.isHidden = false
-        searchResultTableView.layer.cornerRadius = 15
-        isBottom = true
-    }
-    
     private func setUI() {
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .helfmeWhite
+        viewMap()
+    }
+    
+    private func addBtnAction() {
+        backButton.press {
+            self.delegate?.searchResultVCSearchType(type: .recent)
+            self.navigationController?.popViewController(animated: false)
+        }
+        
+        resultCloseButton.press {
+            guard let vcs = self.navigationController?.viewControllers else { return }
+            for vc in vcs {
+                self.navigationController?.popToViewController(vc, animated: true)
+            }
+        }
+        
+        viewMapButton.press {
+            self.viewMap()
+        }
+        
+        viewListButton.press {
+            self.viewList()
+        }
     }
     
     private func setLayout() {
@@ -203,13 +203,20 @@ extension SearchResultVC {
             $0.height.equalTo(1)
         }
         
-        searchResultHeaderView.addSubviews(searchResultHeaderButton)
+        searchResultHeaderView.addSubviews(viewMapButton, viewListButton)
         
-        searchResultHeaderButton.snp.makeConstraints {
-            $0.trailing.equalTo(searchResultHeaderView.snp.trailing).inset(20)
-            $0.centerY.equalTo(searchResultHeaderView)
-            $0.width.equalTo(105)
-            $0.height.equalTo(20)
+        viewMapButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.equalTo(67)
+            $0.height.equalTo(16)
+        }
+        
+        viewListButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.equalTo(67)
+            $0.height.equalTo(14)
         }
         
         searchResultTableView.snp.makeConstraints {
@@ -236,6 +243,36 @@ extension SearchResultVC {
     
     private func registerCell() {
         SearchResultTVC.register(target: searchResultTableView)
+    }
+    
+    private func viewMap() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 585)
+        })
+        searchResultTableView.tableHeaderView?.frame.size.height = 40
+        isBottom = true
+        searchResultTableView.layer.shadowOpacity = 0.1
+        searchResultTableView.layer.cornerRadius = 15
+        searchResultLineView.isHidden = false
+        viewMapButton.isHidden = true
+        viewListButton.isHidden = false
+    }
+    
+    private func viewList() {
+        UIView.animate(withDuration: 0.2) {
+            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.viewMapButton.isHidden = false
+        } completion: { _ in
+            self.view.bringSubviewToFront(self.topView)
+            self.view.bringSubviewToFront(self.searchTextField)
+        }
+        searchResultTableView.tableHeaderView?.frame.size.height = 50
+        isBottom = false
+        searchResultTableView.layer.cornerRadius = 0
+        searchResultTableView.layer.shadowOpacity = 0
+        searchResultLineView.isHidden = true
+        viewMapButton.isHidden = false
+        viewListButton.isHidden = true
     }
 }
 
@@ -272,21 +309,11 @@ extension SearchResultVC: UITableViewDataSource {
 
 extension SearchResultVC: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y == 0 && isBottom {
-            self.searchResultTableView.isScrollEnabled = false
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear) {
-                self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 0)
-                self.searchResultHeaderButton.isHidden = false
-            } completion: { _ in
-                self.view.bringSubviewToFront(self.topView)
-                self.view.bringSubviewToFront(self.searchTextField)
+        if scrollView.contentOffset.y == 0 {
+            if isBottom {
+                viewList()
             }
         }
-        isBottom = false
-        searchResultTableView.layer.cornerRadius = 0
-        searchResultTableView.layer.shadowOpacity = 0
-        searchResultLineView.isHidden = true
-        searchResultTableView.isScrollEnabled = true
     }
 }
 

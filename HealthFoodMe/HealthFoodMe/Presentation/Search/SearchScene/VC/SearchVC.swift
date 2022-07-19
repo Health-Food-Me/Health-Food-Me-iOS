@@ -95,16 +95,16 @@ final class SearchVC: UIViewController {
         return lb
     }()
     
-    private lazy var resultHeaderButton: UIButton = {
+    private lazy var viewMapButton: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Search.viewMapBtn, for: .normal)
         btn.setTitle(I18N.Search.searchMap, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray1, for: .normal)
-        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.titleLabel?.font = .NotoRegular(size: 12)
         btn.isHidden = true
         btn.addTarget(self, action: #selector(pushToSearchResultVC), for: .touchUpInside)
         btn.semanticContentAttribute = .forceLeftToRight
-        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 10)
+        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 20)
         return btn
     }()
     
@@ -116,7 +116,7 @@ final class SearchVC: UIViewController {
         tv.backgroundColor = .helfmeWhite
         tv.keyboardDismissMode = .onDrag
         tv.tableHeaderView = searchHeaderView
-        tv.tableHeaderView?.frame.size.height = 56
+        tv.tableHeaderView?.frame.size.height = 40
         return tv
     }()
     
@@ -203,6 +203,7 @@ extension SearchVC {
         dismissKeyboard()
         self.navigationController?.isNavigationBarHidden = true
         searchTextField.text?.removeAll()
+        searchTextField.becomeFirstResponder()
         searchEmptyView.isHidden = true
     }
     
@@ -238,18 +239,18 @@ extension SearchVC {
             $0.height.equalTo(1)
         }
         
-        searchHeaderView.addSubviews(recentHeaderLabel, resultHeaderButton)
+        searchHeaderView.addSubviews(recentHeaderLabel, viewMapButton)
         
         recentHeaderLabel.snp.makeConstraints {
             $0.top.equalTo(searchHeaderView.snp.top).offset(20)
             $0.leading.equalTo(searchHeaderView.snp.leading).inset(20)
         }
         
-        resultHeaderButton.snp.makeConstraints {
-            $0.trailing.equalTo(searchHeaderView.snp.trailing).inset(20)
-            $0.centerY.equalTo(searchHeaderView)
-            $0.width.equalTo(105)
-            $0.height.equalTo(20)
+        viewMapButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.equalTo(67)
+            $0.height.equalTo(16)
         }
         
         searchView.snp.makeConstraints {
@@ -300,7 +301,7 @@ extension SearchVC {
         searchTableView.tableHeaderView = searchHeaderView
         searchTableView.tableHeaderView?.frame.size.height = 56
         recentHeaderLabel.isHidden = false
-        resultHeaderButton.isHidden = true
+        viewMapButton.isHidden = true
         searchEmptyView.isHidden = true
         searchType = .recent
     }
@@ -329,7 +330,7 @@ extension SearchVC {
             searchTableView.tableHeaderView = searchHeaderView
             searchTableView.tableHeaderView?.frame.size.height = 42
             recentHeaderLabel.isHidden = true
-            resultHeaderButton.isHidden = false
+            viewMapButton.isHidden = false
             searchType = .searchResult
         }
     }
