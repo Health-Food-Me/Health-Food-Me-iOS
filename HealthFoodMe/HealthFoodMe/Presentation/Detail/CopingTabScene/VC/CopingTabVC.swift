@@ -12,6 +12,7 @@ import RxCocoa
 
 protocol CopingGestureDelegate {
     func panGestureSwipe(isRight: Bool)
+    func downPanGestureSwipe(panGesture: ControlEvent<UIPanGestureRecognizer>.Element)
 }
 
 class CopingTabVC: UIViewController {
@@ -43,6 +44,7 @@ class CopingTabVC: UIViewController {
     private let headerHeight = 130
     private let rowHeight = 38
     private let bottomMargin = 120
+    var swipeDelegate: SwipeDismissDelegate?
     
     // MARK: - UI Components
     
@@ -162,6 +164,7 @@ extension CopingTabVC {
                     self?.delegate?.scrollStarted(velocity: -10, scrollView: UIScrollView())
                     
                 case (true, _, let y) where y > 0:
+                    self?.swipeDelegate?.swipeToDismiss()
                     self?.delegate?.childViewScrollDidEnd(type: .coping)
                     
                 case (false, let x, _) where x > 0:
