@@ -6,8 +6,10 @@
 //
 
 import Alamofire
+import UIKit
 
 enum ReviewRouter {
+    case requestReviewWrite(userId: String, restaurantId: String, score: Double, taste: String, good: [String], content: String, image: [UIImage])
     case getReviewList(restaurantId: String)
     case requestUserReview(userId: String)
     case getBlogReviewList(restaurantName: String)
@@ -16,9 +18,15 @@ enum ReviewRouter {
 extension ReviewRouter: BaseRouter {
     var method: HTTPMethod {
         switch self {
-        default :
+        case .requestReviewWrite:
+            return .post
+        default:
             return .get
         }
+    }
+    
+    var header: HeaderType {
+        return .multiPartWithToken
     }
     
     var path: String {
@@ -27,10 +35,13 @@ extension ReviewRouter: BaseRouter {
             return "review/restaurant/\(restaurantId)/"
         case .requestUserReview(let userId):
             return "/review/user/\(userId)"
+        case .requestReviewWrite(let userId, let restaurantId,_,_,_,_,_):
+            return "/review/user/\(userId)/restaurant/\(restaurantId)"
         case .getBlogReviewList(let restaurantName):
             return "review/restaurant/\(restaurantName)/blog"
         default:
             return ""
+            
         }
     }
     
@@ -56,10 +67,35 @@ extension ReviewRouter: BaseRouter {
         }
     }
     
+    var multipart: MultipartFormData {
+        switch self {
+        case .requestReviewWrite(_,_,let score, let taste, let good, let content, let image):
+            let multiPart = MultipartFormData()
+            
+            multiPart.append(Data(String(score).utf8), withName: "score")
+            multiPart.append(Data(taste.utf8), withName: "taste")
+            good.forEach {
+                let data = Data(String($0).utf8)
+                multiPart.append(data, withName: "good")
+            }
+            multiPart.append(Data(content.utf8), withName: "content")
+            for (index, item) in image.enumerated() {
+                print(index, item)
+                if let imageData = item.pngData() {
+                    multiPart.append(imageData, withName: "image", fileName: "image\(index).png", mimeType: "image/png")
+                }
+            }
+            
+            return multiPart
+       default: return MultipartFormData()
+    }
+
     var header: HeaderType {
         switch self {
         default:
             return .withToken
         }
     }
+    }
 }
+
