@@ -9,6 +9,7 @@ import UIKit
 
 import RealmSwift
 import SnapKit
+import NMapsMap
 
 enum SearchType {
     case recent
@@ -20,6 +21,7 @@ final class SearchVC: UIViewController {
     
     // MARK: - Properties
     
+    private let locationManager = NMFLocationManager.sharedInstance()
     let realm = try? Realm()
     var searchType: SearchType = SearchType.recent {
         didSet {
@@ -198,6 +200,21 @@ extension SearchVC {
         }
     }
     
+    private func fetchSearchResultData(keyword: String, fromRecent: Bool) {
+        let NMGPosition = self.locationManager?.currentLatLng()
+        var lng:Double = 0.0
+        var lat:Double = 0.0
+        if let position = NMGPosition {
+            lng = position.lng
+            lat = position.lat
+        } else {
+            lng = LocationLiterals.gangnamStation.lng
+            lat = LocationLiterals.gangnamStation.lat
+        }
+        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: lng, latitude: lat,
+                                                                       keyword: keyword), fromRecent: fromRecent)
+    }
+    
     private func setUI() {
         view.backgroundColor = .helfmeWhite
         dismissKeyboard()
@@ -341,8 +358,7 @@ extension SearchVC {
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let text = searchTextField.text {
-            requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: 1, latitude: 1, zoom: 0,
-                                                                           keyword: text), fromRecent: false)
+            fetchSearchResultData(keyword: text, fromRecent: false)
         }
         return true
     }
@@ -414,8 +430,7 @@ extension SearchVC: UITableViewDataSource {
         switch searchType {
         case .recent:
             searchTextField.text = searchRecentList[indexPath.row]
-            requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: 0, latitude: 0, zoom: 0,
-                                                                             keyword: searchRecentList[indexPath.row]), fromRecent: true)
+            fetchSearchResultData(keyword: searchRecentList[indexPath.row], fromRecent: true)
             addSearchRecent(title: searchRecentList[indexPath.row])
         case .search:
             // 화면 전환 코드 추가해야 됨
@@ -479,7 +494,6 @@ extension SearchVC {
     private func requestRestaurantSearchResult(searchRequest: SearchRequestEntity, fromRecent: Bool) {
         RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: searchRequest.longtitude,
                                                                                                   latitude: searchRequest.latitude,
-                                                                                                  zoom: searchRequest.zoom,
                                                                                                   keyword: searchRequest.keyword)) { networkResult in
             switch networkResult {
             case .success(let data):
