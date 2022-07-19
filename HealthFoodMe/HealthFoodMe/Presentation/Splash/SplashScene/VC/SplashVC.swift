@@ -10,11 +10,15 @@ import UIKit
 import Lottie
 
 class SplashVC: UIViewController {
-  
+    
+    // MARK: - Properties
+    
+    let userManager = UserManager.shared
+    
     // MARK: - UI Components
     
     private let animationView: AnimationView = .init(name: "splash_ios")
-  
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -22,7 +26,7 @@ class SplashVC: UIViewController {
         setUI()
         setLayout()
         playAnimation()
-        presentToMainMap()
+        checkLoginStatusAndPresentVC()
     }
 }
 
@@ -35,7 +39,7 @@ extension SplashVC {
     
     private func setLayout() {
         self.view.addSubview(animationView)
-
+        
         animationView.frame = self.view.bounds
         animationView.center = self.view.center
         animationView.contentMode = .scaleAspectFit
@@ -45,11 +49,25 @@ extension SplashVC {
         animationView.play()
     }
     
-    private func presentToMainMap() {
+    private func presentMainMapVC() {
+        let vc = ModuleFactory.resolve().makeMainMapVC()
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: false)
+    }
+    
+    private func presentSocialLoginVC() {
+        let vc = ModuleFactory.resolve().makeLoginVC()
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: false)
+    }
+    
+    private func checkLoginStatusAndPresentVC() {
         DispatchQueue.main.asyncAfter(deadline: .now()+3) {
-            let vc = ModuleFactory.resolve().makeLoginVC()
-            vc.modalPresentationStyle = .overFullScreen
-            self.present(vc, animated: false)
+            if self.userManager.isLogin == true {
+                self.reissuanceToken()
+            } else {
+                self.presentSocialLoginVC()
+            }
         }
     }
 }
@@ -57,5 +75,14 @@ extension SplashVC {
 // MARK: - Network
 
 extension SplashVC {
-
+    private func reissuanceToken() {
+        print("하이")
+        userManager.reissuanceAccessToken() { success in
+            if success {
+                self.presentMainMapVC()
+            } else {
+                self.presentSocialLoginVC()
+            }
+        }
+    }
 }
