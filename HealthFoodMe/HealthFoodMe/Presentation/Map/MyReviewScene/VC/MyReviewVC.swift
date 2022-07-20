@@ -41,6 +41,7 @@ class MyReviewVC: UIViewController {
     
     private lazy var customNavigationBar: HelfmeNaviBar = {
         let view = HelfmeNaviBar()
+        view.setTitleView(title: I18N.MyReview.myReviewTitle)
         view.buttonClosure = {
             self.popViewController()
         }

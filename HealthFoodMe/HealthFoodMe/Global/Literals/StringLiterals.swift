@@ -133,6 +133,7 @@ struct I18N {
     }
     
     struct MyReview {
+        static let myReviewTitle = "내가 쓴 리뷰"
         static let enjoyRestaurant = "다이어터도 즐길 수 있는"
         static let gotoFindRestaurant = "식당 보러 가기"
     }
