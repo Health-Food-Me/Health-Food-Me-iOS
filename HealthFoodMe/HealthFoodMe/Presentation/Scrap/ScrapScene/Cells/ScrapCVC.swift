@@ -81,7 +81,6 @@ extension ScrapCVC {
         storeImageView.image = UIImage(named: data.logo)
         storeNameLabel.text = data.name
         locationLabel.text = data.address
-        restaurantId = data._id
     }
     
     private func setUI() {
