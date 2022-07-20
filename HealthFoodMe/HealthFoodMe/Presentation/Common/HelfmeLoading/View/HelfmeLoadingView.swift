@@ -10,11 +10,16 @@ import UIKit
 import Lottie
 import SnapKit
 
-class HelfmeLoadingVC: UIView {
+class HelfmeLoadingView: UIView {
+    
+    // MARK: - Properties
+    
+    static let shared = HelfmeLoadingView()
+    
+    // MARK: - UI Components
+    
     private var contentView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black.withAlphaComponent(0.4)
-        view.alpha = 0
         return view
     }()
     
@@ -24,27 +29,53 @@ class HelfmeLoadingVC: UIView {
         
         return animationView
     }()
+    
+    // MARK: - View Life Cycle
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setLayout()
+        setUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
-extension HelfmeLoadingVC {
+// MARK: - Extension
+
+extension HelfmeLoadingView {
     private func setLayout() {
         self.addSubview(contentView)
-        contentView.addSubview(loadingView)
-        
-        contentView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        contentView.addSubview(self.loadingView)
+
+        self.contentView.snp.makeConstraints {
+          $0.center.equalTo(self.safeAreaLayoutGuide)
         }
-        
-        loadingView.snp.makeConstraints { make in
-            make.center.equalTo(safeAreaLayoutGuide)
-            make.size.equalTo(300)
+        self.loadingView.snp.makeConstraints {
+          $0.center.equalTo(self.safeAreaLayoutGuide)
         }
     }
     
+    private func setUI() {
+        self.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
+    }
+    
     func show() {
-        guard !AppDelegate.window.subviews.contains(where: {$0 is HelfmeLoadingVC})
+        guard let window = UIApplication.shared.windows.last else { return }
+        print("윈도우", window)
+        window.addSubview(self)
+        
+        self.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         self.layoutIfNeeded()
         self.loadingView.play()
+            UIView.animate(
+              withDuration: 0.7,
+              animations: { self.contentView.alpha = 1 }
+            )
     }
     
     func hide(completion: @escaping () -> ()) {
