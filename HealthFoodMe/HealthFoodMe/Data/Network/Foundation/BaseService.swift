@@ -60,7 +60,7 @@ class BaseService {
             }
             
         case 400..<500:
-            return .requestErr(decodedData.status)
+            return .requestErr(decodedData)
             
         case 500:
             return .serverErr

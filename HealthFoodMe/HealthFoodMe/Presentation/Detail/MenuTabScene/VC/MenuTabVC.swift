@@ -28,6 +28,13 @@ final class MenuTabVC: UIViewController {
 	
 	var isMenu: Bool = true
 	var topScrollAnimationNotFinished: Bool = true
+	var menuData: [MenuDataModel] = MenuDataModel.sampleMenuData {
+		didSet {
+			DispatchQueue.main.async {
+				self.menuCV.reloadData()
+			}
+		}
+	}
 	let panGesture = UIPanGestureRecognizer()
 	weak var delegate: ScrollDeliveryDelegate?
 	var swipeDismissDelegate: SwipeDismissDelegate?
@@ -105,6 +112,14 @@ extension MenuTabVC {
 	private func lockCollectionView() {
 		menuCV.isScrollEnabled = false
 	}
+	
+	func setData(data: [Menu]) {
+		var models: [MenuDataModel] = []
+		data.forEach {
+			models.append($0.toDomain())
+		}
+		self.menuData = models
+	}
 }
 
 extension MenuTabVC: UICollectionViewDelegate {
@@ -160,13 +175,13 @@ extension MenuTabVC: UICollectionViewDelegate {
 extension MenuTabVC: UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return MenuDataModel.sampleMenuData.count
+		return menuData.count
 	}
 		
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let cell = menuCV.dequeueReusableCell(withReuseIdentifier: MenuCellCVC.className, for: indexPath) as? MenuCellCVC
 		else { return UICollectionViewCell() }
-		cell.setData(menuData: MenuDataModel.sampleMenuData[indexPath.row])
+		cell.setData(menuData: menuData[indexPath.row])
 		cell.changeCustomView(isMenu: isMenu)
 		return cell
 	}

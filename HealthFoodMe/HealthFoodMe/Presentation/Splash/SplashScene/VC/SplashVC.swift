@@ -17,7 +17,7 @@ class SplashVC: UIViewController {
     
     // MARK: - UI Components
     
-    private let animationView: AnimationView = .init(name: "splash_ios")
+    private let animationView: AnimationView = .init(name: "splash_iOS")
     
     // MARK: - View Life Cycle
     
@@ -96,7 +96,8 @@ extension SplashVC {
                     self.userManager.updateAuthToken(access, refresh)
                     self.presentMainMapVC()
                 }
-                break
+            case .requestErr:
+                self.presentSocialLoginVC()
             default:
                 print("소셜 토큰 에러")
             }

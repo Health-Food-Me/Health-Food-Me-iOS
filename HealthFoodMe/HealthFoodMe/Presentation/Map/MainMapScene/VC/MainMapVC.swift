@@ -11,6 +11,7 @@ import UIKit
 import NMapsMap
 import RxSwift
 import SnapKit
+import SwiftUI
 
 class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
@@ -18,6 +19,14 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
     private let disposeBag = DisposeBag()
     private var isInitialPoint = false
+    private var currentZoom: Double = 0
+    private var currentRestaurantId: String = ""
+    private var currentLocation: Location = Location.init(latitude: 0, longitude: 0)
+    private var currentCategory: String = "" {
+        didSet {
+            self.fetchRestaurantList(zoom: self.currentZoom)
+        }
+    }
     private let locationManager = NMFLocationManager.sharedInstance()
     private var selectedCategories: [Bool] = [false, false, false,
                                               false, false, false,
@@ -26,6 +35,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
             categoryCollectionView.reloadData()
         }
     }
+    private var restaurantData: [MainMapEntity] = []
     var viewModel: MainMapViewModel!
     
     
@@ -119,7 +129,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
             self.makeVibrate()
             let NMGPosition = self.locationManager?.currentLatLng()
             if let position = NMGPosition {
-              self.mapView.moveCameraPositionWithZoom(position, 200)
+                self.mapView.moveCameraPositionWithZoom(position, 200)
             }
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
@@ -276,7 +286,7 @@ extension MainMapVC {
                         self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: summaryViewTranslation.y)
                     }
                 case .ended:
-                        guard let self = self else { return }
+                    guard let self = self else { return }
                     if summaryViewTranslation.y < -90
                         || (self.mapDetailSummaryView.frame.origin.y ?? 40 < 30) {
                         self.mapDetailSummaryView.snp.updateConstraints { make in
@@ -324,15 +334,15 @@ extension MainMapVC {
     }
     
     private func setIntitialMapPoint() {
-            
-            let NMGPosition = self.locationManager?.currentLatLng()
-            if let position = NMGPosition {
-                self.mapView.moveCameraPositionWithZoom(position, 2000)
-            } else {
-                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
-            }
-            isInitialPoint = true
-
+        
+        let NMGPosition = self.locationManager?.currentLatLng()
+        if let position = NMGPosition {
+            self.mapView.moveCameraPositionWithZoom(position, 2000)
+        } else {
+            self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
+        }
+        isInitialPoint = true
+        
     }
     
     private func setMapView() {
@@ -359,16 +369,26 @@ extension MainMapVC {
             .subscribe(onNext: { _ in
                 self.unselectMapPoint()
             }).disposed(by: self.disposeBag)
-      
-      mapView.zoomLevelChange
-        .subscribe(onNext: { [weak self] zoomLevel in
-          guard let self = self else { return }
-            let accumulate = MapAccumulationCalculator.zoomLevelToDistance(level: zoomLevel)
-            print(accumulate)
-        }).disposed(by: self.disposeBag)
-              
+        
+        mapView.zoomLevelChange
+            .throttleOnMain(.seconds(1))
+            .subscribe(onNext: { [weak self] zoomLevel in
+                guard let self = self else { return }
+                let accumulate = MapAccumulationCalculator.zoomLevelToDistance(level: zoomLevel)
+                self.currentZoom = Double(accumulate)
+                self.fetchRestaurantList(zoom: Double(accumulate))
+            }).disposed(by: self.disposeBag)
+        
         mapView.setSelectPoint
             .subscribe(onNext: { [weak self] dataModel in
+                let NMGPosition = NMGLatLng(lat: dataModel.latitude,
+                                            lng: dataModel.longtitude)
+                if let restaurantId = self?.matchRestaurantId(position: NMGPosition) {
+                    self?.currentRestaurantId = restaurantId
+                    self?.currentLocation = Location(latitude: dataModel.latitude, longitude: dataModel.longtitude)
+                    self?.fetchRestaurantSummary(id: restaurantId)
+                }
+                
                 let summaryViewHeight: CGFloat = 189
                 self?.mapDetailSummaryView.snp.updateConstraints { make in
                     make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
@@ -378,7 +398,7 @@ extension MainMapVC {
                         make.bottom.equalTo(mapDetailViewTopCosntraint).offset(-12)
                     }
                 }
-
+                
                 UIView.animate(withDuration: 0.3, delay: 0) {
                     self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                     self?.view.layoutIfNeeded()
@@ -402,17 +422,7 @@ extension MainMapVC {
     
     private func makeDummyPoints() -> Observable<[MapPointDataModel]> {
         return .create { observer in
-            let pointList: [MapPointDataModel] = .init([
-                MapPointDataModel.init(latitude: 37.5666805, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.567, longtitude: 126.9784147, type: .healthFood),
-                MapPointDataModel.init(latitude: 37.568, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.569, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.557, longtitude: 126.9784147, type: .healthFood),
-                MapPointDataModel.init(latitude: 37.571, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.572, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.010, longtitude: 126.9784147, type: .normalFood)
-            ])
-            observer.onNext(pointList)
+            observer.onNext([])
             return Disposables.create()
         }
     }
@@ -436,6 +446,12 @@ extension MainMapVC {
                 self.categoryCollectionView.isHidden = false
             }
         }
+        nextVC.restaurantId = self.currentRestaurantId
+        nextVC.location = self.currentLocation
+        if let lat = locationManager?.currentLatLng().lat,
+           let lng = locationManager?.currentLatLng().lng {
+            nextVC.userLocation = Location(latitude: lat, longitude: lng)
+        }
         let nav = UINavigationController(rootViewController: nextVC)
         nav.modalPresentationStyle = .overCurrentContext
         nav.modalTransitionStyle = .crossDissolve
@@ -445,6 +461,37 @@ extension MainMapVC {
             self.searchBar.isHidden = true
             self.categoryCollectionView.isHidden = true
         }
+    }
+    
+    private func setCurrentCategory(currentIndex: Int) {
+        if selectedCategories[currentIndex] {
+            for (index, item) in selectedCategories.enumerated() {
+                if (selectedCategories[index] == true) && (index != currentIndex) {
+                    selectedCategories[index] = false
+                }
+            }
+        }
+        var hasCurrent: Bool = false
+        for (index, item) in selectedCategories.enumerated() {
+            if item {
+                currentCategory = MainMapCategory.categorySample[index].menuName
+                hasCurrent = true
+            }
+        }
+        if !hasCurrent {
+            currentCategory = ""
+        }
+    }
+    
+    private func matchRestaurantId(position: NMGLatLng) -> String {
+        var id = ""
+        restaurantData.forEach { entity in
+            if entity.latitude == position.lat,
+               entity.longitude == position.lng {
+                id = entity.id
+            }
+        }
+        return id
     }
     
     @objc
@@ -462,7 +509,7 @@ extension MainMapVC {
         self.mapDetailSummaryView.snp.updateConstraints { make in
             make.top.equalToSuperview().inset(44)
         }
-
+        
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.layoutIfNeeded()
@@ -475,12 +522,15 @@ extension MainMapVC {
 // MARK: - CollectionView Delegate
 
 extension MainMapVC: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        makeVibrate()
-    }
-    
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         selectedCategories[indexPath.row].toggle()
+        setCurrentCategory(currentIndex: indexPath.row)
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
+        selectedCategories[indexPath.row].toggle()
+        setCurrentCategory(currentIndex: indexPath.row)
         return true
     }
 }
@@ -520,4 +570,50 @@ extension MainMapVC: HamburgerbarVCDelegate {
     }
 }
 
+// MARK: - Network
 
+extension MainMapVC {
+    
+    private func makePoints(points: [MapPointDataModel]) -> Observable<[MapPointDataModel]> {
+        return .create { observer in
+            observer.onNext(points)
+            return Disposables.create()
+        }
+    }
+    
+
+    private func fetchRestaurantList(zoom: Double) {
+        if let lng = locationManager?.currentLatLng().lng,
+           let lat = locationManager?.currentLatLng().lat {
+            RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
+                switch networkResult {
+                case .success(let data):
+                    if let data = data as? [MainMapEntity] {
+                        self.restaurantData = data
+                        var models = [MapPointDataModel]()
+                        models = data.map({ entity in
+                            entity.toDomain()
+                        })
+                        self.makePoints(points: models).bind(to: self.mapView.rx.pointList)
+                            .disposed(by: self.disposeBag)
+                    }
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    private func fetchRestaurantSummary(id: String) {
+        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser?.id ?? "") { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? RestaurantSummaryEntity {
+                    self.mapDetailSummaryView.setData(data: data)
+                }
+            default:
+                break
+            }
+        }
+    }
+}

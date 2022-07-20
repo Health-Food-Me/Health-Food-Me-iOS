@@ -101,8 +101,8 @@ extension ScrapCVC {
         }
         
         scrapButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(11)
-            $0.trailing.equalToSuperview().inset(13)
+            $0.top.trailing.equalToSuperview().inset(8)
+            $0.height.width.equalTo(28)
         }
         
         storeNameLabel.snp.makeConstraints {

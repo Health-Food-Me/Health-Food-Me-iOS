@@ -14,6 +14,7 @@ final class MenuView: UIView {
     // MARK: - Properties
     
     var isPick = false
+    
     // MARK: - UI Components
     
     let menuView: UIView = {
@@ -36,6 +37,7 @@ final class MenuView: UIView {
         let iv = UIImageView()
         iv.image = ImageLiterals.MenuTab.emptyCard
         iv.layer.cornerRadius = 8
+        iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
         return iv
     }()
@@ -169,7 +171,7 @@ extension MenuView {
             make.trailing.equalToSuperview().inset(97)
             make.centerY.equalTo(menuImageView.snp.centerY)
         }
-    
+        
         kcalView.addSubview(kcalStackView)
         kcalStackView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
@@ -181,7 +183,7 @@ extension MenuView {
             menuStackView.isHidden = false
             allMenuStackView.isHidden = true
         } else {
-         
+            
             allMenuStackView.addArrangedSubviews(pickImageView, titleLabel, priceLabel)
             
             allMenuStackView.snp.makeConstraints { make in
@@ -193,5 +195,10 @@ extension MenuView {
             allMenuStackView.isHidden = false
             menuStackView.isHidden = true
         }
+    }
+    
+    func prepareView() {
+        menuStackView.isHidden = false
+        allMenuStackView.isHidden = false
     }
 }

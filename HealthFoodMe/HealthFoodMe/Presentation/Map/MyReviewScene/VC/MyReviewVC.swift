@@ -12,6 +12,7 @@ import RxSwift
 class MyReviewVC: UIViewController {
     
     // MARK: - Properties
+    var isEdited: Bool = true // 리뷰 수정
     
     private let withImageAndContents = 0
     private let withImage = 1
@@ -223,26 +224,6 @@ extension MyReviewVC {
         return textView.frame.height
     }
     
-    private func requestReviewListWithAPI() {
-        ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser?.id ?? "") { networkResult in
-            switch networkResult {
-            case .success(let data):
-                self.reviewServerData.removeAll()
-                if let data = data as? [MyReviewEntity] {
-                    for da in data {
-                        self.reviewServerData.append(da.toDomain())
-                    }
-                    self.processViewModel(self.reviewServerData)
-                }
-            case .networkFail:
-                print("서버통신 실패")
-            default:
-                break
-            }
-            self.reviewCV.reloadData()
-        }
-    }
-    
     private func popViewController() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -376,9 +357,56 @@ extension MyReviewVC: MyReviewCVCDelegate {
     
     func editButtonTapped() {
         // TODO: - 수정 API 붙이기
+        let vc = ModuleFactory.resolve().makeReviewWriteVC()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func deleteButtonTapped() {
+    func deleteButtonTapped(reviewId: String) {
         // TODO: - 삭제 API 붙이기
+        self.makeAlert(alertType: .deleteReviewAlert,
+                       title: "작성한 리뷰를 \n 삭제하실건가요?", subtitle: nil) {
+            self.requestReviewDelete(reviewId: reviewId) {
+                self.requestReviewListWithAPI()
+            }
+        }
     }
 }
+
+extension MyReviewVC {
+    private func requestReviewListWithAPI() {
+        ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser?.id ?? "") { networkResult in
+            switch networkResult {
+            case .success(let data):
+                self.reviewServerData.removeAll()
+                if let data = data as? [MyReviewEntity] {
+                    for da in data {
+                        self.reviewServerData.append(da.toDomain())
+                    }
+                    self.processViewModel(self.reviewServerData)
+                    self.reviewCV.reloadData()
+                }
+            case .networkFail:
+                print("서버통신 실패")
+            default:
+                break
+            }
+        }
+    }
+    
+    func requestReviewDelete(reviewId: String, completion: @escaping(() -> Void)) {
+        ReviewService.shared.requestReviewDelete(reviewId: reviewId){ networkResult in
+            print(networkResult)
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? String {
+                    print(data, "성공")
+                    print("🍎\(reviewId)")
+                    completion()
+                }
+            default:
+                break
+            }
+        }
+    }
+}
+

@@ -117,28 +117,32 @@ extension ExpandableInfoTVC {
         }
     }
     
-    func setUIWithIndex(indexPath: IndexPath,isOpenned: Bool) {
+    func setUIWithIndex(indexPath: IndexPath, isOpenned: Bool, expandableData: MainDetailExpandableModel) {
         let isFirstRow = indexPath.row == 0
         let isSecondSection = indexPath.section == 1
         
         switch indexPath.section {
         case 0:
             iconImageView.image = ImageLiterals.MainDetail.locationIcon
-            infoLabel.text = "서울특별시 중랑구 상봉동"
+            infoLabel.text = expandableData.location
             toggleButtonInfnoLabel.isHidden = true
         case 1:
             print(isOpenned,"isOpened",indexPath.row)
             iconImageView.image = ImageLiterals.MainDetail.timeIcon
             toggleButtonInfnoLabel.isHidden = false
+            toggleButton.isHidden = !expandableData.isExpandable
+            if expandableData.labelText.count > 0 {
+                infoLabel.text = expandableData.labelText[indexPath.row]
+            }
+            infoLabel.sizeToFit()
         default:
             iconImageView.image = ImageLiterals.MainDetail.phoneIcon
-            let telephoneString = "02-123-123"
+            let telephoneString = expandableData.telephone
             let attributeString = NSMutableAttributedString(string: telephoneString)
             attributeString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: telephoneString.count))
             infoLabel.attributedText = attributeString
             setTapGesture()
             toggleButtonInfnoLabel.isHidden = true
-
         }
         
         iconImageView.isHidden = !isFirstRow
