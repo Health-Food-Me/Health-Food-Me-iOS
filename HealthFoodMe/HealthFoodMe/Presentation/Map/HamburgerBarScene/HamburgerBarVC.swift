@@ -204,8 +204,7 @@ extension HamburgerBarVC {
     }
 
     private func setLayout() {
-        view.addSubviews(hamburgerBarView
-    )
+        view.addSubviews(hamburgerBarView)
         
         hamburgerBarView.addSubviews(hellowStackView,
                                      storeButtonStackView, reportButtonStackView,
@@ -223,11 +222,6 @@ extension HamburgerBarVC {
             make.top.equalTo(hamburgerBarView).inset(96)
             make.leading.equalTo(hamburgerBarView).inset(20)
         }
-        
-//        editNameButton.snp.makeConstraints { make in
-//            make.centerY.equalTo(hellowStackView.snp.centerY)
-//            make.leading.equalTo(hellowStackView.snp.trailing).offset(8)
-//        }
         
         dividingLineViews[0].snp.makeConstraints { make in
             make.width.equalTo(hamburgerBarView)
