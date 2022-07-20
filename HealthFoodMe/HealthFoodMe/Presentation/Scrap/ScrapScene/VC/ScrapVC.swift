@@ -88,6 +88,7 @@ extension ScrapVC {
     }
     
     private func setUI() {
+        scrapEmptyView.isHidden = true
         self.navigationController?.navigationBar.isHidden = true
     }
     
