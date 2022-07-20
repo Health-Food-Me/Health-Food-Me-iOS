@@ -86,6 +86,7 @@ extension NaverMapContainerView {
   }
   
   private func setPointMarkers(_ points: [MapPointDataModel]) {
+      resetMarkers(points)
     DispatchQueue.global(qos: .default).async {
       for point in points {
         let marker = NMFMarker()
@@ -171,6 +172,26 @@ extension NaverMapContainerView {
     let iconName = selectState ? "icn_diet_selected" : "icn_diet"
     mark.iconImage = NMFOverlayImage.init(image: UIImage(named: iconName) ?? UIImage())
   }
+    
+    private func resetMarkers(_ points: [MapPointDataModel]) {
+        markers.forEach { marker in
+            marker.mapView = nil
+        }
+        markers = [NMFMarker]()
+//        for point in points {
+//            let NMGPosition = NMGLatLng(lat: point.latitude,
+//                                        lng: point.longtitude)
+//            var targetIndex = 0
+//            var alreadySet = false
+//            for (index, marker) in markers.enumerated() {
+//                if marker.position == NMGPosition {
+//                    alreadySet = true
+//                }
+//            }
+//            if !alreadySet {
+//            }
+//        }
+    }
 }
 
 extension NaverMapContainerView: NMFMapViewCameraDelegate {

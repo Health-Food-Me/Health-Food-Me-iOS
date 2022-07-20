@@ -78,8 +78,10 @@ final class DetailSummaryView: UIView {
 // MARK: - Methods
 
 extension DetailSummaryView {
-    func setData() {
-        
+    func setData(data: MainDetailEntity) {
+        logoImageView.setImage(with: data.restaurant.logo)
+        // 별점도 할당하기
+        restaurantNameLabel.text = data.restaurant.name
     }
 }
 

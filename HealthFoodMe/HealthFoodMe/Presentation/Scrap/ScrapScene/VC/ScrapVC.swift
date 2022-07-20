@@ -79,7 +79,7 @@ extension ScrapVC {
 
 extension ScrapVC {
     private func fetchData() {
-        getScrapList(userId: "62d4e93f0ff2f900ea88bed1")
+        getScrapList(userId: UserManager.shared.getUser?.id ?? "")
         isScrapEmpty()
     }
     
@@ -196,7 +196,7 @@ extension ScrapVC: UICollectionViewDelegateFlowLayout {
 
 extension ScrapVC: ScrapCVCDelegate {
     func scrapCVCButtonDidTap(restaurantId: String) {
-        putScrap(userId: "62d4e93f0ff2f900ea88bed1", restaurantId: restaurantId)
+        putScrap(userId: UserManager.shared.getUser?.id ?? "", restaurantId: restaurantId)
     }
 }
 

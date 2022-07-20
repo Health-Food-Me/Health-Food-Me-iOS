@@ -20,6 +20,11 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
     let toggleButtonTapped = PublishRelay<Void>()
     let directionButtonTapped = PublishRelay<Void>()
     let telePhoneLabelTapped = PublishRelay<String>()
+    var expandableData = MainDetailExpandableModel.init(location: "",
+                                                        telephone: "",
+                                                        labelText: [" "],
+                                                        isExpandable: false)
+    var isInitialReload = true
     
     // MARK: - UI Components
     
@@ -128,6 +133,21 @@ extension MainInfoTVC {
         directionImageView.addGestureRecognizer(tapGesture)
     }
     
+    func setData(data: MainDetailEntity) {
+        detailSummaryView.setData(data: data)
+        distanceLabel.text = "\(data.restaurant.distance)m"
+        self.expandableData = data.restaurant.toDomain()
+        
+        initialReload()
+    }
+    
+    func initialReload() {
+        if isInitialReload {
+            expandableTableView.reloadData()
+            isInitialReload.toggle()
+        }
+    }
+    
     @objc
     private func presentActionSheet() {
         directionButtonTapped.accept(())
@@ -155,7 +175,7 @@ extension MainInfoTVC: UITableViewDelegate {
 extension MainInfoTVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (section == 1) && isOpenned {
-            return 7
+            return expandableData.labelText.count
         } else {
             return 1
         }
@@ -169,9 +189,9 @@ extension MainInfoTVC: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ExpandableInfoTVC.className, for: indexPath) as? ExpandableInfoTVC else { return UITableViewCell() }
         if indexPath.row == 0 && indexPath.section == 1 {
             cell.foldState = self.isOpenned
-            cell.setUIWithIndex(indexPath: indexPath, isOpenned: self.isOpenned)
+            cell.setUIWithIndex(indexPath: indexPath, isOpenned: self.isOpenned, expandableData: self.expandableData)
         } else {
-            cell.setUIWithIndex(indexPath: indexPath, isOpenned: false)
+            cell.setUIWithIndex(indexPath: indexPath, isOpenned: false, expandableData: self.expandableData)
         }
         cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
             .drive { _ in
