@@ -9,11 +9,16 @@ import UIKit
 
 import SnapKit
 
+protocol MapDetailSummaryViewDelegate: AnyObject {
+    func MapDetailSummaryViewScarp()
+}
+
 final class MapDetailSummaryView: UIView {
     
     // MARK: - Properties
     
     private var tagList = [String]()
+    weak var delegate: MapDetailSummaryViewDelegate?
     
     // MARK: - UI Components
     
@@ -37,6 +42,7 @@ final class MapDetailSummaryView: UIView {
         bt.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
         bt.addAction(UIAction(handler: { _ in
             bt.isSelected.toggle()
+            self.delegate?.MapDetailSummaryViewScarp()
         }), for: .touchUpInside)
         return bt
     }()

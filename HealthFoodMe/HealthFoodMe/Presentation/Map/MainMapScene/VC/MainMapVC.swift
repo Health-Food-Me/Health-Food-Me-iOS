@@ -263,6 +263,7 @@ extension MainMapVC {
     private func setDelegate() {
         categoryCollectionView.delegate = self
         categoryCollectionView.dataSource = self
+        mapDetailSummaryView.delegate = self
     }
     
     private func registerCell() {
@@ -570,6 +571,12 @@ extension MainMapVC: HamburgerbarVCDelegate {
     }
 }
 
+extension MainMapVC: MapDetailSummaryViewDelegate {
+    func MapDetailSummaryViewScarp() {
+        putScrap(userId: UserManager.shared.getUser?.id ?? "", restaurantId: currentRestaurantId)
+    }
+}
+
 // MARK: - Network
 
 extension MainMapVC {
@@ -613,6 +620,17 @@ extension MainMapVC {
                 }
             default:
                 break
+            }
+        }
+    }
+    
+    private func putScrap(userId: String, restaurantId: String) {
+        UserService.shared.putScrap(userId: userId, restaurantId: restaurantId) { networkResult in
+            switch networkResult {
+            case .success(let message):
+                print(message)
+            default:
+                break;
             }
         }
     }
