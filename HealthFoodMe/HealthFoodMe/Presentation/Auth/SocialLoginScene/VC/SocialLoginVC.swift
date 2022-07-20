@@ -17,14 +17,16 @@ class SocialLoginVC: UIViewController {
 
     var social: String = ""
     var accessToken: String = ""
+    private let screenWidth = UIScreen.main.bounds.width
     private let userManager = UserManager.shared
 
     // MARK: - Properties
     
     private var titleLabel: UILabel = {
         let lb = UILabel()
+        let screenWidth = UIScreen.main.bounds.width
         lb.text = I18N.Auth.title
-        lb.font = UIFont(name: AppFontName.GodoB, size: 58)
+        lb.font = UIFont(name: AppFontName.GodoB, size: 58 * (screenWidth/375))
         lb.textColor = .mainRed
         lb.textAlignment = .center
         
@@ -33,9 +35,10 @@ class SocialLoginVC: UIViewController {
     
     private var subTitleLabel: UILabel = {
         let lb = UILabel()
-        let boldFont = UIFont(name: AppFontName.appleSDGothicNeoBold, size: 14)!
+        let screenWidth = UIScreen.main.bounds.width
+        let boldFont = UIFont(name: AppFontName.appleSDGothicNeoBold, size: 14 * (screenWidth/375))!
         lb.text = I18N.Auth.subTitle
-        lb.font = UIFont(name: AppFontName.appleSDGothicNeoMedium, size: 14)
+        lb.font = UIFont(name: AppFontName.appleSDGothicNeoMedium, size: 14 * (screenWidth/375))
         lb.textColor = .helfmeGray1
         lb.numberOfLines = 2
         lb.textAlignment = .center
@@ -46,12 +49,14 @@ class SocialLoginVC: UIViewController {
     private lazy var kakaoLoginButton: UIButton = {
        let button = UIButton()
         button.setBackgroundImage(ImageLiterals.Auth.kakaoLoginBtn, for: .normal)
+        button.alpha = 0
         return button
     }()
     
     private lazy var appleLoginButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(ImageLiterals.Auth.appleLoginBtn, for: .normal)
+        button.alpha = 0
         return button
     }()
     
@@ -60,6 +65,15 @@ class SocialLoginVC: UIViewController {
         super.viewDidLoad()
         setLayout()
         setAddTarget()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        showAnimation()
+    }
+
+    
+    override func viewDidLayoutSubviews() {
+
     }
 }
 
@@ -158,13 +172,13 @@ extension SocialLoginVC {
         view.addSubviews(titleLabel, subTitleLabel, kakaoLoginButton, appleLoginButton)
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(140)
-            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(230)
+            make.centerX.equalToSuperview().offset(2)
         }
         
         subTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.centerX.equalToSuperview()
+            make.top.equalTo(titleLabel.snp.bottom).offset(15)
+            make.centerX.equalToSuperview().offset(1)
         }
         
         let loginButtonWidth = UIScreen.main.bounds.width - 100
@@ -178,6 +192,18 @@ extension SocialLoginVC {
             make.bottom.equalTo(appleLoginButton.snp.top).offset(-10)
             make.leading.trailing.equalToSuperview().inset(50)
             make.height.equalTo(loginButtonWidth * 41/275)
+        }
+    }
+    
+    private func showAnimation() {
+        titleLabel.snp.updateConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(140)
+        }
+        
+        UIView.animate(withDuration: 0.7,delay: 0.5) {
+            self.view.layoutIfNeeded()
+            self.kakaoLoginButton.alpha = 1
+            self.appleLoginButton.alpha = 1
         }
     }
     
