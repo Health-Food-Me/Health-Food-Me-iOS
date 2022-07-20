@@ -799,6 +799,7 @@ extension ReviewWriteVC {
             dump(networkResult)
             switch networkResult {
             case .success(let data):
+                dump(data)
                 if let data = data as? ReviewWriteEntity {
                     print(data, "성공")
                 }

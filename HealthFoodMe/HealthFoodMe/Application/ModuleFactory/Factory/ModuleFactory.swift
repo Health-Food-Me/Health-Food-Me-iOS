@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ModuleFactoryProtocol {
     
@@ -27,7 +28,7 @@ protocol ModuleFactoryProtocol {
     func makeCopingTabVC() -> CopingTabVC
     func makeReviewDetailVC() -> ReviewDetailVC
     func makeReviewWriteVC() -> ReviewWriteVC
-    func makeReviewWriteNavigationController() -> ReviewWriteNavigationController
+    func makeReviewWriteNavigationController(restaurantId: String) -> UINavigationController
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC
@@ -151,8 +152,10 @@ class ModuleFactory: ModuleFactoryProtocol {
         return vc
     }
     
-    func makeReviewWriteNavigationController() -> ReviewWriteNavigationController {
-        let nc = ReviewWriteNavigationController.controllerFromStoryboard(.reviewWrite)
+    func makeReviewWriteNavigationController(restaurantId: String) -> UINavigationController {
+        let vc = ReviewWriteVC.controllerFromStoryboard(.reviewWrite)
+        vc.restaurantID = restaurantId
+        guard let nc = UINavigationController(rootViewController: vc) as? UINavigationController else { return UINavigationController() }
         
         return nc
     }

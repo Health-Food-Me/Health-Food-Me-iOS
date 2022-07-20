@@ -170,7 +170,7 @@ extension MainDetailVC {
     
     private func setButtonAction() {
         reviewWriteCTAButton.press {
-            let writeVC = ModuleFactory.resolve().makeReviewWriteNavigationController()
+            let writeVC = ModuleFactory.resolve().makeReviewWriteNavigationController(restaurantId: self.restaurantId)
             writeVC.modalPresentationStyle = .fullScreen
             self.present(writeVC, animated: true)
         }
