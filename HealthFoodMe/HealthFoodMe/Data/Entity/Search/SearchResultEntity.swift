@@ -12,7 +12,7 @@ struct SearchResultEntity: Codable {
     let name: String
     let category: String
     let score: Double
-    let distance: Int
+    let distance: Double
     let logo: String
     
     func toDomain() -> SearchResultDataModel {

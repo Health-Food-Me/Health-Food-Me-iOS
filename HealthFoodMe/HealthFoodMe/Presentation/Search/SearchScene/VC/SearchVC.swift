@@ -8,7 +8,9 @@
 import UIKit
 
 import RealmSwift
+import RxSwift
 import SnapKit
+import NMapsMap
 
 enum SearchType {
     case recent
@@ -20,12 +22,15 @@ final class SearchVC: UIViewController {
     
     // MARK: - Properties
     
+    private let locationManager = NMFLocationManager.sharedInstance()
+    private let disposeBag = DisposeBag()
     let realm = try? Realm()
     var searchType: SearchType = SearchType.recent {
         didSet {
             searchTableView.reloadData()
         }
     }
+    var searchContent: String = ""
     var searchRecentList: [String] = []
     var searchList: [SearchDataModel] = []
     var searchResultList: [SearchResultDataModel] = []
@@ -95,16 +100,16 @@ final class SearchVC: UIViewController {
         return lb
     }()
     
-    private lazy var resultHeaderButton: UIButton = {
+    private lazy var viewMapButton: UIButton = {
         let btn = UIButton()
         btn.setImage(ImageLiterals.Search.viewMapBtn, for: .normal)
         btn.setTitle(I18N.Search.searchMap, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray1, for: .normal)
-        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.titleLabel?.font = .NotoRegular(size: 12)
         btn.isHidden = true
         btn.addTarget(self, action: #selector(pushToSearchResultVC), for: .touchUpInside)
         btn.semanticContentAttribute = .forceLeftToRight
-        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 10)
+        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 20)
         return btn
     }()
     
@@ -116,7 +121,7 @@ final class SearchVC: UIViewController {
         tv.backgroundColor = .helfmeWhite
         tv.keyboardDismissMode = .onDrag
         tv.tableHeaderView = searchHeaderView
-        tv.tableHeaderView?.frame.size.height = 56
+        tv.tableHeaderView?.frame.size.height = 50
         return tv
     }()
     
@@ -144,10 +149,11 @@ extension SearchVC {
         case .recent:
             navigationController?.popViewController(animated: true)
         case .search:
-            navigationController?.popViewController(animated: true)
+            isSearchRecent()
+            setRecentTextField()
         case .searchResult:
             isSearchRecent()
-            initTextField()
+            setRecentTextField()
         }
     }
     
@@ -161,9 +167,7 @@ extension SearchVC {
             isSearchRecent()
         } else {
             searchTextField.rightViewMode = .always
-            if let text = searchTextField.text {
-                requestRestaurantSearch(query: text)
-            }
+            fetchSearchData()
         }
     }
     
@@ -186,10 +190,24 @@ extension SearchVC {
 
 extension SearchVC {
     private func initTextField() {
+        searchTextField.becomeFirstResponder()
+    }
+    
+    private func setRecentTextField() {
         if searchType == .recent {
             searchTextField.text?.removeAll()
+            searchTextField.resignFirstResponder()
         }
     }
+    
+    //    private func setTextField() {
+    //        searchTextField.rx.text.debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+    //            .subscribe(onNext: { text in
+    //                if let searchContent = text {
+    //                    self.fetchSearchData(text: searchContent)
+    //                }
+    //            }).disposed(by: disposeBag)
+    //    }
     
     private func setData() {
         let savedSearchRecent = realm?.objects(SearchRecent.self)
@@ -198,11 +216,39 @@ extension SearchVC {
         }
     }
     
+    private func fetchSearchData() {
+        if let text = searchTextField.text {
+            let searchContent = text.trimmingCharacters(in: .whitespaces)
+            if !searchContent.isEmpty {
+                requestRestaurantSearch(query: searchContent)
+            }
+        }
+    }
+    
+    private func fetchSearchResultData(keyword: String, fromRecent: Bool) {
+        let NMGPosition = self.locationManager?.currentLatLng()
+        var lng: Double = 0.0
+        var lat: Double = 0.0
+        if let position = NMGPosition {
+            lng = position.lng
+            lat = position.lat
+        } else {
+            lng = LocationLiterals.gangnamStation.lng
+            lat = LocationLiterals.gangnamStation.lat
+        }
+        if let text = searchTextField.text {
+            searchContent = text
+        }
+        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lat, latitude: lng,
+                                                                         keyword: keyword), fromRecent: fromRecent)
+    }
+    
     private func setUI() {
         view.backgroundColor = .helfmeWhite
         dismissKeyboard()
         self.navigationController?.isNavigationBarHidden = true
         searchTextField.text?.removeAll()
+        searchTextField.becomeFirstResponder()
         searchEmptyView.isHidden = true
     }
     
@@ -238,18 +284,18 @@ extension SearchVC {
             $0.height.equalTo(1)
         }
         
-        searchHeaderView.addSubviews(recentHeaderLabel, resultHeaderButton)
+        searchHeaderView.addSubviews(recentHeaderLabel, viewMapButton)
         
         recentHeaderLabel.snp.makeConstraints {
             $0.top.equalTo(searchHeaderView.snp.top).offset(20)
             $0.leading.equalTo(searchHeaderView.snp.leading).inset(20)
         }
         
-        resultHeaderButton.snp.makeConstraints {
-            $0.trailing.equalTo(searchHeaderView.snp.trailing).inset(20)
-            $0.centerY.equalTo(searchHeaderView)
-            $0.width.equalTo(105)
-            $0.height.equalTo(20)
+        viewMapButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.equalTo(67)
+            $0.height.equalTo(16)
         }
         
         searchView.snp.makeConstraints {
@@ -298,9 +344,8 @@ extension SearchVC {
     private func isSearchRecent() {
         searchTextField.rightViewMode = .never
         searchTableView.tableHeaderView = searchHeaderView
-        searchTableView.tableHeaderView?.frame.size.height = 56
         recentHeaderLabel.isHidden = false
-        resultHeaderButton.isHidden = true
+        viewMapButton.isHidden = true
         searchEmptyView.isHidden = true
         searchType = .recent
     }
@@ -324,14 +369,14 @@ extension SearchVC {
                     addSearchRecent(title: text)
                 }
             }
-            searchTextField.rightViewMode = .always
-            searchTextField.rightView = resultCloseButton
             searchTableView.tableHeaderView = searchHeaderView
             searchTableView.tableHeaderView?.frame.size.height = 42
             recentHeaderLabel.isHidden = true
-            resultHeaderButton.isHidden = false
-            searchType = .searchResult
+            viewMapButton.isHidden = false
         }
+        searchTextField.rightViewMode = .always
+        searchTextField.rightView = resultCloseButton
+        searchType = .searchResult
     }
 }
 
@@ -339,18 +384,19 @@ extension SearchVC {
 
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         if let text = searchTextField.text {
-            requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: 1, latitude: 1, zoom: 0,
-                                                                           keyword: text), fromRecent: false)
+            let searchContent = text.trimmingCharacters(in: .whitespaces)
+            if !searchContent.isEmpty {
+                fetchSearchResultData(keyword: searchContent, fromRecent: false)
+            }
         }
         return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if searchType == .searchResult {
-            if let text = searchTextField.text {
-                requestRestaurantSearch(query: text)
-            }
+            fetchSearchData()
             isSearch()
         }
     }
@@ -413,15 +459,14 @@ extension SearchVC: UITableViewDataSource {
         switch searchType {
         case .recent:
             searchTextField.text = searchRecentList[indexPath.row]
-            requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: 0, latitude: 0, zoom: 0,
-                                                                             keyword: searchRecentList[indexPath.row]), fromRecent: true)
+            fetchSearchResultData(keyword: searchRecentList[indexPath.row], fromRecent: true)
             addSearchRecent(title: searchRecentList[indexPath.row])
         case .search:
-            // 화면 전환 코드 추가해야 됨
+            // 지도 눌러도 안바뀌는 화면으로 이동
             print("\(searchList[indexPath.row].title) 식당 상세 페이지로 이동")
             addSearchRecent(title: searchList[indexPath.row].title)
         case .searchResult:
-            // 화면 전환 코드 추가해야 됨
+            // 지도 누르면 리스트로 바뀌는 화면으로 이동
             print("\(searchResultList[indexPath.row].storeName) 식당 상세 페이지로 이동")
         }
     }
@@ -446,8 +491,9 @@ extension SearchVC: SearchRecentTVCDelegate {
 extension SearchVC: SearchResultVCDelegate {
     func searchResultVCSearchType(type: SearchType) {
         if type == .search {
-            clearButton.isHidden = false
             searchTextField.becomeFirstResponder()
+            clearButton.isHidden = false
+            fetchSearchData()
         } else {
             isSearchRecent()
         }
@@ -476,9 +522,8 @@ extension SearchVC {
     }
     
     private func requestRestaurantSearchResult(searchRequest: SearchRequestEntity, fromRecent: Bool) {
-        RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: searchRequest.longtitude,
+        RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: searchRequest.longitude,
                                                                                                   latitude: searchRequest.latitude,
-                                                                                                  zoom: searchRequest.zoom,
                                                                                                   keyword: searchRequest.keyword)) { networkResult in
             switch networkResult {
             case .success(let data):

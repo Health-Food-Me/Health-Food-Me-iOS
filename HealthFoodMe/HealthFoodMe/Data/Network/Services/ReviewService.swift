@@ -62,10 +62,14 @@ extension ReviewService {
         requestObject(ReviewRouter.requestUserReview(userId: userId), type: [MyReviewEntity].self, decodingMode: .model, completion: completion)
     }
     
+    func requestReviewEnabled(userId: String, restaurantId: String, completion: @escaping(NetworkResult<Any>) -> Void) {
+        requestObject(ReviewRouter.requestReviewEnabled(userId: userId, restaurantId: restaurantId), type: ReviewCheckEntity.self, decodingMode: .model, completion: completion)
+    }
+    
     func requestReviewDelete(reviewId: String,
                              completion: @escaping (NetworkResult<Any>) -> Void) {
            requestObject(ReviewRouter.requestReviewDelete(reviewId: reviewId),
-                         type: ReviewWriteEntity.self,
+                         type: ReviewDeleteEntity.self,
                          decodingMode: .message,
                          completion: completion)
            }

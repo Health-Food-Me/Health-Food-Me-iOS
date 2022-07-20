@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct ReviewDeleteEntity {
+struct ReviewDeleteEntity: Codable {
 
 
 }

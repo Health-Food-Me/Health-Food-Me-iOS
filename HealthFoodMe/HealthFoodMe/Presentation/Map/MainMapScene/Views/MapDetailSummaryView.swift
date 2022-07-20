@@ -11,6 +11,10 @@ import SnapKit
 
 final class MapDetailSummaryView: UIView {
     
+    // MARK: - Properties
+    
+    private var tagList = [String]()
+    
     // MARK: - UI Components
     
     private let grabLineView: UIView = {
@@ -177,6 +181,28 @@ extension MapDetailSummaryView {
     private func registerCell() {
         TagSummaryCVC.register(target: tagCollectionView)
     }
+    
+    func setData(data: RestaurantSummaryEntity) {
+        logoImageView.setImage(with: data.logo)
+        starRateView.rate = data.score
+        scrapButton.isSelected = data.isScrap
+        restaurantNameLabel.text = data.name
+        let score = round(data.score * 10) / 10
+        rateLabel.text = "(\(score))"
+        tagList = data.hashtag
+        makeConstraints()
+        tagCollectionView.reloadData()
+    }
+    
+    private func makeConstraints() {
+        tagCollectionView.snp.updateConstraints { make in
+            if isDoubleLineHeight(tags: tagList) {
+                make.height.equalTo(43)
+            } else {
+                make.height.equalTo(23)
+            }
+        }
+    }
 }
 
 extension MapDetailSummaryView: UICollectionViewDelegate {
@@ -185,7 +211,7 @@ extension MapDetailSummaryView: UICollectionViewDelegate {
 
 extension MapDetailSummaryView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: MainMapCategory.categorySample[indexPath.row].menuName.size(withAttributes: [NSAttributedString.Key.font: UIFont.NotoRegular(size: 10)]).width + 20, height: 18)
+        return CGSize(width: tagList[indexPath.row].size(withAttributes: [NSAttributedString.Key.font: UIFont.NotoRegular(size: 10)]).width + 20, height: 18)
     }
     
     // TODO: - 태그 데이터 가져와서 컬렉션뷰 높이 조정해주기
@@ -201,12 +227,12 @@ extension MapDetailSummaryView: UICollectionViewDelegateFlowLayout {
 
 extension MapDetailSummaryView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        4
+        return tagList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagSummaryCVC.className, for: indexPath) as? TagSummaryCVC else { return UICollectionViewCell() }
-        cell.setData(tag: MainMapCategory.categorySample[indexPath.row].menuName)
+        cell.setData(tag: tagList[indexPath.row])
         return cell
     }
 }

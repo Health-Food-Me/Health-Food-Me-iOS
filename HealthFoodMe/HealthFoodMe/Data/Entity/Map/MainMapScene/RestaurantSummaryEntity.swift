@@ -1,13 +1,13 @@
 //
-//  RestaurantSummaryModel.swift
+//  RestaurantSummaryEntity.swift
 //  HealthFoodMe
 //
-//  Created by Junho Lee on 2022/07/18.
+//  Created by Junho Lee on 2022/07/20.
 //
 
 import Foundation
 
-struct RestaurantSummaryModel: Codable {
+struct RestaurantSummaryEntity: Codable {
     let id, name, logo, category: String
     let hashtag: [String]
     let score: Double
