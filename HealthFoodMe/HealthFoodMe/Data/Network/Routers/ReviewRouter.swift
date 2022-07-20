@@ -10,6 +10,7 @@ import Alamofire
 enum ReviewRouter {
     case getReviewList(restaurantId: String)
     case requestUserReview(userId: String)
+    case requestReviewEnabled(userId: String, restaurantId: String)
 }
 
 extension ReviewRouter: BaseRouter {
@@ -26,6 +27,8 @@ extension ReviewRouter: BaseRouter {
             return "review/restaurant/\(restaurantId)/"
         case .requestUserReview(let userId):
             return "/review/user/\(userId)"
+        case .requestReviewEnabled(let userId, let restaurantId):
+            return "/review/check/\(userId)/\(restaurantId)"
         default:
             return ""
         }
@@ -41,6 +44,12 @@ extension ReviewRouter: BaseRouter {
         case .requestUserReview(let userId):
             let requestParams: [String: Any] = [
                 "userId": userId
+            ]
+            return .query(requestParams)
+        case .requestReviewEnabled(let userId, let restaurantId):
+            let requestParams: [String: Any] = [
+                "userId": userId,
+                "restaurantId": restaurantId
             ]
             return .query(requestParams)
         default:
