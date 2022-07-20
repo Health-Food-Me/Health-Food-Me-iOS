@@ -165,7 +165,7 @@ extension MainDetailVC {
     private func setButtonAction() {
         reviewWriteCTAButton.press {
             let writeVC = ModuleFactory.resolve().makeReviewWriteNavigationController()
-            writeVC.modalPresentationStyle = .overCurrentContext
+            writeVC.modalPresentationStyle = .fullScreen
             self.present(writeVC, animated: true)
         }
     }
