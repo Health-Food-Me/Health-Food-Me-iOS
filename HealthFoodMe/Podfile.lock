@@ -105,6 +105,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.7.0):
     - GoogleUtilities/Logger
+  - ImageSlideShowSwift (0.1.8)
   - KakaoSDKAuth (2.11.0):
     - KakaoSDKCommon (= 2.11.0)
   - KakaoSDKCommon (2.11.0):
@@ -145,6 +146,7 @@ DEPENDENCIES:
   - Firebase/Core (= 9.2.0)
   - Firebase/Crashlytics
   - Firebase/RemoteConfig
+  - ImageSlideShowSwift
   - KakaoSDKAuth
   - KakaoSDKUser
   - Kingfisher (~> 7.0)
@@ -172,6 +174,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
+    - ImageSlideShowSwift
     - KakaoSDKAuth
     - KakaoSDKCommon
     - KakaoSDKUser
@@ -203,6 +206,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 7a33224321f975d58c166657260526775d9c6b1a
   GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  ImageSlideShowSwift: 0d3463bf19c3b4529cd7d5a42263209773d65a37
   KakaoSDKAuth: b9470887e42b869725b391f4af34c4aaec42ea46
   KakaoSDKCommon: 0f59f2c1aead6012d92758e8ca46b63ea11c408b
   KakaoSDKUser: 5dbefe494c50dfdc87e4072710e503d39b41a609
@@ -219,6 +223,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
 
-PODFILE CHECKSUM: c554279c7ddb13cf5871f9b4e7f4f2d4884f2c79
+PODFILE CHECKSUM: e1e1bd14ecac3064859e09d510064730fa5bdd56
 
 COCOAPODS: 1.11.3
