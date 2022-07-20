@@ -309,6 +309,9 @@ extension MainDetailVC: UITableViewDataSource {
             reviewTabVC.delegate = self
             reviewTabVC.swipeDismissDelegate = self
             
+            copingTabVC.restaurantId = self.restaurantId
+            reviewTabVC.restaurantId = self.restaurantId
+            
             self.addChild(menuTabVC)
             self.addChild(copingTabVC)
             self.addChild(reviewTabVC)
@@ -479,6 +482,7 @@ extension MainDetailVC {
                     if let data = data as? MainDetailEntity {
                         self.mainInfoTVC.setData(data: data)
                         self.menuTabVC.setData(data: data.menu)
+                        self.reviewTabVC.restaurantName = data.restaurant.name
                     }
                 default:
                     print("통신 에러")

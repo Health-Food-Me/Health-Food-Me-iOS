@@ -30,8 +30,8 @@ class ReviewDetailVC: UIViewController {
     private var expendStateList: [Bool] = []
     var moreContentsButtonRect: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     
-    var restaurantId: String = "62d26c9bd11146a81ef18ea6"
-    var restaurantName: String = "샐러디태릉입구"
+    var restaurantId = ""
+    var restaurantName = ""
     
     var selectedCustomSegment = 0 {
         didSet {
