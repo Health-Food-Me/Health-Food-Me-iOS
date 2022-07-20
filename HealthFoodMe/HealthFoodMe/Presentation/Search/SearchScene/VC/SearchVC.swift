@@ -120,7 +120,7 @@ final class SearchVC: UIViewController {
         tv.backgroundColor = .helfmeWhite
         tv.keyboardDismissMode = .onDrag
         tv.tableHeaderView = searchHeaderView
-        tv.tableHeaderView?.frame.size.height = 40
+        tv.tableHeaderView?.frame.size.height = 50
         return tv
     }()
     
@@ -146,13 +146,7 @@ extension SearchVC {
     @objc func didTapBackButton() {
         switch searchType {
         case .recent:
-            if goToResult {
-                searchTextField.text = searchContent
-                isSearchResult(fromRecent: false)
-                searchTableView.reloadData()
-            } else {
-                navigationController?.popViewController(animated: true)
-            }
+            navigationController?.popViewController(animated: true)
         case .search:
             if searchList.isEmpty {
                 isSearchRecent()
@@ -182,9 +176,7 @@ extension SearchVC {
             isSearchRecent()
         } else {
             searchTextField.rightViewMode = .always
-            if let text = searchTextField.text {
-                requestRestaurantSearch(query: text)
-            }
+            fetchSearchData()
         }
     }
     
@@ -216,6 +208,15 @@ extension SearchVC {
         let savedSearchRecent = realm?.objects(SearchRecent.self)
         savedSearchRecent?.forEach { object in
             searchRecentList.insert(object.title, at: 0)
+        }
+    }
+    
+    private func fetchSearchData() {
+        if let text = searchTextField.text {
+            let searchContent = text.trimmingCharacters(in: .whitespaces)
+            if !searchContent.isEmpty {
+                requestRestaurantSearch(query: searchContent)
+            }
         }
     }
     
@@ -338,7 +339,6 @@ extension SearchVC {
     private func isSearchRecent() {
         searchTextField.rightViewMode = .never
         searchTableView.tableHeaderView = searchHeaderView
-        searchTableView.tableHeaderView?.frame.size.height = 56
         recentHeaderLabel.isHidden = false
         viewMapButton.isHidden = true
         searchEmptyView.isHidden = true
@@ -381,16 +381,17 @@ extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if let text = searchTextField.text {
-            fetchSearchResultData(keyword: text, fromRecent: false)
+            let searchContent = text.trimmingCharacters(in: .whitespaces)
+            if !searchContent.isEmpty {
+                fetchSearchResultData(keyword: searchContent, fromRecent: false)
+            }
         }
         return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if searchType == .searchResult {
-            if let text = searchTextField.text {
-                requestRestaurantSearch(query: text)
-            }
+            fetchSearchData()
             goToResult = true
             isSearch()
         }
