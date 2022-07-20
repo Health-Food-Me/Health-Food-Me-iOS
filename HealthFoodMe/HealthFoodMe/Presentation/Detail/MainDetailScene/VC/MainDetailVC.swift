@@ -502,8 +502,10 @@ extension MainDetailVC {
     
     private func checkCTAButtonStatus(reviewEnabled: Bool) {
         if !reviewEnabled {
-            reviewWriteCTAButton.isEnabled = false
-            reviewWriteCTAButton.setTitle("리뷰 작성 완료", for: .normal)
+            DispatchQueue.main.async {
+                self.reviewWriteCTAButton.isEnabled = false
+                self.reviewWriteCTAButton.setAttributedTitleForDisabled(title: "리뷰 작성 완료")
+            }
         }
     }
 }
