@@ -28,11 +28,11 @@ struct MyReviewEntity: Codable {
         for img in self.image {
             imageList.append(img.url)
         }
-        return MyReviewModel.init(restaurantName: restaurant,
-                                    starRate: score,
-                                    tagList: hashTagList,
-                                    reviewImageURLList: imageList,
-                                    reviewContents: content)
+        return MyReviewModel.init(reviewId: id, restaurantName: restaurant,
+                                  starRate: score,
+                                  tagList: hashTagList,
+                                  reviewImageURLList: imageList,
+                                  reviewContents: content)
     }
 }
 

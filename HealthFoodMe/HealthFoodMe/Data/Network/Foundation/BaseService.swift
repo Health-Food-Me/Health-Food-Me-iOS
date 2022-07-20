@@ -70,6 +70,16 @@ class BaseService {
         }
     }
     
+    func judgeStatusWithEmptyReponse(by statusCode: Int?) -> NetworkResult<Any> {
+        guard let statusCode = statusCode else { return .pathErr }
+        switch statusCode {
+            case 200..<300: return .success(())
+            case 400..<500: return .requestErr(())
+            case 500:       return .serverErr
+            default:        return .networkFail
+        }
+    }
+    
     func requestObject<T: Codable>(_ target: BaseRouter, type: T.Type, decodingMode: DecodingMode, completion: @escaping (NetworkResult<Any>) -> Void) {
         AFManager.request(target).responseData { response in
             switch response.result {
@@ -84,4 +94,11 @@ class BaseService {
             }
         }
     }
+    
+    func requestObjectWithEmptyResponse(_ target: BaseRouter,completion: @escaping (NetworkResult<Any>) -> Void) {
+        AFManager.request(target).responseData { response in
+            completion(self.judgeStatusWithEmptyReponse(by: response.response?.statusCode))
+        }
+    }
+
 }

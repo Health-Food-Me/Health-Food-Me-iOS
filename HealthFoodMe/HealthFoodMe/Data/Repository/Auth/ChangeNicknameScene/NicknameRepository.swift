@@ -8,41 +8,45 @@
 import RxSwift
 
 protocol NicknameRepository {
-  func postNicknameInValidCheck(nickname: String) -> Observable<Bool?>
-  func getUserNickname() -> Observable<String?>
+  func putNicknameChange(nickname: String)
+  func getUserNickname()
+    
+  var userNicknameChange: PublishSubject<NicknameChangeStatus> { get set }
+  var userNickname: PublishSubject<String> { get set }
 }
 
 // FIXME: - 실제 네트워크 나오면 바로 Service 프로토콜 주입 및 파일 붙일 예정
 final class DefaultNicknameRepository {
   
-//  private let networkService: AuthServiceType
-  private let disposeBag = DisposeBag()
-
-//  init(service: AuthServiceType) {
-//    self.networkService = service
-//  }
+    var userNicknameChange = PublishSubject<NicknameChangeStatus>()
+    var userNickname = PublishSubject<String>()
+    private let networkService = UserService.shared
+    private let disposeBag = DisposeBag()
 }
 
 extension DefaultNicknameRepository: NicknameRepository {
-  func postNicknameInValidCheck(nickname: String) -> Observable<Bool?> {
-    //  return self.networkService.checkNicknameDuplicated(nickname: nickname)
-    //  이후 실제로 쓸 코드 잠시 주석처리 해둠 (서버 되면 붙일 예정)
-    
-    // 닉네임 중복 검사를 잠시 임시로 처리해둠
-    return .create { observer in
-      if nickname == "중복된닉네임" || nickname == "중복" {
-        observer.onNext(true)
-      }else {
-        observer.onNext(false)
+  func putNicknameChange(nickname: String) {
+      guard let userId = UserManager.shared.getUser?.id else { return }
+      networkService.putUserNickname(userId: userId,
+                                     nickname: nickname) { result in
+          switch(result)
+          {
+              case .success(_): self.userNicknameChange.onNext(.normal)
+              case .requestErr(_): self.userNicknameChange.onNext(.duplicated)
+              default : self.userNicknameChange.onNext(.networkFail)
+          }
       }
-      return Disposables.create()
-    }
   }
-  
-  func getUserNickname() -> Observable<String?> {
-    return .create { observer in
-      observer.onNext("혜화동불가마")
-      return Disposables.create()
-    }
+    
+  func getUserNickname() {
+      guard let userID = UserManager.shared.getUser?.id else { return }
+      UserService.shared.getUserNickname(userId: userID) { result in
+          switch(result) {
+              case .success(let result):
+                  guard let result = result as? UserEntity else { return }
+                  self.userNickname.onNext(result.name)
+              default: break
+          }
+      }
   }
 }

@@ -10,10 +10,9 @@ import RxRelay
 
 protocol NicknameChangeUseCase {
   func checkNicknameHasCharacter(nickname: String)
-  func checkNicknameDuplicated(nickname: String)
 
-  var nicknameDuplicated: PublishSubject<Bool> { get set }
   var nicknameHasCharacter: PublishSubject<Bool> { get set }
+  var nicknameChangeState: PublishSubject<NicknameChangeStatus> { get set }
 }
 
 final class DefaultNicknameChangeUseCase {
@@ -21,8 +20,8 @@ final class DefaultNicknameChangeUseCase {
   private let repository: NicknameRepository
   private let disposeBag = DisposeBag()
   
-  var nicknameDuplicated = PublishSubject<Bool>()
   var nicknameHasCharacter = PublishSubject<Bool>()
+  var nicknameChangeState = PublishSubject<NicknameChangeStatus>()
 
   init(repository: NicknameRepository) {
     self.repository = repository
@@ -31,18 +30,20 @@ final class DefaultNicknameChangeUseCase {
 
 extension DefaultNicknameChangeUseCase: NicknameChangeUseCase {
   func checkNicknameHasCharacter(nickname: String) {
-    self.nicknameHasCharacter.onNext(hasCharacter(nickname))
+      if hasCharacter(nickname) {
+          self.nicknameHasCharacter.onNext(true)
+      } else {
+          putNicknameChange(nickname: nickname)
+      }
   }
   
-  func checkNicknameDuplicated(nickname: String) {
-    repository.postNicknameInValidCheck(nickname: nickname)
-      .filter { $0 != nil }
+  private func putNicknameChange(nickname: String) {
+    repository.putNicknameChange(nickname: nickname)
 
-      .subscribe(onNext: { [weak self] duplicated in
-      guard let self = self else { return }
-      self.nicknameDuplicated.onNext(duplicated!)
+    repository.userNicknameChange.subscribe(onNext: { [weak self] changeState in
+        guard let self = self else { return }
+        self.nicknameChangeState.onNext(changeState)
     }).disposed(by: self.disposeBag)
-    
   }
   
   private func hasCharacter(_ nickname: String) -> Bool {
