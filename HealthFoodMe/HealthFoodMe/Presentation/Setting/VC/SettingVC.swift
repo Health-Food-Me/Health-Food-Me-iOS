@@ -190,6 +190,13 @@ extension SettingVC {
 extension SettingVC {
   private func addButtonAction() {
     askButton.press(animated: false) {
+        HelfmeLoadingView.shared.show()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            HelfmeLoadingView.shared.hide(){
+                print("로딩 종료")
+            }
+         }
     }
     
     withdrawalButton.press(animated: false) {

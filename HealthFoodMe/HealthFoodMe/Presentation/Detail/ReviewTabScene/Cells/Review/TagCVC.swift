@@ -23,6 +23,7 @@ class TagCVC: UICollectionViewCell, UICollectionViewRegisterable {
         tv.isScrollEnabled = false
         tv.textContainerInset = .zero
         tv.textContainer.lineFragmentPadding = .zero
+        tv.textAlignment = .center
         return tv
     }()
     
@@ -46,9 +47,9 @@ extension TagCVC {
         
         tagTextView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(3)
-            make.leading.equalToSuperview().offset(10)
+            make.leading.equalToSuperview().offset(8)
             make.bottom.equalToSuperview().offset(-4)
-            make.trailing.equalToSuperview().offset(-10)
+            make.trailing.equalToSuperview().offset(-8)
 
         }
     }

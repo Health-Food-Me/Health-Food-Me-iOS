@@ -13,5 +13,5 @@ struct SearchResultDataModel {
     let foodCategory: String
     let storeName: String
     let starRate: Double
-    let distance: Int
+    let distance: Double
 }

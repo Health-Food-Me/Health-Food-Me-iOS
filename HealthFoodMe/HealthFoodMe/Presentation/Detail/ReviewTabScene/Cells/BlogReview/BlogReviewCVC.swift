@@ -20,6 +20,7 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
         lb.font = UIFont.NotoBold(size: 14)
+        
         return lb
     }()
     
@@ -78,7 +79,7 @@ extension BlogReviewCVC {
     }
     
     func setData(blogReviewData: BlogReviewDataModel) {
-        blogReviewTitleLabel.text = blogReviewData.blogReviewTitle
-        blogReviewContentsLabel.text = blogReviewData.blogReviewContents
+        blogReviewTitleLabel.text = blogReviewTitleLabel.htmlToString(blogReviewData.blogReviewTitle)?.string
+        blogReviewContentsLabel.text = blogReviewTitleLabel.htmlToString(blogReviewData.blogReviewContents)?.string
     }
 }

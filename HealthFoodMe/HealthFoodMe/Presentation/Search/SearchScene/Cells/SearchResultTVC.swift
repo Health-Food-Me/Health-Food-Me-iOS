@@ -58,7 +58,7 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
     private var starLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeGray2
-        lb.font = .NotoRegular(size: 8)
+        lb.font = .NotoRegular(size: 10)
         return lb
     }()
     
@@ -111,7 +111,11 @@ extension SearchResultTVC {
         storeNameLabel.text = data.storeName
         starView.rate = data.starRate
         starLabel.text = "(\(data.starRate))"
-        distanceLabel.text = "거리: \(data.distance)m"
+        if data.distance < 1000 {
+            distanceLabel.text = "거리: \(data.distance))m"
+        } else {
+            distanceLabel.text = "거리: \(round(data.distance / 1000))km"
+        }
     }
     
     private func setUI() {

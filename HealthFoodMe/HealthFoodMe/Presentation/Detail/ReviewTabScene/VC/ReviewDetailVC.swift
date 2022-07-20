@@ -7,15 +7,10 @@
 
 import UIKit
 
-enum ReviewDetailCellLayoutType: Int {
-    case withImageAndContents = 1
-    case withImage = 2
-    case withContents = 3
-    case withoutImageAndContents = 4
-}
-
 class ReviewDetailVC: UIViewController {
 
+    // MARK: - Properties
+    
     private let withImageAndContents = 0
     private let withImage = 1
     private let withContents = 2
@@ -36,12 +31,15 @@ class ReviewDetailVC: UIViewController {
     var moreContentsButtonRect: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     
     var restaurantId: String = "62d26c9bd11146a81ef18ea6"
+    var restaurantName: String = "샐러디태릉입구"
     
     var selectedCustomSegment = 0 {
         didSet {
             reviewCV.reloadData()
         }
     }
+    
+    // MARK: - UI Components
     
     private lazy var reviewCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -56,14 +54,23 @@ class ReviewDetailVC: UIViewController {
         
         return cv
     }()
+    
+    // MARK: - Life Cycle Part
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
         setDelegate()
         registerCell()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchData()
     }
 }
+
+// MARK: - Extension
 
 extension ReviewDetailVC {
     func setDelegate() {
@@ -105,47 +112,6 @@ extension ReviewDetailVC {
                 return withoutImageAndContents
             }
         }
-    }
-    
-    private func fetchCutStringList() {
-        for viewModel in reviewData {
-            if let reviewText = viewModel.data.reviewContents {
-                let cutText = cutReviewContents(reviewText)
-                cutLabelList.append(cutText)
-            } else {
-                cutLabelList.append("")
-            }
-        }
-    }
-    
-    private func fetchExpendStateList() {
-        expendStateList = Array<Bool>(repeating: false, count: reviewData.count)
-    }
-    
-    private func fetchData() {
-        // 데이터를 서버에서 받아와야 함
-        requestReviewListWithAPI()
-    }
-    
-    private func processViewModel(_ reviewDataList: [ReviewDataModel],
-                                  _ blogReviewDataList: [BlogReviewDataModel]) {
-        var reviewResult: [ReviewCellViewModel] = []
-        var blogReviewResult: [BlogReviewDataModel] = []
-        for reviewData in reviewDataList {
-            let height = calculateReviewHeight(reviewData.reviewContents ?? "")
-            reviewResult.append(ReviewCellViewModel.init(data: reviewData,
-                                                   foldRequired: height > 55))
-        }
-        
-        for blogReviewData in blogReviewDataList {
-            blogReviewResult.append(
-                BlogReviewDataModel.init(blogReviewTitle: blogReviewData.blogReviewTitle,
-                                         blogReviewContents: blogReviewData.blogReviewContents,
-                                         blogURL: blogReviewData.blogURL))
-        }
-        
-        self.reviewData = reviewResult
-        self.blogReviewData = blogReviewResult
     }
     
     private func calculateTextInSize(review: String) -> (Int,String) {
@@ -199,7 +165,53 @@ extension ReviewDetailVC {
         return textView.frame.height
     }
     
-    private func requestReviewListWithAPI() {
+    // MARK: - Network
+    
+    private func fetchCutStringList() {
+        for viewModel in reviewData {
+            if let reviewText = viewModel.data.reviewContents {
+                let cutText = cutReviewContents(reviewText)
+                cutLabelList.append(cutText)
+            } else {
+                cutLabelList.append("")
+            }
+        }
+    }
+    
+    private func fetchExpendStateList() {
+        expendStateList = Array<Bool>(repeating: false, count: reviewData.count)
+    }
+    
+    private func fetchData() {
+        // 데이터를 서버에서 받아와야 함
+        requestReviewListWithAPI() {
+            self.requestBlogReviewListWithAPI()
+            self.processViewModel(self.reviewServerData, self.blogReviewData)
+        }
+    }
+    
+    private func processViewModel(_ reviewDataList: [ReviewDataModel],
+                                  _ blogReviewDataList: [BlogReviewDataModel]) {
+        var reviewResult: [ReviewCellViewModel] = []
+        var blogReviewResult: [BlogReviewDataModel] = []
+        for reviewData in reviewDataList {
+            let height = calculateReviewHeight(reviewData.reviewContents ?? "")
+            reviewResult.append(ReviewCellViewModel.init(data: reviewData,
+                                                   foldRequired: height > 55))
+        }
+        
+        for blogReviewData in blogReviewDataList {
+            blogReviewResult.append(
+                BlogReviewDataModel.init(blogReviewTitle: blogReviewData.blogReviewTitle,
+                                         blogReviewContents: blogReviewData.blogReviewContents,
+                                         blogURL: blogReviewData.blogURL))
+        }
+        
+        self.reviewData = reviewResult
+        self.blogReviewData = blogReviewResult
+    }
+    
+    private func requestReviewListWithAPI(completion: @escaping(()->Void)) {
         ReviewService.shared.requestReviewList(restaurantId: restaurantId) { networkResult in
             switch networkResult {
             case .success(let data):
@@ -208,10 +220,26 @@ extension ReviewDetailVC {
                     for da in data {
                         self.reviewServerData.append(da.toDomain())
                     }
-                    let blogReviewData = BlogReviewDataModel.sampleData
-                    self.processViewModel(self.reviewServerData, blogReviewData)
-
                     print(data, "성공")
+                }
+                
+            case .networkFail:
+                print("실패")
+            default:
+                break
+            }
+            completion()
+        }
+    }
+    
+    private func requestBlogReviewListWithAPI()  {
+        ReviewService.shared.requestBlogReviewList(restaurantName: restaurantName) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                self.blogReviewData.removeAll()
+                if let data = data as? BlogReviewListEntity {
+                    self.blogReviewData = data.toDomain()
+                    print("성공")
                 }
             case .networkFail:
                 print("실패")

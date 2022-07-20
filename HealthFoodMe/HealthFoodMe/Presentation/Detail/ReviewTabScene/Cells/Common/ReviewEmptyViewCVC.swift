@@ -14,6 +14,7 @@ class ReviewEmptyViewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     static var isFromNib = false
     
     // MARK: - UI Components
+    
     private var testLabel: UILabel = {
         let lb = UILabel()
         lb.text = "SDFSDFSDF"
