@@ -34,7 +34,7 @@ class ContentTVC: UITableViewCell, UITableViewRegisterable {
     lazy var contentStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
-        sv.alignment = .center
+        sv.alignment = .top
         sv.spacing = 10
         sv.addArrangedSubviews(checkImageView, contentLabel)
         return sv
