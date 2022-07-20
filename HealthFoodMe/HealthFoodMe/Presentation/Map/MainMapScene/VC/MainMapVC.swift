@@ -16,7 +16,7 @@ import SwiftUI
 class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
     // MARK: - Properties
-    
+    private var initialMapOpened: Bool = false
     private let disposeBag = DisposeBag()
     private var isInitialPoint = false
     private var currentZoom: Double = 0
@@ -334,15 +334,16 @@ extension MainMapVC {
     }
     
     private func setIntitialMapPoint() {
-        
-        let NMGPosition = self.locationManager?.currentLatLng()
-        if let position = NMGPosition {
-            self.mapView.moveCameraPositionWithZoom(position, 2000)
-        } else {
-            self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
+        if !initialMapOpened {
+            initialMapOpened = true
+            let NMGPosition = self.locationManager?.currentLatLng()
+            if let position = NMGPosition {
+                self.mapView.moveCameraPositionWithZoom(position, 2000)
+            } else {
+                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
+            }
+            isInitialPoint = true
         }
-        isInitialPoint = true
-        
     }
     
     private func setMapView() {
