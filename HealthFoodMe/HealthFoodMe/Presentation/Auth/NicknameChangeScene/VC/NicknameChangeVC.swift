@@ -247,7 +247,7 @@ extension NicknameChangeVC {
 }
 
 extension NicknameChangeVC {
-  private func showUpperToast(_ status: NicknameStatus) {
+  private func showUpperToast(_ status: NicknameChangeStatus) {
     guard status != .normal else {
       // FIXME: - 이후에 Custom Alert 생성되면 바꿀 예정
       makeAlert(title: "알림", message: "닉네임 변경 성공! ^_^")
