@@ -133,7 +133,8 @@ extension ReviewCVC {
     
     func setDefaultLayout() {
         contentView.addSubviews(nameLabel, starView, tagCV,
-                                reviewPhotoCV, reviewContents, reviewSeperatorView,moreTapButton)
+                                reviewPhotoCV, reviewContents, reviewSeperatorView,
+                                moreTapButton)
         
         let width = UIScreen.main.bounds.width
         
@@ -183,7 +184,6 @@ extension ReviewCVC {
             make.bottom.equalToSuperview().offset(-28)
             make.trailing.equalToSuperview().offset(-30)
             make.width.equalTo(width - 40)
-            make.height.equalToSuperview()
         }
         
 
