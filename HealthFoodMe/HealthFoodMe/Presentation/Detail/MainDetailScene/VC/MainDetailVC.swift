@@ -79,7 +79,6 @@ class MainDetailVC: UIViewController {
         fetchRestauranDetail(restaurantId: self.restaurantId) {
             self.requestReviewEnabled(restaurantId: self.restaurantId)
         }
-        print("🍎\(restaurantId)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -311,6 +310,7 @@ extension MainDetailVC: UITableViewDataSource {
             reviewTabVC.swipeDismissDelegate = self
             
             copingTabVC.restaurantId = self.restaurantId
+            reviewTabVC.restaurantId = self.restaurantId
             
             self.addChild(menuTabVC)
             self.addChild(copingTabVC)
@@ -482,6 +482,7 @@ extension MainDetailVC {
                     if let data = data as? MainDetailEntity {
                         self.mainInfoTVC.setData(data: data)
                         self.menuTabVC.setData(data: data.menu)
+                        self.reviewTabVC.restaurantName = data.restaurant.name
                     }
                 default:
                     print("통신 에러")

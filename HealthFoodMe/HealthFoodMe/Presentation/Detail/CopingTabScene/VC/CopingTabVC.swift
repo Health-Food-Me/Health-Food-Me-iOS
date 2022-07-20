@@ -26,7 +26,7 @@ class CopingTabVC: UIViewController {
     weak var delegate: ScrollDeliveryDelegate?
     var panDelegate: CopingGestureDelegate?
     var copingDataModel: CopingTabEntity?
-    var restaurantId = "" //임시로 넣어준 식당ID
+    var restaurantId = "" 
     var recommendList: [String] = [] {
         didSet {
             copingTableView.reloadData()
