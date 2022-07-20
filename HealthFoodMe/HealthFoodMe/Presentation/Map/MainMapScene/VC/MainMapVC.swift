@@ -20,6 +20,8 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     private let disposeBag = DisposeBag()
     private var isInitialPoint = false
     private var currentZoom: Double = 0
+    private var currentRestaurantId: String = ""
+    private var currentLocation: Location = Location.init(latitude: 0, longitude: 0)
     private var currentCategory: String = "" {
         didSet {
             self.fetchRestaurantList(zoom: self.currentZoom)
@@ -354,6 +356,8 @@ extension MainMapVC {
                 let NMGPosition = NMGLatLng(lat: dataModel.latitude,
                                             lng: dataModel.longtitude)
                 if let restaurantId = self?.matchRestaurantId(position: NMGPosition) {
+                    self?.currentRestaurantId = restaurantId
+                    self?.currentLocation = Location(latitude: dataModel.latitude, longitude: dataModel.longtitude)
                     self?.fetchRestaurantSummary(id: restaurantId)
                 }
                 
@@ -400,6 +404,8 @@ extension MainMapVC {
                 self.categoryCollectionView.isHidden = false
             }
         }
+        nextVC.restaurantId = self.currentRestaurantId
+        nextVC.location = self.currentLocation
         let nav = UINavigationController(rootViewController: nextVC)
         nav.modalPresentationStyle = .overCurrentContext
         nav.modalTransitionStyle = .crossDissolve

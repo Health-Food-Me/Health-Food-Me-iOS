@@ -31,6 +31,8 @@ class MainDetailVC: UIViewController {
     private var phoneMenuTouched: Bool = false
     private var navigationTitle: String = "서브웨이 테스트"
     private var isOpenned: Bool = false
+    var restaurantId: String = ""
+    var location: Location?
     var panGestureEnabled = true
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
@@ -74,6 +76,7 @@ class MainDetailVC: UIViewController {
         setDelegate()
         bindViewModels()
         setButtonAction()
+        fetchRestauranDetail(restaurantId: self.restaurantId)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -457,6 +460,27 @@ extension MainDetailVC: SwipeDismissDelegate {
             if mainTableView.contentOffset.y == 0 {
                 self.dismiss(animated: false) {
                     self.translationClosure?()
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Network
+
+extension MainDetailVC {
+    func fetchRestauranDetail(restaurantId: String) {
+        print("했니")
+        if let location = location {
+            print("했니", location)
+            RestaurantService.shared.fetchRestaurantDetail(restaurantId: restaurantId, userId: UserManager.shared.getUser?.id ?? "", latitude: location.latitude, longitude: location.longitude) { networkResult in
+                switch networkResult {
+                case .success(let data):
+                    if let data = data as? MainDetailEntity {
+                        dump(data)
+                    }
+                default:
+                    print("통신 에러")
                 }
             }
         }
