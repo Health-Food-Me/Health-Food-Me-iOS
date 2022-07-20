@@ -50,7 +50,7 @@ extension SplashVC {
     }
     
     private func presentMainMapVC() {
-        let vc = ModuleFactory.resolve().makeMainMapVC()
+        let vc = ModuleFactory.resolve().makeMainMapNavigationController()
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: false)
     }

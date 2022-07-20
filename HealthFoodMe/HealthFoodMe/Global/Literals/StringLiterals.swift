@@ -138,6 +138,7 @@ struct I18N {
         static let customerServiceTitle = "고객지원"
         static let askButtonTitle = "문의하기"
         static let userWithdrawalTitle = "회원탈퇴"
+        static let reportTitle = "신고하기"
         static let termsTitle = "약관 및 정책"
         static let openSourceButtonTitle = "오픈 소스 정보"
         static let naverMapTerms = "네이버 지도 법적 공지"

@@ -40,8 +40,8 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.menuIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            self.mapView.disableSelectPoint.accept(())
             self.makeVibrate()
+            self.unselectMapPoint()
             let nextVC = ModuleFactory.resolve().makeHamburgerBarVC()
             nextVC.modalPresentationStyle = .overFullScreen
             nextVC.delegate = self
@@ -155,6 +155,10 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         setIntitialMapPoint()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        mapView.disableSelectPoint.accept(())
     }
 }
 
@@ -330,21 +334,25 @@ extension MainMapVC {
         locationManager?.add(self)
     }
     
+    private func unselectMapPoint() {
+        self.mapView.disableSelectPoint.accept(())
+        self.mapDetailSummaryView.snp.updateConstraints { make in
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
+        }
+        let bottomSafeArea = self.safeAreaBottomInset()
+        self.myLocationButton.snp.updateConstraints { make in
+            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
+        }
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     private func bindMapView() {
         mapView.rx.mapViewClicked
             .subscribe(onNext: { _ in
-                self.mapView.disableSelectPoint.accept(())
-                self.mapDetailSummaryView.snp.updateConstraints { make in
-                    make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
-                }
-                let bottomSafeArea = self.safeAreaBottomInset()
-                self.myLocationButton.snp.updateConstraints { make in
-                    make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
-                }
-                UIView.animate(withDuration: 0.3, delay: 0) {
-                    self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
-                    self.view.layoutIfNeeded()
-                }
+                self.unselectMapPoint()
             }).disposed(by: self.disposeBag)
       
       mapView.zoomLevelChange
