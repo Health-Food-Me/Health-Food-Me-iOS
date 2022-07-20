@@ -32,6 +32,10 @@ final class MenuCellCVC: UICollectionViewCell, UICollectionViewRegisterable {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func prepareForReuse() {
+        
+    }
 }
 
 // MARK: - Methods
@@ -53,6 +57,7 @@ extension MenuCellCVC {
     }
     
     func setData(menuData: MenuDataModel) {
+        menuView.prepareView()
         self.isPick = menuData.isPick
         menuView.isPick = self.isPick
         menuView.updateLayout()

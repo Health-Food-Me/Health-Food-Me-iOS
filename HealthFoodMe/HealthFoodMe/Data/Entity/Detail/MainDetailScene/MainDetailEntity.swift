@@ -25,6 +25,10 @@ struct Menu: Codable {
         case id = "_id"
         case name, image, kcal, per, price, isPick
     }
+    
+    func toDomain() -> MenuDataModel {
+        return MenuDataModel.init(restaurantID: id, isPick: isPick, memuImageURL: image, menuName: name, menuPrice: price, menuKcal: kcal, carbohydrates: nil, protein: nil, fat: nil)
+    }
 }
 
 // MARK: - Restaurant

@@ -478,6 +478,7 @@ extension MainDetailVC {
                 case .success(let data):
                     if let data = data as? MainDetailEntity {
                         self.mainInfoTVC.setData(data: data)
+                        self.menuTabVC.setData(data: data.menu)
                     }
                 default:
                     print("통신 에러")
