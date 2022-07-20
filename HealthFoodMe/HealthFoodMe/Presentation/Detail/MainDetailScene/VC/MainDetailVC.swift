@@ -493,7 +493,7 @@ extension MainDetailVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? ReviewCheckEntity {
-                    self.checkCTAButtonStatus(reviewEnabled: data.hasReview)
+                    self.checkCTAButtonStatus(hasReview: data.hasReview)
                 }
             default:
                 print("통신 에러")
@@ -501,8 +501,8 @@ extension MainDetailVC {
         }
     }
     
-    private func checkCTAButtonStatus(reviewEnabled: Bool) {
-        if !reviewEnabled {
+    private func checkCTAButtonStatus(hasReview: Bool) {
+        if hasReview {
             DispatchQueue.main.async {
                 self.reviewWriteCTAButton.isEnabled = false
                 self.reviewWriteCTAButton.setAttributedTitleForDisabled(title: "리뷰 작성 완료")
