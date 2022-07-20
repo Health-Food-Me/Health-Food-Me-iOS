@@ -17,7 +17,7 @@ class SplashVC: UIViewController {
     
     // MARK: - UI Components
     
-    private let animationView: AnimationView = .init(name: "splash_ios")
+    private let animationView: AnimationView = .init(name: "splash_iOS")
     
     // MARK: - View Life Cycle
     
