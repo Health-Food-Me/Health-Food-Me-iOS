@@ -15,7 +15,6 @@ protocol SwipeDismissDelegate {
     func swipeToDismiss()
 }
 
-
 class MainDetailVC: UIViewController {
     
     // MARK: - Properties
@@ -31,6 +30,9 @@ class MainDetailVC: UIViewController {
     private var phoneMenuTouched: Bool = false
     private var navigationTitle: String = "서브웨이 테스트"
     private var isOpenned: Bool = false
+    var userLocation: Location?
+    var restaurantId: String = ""
+    var location: Location?
     var panGestureEnabled = true
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
@@ -74,6 +76,9 @@ class MainDetailVC: UIViewController {
         setDelegate()
         bindViewModels()
         setButtonAction()
+        fetchRestauranDetail(restaurantId: self.restaurantId) {
+            self.requestReviewEnabled(restaurantId: self.restaurantId)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -458,6 +463,49 @@ extension MainDetailVC: SwipeDismissDelegate {
                 self.dismiss(animated: false) {
                     self.translationClosure?()
                 }
+            }
+        }
+    }
+}
+
+// MARK: - Network
+
+extension MainDetailVC {
+    func fetchRestauranDetail(restaurantId: String, comletion: @escaping(() -> Void)) {
+        if let location = userLocation {
+            RestaurantService.shared.fetchRestaurantDetail(restaurantId: restaurantId, userId: UserManager.shared.getUser?.id ?? "", latitude: location.latitude, longitude: location.longitude) { networkResult in
+                switch networkResult {
+                case .success(let data):
+                    if let data = data as? MainDetailEntity {
+                        self.mainInfoTVC.setData(data: data)
+                        self.menuTabVC.setData(data: data.menu)
+                    }
+                default:
+                    print("통신 에러")
+                }
+            }
+        }
+        comletion()
+    }
+    
+    func requestReviewEnabled(restaurantId: String) {
+        ReviewService.shared.requestReviewEnabled(userId: UserManager.shared.getUser?.id ?? "", restaurantId: restaurantId) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? ReviewCheckEntity {
+                    self.checkCTAButtonStatus(reviewEnabled: data.hasReview)
+                }
+            default:
+                print("통신 에러")
+            }
+        }
+    }
+    
+    private func checkCTAButtonStatus(reviewEnabled: Bool) {
+        if !reviewEnabled {
+            DispatchQueue.main.async {
+                self.reviewWriteCTAButton.isEnabled = false
+                self.reviewWriteCTAButton.setAttributedTitleForDisabled(title: "리뷰 작성 완료")
             }
         }
     }

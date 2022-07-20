@@ -12,13 +12,13 @@ enum RestaurantRouter {
     case requestRestaurantSearchResult(searchRequest: SearchRequestEntity)
     case fetchRestaurantSummary(restaurantId: String, userId: String)
     case getMenuPrescription(restaurantId: String)
+    case fetchRestaurantList(longitude: Double, latitude: Double, zomm: Double, category: String)
+    case fetchRestaurantDetail(restaurantId: String, userId: String, latitude: Double, longitude: Double)
 }
 
 extension RestaurantRouter: BaseRouter {
     var method: HTTPMethod {
         switch self {
-        case .requestRestaurantSearch:
-            return .get
         default :
             return .get
         }
@@ -34,6 +34,10 @@ extension RestaurantRouter: BaseRouter {
             return "/restaurant/\(restaurantId)/prescription"
         case .fetchRestaurantSummary(let restaurantId, let userId):
             return "/restaurant/\(restaurantId)/\(userId)"
+        case .fetchRestaurantList:
+            return "/restaurant"
+        case .fetchRestaurantDetail(let restaurantId, let userId, _, _):
+            return "/restaurant/\(restaurantId)/\(userId)/menus"
         default:
             return ""
         }
@@ -48,10 +52,30 @@ extension RestaurantRouter: BaseRouter {
             return .query(requestQuery)
         case .requestRestaurantSearchResult(let searchRequest):
             let requestQuery: [String: Any] = [
-                "longtitude": searchRequest.longtitude,
+                "longitude": searchRequest.longtitude,
                 "latitude": searchRequest.latitude,
                 "zoom": searchRequest.zoom,
                 "keyword": searchRequest.keyword
+            ]
+            return .query(requestQuery)
+        case .fetchRestaurantList(let lng, let lat, let zoom, let category):
+            let requestQuery: [String: Any] = [
+                "longitude": lng,
+                "latitude": lat,
+                "zoom": zoom,
+                "category": category
+            ]
+            return .query(requestQuery)
+        case .fetchRestaurantSummary(let restaurantId, let userId):
+            let requestQuery: [String: Any] = [
+                "restaurantId": restaurantId,
+                "userId": userId
+            ]
+            return .query(requestQuery)
+        case .fetchRestaurantDetail(_, _, let latitude, let longitude):
+            let requestQuery: [String: Any] = [
+                "latitude": latitude,
+                "longitude": longitude
             ]
             return .query(requestQuery)
         default:
@@ -61,8 +85,6 @@ extension RestaurantRouter: BaseRouter {
     
     var header: HeaderType {
         switch self{
-        case .requestRestaurantSearch:
-            return .withToken
         default:
             return .withToken
         }

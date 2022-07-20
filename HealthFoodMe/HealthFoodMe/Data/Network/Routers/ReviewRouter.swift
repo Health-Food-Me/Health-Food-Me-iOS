@@ -13,6 +13,7 @@ enum ReviewRouter {
     case getReviewList(restaurantId: String)
     case requestUserReview(userId: String)
     case getBlogReviewList(restaurantName: String)
+    case requestReviewEnabled(userId: String, restaurantId: String)
 }
 
 extension ReviewRouter: BaseRouter {
@@ -25,10 +26,6 @@ extension ReviewRouter: BaseRouter {
         }
     }
     
-    var header: HeaderType {
-        return .multiPartWithToken
-    }
-    
     var path: String {
         switch self {
         case .getReviewList(let restaurantId):
@@ -39,6 +36,8 @@ extension ReviewRouter: BaseRouter {
             return "/review/user/\(userId)/restaurant/\(restaurantId)"
         case .getBlogReviewList(let restaurantName):
             return "review/restaurant/\(restaurantName)/blog"
+        case .requestReviewEnabled(let userId, let restaurantId):
+            return "/review/check/\(userId)/\(restaurantId)"
         default:
             return ""
             
@@ -60,6 +59,12 @@ extension ReviewRouter: BaseRouter {
         case .getBlogReviewList(let restaurantName):
             let requestParams: [String: Any] = [
                 "restaurantName": restaurantName
+            ]
+            return .query(requestParams)
+        case .requestReviewEnabled(let userId, let restaurantId):
+            let requestParams: [String: Any] = [
+                "userId": userId,
+                "restaurantId": restaurantId
             ]
             return .query(requestParams)
         default:
@@ -87,15 +92,17 @@ extension ReviewRouter: BaseRouter {
             }
             
             return multiPart
-       default: return MultipartFormData()
+        default: return MultipartFormData()
+        }
     }
-
+    
     var header: HeaderType {
         switch self {
+        case .requestReviewWrite:
+            return .multiPartWithToken
         default:
             return .withToken
         }
-    }
     }
 }
 
