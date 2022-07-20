@@ -58,4 +58,11 @@ final class URLSchemeManager: NSObject {
             UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
         }
     }
+    
+}
+
+enum NaverTerms: String{
+    case serviceTerm = "policy.naver.com/rules/service_pre_20140317.html"
+    case naverMapTerm = "policy.naver.com/rules/service_location.html"
+    case naverMapOpensource = "policy.naver.com/rules/service_group.html"
 }

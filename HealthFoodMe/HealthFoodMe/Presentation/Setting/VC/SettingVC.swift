@@ -6,10 +6,14 @@
 //
 
 import UIKit
+import MessageUI
+import NMapsMap
 
 class SettingVC: UIViewController {
     
     // MARK: - Properties
+    
+    private let schemeManager = URLSchemeManager.shared
     
     // MARK: - UI Components
     
@@ -155,21 +159,21 @@ extension SettingVC {
         }
         
         reportButton.snp.makeConstraints { make in
-            make.top.equalTo(askButton.snp.bottom).offset(24)
+            make.top.equalTo(withdrawalButton.snp.bottom).offset(36)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
             make.height.equalTo(16)
         }
         
         withdrawalButton.snp.makeConstraints { make in
-            make.top.equalTo(reportButton.snp.bottom).offset(36)
+            make.top.equalTo(askButton.snp.bottom).offset(36)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
             make.height.equalTo(16)
         }
         
         termsTitle.snp.makeConstraints { make in
-            make.top.equalTo(withdrawalButton.snp.bottom).offset(54)
+            make.top.equalTo(reportButton.snp.bottom).offset(54)
             make.leading.equalToSuperview().offset(20)
             make.height.equalTo(20)
         }
@@ -206,23 +210,47 @@ extension SettingVC {
 extension SettingVC {
     private func addButtonAction() {
         askButton.press(animated: false) {
+            self.presentReportMail(title: I18N.Setting.askButtonTitle, content: I18N.Setting.askMailContent)
         }
         
+        reportButton.press(animated: false) {
+            self.presentReportMail(title: I18N.Setting.reportTitle, content: I18N.Setting.reportMailContent)
+        }
+    
         withdrawalButton.press(animated: false) {
             let withdrawlVC = ModuleFactory.resolve().makeUserWithdrawlVC()
             self.navigationController?.pushViewController(withdrawlVC, animated: true)
         }
         
         openSourceButton.press(animated: false) {
-            print("오픈 소스 정보")
+            self.schemeManager.loadSafariApp(blogLink: NaverTerms.serviceTerm.rawValue)
         }
         
         naverMapTermsButton.press(animated: false) {
-            print("네이버 지도 법적 공지")
+            self.schemeManager.loadSafariApp(blogLink: NaverTerms.naverMapTerm.rawValue)
         }
         
         naverMapLicenseButton.press(animated: false) {
-            print("네이버 지도 라이선스")
+            self.schemeManager.loadSafariApp(blogLink: NaverTerms.naverMapOpensource.rawValue)
         }
+    }
+}
+
+extension SettingVC: MFMailComposeViewControllerDelegate {
+    private func presentReportMail(title: String, content: String) {
+        let mailComposeVC = MFMailComposeViewController()
+        if MFMailComposeViewController.canSendMail() {
+            mailComposeVC.mailComposeDelegate = self
+            mailComposeVC.setToRecipients(["0inn1220@gmail.com"])
+            mailComposeVC.setSubject(title)
+            mailComposeVC.setMessageBody(content, isHTML: false)
+            self.present(mailComposeVC, animated: true, completion: nil)
+        } else {
+            makeAlert(title: "메세지 전송 실패", message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.")
+        }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
     }
 }

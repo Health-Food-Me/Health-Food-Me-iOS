@@ -137,8 +137,11 @@ struct I18N {
     struct Setting {
         static let customerServiceTitle = "고객지원"
         static let askButtonTitle = "문의하기"
+        static let askMailContent = "문의할 내용을 작성해주세요."
+        
         static let userWithdrawalTitle = "회원탈퇴"
         static let reportTitle = "신고하기"
+        static let reportMailContent = "부적절한 리뷰를 알려주세요. \n식당이름, 닉네임을 작성해 주시면 접수 후 처리할 예정입니다."
         static let termsTitle = "약관 및 정책"
         static let openSourceButtonTitle = "오픈 소스 정보"
         static let naverMapTerms = "네이버 지도 법적 공지"
