@@ -26,6 +26,7 @@ struct I18N {
         static let ctaButtonTitle = "수정 완료"
         static let formatErrMessage =  "닉네임 설정 기준에 적합하지 않습니다"
         static let duplicatedErrMessage = "중복된 닉네임입니다"
+        static let nicknameChangeSuccees = "닉네임 변경에 성공하였습니다."
       }
       
       struct Withdrawal {
@@ -33,7 +34,8 @@ struct I18N {
         static let topGuideText = "탈퇴하면 내 앱 모든 데이터가 사라집니다"
         static let bottomGuideText = "서비스를 탈퇴하려면 닉네임을 입력해주세요"
         static let ctaButtonTitle = "확인"
-        
+        static let withdrawlAlertTitle = "정말로 탈퇴하실건가요?"
+        static let withdrawlContent = "탈퇴 시 헬푸미의 새로운 정보를\n얻을 수 없습니다."
       }
     }
     
@@ -138,7 +140,11 @@ struct I18N {
     struct Setting {
         static let customerServiceTitle = "고객지원"
         static let askButtonTitle = "문의하기"
+        static let askMailContent = "문의할 내용을 작성해주세요."
+        
         static let userWithdrawalTitle = "회원탈퇴"
+        static let reportTitle = "신고하기"
+        static let reportMailContent = "부적절한 리뷰를 알려주세요. \n식당이름, 닉네임을 작성해 주시면 접수 후 처리할 예정입니다."
         static let termsTitle = "약관 및 정책"
         static let openSourceButtonTitle = "오픈 소스 정보"
         static let naverMapTerms = "네이버 지도 법적 공지"

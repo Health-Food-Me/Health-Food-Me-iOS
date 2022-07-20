@@ -8,6 +8,7 @@
 import Foundation
 
 struct MyReviewModel {
+    let reviewId: String
     let restaurantName: String
     let starRate: Float
     let tagList: [String]

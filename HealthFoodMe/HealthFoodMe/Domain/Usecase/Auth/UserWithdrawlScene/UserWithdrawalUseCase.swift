@@ -27,11 +27,12 @@ final class DefaultUserWithdrawlUseCase {
 
 extension DefaultUserWithdrawlUseCase: UserWithdrawalUseCase {
   func getUserNickname() {
-    repository.getUserNickname()
-      .filter { $0 != nil }
+      repository.getUserNickname()
+      
+      repository.userNickname
       .subscribe(onNext: { [weak self] nickname in
         guard let self = self else { return }
-        self.userNickname.accept(nickname!)
+        self.userNickname.accept(nickname)
       }).disposed(by: self.disposeBag)
   }
 }

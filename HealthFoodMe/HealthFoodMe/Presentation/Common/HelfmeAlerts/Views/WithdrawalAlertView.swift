@@ -78,6 +78,7 @@ class WithdrawalAlertView: UIView {
 
 extension WithdrawalAlertView {
     @objc func didTapWithdrawal() {
+        postObserverAction(.withdrawalButtonClicked)
         delegate?.alertDidTap()
     }
     

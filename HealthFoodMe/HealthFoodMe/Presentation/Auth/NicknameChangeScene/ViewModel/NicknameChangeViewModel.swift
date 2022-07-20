@@ -20,7 +20,7 @@ final class NicknameChangeViewModel: ViewModelType {
   
   // MARK: - Outputs
   struct Output {
-    let currentNicknameStatus = PublishRelay<NicknameStatus>()
+    let currentNicknameStatus = PublishRelay<NicknameChangeStatus>()
   }
   
   init(useCase: NicknameChangeUseCase) {
@@ -39,7 +39,6 @@ extension NicknameChangeViewModel {
       .subscribe(onNext: { [weak self] nickname in
         guard let self = self else { return }
         self.useCase.checkNicknameHasCharacter(nickname: nickname!)
-        self.useCase.checkNicknameDuplicated(nickname: nickname!)
       }).disposed(by: self.disposeBag)
     
     return output
@@ -47,26 +46,26 @@ extension NicknameChangeViewModel {
   
   private func bindOutput(output: Output, disposeBag: DisposeBag) {
     let hasSpecialCharacter = useCase.nicknameHasCharacter
-    let isDuplicatedNickname = useCase.nicknameDuplicated
+    let nicknameChangeState = useCase.nicknameChangeState
     
-    Observable.zip(hasSpecialCharacter, isDuplicatedNickname,
-                             resultSelector: { characterState, duplicatedState -> NicknameStatus in
-      if characterState {
-        return NicknameStatus.containsSpecialCharacter
-      } else if duplicatedState {
-        return NicknameStatus.duplicated
-      } else {
-        return NicknameStatus.normal
-      }
-    })
+    hasSpecialCharacter
     .subscribe(onNext: { nicknameState in
-      output.currentNicknameStatus.accept(nicknameState)
+        if nicknameState {
+            output.currentNicknameStatus.accept(.containsSpecialCharacter)
+        }
+    }).disposed(by: self.disposeBag)
+      
+    nicknameChangeState.subscribe(onNext: { [weak self] changeSuccess in
+        if changeSuccess == .normal { output.currentNicknameStatus.accept(.normal) }
+        else if changeSuccess == .duplicated { output.currentNicknameStatus.accept(.duplicated) }
+        else { output.currentNicknameStatus.accept(.networkFail) }
     }).disposed(by: self.disposeBag)
   }
 }
 
-enum NicknameStatus {
+enum NicknameChangeStatus {
   case normal
   case duplicated
   case containsSpecialCharacter
+  case networkFail
 }

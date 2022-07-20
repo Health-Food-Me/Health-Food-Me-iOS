@@ -82,6 +82,7 @@ class UserWithdrawalVC: UIViewController {
     self.setLayout()
     self.setUI()
     self.addButtonAction()
+    self.addObserver()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -160,9 +161,32 @@ extension UserWithdrawalVC {
   
   private func addButtonAction() {
     changeCTAButton.press {
-      // FIXME: - 여기서 Custom Alert를 띄우기
+        let alertVC = ModuleFactory.resolve().makeHelfmeAlertVC(type: .withdrawalAlert)
+        alertVC.alertTitle = I18N.Auth.Withdrawal.withdrawlAlertTitle
+        alertVC.alertContent = I18N.Auth.Withdrawal.withdrawlContent
+        alertVC.modalTransitionStyle = .crossDissolve
+        alertVC.modalPresentationStyle = .overCurrentContext
+        self.present(alertVC, animated: true)
     }
   }
+    
+    private func addObserver() {
+        addObserverAction(.withdrawalButtonClicked) { _ in
+            self.deleteUser()
+        }
+    }
+    
+    private func deleteUser() {
+        guard let userID = UserManager.shared.getUser?.id else { return }
+        UserService.shared.deleteUserNickname(userId: userID) { result in
+            switch(result) {
+                case .success(_) :
+                    let loginVC = ModuleFactory.resolve().makeLoginVC()
+                    self.navigationController?.pushViewController(loginVC, animated: true)
+                default: self.makeAlert(title: "오류", message: "네트워크를 확인해주세요")
+            }
+        }
+    }
 }
 
 extension UserWithdrawalVC {
@@ -176,7 +200,6 @@ extension UserWithdrawalVC {
     output.userNickname
       .subscribe(onNext: { [weak self] nickname in
         guard let self = self else { return }
-        self.nickNameTextField.placeholder = nickname
         
       }).disposed(by: self.disposeBag)
     
