@@ -1,5 +1,5 @@
 //
-//  MyReviewEmptyView.swift
+//  MyReviewEmptyViewCVC.swift
 //  HealthFoodMe
 //
 //  Created by 강윤서 on 2022/07/21.
@@ -7,12 +7,18 @@
 
 import UIKit
 
-class MyReviewEmptyView: UIView {
+protocol MyReviewEmptyViewDelegate: AnyObject {
+    func myReviewEmptyViewDidTap()
+}
 
+class MyReviewEmptyViewCVC: UICollectionViewCell, UICollectionViewRegisterable {
+    
     // MARK: - Properties
     
+    static var isFromNib = false
+    weak var delegate: MyReviewEmptyViewDelegate?
+  
     // MARK: - UI Components
-    
     private let withHelpme: UILabel = {
         let lb = UILabel()
         lb.text = I18N.Scrap.withHelfme
@@ -23,7 +29,7 @@ class MyReviewEmptyView: UIView {
     
     private let dietStore: UILabel = {
         let lb = UILabel()
-        lb.text = I18N.Scrap.dietStore
+        lb.text = I18N.MyReview.enjoyRestaurant
         lb.textColor = .helfmeGray1
         lb.font = .NotoRegular(size: 14)
         return lb
@@ -31,12 +37,12 @@ class MyReviewEmptyView: UIView {
     
     private lazy var myReviewButton: UIButton = {
         let btn = UIButton()
-        btn.setTitle(I18N.Scrap.goScrap, for: .normal)
+        btn.setTitle(I18N.MyReview.gotoFindRestaurant, for: .normal)
         btn.backgroundColor = .mainRed
         btn.setTitleColor(UIColor.helfmeWhite, for: .normal)
         btn.titleLabel?.font = .NotoBold(size: 16)
-        btn.layer.cornerRadius = 22
-//        btn.addTarget(self, action: #selector(popToMainMapVC), for: .touchUpInside)
+        btn.layer.cornerRadius = 24
+        btn.addTarget(self, action: #selector(popToMainVC), for: .touchUpInside)
         return btn
     }()
     
@@ -51,8 +57,8 @@ class MyReviewEmptyView: UIView {
         sv.axis = .vertical
         return sv
     }()
-    
-    // MARK: - View Life Cycle
+  
+    // MARK: - Life Cycle Part
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -64,17 +70,9 @@ class MyReviewEmptyView: UIView {
     }
 }
 
-// MARK: - @objc Methods
-
-extension MyReviewEmptyView {
-    @objc func popToMainMapVC() {
-//        delegate?.scrapEmptyViewDidTap()
-    }
-}
-
 // MARK: - Methods
 
-extension MyReviewEmptyView {
+extension MyReviewEmptyViewCVC {
     private func setUI() {
         backgroundColor = .helfmeWhite
     }
@@ -83,8 +81,8 @@ extension MyReviewEmptyView {
         addSubviews(myReviewStackView)
         
         myReviewStackView.snp.makeConstraints {
-            $0.centerX.equalTo(safeAreaLayoutGuide)
-            $0.centerY.equalTo(safeAreaLayoutGuide).offset(-48)
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-48)
         }
         
         myReviewButton.snp.makeConstraints {
@@ -92,5 +90,9 @@ extension MyReviewEmptyView {
             $0.width.equalTo(btnWidth)
             $0.height.equalTo(btnWidth * (44/180))
         }
+    }
+    
+    @objc func popToMainVC() {
+        delegate?.myReviewEmptyViewDidTap()
     }
 }

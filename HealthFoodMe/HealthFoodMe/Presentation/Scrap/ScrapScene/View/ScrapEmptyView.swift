@@ -43,7 +43,7 @@ class ScrapEmptyView: UIView {
         btn.backgroundColor = .mainRed
         btn.setTitleColor(UIColor.helfmeWhite, for: .normal)
         btn.titleLabel?.font = .NotoBold(size: 16)
-        btn.layer.cornerRadius = 22
+        btn.layer.cornerRadius = 24
         btn.addTarget(self, action: #selector(popToMainMapVC), for: .touchUpInside)
         return btn
     }()

@@ -125,7 +125,7 @@ extension MyReviewVC {
     
     private func registerCell() {
         MyReviewCVC.register(target: reviewCV)
-        ReviewEmptyViewCVC.register(target: reviewCV)
+        MyReviewEmptyViewCVC.register(target: reviewCV)
     }
     
     private func setEnumValue(data: MyReviewModel) -> Int {
@@ -231,6 +231,13 @@ extension MyReviewVC {
 
 // MARK: - CollectionViewDelegate
 
+extension MyReviewVC: MyReviewEmptyViewDelegate {
+    func myReviewEmptyViewDidTap() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+}
+
 extension MyReviewVC: UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -252,7 +259,8 @@ extension MyReviewVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let isEmptyView: Bool = reviewData.count == 0
         if isEmptyView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewEmptyViewCVC.className, for: indexPath) as? ReviewEmptyViewCVC else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyReviewEmptyViewCVC.className, for: indexPath) as? MyReviewEmptyViewCVC else { return UICollectionViewCell() }
+            cell.delegate = self
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyReviewCVC.className, for: indexPath) as? MyReviewCVC else { return UICollectionViewCell() }
@@ -292,7 +300,7 @@ extension MyReviewVC: UICollectionViewDelegateFlowLayout {
         let isEmptyView: Bool = reviewData.count == 0
         if isEmptyView {
             let cellWidth = width
-            let cellHeight = width * 200/width
+            let cellHeight = cellWidth * 814/cellWidth
             return CGSize(width: cellWidth, height: cellHeight)
         } else {
             let cellWidth = width
