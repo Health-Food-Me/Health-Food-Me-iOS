@@ -37,6 +37,7 @@ final class MenuView: UIView {
         let iv = UIImageView()
         iv.image = ImageLiterals.MenuTab.emptyCard
         iv.layer.cornerRadius = 8
+        iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
         return iv
     }()

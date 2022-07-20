@@ -16,7 +16,7 @@ struct MainDetailEntity: Codable {
 // MARK: - Menu
 struct Menu: Codable {
     let id, name: String
-    let image: String
+    let image: String?
     let kcal, per: Int?
     let price: Int
     let isPick: Bool
@@ -27,7 +27,13 @@ struct Menu: Codable {
     }
     
     func toDomain() -> MenuDataModel {
-        return MenuDataModel.init(restaurantID: id, isPick: isPick, memuImageURL: image, menuName: name, menuPrice: price, menuKcal: kcal, carbohydrates: nil, protein: nil, fat: nil)
+        var imageURL: String?
+        if image == "" {
+            imageURL = nil
+        } else {
+            imageURL = image
+        }
+        return MenuDataModel.init(restaurantID: id, isPick: isPick, memuImageURL: imageURL, menuName: name, menuPrice: price, menuKcal: kcal, carbohydrates: nil, protein: nil, fat: nil)
     }
 }
 
