@@ -7,8 +7,10 @@
 
 import UIKit
 
-class ReviewDetailVC: UIViewController {
+import ImageSlideShowSwift
 
+class ReviewDetailVC: UIViewController {
+    
     // MARK: - Properties
     
     private let withImageAndContents = 0
@@ -62,6 +64,7 @@ class ReviewDetailVC: UIViewController {
         setLayout()
         setDelegate()
         registerCell()
+        addObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,7 +121,7 @@ extension ReviewDetailVC {
         var calculatedText: String = ""
         var previousHeight: CGFloat = 0
         var lineCount: Int = 0
-
+        
         for char in review {
             calculatedText += String(char)
             if (previousHeight != calculateReviewHeight(calculatedText)) {
@@ -165,6 +168,36 @@ extension ReviewDetailVC {
         return textView.frame.height
     }
     
+    private func addObserver() {
+        addObserverAction(.reviewPhotoClicked) { noti in
+            if let slideData = noti.object as? ImageSlideDataModel {
+                self.clickPhotos(index: slideData.clickedIndex, urls: slideData.imgURLs)
+            }
+        }
+    }
+    
+    func clickPhotos(index: Int,urls: [String]){
+        let images :[ImageSlideShowProtocol] = urls.enumerated().map { index,url in
+            
+            ImageForSlide(title: "\(index+1)/\(urls.count)", url: URL(string: url)!)
+        }
+        
+        ImageSlideShowViewController.presentFrom(self) { controller in
+            controller.navigationBarTintColor = .black
+            controller.navigationController?.navigationBar.backgroundColor = .black
+            controller.navigationController?.navigationBar.barTintColor = .black
+            controller.navigationController?.navigationBar.tintColor = .black
+            controller.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+
+            controller.dismissOnPanGesture = true
+            controller.slides = images
+            controller.enableZoom = true
+            controller.initialIndex = index
+            controller.view.backgroundColor = .black
+        }
+    }
+    
+    
     // MARK: - Network
     
     private func fetchCutStringList() {
@@ -197,7 +230,7 @@ extension ReviewDetailVC {
         for reviewData in reviewDataList {
             let height = calculateReviewHeight(reviewData.reviewContents ?? "")
             reviewResult.append(ReviewCellViewModel.init(data: reviewData,
-                                                   foldRequired: height > 55))
+                                                         foldRequired: height > 55))
         }
         
         for blogReviewData in blogReviewDataList {
@@ -354,13 +387,13 @@ extension ReviewDetailVC: UICollectionViewDataSource {
                                      text: reviewText ?? "",
                                      isFoldRequired: true,
                                      expanded: expendStateList[indexPath.row])
-
+                        
                     } else {
                         cell.setData(reviewData: reviewData[indexPath.row].data,
                                      text: reviewData[indexPath.row].data.reviewContents ?? "",
-                        isFoldRequired: false, expanded: false)
+                                     isFoldRequired: false, expanded: false)
                     }
-
+                    
                     // 레이아웃 분기처리 코드
                     cell.layoutEnumValue = setEnumValue(data: reviewData[indexPath.row].data)
                     cell.setLayout()
@@ -384,10 +417,12 @@ extension ReviewDetailVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if selectedCustomSegment == 1 {
+        if selectedCustomSegment == 0 {
+
+        } else if selectedCustomSegment == 1 {
             URLSchemeManager.shared.loadSafariApp(blogLink: blogReviewData[indexPath.row].blogURL)
         }
-            
+        
     }
 }
 
@@ -470,7 +505,7 @@ extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
             return UIEdgeInsets(top: 0, left: 0, bottom: 90, right: 0)
         }
     }
-        
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }

@@ -423,6 +423,12 @@ extension ReviewCVC: UICollectionViewDelegateFlowLayout {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let imageSlideData = ImageSlideDataModel.init(clickedIndex: indexPath.row,
+                                                      imgURLs: cellViewModel?.reviewImageURLList ?? [])
+        postObserverAction(.reviewPhotoClicked,object: imageSlideData)
+    }
+    
     private func calculateTagCellWidth(_ tag: String) -> CGFloat {
         let label = UILabel()
         label.font = .NotoRegular(size: 10)
@@ -430,4 +436,9 @@ extension ReviewCVC: UICollectionViewDelegateFlowLayout {
         label.sizeToFit()
         return label.frame.width + 20
     }
+}
+
+struct ImageSlideDataModel {
+    let clickedIndex: Int
+    let imgURLs: [String]
 }

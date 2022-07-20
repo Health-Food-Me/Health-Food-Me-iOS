@@ -22,6 +22,7 @@
 		3B723C932880074200822B7C /* ReviewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B723C922880074200822B7C /* ReviewDataModel.swift */; };
 		3B723CA32881AB8A00822B7C /* ReviewDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B723CA22881AB8A00822B7C /* ReviewDetailVC.swift */; };
 		3B723CA52881B36F00822B7C /* ReviewDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B723CA42881B36F00822B7C /* ReviewDetail.storyboard */; };
+		3B7DC1A12888A4F9005B5536 /* ImageForSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7DC1A02888A4F9005B5536 /* ImageForSlide.swift */; };
 		3B9332A22888643200543683 /* MyReviewEmptyViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9332A12888643200543683 /* MyReviewEmptyViewCVC.swift */; };
 		3B93ED4E2887C9CB00240434 /* HelfmeLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B93ED4D2887C9CB00240434 /* HelfmeLoadingView.swift */; };
 		3B93ED522887CBC500240434 /* loading_iOS.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B93ED512887CBC500240434 /* loading_iOS.json */; };
@@ -36,8 +37,6 @@
 		3BCC441E28745FD800661A12 /* SocialLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCC441D28745FD800661A12 /* SocialLoginVC.swift */; };
 		3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BCC441F28745FE500661A12 /* SocialLogin.storyboard */; };
 		3BDE7F292882054200EE7F47 /* ReviewEmptyViewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDE7F282882054200EE7F47 /* ReviewEmptyViewCVC.swift */; };
-		4AEA5A7C121189B57DD6CE75 /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C321ED365502C47A4E65A10E /* Pods_HealthFoodMe.framework */; };
-		4F66D470143F608082F91FC7 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		69028BA62874673600373984 /* MenuCellCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BA52874673600373984 /* MenuCellCVC.swift */; };
 		69028BA82874675800373984 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BA72874675800373984 /* MenuView.swift */; };
 		69028BAA287467F100373984 /* MenuDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BA9287467F100373984 /* MenuDetailView.swift */; };
@@ -64,6 +63,7 @@
 		695758F928857FDC00E36789 /* ReviewWriteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758F828857FDC00E36789 /* ReviewWriteEntity.swift */; };
 		69D7074B2888062E00C2C278 /* ReviewDeleteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D7074A2888062E00C2C278 /* ReviewDeleteEntity.swift */; };
 		69D7074D28885B9900C2C278 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69D7074C28885B9900C2C278 /* GoogleService-Info.plist */; };
+		A1C216841FE9493B5DB5C4A2 /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68035982AEF7055CACF7B224 /* Pods_HealthFoodMe.framework */; };
 		A90CFDCF2885B4DC0018AB94 /* SearchDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90CFDCE2885B4DC0018AB94 /* SearchDataModel.swift */; };
 		A90CFDD12885B4E70018AB94 /* SearchResultDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90CFDD02885B4E70018AB94 /* SearchResultDataModel.swift */; };
 		A90ED6252886644400FCE149 /* SearchEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90ED6222886644400FCE149 /* SearchEntity.swift */; };
@@ -226,20 +226,20 @@
 		FD72FCC028834AB60092746F /* MainMapNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD72FCBF28834AB60092746F /* MainMapNavigationController.swift */; };
 		FDA3AEF82880612300D6CCB4 /* UserWithdrawalUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA3AEF22880612300D6CCB4 /* UserWithdrawalUseCase.swift */; };
 		FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */; };
+		FDC46A25288326AC00F62D20 /* splash_iOS.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC46A24288326AB00F62D20 /* splash_iOS.json */; };
 		FDCB3CC12888338300E6FBCE /* NicknameEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB3CC02888338300E6FBCE /* NicknameEntity.swift */; };
 		FDCB3CC328884F1700E6FBCE /* HamburgerBarNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB3CC228884F1700E6FBCE /* HamburgerBarNavigationController.swift */; };
 		FDCB3CC52888565400E6FBCE /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB3CC42888565400E6FBCE /* UserEntity.swift */; };
-		FDC46A25288326AC00F62D20 /* splash_iOS.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC46A24288326AB00F62D20 /* splash_iOS.json */; };
 		FDCD5B452881ACC100EAEF51 /* LocationLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCD5B442881ACC100EAEF51 /* LocationLiterals.swift */; };
 		FDCD5B472882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCD5B462882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift */; };
 		FDF2E1FA287EFA5B0007D4F9 /* SampleStarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E1F9287EFA5B0007D4F9 /* SampleStarVC.swift */; };
 		FDF2E1FC287EFC710007D4F9 /* StarRatingSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E1FB287EFC710007D4F9 /* StarRatingSlider.swift */; };
 		FDF2E1FE287F08010007D4F9 /* TouchableSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E1FD287F08010007D4F9 /* TouchableSlider.swift */; };
 		FDF2E215287F5D080007D4F9 /* NicknameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20F287F5D080007D4F9 /* NicknameRepository.swift */; };
-		FF87259B39272C95D578809A /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E453A668B114DA7D1E40B7F7 /* Pods_HealthFoodMe.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		31504E08C4A872E9E6B2EEDD /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
 		3B089C48287D876F00DA80B9 /* GodoB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoB.otf; sourceTree = "<group>"; };
 		3B089C49287D876F00DA80B9 /* GodoB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoB.ttf; sourceTree = "<group>"; };
 		3B0B254D28757C7100950539 /* HealthFoodMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthFoodMe.entitlements; sourceTree = "<group>"; };
@@ -256,6 +256,7 @@
 		3B723C922880074200822B7C /* ReviewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDataModel.swift; sourceTree = "<group>"; };
 		3B723CA22881AB8A00822B7C /* ReviewDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailVC.swift; sourceTree = "<group>"; };
 		3B723CA42881B36F00822B7C /* ReviewDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReviewDetail.storyboard; sourceTree = "<group>"; };
+		3B7DC1A02888A4F9005B5536 /* ImageForSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageForSlide.swift; sourceTree = "<group>"; };
 		3B9332A12888643200543683 /* MyReviewEmptyViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewEmptyViewCVC.swift; sourceTree = "<group>"; };
 		3B93ED4D2887C9CB00240434 /* HelfmeLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelfmeLoadingView.swift; sourceTree = "<group>"; };
 		3B93ED512887CBC500240434 /* loading_iOS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading_iOS.json; sourceTree = "<group>"; };
@@ -270,7 +271,8 @@
 		3BCC441D28745FD800661A12 /* SocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginVC.swift; sourceTree = "<group>"; };
 		3BCC441F28745FE500661A12 /* SocialLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SocialLogin.storyboard; sourceTree = "<group>"; };
 		3BDE7F282882054200EE7F47 /* ReviewEmptyViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewEmptyViewCVC.swift; sourceTree = "<group>"; };
-		600CCAF3FC0BCD4F011BD0E6 /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
+		419B07D18D99D2AAB152AD90 /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
+		68035982AEF7055CACF7B224 /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		69028BA52874673600373984 /* MenuCellCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellCVC.swift; sourceTree = "<group>"; };
 		69028BA72874675800373984 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		69028BA9287467F100373984 /* MenuDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailView.swift; sourceTree = "<group>"; };
@@ -327,9 +329,6 @@
 		A9E593C62874266200B0F8B5 /* SearchRecent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecent.swift; sourceTree = "<group>"; };
 		A9E593CE2876C26900B0F8B5 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		A9E593D0287818E900B0F8B5 /* SearchTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTVC.swift; sourceTree = "<group>"; };
-		B4CAC0AB97262726248978F9 /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
-		C321ED365502C47A4E65A10E /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E453A668B114DA7D1E40B7F7 /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB033E83287B5BE300C48FB9 /* StarRatingView.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; tabWidth = 4; };
 		EB085ED628716E1900361837 /* HealthFoodMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthFoodMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB085EE728716E1B00361837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -464,10 +463,10 @@
 		FD72FCBF28834AB60092746F /* MainMapNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapNavigationController.swift; sourceTree = "<group>"; };
 		FDA3AEF22880612300D6CCB4 /* UserWithdrawalUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWithdrawalUseCase.swift; sourceTree = "<group>"; };
 		FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegementControl.swift; sourceTree = "<group>"; };
+		FDC46A24288326AB00F62D20 /* splash_iOS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_iOS.json; sourceTree = "<group>"; };
 		FDCB3CC02888338300E6FBCE /* NicknameEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEntity.swift; sourceTree = "<group>"; };
 		FDCB3CC228884F1700E6FBCE /* HamburgerBarNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerBarNavigationController.swift; sourceTree = "<group>"; };
 		FDCB3CC42888565400E6FBCE /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
-		FDC46A24288326AB00F62D20 /* splash_iOS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_iOS.json; sourceTree = "<group>"; };
 		FDCD5B442881ACC100EAEF51 /* LocationLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationLiterals.swift; sourceTree = "<group>"; };
 		FDCD5B462882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapContainerViewCameraDelegateProxy.swift; sourceTree = "<group>"; };
 		FDF2E1F9287EFA5B0007D4F9 /* SampleStarVC.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = SampleStarVC.swift; sourceTree = "<group>"; tabWidth = 4; };
@@ -486,9 +485,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4AEA5A7C121189B57DD6CE75 /* Pods_HealthFoodMe.framework in Frameworks */,
-				4F66D470143F608082F91FC7 /* (null) in Frameworks */,
-				FF87259B39272C95D578809A /* Pods_HealthFoodMe.framework in Frameworks */,
+				A1C216841FE9493B5DB5C4A2 /* Pods_HealthFoodMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -815,10 +812,17 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		92A28C6F6F3B08038C52D661 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				68035982AEF7055CACF7B224 /* Pods_HealthFoodMe.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A90CFDA5288328C90018AB94 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				C321ED365502C47A4E65A10E /* Pods_HealthFoodMe.framework */,
 				A90CFDD22885C3050018AB94 /* SearchRequestEntity.swift */,
 				A90CFDC82885B1880018AB94 /* SearchEntity.swift */,
 				A90CFDCA2885B2730018AB94 /* SearchResultEntity.swift */,
@@ -994,8 +998,8 @@
 		E3F60CBC9B890A7FB4D4AAAF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B4CAC0AB97262726248978F9 /* Pods-HealthFoodMe.debug.xcconfig */,
-				600CCAF3FC0BCD4F011BD0E6 /* Pods-HealthFoodMe.release.xcconfig */,
+				31504E08C4A872E9E6B2EEDD /* Pods-HealthFoodMe.debug.xcconfig */,
+				419B07D18D99D2AAB152AD90 /* Pods-HealthFoodMe.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1021,7 +1025,7 @@
 				EB085ED728716E1900361837 /* Products */,
 				E3F60CBC9B890A7FB4D4AAAF /* Pods */,
 				A90CFDA5288328C90018AB94 /* Recovered References */,
-				EC921F0D619DA4E9C0CE8F2B /* Frameworks */,
+				92A28C6F6F3B08038C52D661 /* Frameworks */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -1643,6 +1647,7 @@
 				EBF66AB2287227F500DE0ED1 /* Adjusted+.swift */,
 				FDF2E206287F2CAA0007D4F9 /* addTextFieldPadding.swift */,
 				EBFAEAFF28851C9E009C569C /* UserDefaultWrapper.swift */,
+				3B7DC1A02888A4F9005B5536 /* ImageForSlide.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1801,14 +1806,6 @@
 				69D7074A2888062E00C2C278 /* ReviewDeleteEntity.swift */,
 			);
 			path = MyReviewScene;
-			sourceTree = "<group>";
-		};
-		EC921F0D619DA4E9C0CE8F2B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E453A668B114DA7D1E40B7F7 /* Pods_HealthFoodMe.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		FD2E57A8288062C20073C448 /* UserWithdrawlScene */ = {
@@ -1989,12 +1986,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EB085EEA28716E1B00361837 /* Build configuration list for PBXNativeTarget "HealthFoodMe" */;
 			buildPhases = (
-				D7E4509F3F84FA0CF057E65B /* [CP] Check Pods Manifest.lock */,
+				6544FF9BC2ED4872399FB637 /* [CP] Check Pods Manifest.lock */,
 				EB085ED228716E1900361837 /* Sources */,
 				EB085ED328716E1900361837 /* Frameworks */,
 				EB085ED428716E1900361837 /* Resources */,
-				6382E1C6D0A6A9AEE6381C8B /* [CP] Embed Pods Frameworks */,
 				EBFAEB012885551B009C569C /* Run Script */,
+				4533E3ED9E9CF29ADF7AFFCF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2083,7 +2080,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6382E1C6D0A6A9AEE6381C8B /* [CP] Embed Pods Frameworks */ = {
+		4533E3ED9E9CF29ADF7AFFCF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2100,7 +2097,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D7E4509F3F84FA0CF057E65B /* [CP] Check Pods Manifest.lock */ = {
+		6544FF9BC2ED4872399FB637 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2290,6 +2287,7 @@
 				EB033E84287B5BE300C48FB9 /* StarRatingView.swift in Sources */,
 				FDCD5B472882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift in Sources */,
 				EBFAEB112885642C009C569C /* AppLog.swift in Sources */,
+				3B7DC1A12888A4F9005B5536 /* ImageForSlide.swift in Sources */,
 				695758D02880ACF000E36789 /* addToolBar.swift in Sources */,
 				EB6A451128740CFF00749582 /* MainInfoTVC.swift in Sources */,
 				695758DC2881128300E36789 /* ContentTVC.swift in Sources */,
@@ -2475,7 +2473,7 @@
 		};
 		EB085EEB28716E1B00361837 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B4CAC0AB97262726248978F9 /* Pods-HealthFoodMe.debug.xcconfig */;
+			baseConfigurationReference = 31504E08C4A872E9E6B2EEDD /* Pods-HealthFoodMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2505,7 +2503,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
+				PROVISIONING_PROFILE_SPECIFIER = HealthFoodMe_Dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2514,7 +2512,7 @@
 		};
 		EB085EEC28716E1B00361837 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 600CCAF3FC0BCD4F011BD0E6 /* Pods-HealthFoodMe.release.xcconfig */;
+			baseConfigurationReference = 419B07D18D99D2AAB152AD90 /* Pods-HealthFoodMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
