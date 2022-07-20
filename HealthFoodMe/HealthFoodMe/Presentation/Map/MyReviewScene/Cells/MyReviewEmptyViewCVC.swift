@@ -1,26 +1,24 @@
 //
-//  ScrapEmptyView.swift
+//  MyReviewEmptyViewCVC.swift
 //  HealthFoodMe
 //
-//  Created by 김영인 on 2022/07/14.
+//  Created by 강윤서 on 2022/07/21.
 //
 
 import UIKit
 
-import SnapKit
-
-protocol ScrapEmptyViewDelegate: AnyObject {
-    func scrapEmptyViewDidTap()
+protocol MyReviewEmptyViewDelegate: AnyObject {
+    func myReviewEmptyViewDidTap()
 }
 
-class ScrapEmptyView: UIView {
+class MyReviewEmptyViewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     // MARK: - Properties
     
-    weak var delegate: ScrapEmptyViewDelegate?
-    
+    static var isFromNib = false
+    weak var delegate: MyReviewEmptyViewDelegate?
+  
     // MARK: - UI Components
-    
     private let withHelpme: UILabel = {
         let lb = UILabel()
         lb.text = I18N.Scrap.withHelfme
@@ -31,36 +29,36 @@ class ScrapEmptyView: UIView {
     
     private let dietStore: UILabel = {
         let lb = UILabel()
-        lb.text = I18N.Scrap.dietStore
+        lb.text = I18N.MyReview.enjoyRestaurant
         lb.textColor = .helfmeGray1
         lb.font = .NotoRegular(size: 14)
         return lb
     }()
     
-    private lazy var scrapButton: UIButton = {
+    private lazy var myReviewButton: UIButton = {
         let btn = UIButton()
-        btn.setTitle(I18N.Scrap.goScrap, for: .normal)
+        btn.setTitle(I18N.MyReview.gotoFindRestaurant, for: .normal)
         btn.backgroundColor = .mainRed
         btn.setTitleColor(UIColor.helfmeWhite, for: .normal)
         btn.titleLabel?.font = .NotoBold(size: 16)
         btn.layer.cornerRadius = 24
-        btn.addTarget(self, action: #selector(popToMainMapVC), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(popToMainVC), for: .touchUpInside)
         return btn
     }()
     
-    private lazy var scrapStackView: UIStackView = {
+    private lazy var myReviewStackView: UIStackView = {
         let sv = UIStackView()
         sv.addArrangedSubviews(withHelpme,
                                dietStore,
-                               scrapButton)
+                               myReviewButton)
         sv.alignment = .center
         sv.setCustomSpacing(14, after: withHelpme)
         sv.setCustomSpacing(10, after: dietStore)
         sv.axis = .vertical
         return sv
     }()
-    
-    // MARK: - View Life Cycle
+  
+    // MARK: - Life Cycle Part
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -72,33 +70,29 @@ class ScrapEmptyView: UIView {
     }
 }
 
-// MARK: - @objc Methods
-
-extension ScrapEmptyView {
-    @objc func popToMainMapVC() {
-        delegate?.scrapEmptyViewDidTap()
-    }
-}
-
 // MARK: - Methods
 
-extension ScrapEmptyView {
+extension MyReviewEmptyViewCVC {
     private func setUI() {
         backgroundColor = .helfmeWhite
     }
     
     private func setLayout() {
-        addSubviews(scrapStackView)
+        addSubviews(myReviewStackView)
         
-        scrapStackView.snp.makeConstraints {
-            $0.centerX.equalTo(safeAreaLayoutGuide)
-            $0.centerY.equalTo(safeAreaLayoutGuide).offset(-48)
+        myReviewStackView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-48)
         }
         
-        scrapButton.snp.makeConstraints {
+        myReviewButton.snp.makeConstraints {
             let btnWidth = UIScreen.main.bounds.width * (180/375)
             $0.width.equalTo(btnWidth)
             $0.height.equalTo(btnWidth * (44/180))
         }
+    }
+    
+    @objc func popToMainVC() {
+        delegate?.myReviewEmptyViewDidTap()
     }
 }
