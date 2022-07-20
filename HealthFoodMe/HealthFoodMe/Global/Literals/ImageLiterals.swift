@@ -45,6 +45,7 @@ struct ImageLiterals {
         static let beforeIcon = UIImage(named: "icon_before")
         static let xIcon = UIImage(named: "icn_x")
         static let viewMapBtn = UIImage(named: "btn_viewmap")
+        static let viewListBtn = UIImage(named: "btn_viewlist")
         static let imageSearch = UIImage(named: "img_search")
     }
     

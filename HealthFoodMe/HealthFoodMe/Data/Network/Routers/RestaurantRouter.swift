@@ -52,9 +52,8 @@ extension RestaurantRouter: BaseRouter {
             return .query(requestQuery)
         case .requestRestaurantSearchResult(let searchRequest):
             let requestQuery: [String: Any] = [
-                "longitude": searchRequest.longtitude,
+                "longitude": searchRequest.longitude,
                 "latitude": searchRequest.latitude,
-                "zoom": searchRequest.zoom,
                 "keyword": searchRequest.keyword
             ]
             return .query(requestQuery)
