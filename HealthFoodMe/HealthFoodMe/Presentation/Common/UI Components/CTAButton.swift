@@ -33,4 +33,12 @@ final class CTAButton: UIButton {
     self.setBackgroundColor(UIColor.helfmeTagGray, for: .disabled)
     self.setBackgroundColor(UIColor.mainRed, for: .normal)
   }
+    
+    func setAttributedTitleForDisabled(title: String) {
+        let titleAttributedString = NSAttributedString(string: title,
+                                                       attributes:
+                                                        [NSAttributedString.Key.foregroundColor : UIColor.white,
+                                                        NSAttributedString.Key.font : UIFont.NotoBold(size: 15)])
+        self.setAttributedTitle(titleAttributedString, for: .disabled)
+    }
 }

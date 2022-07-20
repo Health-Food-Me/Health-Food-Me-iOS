@@ -93,7 +93,8 @@ extension SplashVC {
                     self.userManager.updateAuthToken(access, refresh)
                     self.presentMainMapVC()
                 }
-                break
+            case .requestErr:
+                self.presentSocialLoginVC()
             default:
                 print("소셜 토큰 에러")
             }

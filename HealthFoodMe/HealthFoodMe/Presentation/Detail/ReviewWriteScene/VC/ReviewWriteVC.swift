@@ -800,8 +800,8 @@ extension ReviewWriteVC {
             case .success(let data):
                 if let data = data as? ReviewWriteEntity {
                     print(data, "성공")
-                    self.navigationController?.dismiss(animated: true)
                 }
+                self.dismiss(animated: true)
             default:
                 break;
             }
