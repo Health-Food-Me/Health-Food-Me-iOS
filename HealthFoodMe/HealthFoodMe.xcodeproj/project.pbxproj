@@ -222,6 +222,8 @@
 		FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */; };
 		FDC46A25288326AC00F62D20 /* splash_ios.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC46A24288326AB00F62D20 /* splash_ios.json */; };
 		FDCB3CC12888338300E6FBCE /* NicknameEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB3CC02888338300E6FBCE /* NicknameEntity.swift */; };
+		FDCB3CC328884F1700E6FBCE /* HamburgerBarNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB3CC228884F1700E6FBCE /* HamburgerBarNavigationController.swift */; };
+		FDCB3CC52888565400E6FBCE /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB3CC42888565400E6FBCE /* UserEntity.swift */; };
 		FDCD5B452881ACC100EAEF51 /* LocationLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCD5B442881ACC100EAEF51 /* LocationLiterals.swift */; };
 		FDCD5B472882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCD5B462882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift */; };
 		FDF2E1FA287EFA5B0007D4F9 /* SampleStarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E1F9287EFA5B0007D4F9 /* SampleStarVC.swift */; };
@@ -452,6 +454,8 @@
 		FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegementControl.swift; sourceTree = "<group>"; };
 		FDC46A24288326AB00F62D20 /* splash_ios.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_ios.json; sourceTree = "<group>"; };
 		FDCB3CC02888338300E6FBCE /* NicknameEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEntity.swift; sourceTree = "<group>"; };
+		FDCB3CC228884F1700E6FBCE /* HamburgerBarNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerBarNavigationController.swift; sourceTree = "<group>"; };
+		FDCB3CC42888565400E6FBCE /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
 		FDCD5B442881ACC100EAEF51 /* LocationLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationLiterals.swift; sourceTree = "<group>"; };
 		FDCD5B462882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapContainerViewCameraDelegateProxy.swift; sourceTree = "<group>"; };
 		FDF2E1F9287EFA5B0007D4F9 /* SampleStarVC.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = SampleStarVC.swift; sourceTree = "<group>"; tabWidth = 4; };
@@ -503,6 +507,7 @@
 			children = (
 				3B18D8AB287AB7CD009AF9E7 /* HamburgerBarVC.swift */,
 				3B18D8AD287AB7D8009AF9E7 /* HamburgerBar.storyboard */,
+				FDCB3CC228884F1700E6FBCE /* HamburgerBarNavigationController.swift */,
 			);
 			path = HamburgerBarScene;
 			sourceTree = "<group>";
@@ -798,6 +803,7 @@
 			children = (
 				FDCB3CBF2888336500E6FBCE /* NicknameScene */,
 				A90ED62D2886646600FCE149 /* ScrapScene */,
+				FDCB3CC42888565400E6FBCE /* UserEntity.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -2207,6 +2213,7 @@
 				EBF66AE3287227F500DE0ED1 /* NetworkResult.swift in Sources */,
 				EB6A45262875C3A000749582 /* TabContainerCVC.swift in Sources */,
 				FDCB3CC12888338300E6FBCE /* NicknameEntity.swift in Sources */,
+				FDCB3CC52888565400E6FBCE /* UserEntity.swift in Sources */,
 				EBFAEB312885F2F7009C569C /* MyReviewRepository.swift in Sources */,
 				EBFAEB332885F2F7009C569C /* MyReviewVC.swift in Sources */,
 				A93252B1287F2AF9001EDF50 /* ScrapVC.swift in Sources */,
@@ -2238,6 +2245,7 @@
 				3BB0FCE3288705E200C3862C /* BlogReviewListEntity.swift in Sources */,
 				A93252C628808B82001EDF50 /* ReviewDeleteAlertView.swift in Sources */,
 				EBF66AD7287227F500DE0ED1 /* Presentable.swift in Sources */,
+				FDCB3CC328884F1700E6FBCE /* HamburgerBarNavigationController.swift in Sources */,
 				FD72FC9C288346480092746F /* UserWithdrawalViewModel.swift in Sources */,
 				A932527E287DD261001EDF50 /* SearchResultVC.swift in Sources */,
 				EBD19275287F256000EA053E /* EncodeURLKorean.swift in Sources */,

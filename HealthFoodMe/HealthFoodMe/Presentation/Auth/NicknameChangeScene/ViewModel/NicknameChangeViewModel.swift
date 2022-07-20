@@ -50,7 +50,7 @@ extension NicknameChangeViewModel {
     
     hasSpecialCharacter
     .subscribe(onNext: { nicknameState in
-        if !nicknameState {
+        if nicknameState {
             output.currentNicknameStatus.accept(.containsSpecialCharacter)
         }
     }).disposed(by: self.disposeBag)

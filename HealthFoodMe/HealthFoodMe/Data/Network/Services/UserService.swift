@@ -31,4 +31,9 @@ extension UserService {
     func deleteUserNickname(userId: String, completion: @escaping(NetworkResult<Any>) -> Void){
         requestObjectWithEmptyResponse(UserRouter.deleteUser(userId: userId), completion: completion)
     }
+    
+    func getUserNickname(userId: String,  completion: @escaping(NetworkResult<Any>) -> Void){
+        requestObject(UserRouter.getUserName(userId: userId),
+                      type: UserEntity.self, decodingMode: .model, completion: completion)
+    }
 }

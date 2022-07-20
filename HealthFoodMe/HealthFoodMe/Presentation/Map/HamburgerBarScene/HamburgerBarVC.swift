@@ -138,6 +138,15 @@ class HamburgerBarVC: UIViewController {
         return st
     }()
     
+    
+    private lazy var nicknameChangeSuccessView: UpperToastView = {
+      let toastView = UpperToastView(title: I18N.Auth.ChangeNickname.nicknameChangeSuccees)
+      toastView.layer.cornerRadius = 20
+      return toastView
+    }()
+    
+
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -147,6 +156,8 @@ class HamburgerBarVC: UIViewController {
         setLayout()
         addHamburgerBarGesture()
         addButtonAction()
+        fetchUserNickname()
+        addObserver()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -204,8 +215,8 @@ extension HamburgerBarVC {
     }
 
     private func setLayout() {
-        view.addSubviews(hamburgerBarView
-    )
+        view.addSubviews(hamburgerBarView,nicknameChangeSuccessView)
+    
         
         hamburgerBarView.addSubviews(hellowStackView,
                                      storeButtonStackView, reportButtonStackView,
@@ -219,6 +230,13 @@ extension HamburgerBarVC {
             make.trailing.equalToSuperview().inset(screenWidth)
         }
         
+        nicknameChangeSuccessView.snp.makeConstraints { make in
+          make.width.equalTo(300)
+          make.height.equalTo(40)
+          make.top.equalTo(-40)
+          make.centerX.equalToSuperview()
+        }
+        
         hellowStackView.snp.makeConstraints { make in
             make.top.equalTo(hamburgerBarView).inset(96)
             make.leading.equalTo(hamburgerBarView).inset(20)
@@ -228,7 +246,7 @@ extension HamburgerBarVC {
 //            make.centerY.equalTo(hellowStackView.snp.centerY)
 //            make.leading.equalTo(hellowStackView.snp.trailing).offset(8)
 //        }
-        
+//
         dividingLineViews[0].snp.makeConstraints { make in
             make.width.equalTo(hamburgerBarView)
             make.top.equalTo(hellowStackView.snp.bottom).offset(38)
@@ -300,10 +318,29 @@ extension HamburgerBarVC {
         self.hamburgerBarView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(moveHamburgerBarWithGesture(_:))))
     }
     
+    private func fetchUserNickname() {
+        guard let userID = UserManager.shared.getUser?.id else { return }
+        UserService.shared.getUserNickname(userId: userID) { result in
+            switch(result) {
+                case .success(let result):
+                    guard let result = result as? UserEntity else { return }
+                    self.nickNameLabel.text = result.name
+                default : self.nickNameLabel.text = "헬푸미"
+            }
+        }
+    }
+    private func addObserver() {
+        addObserverAction(.nicknameChanged) { _ in
+            self.nicknameChangeSuccess()
+        }
+    }
+    
     private func addButtonAction() {
         editNameButton.press {
-            self.dismiss(animated: false)
-            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .editName)
+            
+            let nicknameVC = ModuleFactory.resolve().makeNicknameChangeVC()
+            
+            self.navigationController?.pushViewController(nicknameVC, animated: true)
         }
         
         menuButtons[0].press {  
@@ -397,3 +434,38 @@ extension HamburgerBarVC: MFMailComposeViewControllerDelegate {
     }
 }
 
+
+extension HamburgerBarVC {
+    func nicknameChangeSuccess() {
+        print("SHOW UPPER TOAST")
+        showUpperToast()
+    }
+    
+    private func showUpperToast() {
+      makeVibrate()
+        let topInset = calculateTopInset() * (-1)
+        nicknameChangeSuccessView.snp.updateConstraints { make in
+        make.top.equalTo(topInset + 12)
+     }
+
+      UIView.animate(withDuration: 0.5, delay: 0) {
+        self.view.layoutIfNeeded()
+      } completion: { _ in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+          self.hideUpperToast()
+        }
+      }
+    }
+
+    
+    private func hideUpperToast() {
+        print("HIDE")
+      self.nicknameChangeSuccessView.snp.updateConstraints { make in
+        make.top.equalTo(-40)
+      }
+      
+      UIView.animate(withDuration: 0.5, delay: 0) {
+        self.view.layoutIfNeeded()
+      }
+    }
+}

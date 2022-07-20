@@ -42,9 +42,8 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         bt.addAction(UIAction(handler: { _ in
             self.makeVibrate()
             self.unselectMapPoint()
-            let nextVC = ModuleFactory.resolve().makeHamburgerBarVC()
+            let nextVC = ModuleFactory.resolve().makeHamburgerBarNavigationController()
             nextVC.modalPresentationStyle = .overFullScreen
-            nextVC.delegate = self
             self.present(nextVC, animated: false)
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
@@ -129,6 +128,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         bt.layer.applyShadow(color: .helfmeBlack, alpha: 0.2, x: 0, y: 2, blur: 4, spread: 0)
         return bt
     }()
+
     
     private var mapDetailSummaryView = MapDetailSummaryView()
     
@@ -171,7 +171,7 @@ extension MainMapVC {
     }
     
     private func setLayout() {
-        searchBar.addSubview(searchIconImageView)
+        searchBar.addSubviews(searchIconImageView)
         view.addSubviews(mapView, hamburgerButton, searchBar,
                          categoryCollectionView, mapDetailSummaryView, scrapButton,
                          myLocationButton)
@@ -192,6 +192,8 @@ extension MainMapVC {
             make.width.equalTo(55)
             make.height.equalTo(52)
         }
+        
+
         
         searchBar.snp.makeConstraints { make in
             make.centerY.equalTo(hamburgerButton.snp.centerY)
@@ -255,6 +257,8 @@ extension MainMapVC {
     private func registerCell() {
         MenuCategoryCVC.register(target: categoryCollectionView)
     }
+    
+
     
     private func setPanGesture() {
         let panGesture = UIPanGestureRecognizer()
@@ -506,3 +510,5 @@ extension MainMapVC: HamburgerbarVCDelegate {
         }
     }
 }
+
+

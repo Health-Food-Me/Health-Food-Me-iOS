@@ -26,6 +26,7 @@ struct I18N {
         static let ctaButtonTitle = "수정 완료"
         static let formatErrMessage =  "닉네임 설정 기준에 적합하지 않습니다"
         static let duplicatedErrMessage = "중복된 닉네임입니다"
+        static let nicknameChangeSuccees = "닉네임 변경에 성공하였습니다."
       }
       
       struct Withdrawal {

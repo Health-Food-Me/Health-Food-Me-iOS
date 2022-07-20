@@ -12,6 +12,7 @@ enum UserRouter {
     case putScrap(userId: String, restaurantId: String)
     case putUserNickname(userId: String, nickname: String)
     case deleteUser(userId: String)
+    case getUserName(userId: String)
 }
 
 extension UserRouter: BaseRouter {
@@ -23,6 +24,8 @@ extension UserRouter: BaseRouter {
             return .put
         case .deleteUser:
             return .delete
+        case .getUserName:
+            return .get
         }
     }
     
@@ -36,6 +39,8 @@ extension UserRouter: BaseRouter {
             return "/user/\(userID)/profile"
         case .deleteUser(let userID):
             return "/auth/withdrawal/\(userID)"
+        case .getUserName(let userID):
+            return "/user/\(userID)/profile"
         }
     }
     
@@ -52,6 +57,8 @@ extension UserRouter: BaseRouter {
                 "name": nickname
             ]
             return .requestBody(body)
+        case .getUserName(_):
+            return .requestPlain
         }
     }
     
@@ -64,6 +71,8 @@ extension UserRouter: BaseRouter {
         case .deleteUser:
             return .withToken
         case .putUserNickname:
+            return .withToken
+        case .getUserName:
             return .withToken
         }
     }
