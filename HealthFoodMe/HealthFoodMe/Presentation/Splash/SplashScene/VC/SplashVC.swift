@@ -63,11 +63,14 @@ extension SplashVC {
     
     private func checkLoginStatusAndPresentVC() {
         DispatchQueue.main.asyncAfter(deadline: .now()+3) {
-            if self.userManager.isLogin == true {
-                self.requestSocialLogin()
-            } else {
-                self.presentSocialLoginVC()
-            }
+                            self.presentSocialLoginVC()
+
+//            print(self.userManager.isLogin)
+//            if self.userManager.isLogin == true {
+//                self.requestSocialLogin()
+//            } else {
+//                self.presentSocialLoginVC()
+//            }
         }
     }
 }

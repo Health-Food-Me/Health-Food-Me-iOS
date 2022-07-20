@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct NicknameEntity: Codable {
+    let _id, name: String
+}
