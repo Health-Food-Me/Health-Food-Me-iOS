@@ -118,7 +118,20 @@ extension MenuTabVC {
 		data.forEach {
 			models.append($0.toDomain())
 		}
-		self.menuData = models
+		
+		var pickModel: [MenuDataModel] = []
+		var notPickModel: [MenuDataModel] = []
+		
+		models.forEach { data in
+			if data.isPick {
+				pickModel.append(data)
+			} else {
+				notPickModel.append(data)
+			}
+		}
+		pickModel += notPickModel
+		
+		self.menuData = pickModel
 	}
 }
 

@@ -30,6 +30,7 @@ class MainDetailVC: UIViewController {
     private var phoneMenuTouched: Bool = false
     private var navigationTitle: String = "서브웨이 테스트"
     private var isOpenned: Bool = false
+    private var mainInfoInitialReload: Bool = true
     var userLocation: Location?
     var restaurantId: String = ""
     var location: Location?
@@ -170,7 +171,7 @@ extension MainDetailVC {
     
     private func setButtonAction() {
         reviewWriteCTAButton.press {
-            let writeVC = ModuleFactory.resolve().makeReviewWriteNavigationController()
+            let writeVC = ModuleFactory.resolve().makeReviewWriteNavigationController(restaurantId: self.restaurantId)
             writeVC.modalPresentationStyle = .fullScreen
             self.present(writeVC, animated: true)
         }
@@ -277,6 +278,7 @@ extension MainDetailVC: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MainInfoTVC.className, for: indexPath) as? MainInfoTVC else { return UITableViewCell() }
             cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
                 .drive(onNext: {
+                    self.mainInfoInitialReload = false
                     self.isOpenned.toggle()
                     self.mainTableView.reloadData()
                 }).disposed(by: disposeBag)
@@ -481,6 +483,8 @@ extension MainDetailVC {
                 switch networkResult {
                 case .success(let data):
                     if let data = data as? MainDetailEntity {
+                        self.navigationTitle = data.restaurant.name
+                        self.mainInfoTVC.isInitialReload = self.mainInfoInitialReload
                         self.mainInfoTVC.setData(data: data)
                         self.menuTabVC.setData(data: data.menu)
                         self.reviewTabVC.restaurantName = data.restaurant.name
@@ -498,7 +502,7 @@ extension MainDetailVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? ReviewCheckEntity {
-                    self.checkCTAButtonStatus(reviewEnabled: data.hasReview)
+                    self.checkCTAButtonStatus(hasReview: data.hasReview)
                 }
             default:
                 print("통신 에러")
@@ -506,8 +510,8 @@ extension MainDetailVC {
         }
     }
     
-    private func checkCTAButtonStatus(reviewEnabled: Bool) {
-        if !reviewEnabled {
+    private func checkCTAButtonStatus(hasReview: Bool) {
+        if hasReview {
             DispatchQueue.main.async {
                 self.reviewWriteCTAButton.isEnabled = false
                 self.reviewWriteCTAButton.setAttributedTitleForDisabled(title: "리뷰 작성 완료")
