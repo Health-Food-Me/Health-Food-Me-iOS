@@ -26,6 +26,7 @@
 		3B9EF0FB2885D340009DEEDE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B9EF0FA2885D340009DEEDE /* GoogleService-Info.plist */; };
 		3B9EF0FE2885D372009DEEDE /* ReviewListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF0FD2885D372009DEEDE /* ReviewListEntity.swift */; };
 		3B9EF1062885F9EF009DEEDE /* withdrawalEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9EF1052885F9EF009DEEDE /* withdrawalEntity.swift */; };
+		3BB0FCE3288705E200C3862C /* BlogReviewListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB0FCE2288705E200C3862C /* BlogReviewListEntity.swift */; };
 		3BC01F7B287E89D2006C2181 /* ReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */; };
 		3BC01F84287EAE48006C2181 /* BlogReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */; };
 		3BC01F87287EBB8E006C2181 /* BlogReviewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC01F86287EBB8E006C2181 /* BlogReviewDataModel.swift */; };
@@ -58,6 +59,7 @@
 		695758EC28830E3000E36789 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758EB28830E3000E36789 /* SplashVC.swift */; };
 		695758EE28830E3F00E36789 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758ED28830E3F00E36789 /* Splash.storyboard */; };
 		695758F4288545CC00E36789 /* CopingTabEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758F3288545CC00E36789 /* CopingTabEntity.swift */; };
+		695758F928857FDC00E36789 /* ReviewWriteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758F828857FDC00E36789 /* ReviewWriteEntity.swift */; };
 		A90CFDCF2885B4DC0018AB94 /* SearchDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90CFDCE2885B4DC0018AB94 /* SearchDataModel.swift */; };
 		A90CFDD12885B4E70018AB94 /* SearchResultDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90CFDD02885B4E70018AB94 /* SearchResultDataModel.swift */; };
 		A90ED6252886644400FCE149 /* SearchEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90ED6222886644400FCE149 /* SearchEntity.swift */; };
@@ -179,7 +181,6 @@
 		EBF66B00287227F500DE0ED1 /* Adjusted+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66AB2287227F500DE0ED1 /* Adjusted+.swift */; };
 		EBF66B02287227F500DE0ED1 /* NoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66AB7287227F500DE0ED1 /* NoData.swift */; };
 		EBF66B05287227F500DE0ED1 /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66ABB287227F500DE0ED1 /* GeneralResponse.swift */; };
-		EBF66B082872AF5B00DE0ED1 /* SampleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */; };
 		EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B092872B21F00DE0ED1 /* StringLiterals.swift */; };
 		EBF66B0C2872B4FE00DE0ED1 /* StoryboardLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF66B0B2872B4FE00DE0ED1 /* StoryboardLiterals.swift */; };
 		EBFAEAFC2884DCF0009C569C /* RestaurantSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEAFB2884DCF0009C569C /* RestaurantSummaryModel.swift */; };
@@ -192,6 +193,14 @@
 		EBFAEB112885642C009C569C /* AppLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB102885642C009C569C /* AppLog.swift */; };
 		EBFAEB132885643D009C569C /* FirebaseConfigureServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB122885643D009C569C /* FirebaseConfigureServiceProtocol.swift */; };
 		EBFAEB172885DE83009C569C /* Reissuance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB162885DE83009C569C /* Reissuance.swift */; };
+		EBFAEB302885F2F7009C569C /* MyReviewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB2A2885F2F7009C569C /* MyReviewUseCase.swift */; };
+		EBFAEB312885F2F7009C569C /* MyReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB2B2885F2F7009C569C /* MyReviewRepository.swift */; };
+		EBFAEB322885F2F7009C569C /* MyReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB2C2885F2F7009C569C /* MyReviewModel.swift */; };
+		EBFAEB332885F2F7009C569C /* MyReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB2D2885F2F7009C569C /* MyReviewVC.swift */; };
+		EBFAEB342885F2F7009C569C /* MyReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB2E2885F2F7009C569C /* MyReviewViewModel.swift */; };
+		EBFAEB352885F2F7009C569C /* MyReviewEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB2F2885F2F7009C569C /* MyReviewEntity.swift */; };
+		EBFAEB3F2885F379009C569C /* MyReview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBFAEB3E2885F379009C569C /* MyReview.storyboard */; };
+		EBFAEB412885F43E009C569C /* MyReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAEB402885F43E009C569C /* MyReviewCVC.swift */; };
 		FD39FACE2880C30100A01CDA /* NicknameChangeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20E287F5D080007D4F9 /* NicknameChangeUseCase.swift */; };
 		FD39FACF2880C31000A01CDA /* CTAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E208287F30770007D4F9 /* CTAButton.swift */; };
 		FD39FAD12880C35000A01CDA /* UpperToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E20A287F3C360007D4F9 /* UpperToastView.swift */; };
@@ -242,6 +251,7 @@
 		3B9EF0FA2885D340009DEEDE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3B9EF0FD2885D372009DEEDE /* ReviewListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListEntity.swift; sourceTree = "<group>"; };
 		3B9EF1052885F9EF009DEEDE /* withdrawalEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = withdrawalEntity.swift; sourceTree = "<group>"; };
+		3BB0FCE2288705E200C3862C /* BlogReviewListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewListEntity.swift; sourceTree = "<group>"; };
 		3BC01F7A287E89D2006C2181 /* ReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCVC.swift; sourceTree = "<group>"; };
 		3BC01F83287EAE48006C2181 /* BlogReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewCVC.swift; sourceTree = "<group>"; };
 		3BC01F86287EBB8E006C2181 /* BlogReviewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogReviewDataModel.swift; sourceTree = "<group>"; };
@@ -273,6 +283,7 @@
 		695758EB28830E3000E36789 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		695758ED28830E3F00E36789 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		695758F3288545CC00E36789 /* CopingTabEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingTabEntity.swift; sourceTree = "<group>"; };
+		695758F828857FDC00E36789 /* ReviewWriteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteEntity.swift; sourceTree = "<group>"; };
 		A90CFDC82885B1880018AB94 /* SearchEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEntity.swift; sourceTree = "<group>"; };
 		A90CFDCA2885B2730018AB94 /* SearchResultEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultEntity.swift; sourceTree = "<group>"; };
 		A90CFDCE2885B4DC0018AB94 /* SearchDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataModel.swift; sourceTree = "<group>"; };
@@ -402,7 +413,6 @@
 		EBF66AB2287227F500DE0ED1 /* Adjusted+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Adjusted+.swift"; sourceTree = "<group>"; };
 		EBF66AB7287227F500DE0ED1 /* NoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoData.swift; sourceTree = "<group>"; };
 		EBF66ABB287227F500DE0ED1 /* GeneralResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
-		EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleEntity.swift; sourceTree = "<group>"; };
 		EBF66B092872B21F00DE0ED1 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		EBF66B0B2872B4FE00DE0ED1 /* StoryboardLiterals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardLiterals.swift; sourceTree = "<group>"; };
 		EBFAEAFB2884DCF0009C569C /* RestaurantSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSummaryModel.swift; sourceTree = "<group>"; };
@@ -415,6 +425,14 @@
 		EBFAEB102885642C009C569C /* AppLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLog.swift; sourceTree = "<group>"; };
 		EBFAEB122885643D009C569C /* FirebaseConfigureServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConfigureServiceProtocol.swift; sourceTree = "<group>"; };
 		EBFAEB162885DE83009C569C /* Reissuance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reissuance.swift; sourceTree = "<group>"; };
+		EBFAEB2A2885F2F7009C569C /* MyReviewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewUseCase.swift; sourceTree = "<group>"; };
+		EBFAEB2B2885F2F7009C569C /* MyReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewRepository.swift; sourceTree = "<group>"; };
+		EBFAEB2C2885F2F7009C569C /* MyReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewModel.swift; sourceTree = "<group>"; };
+		EBFAEB2D2885F2F7009C569C /* MyReviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewVC.swift; sourceTree = "<group>"; };
+		EBFAEB2E2885F2F7009C569C /* MyReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewViewModel.swift; sourceTree = "<group>"; };
+		EBFAEB2F2885F2F7009C569C /* MyReviewEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewEntity.swift; sourceTree = "<group>"; };
+		EBFAEB3E2885F379009C569C /* MyReview.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyReview.storyboard; sourceTree = "<group>"; };
+		EBFAEB402885F43E009C569C /* MyReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewCVC.swift; sourceTree = "<group>"; };
 		FD39FAD52880C63E00A01CDA /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		FD39FAD72880C69400A01CDA /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		FD582917287DC39A00CE62E8 /* mapContainerViewTouchDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerViewTouchDelegateProxy.swift; sourceTree = "<group>"; };
@@ -535,6 +553,7 @@
 			isa = PBXGroup;
 			children = (
 				3B9EF0FD2885D372009DEEDE /* ReviewListEntity.swift */,
+				3BB0FCE2288705E200C3862C /* BlogReviewListEntity.swift */,
 			);
 			path = ReviewTabScene;
 			sourceTree = "<group>";
@@ -699,6 +718,22 @@
 			path = CopingTabScene;
 			sourceTree = "<group>";
 		};
+		695758F528857F8400E36789 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				695758F628857F9500E36789 /* ReviewWriteScene */,
+			);
+			path = Review;
+			sourceTree = "<group>";
+		};
+		695758F628857F9500E36789 /* ReviewWriteScene */ = {
+			isa = PBXGroup;
+			children = (
+				695758F828857FDC00E36789 /* ReviewWriteEntity.swift */,
+			);
+			path = ReviewWriteScene;
+			sourceTree = "<group>";
+		};
 		697074FB28737D78001A607F /* MenuTabScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -749,7 +784,6 @@
 			isa = PBXGroup;
 			children = (
 				C321ED365502C47A4E65A10E /* Pods_HealthFoodMe.framework */,
-				FD924375288007ED0034876B /* NicknameChange.storyboard */,
 				A90CFDD22885C3050018AB94 /* SearchRequestEntity.swift */,
 				A90CFDC82885B1880018AB94 /* SearchEntity.swift */,
 				A90CFDCA2885B2730018AB94 /* SearchResultEntity.swift */,
@@ -1102,6 +1136,7 @@
 		EB6A44E12873B9F100749582 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				EBFAEB382885F32B009C569C /* MyReviewScene */,
 				EB6A44F52873BEFC00749582 /* MainMapScene */,
 			);
 			path = Map;
@@ -1110,6 +1145,7 @@
 		EB6A44E22873BAAE00749582 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				EBFAEB292885F2E2009C569C /* MyReviewScene */,
 				EBA8C13E28820557009DBA49 /* SupplementMapScene */,
 				3B18D8AA287AB7B6009AF9E7 /* HamburgerBarScene */,
 				EB6A44E32873BABE00749582 /* MainMapScene */,
@@ -1166,6 +1202,7 @@
 		EB6A44F62873BF1A00749582 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				EBFAEB362885F2FF009C569C /* MyReviewScene */,
 				EB6A44F72873BF1C00749582 /* MainMapScene */,
 			);
 			path = Map;
@@ -1182,6 +1219,7 @@
 		EB6A44F82873BF4000749582 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				EBFAEB3D2885F35B009C569C /* MyReviewScene */,
 				EB6A44F92873BF4C00749582 /* MainMapScene */,
 			);
 			path = Map;
@@ -1198,6 +1236,7 @@
 		EB6A44FA2873BF6500749582 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				EBFAEB372885F310009C569C /* MyReviewScene */,
 				EB6A44FB2873BF6900749582 /* MainMapScene */,
 			);
 			path = Map;
@@ -1592,12 +1631,12 @@
 		EBF66B062872AE4200DE0ED1 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				695758F528857F8400E36789 /* Review */,
 				A90ED6212886644400FCE149 /* Search */,
 				A90CFDB228852C550018AB94 /* User */,
 				FDF2E21A287F5D7F0007D4F9 /* Author */,
 				EB6A44F82873BF4000749582 /* Map */,
 				EB6A44DC28737DFA00749582 /* Detail */,
-				EBF66B072872AF5B00DE0ED1 /* SampleEntity.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1653,6 +1692,73 @@
 				EBFAEB162885DE83009C569C /* Reissuance.swift */,
 			);
 			path = Reissuance;
+			sourceTree = "<group>";
+		};
+		EBFAEB292885F2E2009C569C /* MyReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEB3B2885F34D009C569C /* Cells */,
+				EBFAEB3A2885F348009C569C /* VC */,
+				EBFAEB392885F33B009C569C /* ViewModel */,
+			);
+			path = MyReviewScene;
+			sourceTree = "<group>";
+		};
+		EBFAEB362885F2FF009C569C /* MyReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEB2A2885F2F7009C569C /* MyReviewUseCase.swift */,
+			);
+			path = MyReviewScene;
+			sourceTree = "<group>";
+		};
+		EBFAEB372885F310009C569C /* MyReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEB2B2885F2F7009C569C /* MyReviewRepository.swift */,
+			);
+			path = MyReviewScene;
+			sourceTree = "<group>";
+		};
+		EBFAEB382885F32B009C569C /* MyReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEB2C2885F2F7009C569C /* MyReviewModel.swift */,
+			);
+			path = MyReviewScene;
+			sourceTree = "<group>";
+		};
+		EBFAEB392885F33B009C569C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEB2E2885F2F7009C569C /* MyReviewViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		EBFAEB3A2885F348009C569C /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEB2D2885F2F7009C569C /* MyReviewVC.swift */,
+				EBFAEB3E2885F379009C569C /* MyReview.storyboard */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		EBFAEB3B2885F34D009C569C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEB402885F43E009C569C /* MyReviewCVC.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		EBFAEB3D2885F35B009C569C /* MyReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				EBFAEB2F2885F2F7009C569C /* MyReviewEntity.swift */,
+			);
+			path = MyReviewScene;
 			sourceTree = "<group>";
 		};
 		EC921F0D619DA4E9C0CE8F2B /* Frameworks */ = {
@@ -1903,6 +2009,7 @@
 				FD39FAD62880C63E00A01CDA /* Setting.storyboard in Resources */,
 				A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */,
 				695758BD287DA4CD00E36789 /* ReviewWrite.storyboard in Resources */,
+				EBFAEB3F2885F379009C569C /* MyReview.storyboard in Resources */,
 				A93252E22880CBB9001EDF50 /* HelfmeAlert.storyboard in Resources */,
 				3BCC442028745FE500661A12 /* SocialLogin.storyboard in Resources */,
 				695758D72881122800E36789 /* CopingTab.storyboard in Resources */,
@@ -2005,6 +2112,7 @@
 				3B9EF0FE2885D372009DEEDE /* ReviewListEntity.swift in Sources */,
 				EBF66AD6287227F500DE0ED1 /* UITableViewRegisterable.swift in Sources */,
 				EBF66AC5287227F500DE0ED1 /* UITextField+.swift in Sources */,
+				EBFAEB322885F2F7009C569C /* MyReviewModel.swift in Sources */,
 				EBF66AFB287227F500DE0ED1 /* setImage.swift in Sources */,
 				FD58291C287DC39A00CE62E8 /* mapContainerView.swift in Sources */,
 				FDF2E1FE287F08010007D4F9 /* TouchableSlider.swift in Sources */,
@@ -2064,13 +2172,14 @@
 				3B723C8B287FF81800822B7C /* TagCVC.swift in Sources */,
 				FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */,
 				EBF66AF0287227F500DE0ED1 /* BaseVC.swift in Sources */,
-				EBF66B082872AF5B00DE0ED1 /* SampleEntity.swift in Sources */,
 				EB6A44D328737CC400749582 /* MainDetailModel.swift in Sources */,
 				A93252B5287F2CA6001EDF50 /* ScrapCVC.swift in Sources */,
 				EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */,
 				EBFAEB172885DE83009C569C /* Reissuance.swift in Sources */,
 				EBF66AD5287227F500DE0ED1 /* ViewModelType.swift in Sources */,
+				695758F928857FDC00E36789 /* ReviewWriteEntity.swift in Sources */,
 				69028BB02874A60E00373984 /* HeaderView.swift in Sources */,
+				EBFAEB302885F2F7009C569C /* MyReviewUseCase.swift in Sources */,
 				EBFAEB0A2885636E009C569C /* FirebaseAnalyticsProvider.swift in Sources */,
 				695758D52881121900E36789 /* CopingTabVC.swift in Sources */,
 				EBF66ADA287227F500DE0ED1 /* controllerFromStoryBoard.swift in Sources */,
@@ -2086,9 +2195,12 @@
 				3B723C912880037100822B7C /* ReviewPhotoCVC.swift in Sources */,
 				EBF66AE3287227F500DE0ED1 /* NetworkResult.swift in Sources */,
 				EB6A45262875C3A000749582 /* TabContainerCVC.swift in Sources */,
+				EBFAEB312885F2F7009C569C /* MyReviewRepository.swift in Sources */,
+				EBFAEB332885F2F7009C569C /* MyReviewVC.swift in Sources */,
 				A93252B1287F2AF9001EDF50 /* ScrapVC.swift in Sources */,
 				EBF66AF5287227F500DE0ED1 /* Logger.swift in Sources */,
 				FD72FC9E288346480092746F /* UserWithdrawalVC.swift in Sources */,
+				EBFAEB412885F43E009C569C /* MyReviewCVC.swift in Sources */,
 				EB6A4528287664D600749582 /* ExpandableInfoTVC.swift in Sources */,
 				3B723C932880074200822B7C /* ReviewDataModel.swift in Sources */,
 				EBF66ACB287227F500DE0ED1 /* String+.swift in Sources */,
@@ -2111,6 +2223,7 @@
 				EBFAEB0D28856388009C569C /* LogEventType.swift in Sources */,
 				EBF66AFD287227F500DE0ED1 /* calculateTopInset.swift in Sources */,
 				EBF66ACF287227F500DE0ED1 /* Result+.swift in Sources */,
+				3BB0FCE3288705E200C3862C /* BlogReviewListEntity.swift in Sources */,
 				A93252C628808B82001EDF50 /* ReviewDeleteAlertView.swift in Sources */,
 				EBF66AD7287227F500DE0ED1 /* Presentable.swift in Sources */,
 				FD72FC9C288346480092746F /* UserWithdrawalViewModel.swift in Sources */,
@@ -2155,11 +2268,13 @@
 				EBA8C142288205C5009DBA49 /* SupplementMapVC.swift in Sources */,
 				FD39FACF2880C31000A01CDA /* CTAButton.swift in Sources */,
 				EBF66AC0287227F500DE0ED1 /* UIView+.swift in Sources */,
+				EBFAEB342885F2F7009C569C /* MyReviewViewModel.swift in Sources */,
 				EBF66B02287227F500DE0ED1 /* NoData.swift in Sources */,
 				EB6A44F02873BED500749582 /* MainMapModel.swift in Sources */,
 				EB6A44EF2873BED500749582 /* MainMapRepository.swift in Sources */,
 				EBF66AC9287227F500DE0ED1 /* UIColor+.swift in Sources */,
 				EBF66B00287227F500DE0ED1 /* Adjusted+.swift in Sources */,
+				EBFAEB352885F2F7009C569C /* MyReviewEntity.swift in Sources */,
 				EBFAEAFC2884DCF0009C569C /* RestaurantSummaryModel.swift in Sources */,
 				EBA8C14828828E64009DBA49 /* RestaurantService.swift in Sources */,
 				A90CFDCF2885B4DC0018AB94 /* SearchDataModel.swift in Sources */,
@@ -2330,7 +2445,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
+				PROVISIONING_PROFILE_SPECIFIER = HealthFoodMe_Dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

@@ -18,6 +18,7 @@ class ReviewPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
     private lazy var reviewImageView: UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 5
+        iv.clipsToBounds = true
         return iv
     }()
   

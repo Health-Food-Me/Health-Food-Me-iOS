@@ -1,38 +1,56 @@
 //
-//  ReviewCVC.swift
+//  MyReviewCVC.swift
 //  HealthFoodMe
 //
-//  Created by 강윤서 on 2022/07/13.
+//  Created by Junho Lee on 2022/07/19.
 //
 
 import UIKit
 
-class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
+protocol MyReviewCVCDelegate: AnyObject {
+    func restaurantNameTapped()
+    func editButtonTapped()
+    func deleteButtonTapped()
+}
+
+class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     // MARK: - Properties
     
     static var isFromNib = false
     
-    private var cellViewModel: ReviewDataModel? {
+    weak var delegate: MyReviewCVCDelegate?
+    
+    private var cellViewModel: MyReviewModel? {
         didSet {
             tagCV.reloadData()
             reviewPhotoCV.reloadData()
         }
     }
     
-    var layoutEnumValue = 0
-    
     let width = UIScreen.main.bounds.width
+    var layoutEnumValue = 0
     var clickedEvent: ((Int) -> Void)?
     var isFolded: Bool = true
+    var lineNumber: Int?
+    var entitleHeight: CGFloat?
+    
     // MARK: - UI Components
     
-    private var nameLabel: UILabel = {
+    private var restaurantNameLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
         lb.font = UIFont.NotoMedium(size: 14)
         lb.text = ""
+        lb.isUserInteractionEnabled = true
         return lb
+    }()
+    
+    private let arrowImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .center
+        iv.image = ImageLiterals.Map.arrowRightIcon
+        return iv
     }()
     
     private var starView: StarRatingView = {
@@ -54,6 +72,47 @@ class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         return cv
     }()
     
+    private lazy var buttonStackView: UIStackView = {
+        let st = UIStackView()
+        st.axis = .horizontal
+        st.spacing = 8
+        st.distribution = .equalSpacing
+        st.isUserInteractionEnabled = true
+        return st
+    }()
+    
+    private lazy var editButton: UIButton = {
+        let bt = UIButton()
+        bt.titleLabel?.font = .NotoRegular(size: 10)
+        bt.setTitle("편집", for: .normal)
+        bt.setTitleColor(UIColor.helfmeGray2, for: .normal)
+        bt.addAction(UIAction(handler: { _ in
+            self.delegate?.editButtonTapped()
+        }), for: .touchUpInside)
+        return bt
+    }()
+    
+    private let verticalView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .helfmeGray1.withAlphaComponent(0.3)
+        view.snp.makeConstraints { make in
+            make.height.equalTo(12)
+            make.width.equalTo(1)
+        }
+        return view
+    }()
+    
+    private lazy var deleteButton: UIButton = {
+        let bt = UIButton()
+        bt.titleLabel?.font = .NotoRegular(size: 10)
+        bt.setTitle("삭제", for: .normal)
+        bt.setTitleColor(UIColor.helfmeGray2, for: .normal)
+        bt.addAction(UIAction(handler: { _ in
+            self.delegate?.deleteButtonTapped()
+        }), for: .touchUpInside)
+        return bt
+    }()
+    
     private var reviewPhotoCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -64,7 +123,7 @@ class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .helfmeWhite
         cv.showsHorizontalScrollIndicator = false
-
+        
         return cv
     }()
     
@@ -101,6 +160,7 @@ class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         setDelegate()
         registerCell()
         setDefaultLayout()
+        setTapGesture()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -108,7 +168,7 @@ class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     }
     
     override func prepareForReuse() {
-        nameLabel.text = " "
+        restaurantNameLabel.text = " "
         reviewContents.text = " "
         reviewPhotoCV.isHidden = false
         reviewContents.isHidden = false
@@ -117,7 +177,7 @@ class ReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
 
 // MARK: - Methods
 
-extension ReviewCVC {
+extension MyReviewCVC {
     func setDelegate() {
         tagCV.delegate = self
         tagCV.dataSource = self
@@ -131,8 +191,9 @@ extension ReviewCVC {
     }
     
     func setDefaultLayout() {
-        contentView.addSubviews(nameLabel, starView, tagCV,
-                                reviewPhotoCV, reviewContents, reviewSeperatorView,moreTapButton)
+        contentView.addSubviews(arrowImageView, restaurantNameLabel, buttonStackView,
+                                starView, tagCV, reviewPhotoCV,
+                                reviewContents, reviewSeperatorView, moreTapButton)
         
         let width = UIScreen.main.bounds.width
         
@@ -143,21 +204,44 @@ extension ReviewCVC {
             make.width.equalTo(width - 40)
         }
         
-        nameLabel.snp.makeConstraints { make in
+        restaurantNameLabel.snp.makeConstraints { make in
             make.leading.equalTo(20)
             make.top.equalTo(reviewSeperatorView.snp.bottom).offset(28)
-            make.height.equalTo(nameLabel.font.lineHeight)
+            make.height.equalTo(restaurantNameLabel.font.lineHeight)
+        }
+        
+        arrowImageView.snp.makeConstraints { make in
+            make.centerY.equalTo(restaurantNameLabel.snp.centerY)
+            make.leading.equalTo(restaurantNameLabel.snp.trailing).offset(-8)
+            make.width.height.equalTo(20)
+        }
+        
+        buttonStackView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(20)
+            make.centerY.equalTo(restaurantNameLabel.snp.centerY)
+        }
+        
+        buttonStackView.addArrangedSubviews(editButton, verticalView, deleteButton)
+        
+        editButton.snp.makeConstraints { make in
+            make.height.equalTo(16)
+            make.width.equalTo(20)
+        }
+        
+        deleteButton.snp.makeConstraints { make in
+            make.height.equalTo(16)
+            make.width.equalTo(20)
         }
         
         starView.snp.makeConstraints { make in
-            make.leading.equalTo(nameLabel.snp.trailing).offset(8)
-            make.centerY.equalTo(nameLabel)
+            make.leading.equalTo(restaurantNameLabel.snp.leading)
+            make.top.equalTo(restaurantNameLabel.snp.bottom).offset(8)
             make.height.equalTo(18)
             make.width.equalTo(86)
         }
         
         tagCV.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(10)
+            make.top.equalTo(starView.snp.bottom).offset(10)
             make.leading.equalToSuperview()
             make.width.equalTo(width)
             make.height.equalTo(22)
@@ -171,9 +255,8 @@ extension ReviewCVC {
         }
         
         reviewContents.snp.makeConstraints { make in
-            make.top.equalTo(reviewPhotoCV.snp.bottom).offset(12)
-            make.leading.equalTo(20)
-            make.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(reviewPhotoCV.snp.bottom).offset(9)
+            make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-28)
             make.width.equalTo(width - 40)
         }
@@ -182,10 +265,8 @@ extension ReviewCVC {
             make.bottom.equalToSuperview().offset(-28)
             make.trailing.equalToSuperview().offset(-30)
             make.width.equalTo(width - 40)
-            make.height.equalToSuperview()
+            make.height.equalTo(60)
         }
-        
-
     }
     
     func setLayout() {
@@ -218,13 +299,6 @@ extension ReviewCVC {
         addSubviews(reviewContents)
         reviewContents.isHidden = false
         
-        tagCV.snp.remakeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(10)
-            make.leading.equalToSuperview()
-            make.width.equalTo(width)
-            make.height.equalTo(22)
-        }
-        
         reviewContents.snp.remakeConstraints { make in
             make.top.equalTo(tagCV.snp.bottom).offset(10)
             make.leading.equalTo(20)
@@ -238,8 +312,6 @@ extension ReviewCVC {
         reviewContents.removeFromSuperview()
         contentView.addSubviews(reviewPhotoCV)
         
-        let width = UIScreen.main.bounds.width
-        
         reviewPhotoCV.snp.remakeConstraints { make in
             make.top.equalTo(tagCV.snp.bottom).offset(10)
             make.leading.equalToSuperview()
@@ -248,7 +320,7 @@ extension ReviewCVC {
             make.bottom.equalToSuperview().offset(-28)
         }
     }
-
+    
     func setLayoutWithImageAndContents() {
         
         addSubviews(reviewPhotoCV, reviewContents)
@@ -266,19 +338,18 @@ extension ReviewCVC {
         
         reviewContents.snp.remakeConstraints { make in
             make.top.equalTo(reviewPhotoCV.snp.bottom).offset(12)
-            make.leading.equalTo(20)
-            make.trailing.equalToSuperview().inset(20)
+            make.leading.bottom.equalToSuperview().inset(20)
             make.bottom.equalToSuperview().offset(-28)
             make.width.equalTo(width - 40)
         }
     }
     
-    func setData(reviewData: ReviewDataModel,
+    func setData(reviewData: MyReviewModel,
                  text: String,
                  isFoldRequired: Bool,
                  expanded: Bool) {
-        nameLabel.text = reviewData.reviewer
-        nameLabel.sizeToFit()
+        restaurantNameLabel.text = reviewData.restaurantName + "  "
+        restaurantNameLabel.sizeToFit()
         starView.rate = CGFloat(reviewData.starRate)
         self.cellViewModel = reviewData
         reviewContents.text = text
@@ -322,18 +393,28 @@ extension ReviewCVC {
         }
         let fullText = reviewContents.text
         let range = NSRange(location: textCount - 3, length: length)
-            
+        
         let attributedString = NSMutableAttributedString(string: fullText ?? "")
         attributedString.addAttribute(.font, value: UIFont.NotoRegular(size: 12), range: range)
         attributedString.addAttribute(.foregroundColor, value: UIColor.helfmeGray2, range: range)
         reviewContents.attributedText = attributedString
     }
+    
+    private func setTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pushMainDetailVC))
+        restaurantNameLabel.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc
+    private func pushMainDetailVC() {
+        delegate?.restaurantNameTapped()
+    }
 }
 
-extension ReviewCVC: UICollectionViewDelegate {
+extension MyReviewCVC: UICollectionViewDelegate {
 }
 
-extension ReviewCVC: UICollectionViewDataSource {
+extension MyReviewCVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == tagCV {
             return self.cellViewModel?.tagList.count ?? 0
@@ -368,7 +449,7 @@ extension ReviewCVC: UICollectionViewDataSource {
     }
 }
 
-extension ReviewCVC: UICollectionViewDelegateFlowLayout {
+extension MyReviewCVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         switch collectionView {

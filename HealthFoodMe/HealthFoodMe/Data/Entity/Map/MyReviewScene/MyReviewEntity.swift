@@ -1,20 +1,22 @@
 //
-//  ReviewListEntity.swift
+//  MyReviewEntity.swift
 //  HealthFoodMe
 //
-//  Created by 강윤서 on 2022/07/19.
+//  Created by Junho Lee on 2022/07/19.
 //
 
 import Foundation
 
-struct ReviewListEntity: Codable {
-    let id, writer, content: String
+// MARK: - Datum
+struct MyReviewEntity: Codable {
+    let restaurant: String
     let score: Float
-    let image: [Image]
-    let taste: String
+    let content, id: String
+    let image: [MyReviewImage]
     let good: [String]
+    let taste: String
     
-    func toDomain() -> ReviewDataModel {
+    func toDomain() -> MyReviewModel {
         
         var hashTagList = [String]()
         hashTagList.append(taste)
@@ -26,7 +28,7 @@ struct ReviewListEntity: Codable {
         for img in self.image {
             imageList.append(img.url)
         }
-        return ReviewDataModel.init(reviewer: writer,
+        return MyReviewModel.init(restaurantName: restaurant,
                                     starRate: score,
                                     tagList: hashTagList,
                                     reviewImageURLList: imageList,
@@ -34,7 +36,8 @@ struct ReviewListEntity: Codable {
     }
 }
 
-struct Image: Codable {
+// MARK: - Image
+struct MyReviewImage: Codable {
     let name: String
     let url: String
     let id: String

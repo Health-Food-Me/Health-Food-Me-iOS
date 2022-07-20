@@ -83,6 +83,7 @@ struct ImageLiterals {
         static let sandwichIcon = UIImage(named: "icn_sandwich")
         static let shabushabuIcon = UIImage(named: "icn_shabushabu")
         static let searchIcon = UIImage(named: "icn_search_map")
+        static let arrowRightIcon = UIImage(named: "icn_arrowright")
     }
     
     struct ReviewWrite {

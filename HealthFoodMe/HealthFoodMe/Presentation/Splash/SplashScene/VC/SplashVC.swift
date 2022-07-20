@@ -50,9 +50,9 @@ extension SplashVC {
     }
     
     private func presentMainMapVC() {
-        let vc = ModuleFactory.resolve().makeMainMapNavigationController()
-        vc.modalPresentationStyle = .overFullScreen
-        self.present(vc, animated: false)
+        let nav = ModuleFactory.resolve().makeMainMapNavigationController()
+        nav.modalPresentationStyle = .overFullScreen
+        self.present(nav, animated: false)
     }
     
     private func presentSocialLoginVC() {
@@ -64,7 +64,7 @@ extension SplashVC {
     private func checkLoginStatusAndPresentVC() {
         DispatchQueue.main.asyncAfter(deadline: .now()+3) {
             if self.userManager.isLogin == true {
-                self.reissuanceToken()
+                self.requestSocialLogin()
             } else {
                 self.presentSocialLoginVC()
             }
@@ -75,13 +75,27 @@ extension SplashVC {
 // MARK: - Network
 
 extension SplashVC {
-    private func reissuanceToken() {
-        print("하이")
-        userManager.reissuanceAccessToken() { success in
-            if success {
-                self.presentMainMapVC()
-            } else {
-                self.presentSocialLoginVC()
+    private func requestSocialLogin() {
+        var socialType = ""
+        if userManager.isAppleLoginned {
+            socialType = "apple"
+        } else {
+            socialType = "kakao"
+        }
+        AuthService.shared.requestAuth(social: socialType, token: userManager.getSocialToken) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? SocialLoginEntity?,
+                   let user = data?.user,
+                   let access = data?.accessToken,
+                   let refresh = data?.refreshToken {
+                    self.userManager.setCurrentUser(user)
+                    self.userManager.updateAuthToken(access, refresh)
+                    self.presentMainMapVC()
+                }
+                break
+            default:
+                print("소셜 토큰 에러")
             }
         }
     }
