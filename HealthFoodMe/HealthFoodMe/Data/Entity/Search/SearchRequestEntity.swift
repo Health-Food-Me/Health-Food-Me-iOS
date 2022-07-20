@@ -8,7 +8,7 @@
 import Foundation
 
 struct SearchRequestEntity: Codable {
-    let longtitude: Double
+    let longitude: Double
     let latitude: Double
     let keyword: String
 }
