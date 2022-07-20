@@ -80,8 +80,7 @@ struct I18N {
             static let checkReviewToast = "별점과 맛 평가는 필수입니다."
             static let checkPhotoToast = "사진 첨부는 최대 3장까지만 가능합니다!"
             
-            
-            
+            static let gotoRestaurant = "식당 보러 가기"
         }
     }
     
