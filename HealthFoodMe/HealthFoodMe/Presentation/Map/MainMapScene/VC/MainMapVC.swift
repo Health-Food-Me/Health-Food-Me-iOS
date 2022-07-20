@@ -406,6 +406,10 @@ extension MainMapVC {
         }
         nextVC.restaurantId = self.currentRestaurantId
         nextVC.location = self.currentLocation
+        if let lat = locationManager?.currentLatLng().lat,
+           let lng = locationManager?.currentLatLng().lng {
+            nextVC.userLocation = Location(latitude: lat, longitude: lng)
+        }
         let nav = UINavigationController(rootViewController: nextVC)
         nav.modalPresentationStyle = .overCurrentContext
         nav.modalTransitionStyle = .crossDissolve

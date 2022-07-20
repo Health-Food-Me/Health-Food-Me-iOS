@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct ReviewCheckEntity: Codable {
+    let hasReview: Bool
+}
