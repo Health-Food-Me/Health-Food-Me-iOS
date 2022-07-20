@@ -119,6 +119,7 @@ extension MainDetailVC {
         scrapButton.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
         scrapButton.addAction(UIAction(handler: { _ in
             scrapButton.isSelected.toggle()
+            self.putScrap(userId: UserManager.shared.getUser?.id ?? "", restaurantId: self.restaurantId)
         }), for: .touchUpInside)
         
         reviewWriteCTAButton.layer.cornerRadius = 20
@@ -506,6 +507,17 @@ extension MainDetailVC {
             DispatchQueue.main.async {
                 self.reviewWriteCTAButton.isEnabled = false
                 self.reviewWriteCTAButton.setAttributedTitleForDisabled(title: "리뷰 작성 완료")
+            }
+        }
+    }
+    
+    private func putScrap(userId: String, restaurantId: String) {
+        UserService.shared.putScrap(userId: userId, restaurantId: restaurantId) { networkResult in
+            switch networkResult {
+            case .success(let message):
+                print(message)
+            default:
+                break;
             }
         }
     }
