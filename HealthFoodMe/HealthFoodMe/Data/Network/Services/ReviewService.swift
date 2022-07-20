@@ -14,6 +14,7 @@ class ReviewService: BaseService {
 }
 
 extension ReviewService {
+    
     func requestReviewList(restaurantId: String,
                            completion: @escaping(NetworkResult<Any>) -> Void) {
         requestObject(ReviewRouter.getReviewList(restaurantId: restaurantId),
@@ -21,6 +22,7 @@ extension ReviewService {
                       decodingMode: .model,
                       completion: completion)
     }
+    
     
     func requestReviewWrite(userId: String, restaurantId: String, score: Double, taste: String, good: [String], content: String, image: [UIImage], completion: @escaping (NetworkResult<Any>) -> Void) {
         
@@ -55,11 +57,20 @@ extension ReviewService {
                       completion: completion)
     }
     
-    func requestUserReview(userId: String, completion: @escaping(NetworkResult<Any>) -> Void) {
+    func requestUserReview(userId: String,
+                           completion: @escaping(NetworkResult<Any>) -> Void) {
         requestObject(ReviewRouter.requestUserReview(userId: userId), type: [MyReviewEntity].self, decodingMode: .model, completion: completion)
     }
     
     func requestReviewEnabled(userId: String, restaurantId: String, completion: @escaping(NetworkResult<Any>) -> Void) {
         requestObject(ReviewRouter.requestReviewEnabled(userId: userId, restaurantId: restaurantId), type: ReviewCheckEntity.self, decodingMode: .model, completion: completion)
     }
+    
+    func requestReviewDelete(reviewId: String,
+                             completion: @escaping (NetworkResult<Any>) -> Void) {
+           requestObject(ReviewRouter.requestReviewDelete(reviewId: reviewId),
+                         type: ReviewDeleteEntity.self,
+                         decodingMode: .message,
+                         completion: completion)
+           }
 }
