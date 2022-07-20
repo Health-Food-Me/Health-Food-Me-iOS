@@ -30,6 +30,7 @@ class MainDetailVC: UIViewController {
     private var phoneMenuTouched: Bool = false
     private var navigationTitle: String = "서브웨이 테스트"
     private var isOpenned: Bool = false
+    private var mainInfoInitialReload: Bool = true
     var userLocation: Location?
     var restaurantId: String = ""
     var location: Location?
@@ -276,6 +277,7 @@ extension MainDetailVC: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MainInfoTVC.className, for: indexPath) as? MainInfoTVC else { return UITableViewCell() }
             cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
                 .drive(onNext: {
+                    self.mainInfoInitialReload = false
                     self.isOpenned.toggle()
                     self.mainTableView.reloadData()
                 }).disposed(by: disposeBag)
@@ -477,6 +479,8 @@ extension MainDetailVC {
                 switch networkResult {
                 case .success(let data):
                     if let data = data as? MainDetailEntity {
+                        self.navigationTitle = data.restaurant.name
+                        self.mainInfoTVC.isInitialReload = self.mainInfoInitialReload
                         self.mainInfoTVC.setData(data: data)
                         self.menuTabVC.setData(data: data.menu)
                     }

@@ -144,7 +144,6 @@ extension MainInfoTVC {
     func initialReload() {
         if isInitialReload {
             expandableTableView.reloadData()
-            isInitialReload.toggle()
         }
     }
     
