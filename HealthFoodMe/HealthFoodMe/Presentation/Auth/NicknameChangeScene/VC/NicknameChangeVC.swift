@@ -256,7 +256,7 @@ extension NicknameChangeVC {
     guard status != .normal else {
       // FIXME: - 이후에 Custom Alert 생성되면 바꿀 예정
         self.navigationController?.popViewController(animated: true)
-        postObserverAction(.nicknameChanged)
+        postObserverAction(.nicknameChanged,object: nickNameTextField.text!)
       return }
     
     makeVibrate()

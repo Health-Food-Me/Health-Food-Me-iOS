@@ -18,7 +18,7 @@ enum HamburgerType {
 }
 
 protocol HamburgerbarVCDelegate: AnyObject {
-    func HamburgerbarVCDidTap(hamburgerType: HamburgerType)
+    func hamburgerbarVCDidTap(hamburgerType: HamburgerType)
 }
 
 class HamburgerBarVC: UIViewController {
@@ -156,8 +156,11 @@ class HamburgerBarVC: UIViewController {
         setLayout()
         addHamburgerBarGesture()
         addButtonAction()
-        fetchUserNickname()
         addObserver()
+        fetchUserNickname()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -329,8 +332,12 @@ extension HamburgerBarVC {
             }
         }
     }
+    
     private func addObserver() {
-        addObserverAction(.nicknameChanged) { _ in
+        addObserverAction(.nicknameChanged) { noti in
+            if let nickname = noti.object as? String {
+                self.nickNameLabel.text = nickname
+            }
             self.nicknameChangeSuccess()
         }
     }
@@ -345,12 +352,12 @@ extension HamburgerBarVC {
         
         menuButtons[0].press {  
             self.dismiss(animated: false)
-            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .scrap)
+            self.postObserverAction(.moveFromHamburgerBar,object: HamburgerType.scrap)
         }
         
         menuButtons[1].press {
             self.dismiss(animated: false)
-            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .myReview)
+            self.postObserverAction(.moveFromHamburgerBar,object: HamburgerType.myReview)
         }
         
         menuButtons[2].press {
@@ -363,8 +370,7 @@ extension HamburgerBarVC {
         
         settingButton.press {
             self.dismiss(animated: false)
-            
-            self.delegate?.HamburgerbarVCDidTap(hamburgerType: .setting)
+            self.postObserverAction(.moveFromHamburgerBar,object: HamburgerType.setting)
         }
         
         logoutButton.press {
@@ -434,10 +440,8 @@ extension HamburgerBarVC: MFMailComposeViewControllerDelegate {
     }
 }
 
-
 extension HamburgerBarVC {
     func nicknameChangeSuccess() {
-        print("SHOW UPPER TOAST")
         showUpperToast()
     }
     

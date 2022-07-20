@@ -145,6 +145,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         setMapView()
         bindMapView()
         sampleViewInputEvent()
+        addObserver()
         self.bindViewModels()
     }
     
@@ -391,6 +392,14 @@ extension MainMapVC {
             .disposed(by: self.disposeBag)
     }
     
+    private func addObserver() {
+        addObserverAction(.moveFromHamburgerBar) { noti in
+            if let screenCase = noti.object as? HamburgerType {
+                self.hamburgerbarVCDidTap(hamburgerType: screenCase)
+            }
+        }
+    }
+    
     private func makeDummyPoints() -> Observable<[MapPointDataModel]> {
         return .create { observer in
             let pointList: [MapPointDataModel] = .init([
@@ -497,7 +506,7 @@ extension MainMapVC: UICollectionViewDataSource {
 }
 
 extension MainMapVC: HamburgerbarVCDelegate {
-    func HamburgerbarVCDidTap(hamburgerType: HamburgerType) {
+    func hamburgerbarVCDidTap(hamburgerType: HamburgerType) {
         switch hamburgerType {
         case .editName:
             navigationController?.pushViewController(ModuleFactory.resolve().makeNicknameChangeVC(), animated: true)

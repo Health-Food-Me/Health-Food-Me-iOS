@@ -184,8 +184,9 @@ class ModuleFactory: ModuleFactoryProtocol {
     }
     
     // MARK: - HelfmeAlert
-    func makeHelfmeAlertVC() -> HelfmeAlertVC {
+    func makeHelfmeAlertVC(type: AlertType)  -> HelfmeAlertVC {
         let vc = HelfmeAlertVC.controllerFromStoryboard(.helfmeAlert)
+        vc.alertType = type
         
         return vc
     }

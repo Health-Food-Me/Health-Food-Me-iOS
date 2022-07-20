@@ -34,7 +34,8 @@ struct I18N {
         static let topGuideText = "탈퇴하면 내 앱 모든 데이터가 사라집니다"
         static let bottomGuideText = "서비스를 탈퇴하려면 닉네임을 입력해주세요"
         static let ctaButtonTitle = "확인"
-        
+        static let withdrawlAlertTitle = "정말로 탈퇴하실건가요?"
+        static let withdrawlContent = "탈퇴 시 헬푸미의 새로운 정보를\n얻을 수 없습니다."
       }
     }
     
