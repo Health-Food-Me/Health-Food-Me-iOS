@@ -19,7 +19,7 @@ final class SearchResultVC: UIViewController {
     
     var searchContent: String = ""
     weak var delegate: SearchResultVCDelegate?
-    private var isBottom: Bool = true
+    private var isMapView: Bool = true
     var searchResultList: [SearchResultDataModel] = []
     private let mapViewController: SupplementMapVC = {
         let vc = ModuleFactory.resolve().makeSupplementMapVC(forSearchVC: true)
@@ -150,8 +150,12 @@ extension SearchResultVC {
     
     private func addBtnAction() {
         backButton.press {
-            self.delegate?.searchResultVCSearchType(type: .recent)
-            self.navigationController?.popViewController(animated: false)
+            if self.isMapView {
+                self.viewList()
+            } else {
+                self.delegate?.searchResultVCSearchType(type: .recent)
+                self.navigationController?.popViewController(animated: false)
+            }
         }
         
         resultCloseButton.press {
@@ -250,7 +254,7 @@ extension SearchResultVC {
             self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 585)
         })
         searchResultTableView.tableHeaderView?.frame.size.height = 40
-        isBottom = true
+        isMapView = true
         searchResultTableView.layer.shadowOpacity = 0.1
         searchResultTableView.layer.cornerRadius = 15
         searchResultLineView.isHidden = false
@@ -267,7 +271,7 @@ extension SearchResultVC {
             self.view.bringSubviewToFront(self.searchTextField)
         }
         searchResultTableView.tableHeaderView?.frame.size.height = 50
-        isBottom = false
+        isMapView = false
         searchResultTableView.layer.cornerRadius = 0
         searchResultTableView.layer.shadowOpacity = 0
         searchResultLineView.isHidden = true
@@ -310,7 +314,7 @@ extension SearchResultVC: UITableViewDataSource {
 extension SearchResultVC: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y == 0 {
-            if isBottom {
+            if isMapView {
                 viewList()
             }
         }

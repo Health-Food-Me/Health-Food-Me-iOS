@@ -8,6 +8,7 @@
 import UIKit
 
 import RealmSwift
+import RxSwift
 import SnapKit
 import NMapsMap
 
@@ -22,6 +23,7 @@ final class SearchVC: UIViewController {
     // MARK: - Properties
     
     private let locationManager = NMFLocationManager.sharedInstance()
+    private let disposeBag = DisposeBag()
     let realm = try? Realm()
     var searchType: SearchType = SearchType.recent {
         didSet {
@@ -29,7 +31,6 @@ final class SearchVC: UIViewController {
         }
     }
     var searchContent: String = ""
-    var goToResult: Bool = false
     var searchRecentList: [String] = []
     var searchList: [SearchDataModel] = []
     var searchResultList: [SearchResultDataModel] = []
@@ -148,21 +149,11 @@ extension SearchVC {
         case .recent:
             navigationController?.popViewController(animated: true)
         case .search:
-            if searchList.isEmpty {
-                isSearchRecent()
-                initTextField()
-                break;
-            }
-            if goToResult {
-                searchTextField.text = searchContent
-                isSearchResult(fromRecent: false)
-                searchTableView.reloadData()
-            } else {
-                navigationController?.popViewController(animated: true)
-            }
+            isSearchRecent()
+            setRecentTextField()
         case .searchResult:
             isSearchRecent()
-            initTextField()
+            setRecentTextField()
         }
     }
     
@@ -199,10 +190,24 @@ extension SearchVC {
 
 extension SearchVC {
     private func initTextField() {
+        searchTextField.becomeFirstResponder()
+    }
+    
+    private func setRecentTextField() {
         if searchType == .recent {
             searchTextField.text?.removeAll()
+            searchTextField.resignFirstResponder()
         }
     }
+    
+    //    private func setTextField() {
+    //        searchTextField.rx.text.debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+    //            .subscribe(onNext: { text in
+    //                if let searchContent = text {
+    //                    self.fetchSearchData(text: searchContent)
+    //                }
+    //            }).disposed(by: disposeBag)
+    //    }
     
     private func setData() {
         let savedSearchRecent = realm?.objects(SearchRecent.self)
@@ -222,8 +227,8 @@ extension SearchVC {
     
     private func fetchSearchResultData(keyword: String, fromRecent: Bool) {
         let NMGPosition = self.locationManager?.currentLatLng()
-        var lng:Double = 0.0
-        var lat:Double = 0.0
+        var lng: Double = 0.0
+        var lat: Double = 0.0
         if let position = NMGPosition {
             lng = position.lng
             lat = position.lat
@@ -234,7 +239,7 @@ extension SearchVC {
         if let text = searchTextField.text {
             searchContent = text
         }
-        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: lat, latitude: lng,
+        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lat, latitude: lng,
                                                                          keyword: keyword), fromRecent: fromRecent)
     }
     
@@ -364,13 +369,13 @@ extension SearchVC {
                     addSearchRecent(title: text)
                 }
             }
-            searchTextField.rightViewMode = .always
-            searchTextField.rightView = resultCloseButton
             searchTableView.tableHeaderView = searchHeaderView
             searchTableView.tableHeaderView?.frame.size.height = 42
             recentHeaderLabel.isHidden = true
             viewMapButton.isHidden = false
         }
+        searchTextField.rightViewMode = .always
+        searchTextField.rightView = resultCloseButton
         searchType = .searchResult
     }
 }
@@ -392,7 +397,6 @@ extension SearchVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if searchType == .searchResult {
             fetchSearchData()
-            goToResult = true
             isSearch()
         }
     }
@@ -487,9 +491,9 @@ extension SearchVC: SearchRecentTVCDelegate {
 extension SearchVC: SearchResultVCDelegate {
     func searchResultVCSearchType(type: SearchType) {
         if type == .search {
-            goToResult = true
-            clearButton.isHidden = false
             searchTextField.becomeFirstResponder()
+            clearButton.isHidden = false
+            fetchSearchData()
         } else {
             isSearchRecent()
         }
@@ -518,7 +522,7 @@ extension SearchVC {
     }
     
     private func requestRestaurantSearchResult(searchRequest: SearchRequestEntity, fromRecent: Bool) {
-        RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longtitude: searchRequest.longtitude,
+        RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: searchRequest.longitude,
                                                                                                   latitude: searchRequest.latitude,
                                                                                                   keyword: searchRequest.keyword)) { networkResult in
             switch networkResult {
