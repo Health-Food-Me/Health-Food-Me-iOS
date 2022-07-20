@@ -23,6 +23,7 @@ final class NaverMapContainerView: UIView {
   var delegate: NMFMapViewTouchDelegate?
   var cameraDelegate: NMFMapViewCameraDelegate?
   var pointList = PublishRelay<[MapPointDataModel]>()
+    var totalPointList: [MapPointDataModel] = []
   var setSelectPoint = PublishRelay<MapPointDataModel>()
   var disableSelectPoint = PublishRelay<Void>()
   
@@ -72,7 +73,8 @@ extension NaverMapContainerView {
   private func bindRelay() {
     pointList.subscribe(onNext: { [weak self] pointList in
       guard let self = self else { return }
-      self.setPointMarkers(pointList)
+        let data = self.comparePointList(newPoints: pointList)
+      self.setPointMarkers(data)
     }).disposed(by: self.disposeBag)
     
     setSelectPoint.subscribe(onNext: { [weak self] selectedPoint in
@@ -84,9 +86,27 @@ extension NaverMapContainerView {
     }).disposed(by: self.disposeBag)
     
   }
+    
+    private func comparePointList(newPoints: [MapPointDataModel]) -> [MapPointDataModel] {
+        var newDataModel = [MapPointDataModel]()
+        newPoints.forEach { newData in
+            var alreadySet = false
+            totalPointList.forEach { oldData in
+                if oldData.longtitude == newData.longtitude,
+                   oldData.latitude == newData.latitude {
+                    alreadySet = true
+                }
+            }
+            if !alreadySet {
+                newDataModel.append(newData)
+                totalPointList.append(newData)
+            }
+        }
+        print(newDataModel)
+        return newDataModel
+    }
   
   private func setPointMarkers(_ points: [MapPointDataModel]) {
-      resetMarkers(points)
     DispatchQueue.global(qos: .default).async {
       for point in points {
         let marker = NMFMarker()
@@ -172,26 +192,6 @@ extension NaverMapContainerView {
     let iconName = selectState ? "icn_diet_selected" : "icn_diet"
     mark.iconImage = NMFOverlayImage.init(image: UIImage(named: iconName) ?? UIImage())
   }
-    
-    private func resetMarkers(_ points: [MapPointDataModel]) {
-        markers.forEach { marker in
-            marker.mapView = nil
-        }
-        markers = [NMFMarker]()
-//        for point in points {
-//            let NMGPosition = NMGLatLng(lat: point.latitude,
-//                                        lng: point.longtitude)
-//            var targetIndex = 0
-//            var alreadySet = false
-//            for (index, marker) in markers.enumerated() {
-//                if marker.position == NMGPosition {
-//                    alreadySet = true
-//                }
-//            }
-//            if !alreadySet {
-//            }
-//        }
-    }
 }
 
 extension NaverMapContainerView: NMFMapViewCameraDelegate {
