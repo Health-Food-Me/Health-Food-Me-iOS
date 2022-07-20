@@ -28,9 +28,9 @@ extension UIViewController {
     func makeAlert(alertType: AlertType = .logoutAlert,
                    title: String?,
                    subtitle: String?,
-                   okAction: (() -> Void)? ) {
+                   okAction: (() -> Void)?) {
         
-        let alertVC = ModuleFactory.resolve().makeHelfmeAlertVC()
+        let alertVC = ModuleFactory.resolve().makeHelfmeAlertVC(type: alertType)
         
         alertVC.alertType = alertType
         if let title = title {

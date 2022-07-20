@@ -51,9 +51,9 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         bt.setImage(ImageLiterals.Map.menuIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
             self.makeVibrate()
-            let nextVC = ModuleFactory.resolve().makeHamburgerBarVC()
+            self.unselectMapPoint()
+            let nextVC = ModuleFactory.resolve().makeHamburgerBarNavigationController()
             nextVC.modalPresentationStyle = .overFullScreen
-            nextVC.delegate = self
             self.present(nextVC, animated: false)
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
@@ -70,6 +70,12 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         view.layer.cornerRadius = 13
         view.layer.applyShadow(color: .helfmeBlack, alpha: 0.2, x: 0, y: 2, blur: 4, spread: 0)
         return view
+    }()
+    
+    private var searchIconImageView: UIImageView = {
+        let imgView = UIImageView()
+        imgView.image = ImageLiterals.Map.searchIcon
+        return imgView
     }()
     
     private let searchLabel: UILabel = {
@@ -132,6 +138,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         bt.layer.applyShadow(color: .helfmeBlack, alpha: 0.2, x: 0, y: 2, blur: 4, spread: 0)
         return bt
     }()
+
     
     private var mapDetailSummaryView = MapDetailSummaryView()
     
@@ -147,6 +154,8 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         setPanGesture()
         setMapView()
         bindMapView()
+        sampleViewInputEvent()
+        addObserver()
         self.bindViewModels()
     }
     
@@ -157,6 +166,10 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         setIntitialMapPoint()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        mapView.disableSelectPoint.accept(())
     }
 }
 
@@ -169,6 +182,7 @@ extension MainMapVC {
     }
     
     private func setLayout() {
+        searchBar.addSubviews(searchIconImageView)
         view.addSubviews(mapView, hamburgerButton, searchBar,
                          categoryCollectionView, mapDetailSummaryView, scrapButton,
                          myLocationButton)
@@ -177,12 +191,20 @@ extension MainMapVC {
             make.edges.equalToSuperview()
         }
         
+        searchIconImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(20)
+            make.trailing.equalToSuperview().inset(16)
+            make.centerX.equalToSuperview()
+        }
+        
         hamburgerButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(12)
             make.leading.equalToSuperview().inset(20)
             make.width.equalTo(55)
             make.height.equalTo(52)
         }
+        
+
         
         searchBar.snp.makeConstraints { make in
             make.centerY.equalTo(hamburgerButton.snp.centerY)
@@ -199,7 +221,7 @@ extension MainMapVC {
         }
         
         manifyingImageView.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(15)
+            make.trailing.equalToSuperview().inset(16)
             make.width.height.equalTo(16)
             make.centerY.equalToSuperview()
         }
@@ -246,6 +268,8 @@ extension MainMapVC {
     private func registerCell() {
         MenuCategoryCVC.register(target: categoryCollectionView)
     }
+    
+
     
     private func setPanGesture() {
         let panGesture = UIPanGestureRecognizer()
@@ -325,21 +349,25 @@ extension MainMapVC {
         locationManager?.add(self)
     }
     
+    private func unselectMapPoint() {
+        self.mapView.disableSelectPoint.accept(())
+        self.mapDetailSummaryView.snp.updateConstraints { make in
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
+        }
+        let bottomSafeArea = self.safeAreaBottomInset()
+        self.myLocationButton.snp.updateConstraints { make in
+            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
+        }
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     private func bindMapView() {
         mapView.rx.mapViewClicked
             .subscribe(onNext: { _ in
-                self.mapView.disableSelectPoint.accept(())
-                self.mapDetailSummaryView.snp.updateConstraints { make in
-                    make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
-                }
-                let bottomSafeArea = self.safeAreaBottomInset()
-                self.myLocationButton.snp.updateConstraints { make in
-                    make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
-                }
-                UIView.animate(withDuration: 0.3, delay: 0) {
-                    self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
-                    self.view.layoutIfNeeded()
-                }
+                self.unselectMapPoint()
             }).disposed(by: self.disposeBag)
         
         mapView.zoomLevelChange
@@ -378,9 +406,23 @@ extension MainMapVC {
             }).disposed(by: self.disposeBag)
     }
     
-    private func makePoints(points: [MapPointDataModel]) -> Observable<[MapPointDataModel]> {
+    private func sampleViewInputEvent() {
+        makeDummyPoints()
+            .bind(to: mapView.rx.pointList)
+            .disposed(by: self.disposeBag)
+    }
+    
+    private func addObserver() {
+        addObserverAction(.moveFromHamburgerBar) { noti in
+            if let screenCase = noti.object as? HamburgerType {
+                self.hamburgerbarVCDidTap(hamburgerType: screenCase)
+            }
+        }
+    }
+    
+    private func makeDummyPoints() -> Observable<[MapPointDataModel]> {
         return .create { observer in
-            observer.onNext(points)
+            observer.onNext([])
             return Disposables.create()
         }
     }
@@ -454,6 +496,7 @@ extension MainMapVC {
     
     @objc
     private func presentSearchVC() {
+        self.mapView.disableSelectPoint.accept(())
         self.makeVibrate()
         let nextVC = ModuleFactory.resolve().makeSearchVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
@@ -513,7 +556,7 @@ extension MainMapVC: UICollectionViewDataSource {
 }
 
 extension MainMapVC: HamburgerbarVCDelegate {
-    func HamburgerbarVCDidTap(hamburgerType: HamburgerType) {
+    func hamburgerbarVCDidTap(hamburgerType: HamburgerType) {
         switch hamburgerType {
         case .editName:
             navigationController?.pushViewController(ModuleFactory.resolve().makeNicknameChangeVC(), animated: true)
@@ -530,6 +573,15 @@ extension MainMapVC: HamburgerbarVCDelegate {
 // MARK: - Network
 
 extension MainMapVC {
+    
+    private func makePoints(points: [MapPointDataModel]) -> Observable<[MapPointDataModel]> {
+        return .create { observer in
+            observer.onNext(points)
+            return Disposables.create()
+        }
+    }
+    
+
     private func fetchRestaurantList(zoom: Double) {
         if let lng = locationManager?.currentLatLng().lng,
            let lat = locationManager?.currentLatLng().lat {

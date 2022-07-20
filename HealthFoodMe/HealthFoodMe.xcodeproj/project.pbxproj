@@ -225,6 +225,9 @@
 		FD72FCC028834AB60092746F /* MainMapNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD72FCBF28834AB60092746F /* MainMapNavigationController.swift */; };
 		FDA3AEF82880612300D6CCB4 /* UserWithdrawalUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA3AEF22880612300D6CCB4 /* UserWithdrawalUseCase.swift */; };
 		FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */; };
+		FDCB3CC12888338300E6FBCE /* NicknameEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB3CC02888338300E6FBCE /* NicknameEntity.swift */; };
+		FDCB3CC328884F1700E6FBCE /* HamburgerBarNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB3CC228884F1700E6FBCE /* HamburgerBarNavigationController.swift */; };
+		FDCB3CC52888565400E6FBCE /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB3CC42888565400E6FBCE /* UserEntity.swift */; };
 		FDC46A25288326AC00F62D20 /* splash_iOS.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC46A24288326AB00F62D20 /* splash_iOS.json */; };
 		FDCD5B452881ACC100EAEF51 /* LocationLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCD5B442881ACC100EAEF51 /* LocationLiterals.swift */; };
 		FDCD5B472882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCD5B462882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift */; };
@@ -459,6 +462,9 @@
 		FD72FCBF28834AB60092746F /* MainMapNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapNavigationController.swift; sourceTree = "<group>"; };
 		FDA3AEF22880612300D6CCB4 /* UserWithdrawalUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWithdrawalUseCase.swift; sourceTree = "<group>"; };
 		FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegementControl.swift; sourceTree = "<group>"; };
+		FDCB3CC02888338300E6FBCE /* NicknameEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEntity.swift; sourceTree = "<group>"; };
+		FDCB3CC228884F1700E6FBCE /* HamburgerBarNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerBarNavigationController.swift; sourceTree = "<group>"; };
+		FDCB3CC42888565400E6FBCE /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
 		FDC46A24288326AB00F62D20 /* splash_iOS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_iOS.json; sourceTree = "<group>"; };
 		FDCD5B442881ACC100EAEF51 /* LocationLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationLiterals.swift; sourceTree = "<group>"; };
 		FDCD5B462882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapContainerViewCameraDelegateProxy.swift; sourceTree = "<group>"; };
@@ -511,6 +517,7 @@
 			children = (
 				3B18D8AB287AB7CD009AF9E7 /* HamburgerBarVC.swift */,
 				3B18D8AD287AB7D8009AF9E7 /* HamburgerBar.storyboard */,
+				FDCB3CC228884F1700E6FBCE /* HamburgerBarNavigationController.swift */,
 			);
 			path = HamburgerBarScene;
 			sourceTree = "<group>";
@@ -820,7 +827,9 @@
 		A90CFDB228852C550018AB94 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				FDCB3CBF2888336500E6FBCE /* NicknameScene */,
 				A90ED62D2886646600FCE149 /* ScrapScene */,
+				FDCB3CC42888565400E6FBCE /* UserEntity.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1910,6 +1919,14 @@
 			path = Lottie;
 			sourceTree = "<group>";
 		};
+		FDCB3CBF2888336500E6FBCE /* NicknameScene */ = {
+			isa = PBXGroup;
+			children = (
+				FDCB3CC02888338300E6FBCE /* NicknameEntity.swift */,
+			);
+			path = NicknameScene;
+			sourceTree = "<group>";
+		};
 		FDF2E20C287F5CE80007D4F9 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -2229,6 +2246,8 @@
 				3B723C912880037100822B7C /* ReviewPhotoCVC.swift in Sources */,
 				EBF66AE3287227F500DE0ED1 /* NetworkResult.swift in Sources */,
 				EB6A45262875C3A000749582 /* TabContainerCVC.swift in Sources */,
+				FDCB3CC12888338300E6FBCE /* NicknameEntity.swift in Sources */,
+				FDCB3CC52888565400E6FBCE /* UserEntity.swift in Sources */,
 				EBFAEB312885F2F7009C569C /* MyReviewRepository.swift in Sources */,
 				EBFAEB332885F2F7009C569C /* MyReviewVC.swift in Sources */,
 				A93252B1287F2AF9001EDF50 /* ScrapVC.swift in Sources */,
@@ -2260,6 +2279,7 @@
 				3BB0FCE3288705E200C3862C /* BlogReviewListEntity.swift in Sources */,
 				A93252C628808B82001EDF50 /* ReviewDeleteAlertView.swift in Sources */,
 				EBF66AD7287227F500DE0ED1 /* Presentable.swift in Sources */,
+				FDCB3CC328884F1700E6FBCE /* HamburgerBarNavigationController.swift in Sources */,
 				FD72FC9C288346480092746F /* UserWithdrawalViewModel.swift in Sources */,
 				A932527E287DD261001EDF50 /* SearchResultVC.swift in Sources */,
 				EBD19275287F256000EA053E /* EncodeURLKorean.swift in Sources */,
@@ -2481,7 +2501,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = HealthFoodMe_Dev;
+				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
