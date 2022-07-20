@@ -9,7 +9,7 @@ import Foundation
 
 struct ScrapListEntity: Codable {
     let _id, name, logo: String
-    let score: Int
+    let score: Double
     let category: String
     let hashtag: [String]
     let address: String
