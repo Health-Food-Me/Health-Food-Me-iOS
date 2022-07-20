@@ -10,12 +10,13 @@ import UIKit
 protocol MyReviewCVCDelegate: AnyObject {
     func restaurantNameTapped()
     func editButtonTapped()
-    func deleteButtonTapped()
+    func deleteButtonTapped(reviewId: String)
 }
 
 class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     // MARK: - Properties
+    var isEdited = true
     
     static var isFromNib = false
     
@@ -34,6 +35,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     var isFolded: Bool = true
     var lineNumber: Int?
     var entitleHeight: CGFloat?
+    var reviewId : String = ""
     
     // MARK: - UI Components
     
@@ -108,7 +110,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         bt.setTitle("삭제", for: .normal)
         bt.setTitleColor(UIColor.helfmeGray2, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            self.delegate?.deleteButtonTapped()
+            self.delegate?.deleteButtonTapped(reviewId: self.reviewId)
         }), for: .touchUpInside)
         return bt
     }()
@@ -354,6 +356,9 @@ extension MyReviewCVC {
         self.cellViewModel = reviewData
         reviewContents.text = text
         reviewContents.sizeToFit()
+        reviewId = reviewData.reviewId
+//        let restaurantId = reviewData.
+        print("!@#\(reviewId)")
         
         if isFoldRequired {
             moreTapButton.isHidden = false
