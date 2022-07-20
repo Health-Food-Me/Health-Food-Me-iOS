@@ -15,7 +15,6 @@ protocol SwipeDismissDelegate {
     func swipeToDismiss()
 }
 
-
 class MainDetailVC: UIViewController {
     
     // MARK: - Properties
@@ -470,14 +469,12 @@ extension MainDetailVC: SwipeDismissDelegate {
 
 extension MainDetailVC {
     func fetchRestauranDetail(restaurantId: String) {
-        print("했니")
         if let location = location {
-            print("했니", location)
             RestaurantService.shared.fetchRestaurantDetail(restaurantId: restaurantId, userId: UserManager.shared.getUser?.id ?? "", latitude: location.latitude, longitude: location.longitude) { networkResult in
                 switch networkResult {
                 case .success(let data):
                     if let data = data as? MainDetailEntity {
-                        dump(data)
+                        self.mainInfoTVC.setData(data: data)
                     }
                 default:
                     print("통신 에러")
