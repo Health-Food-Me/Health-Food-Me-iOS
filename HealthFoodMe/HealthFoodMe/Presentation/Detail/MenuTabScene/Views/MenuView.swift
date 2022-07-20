@@ -180,13 +180,23 @@ extension MenuView {
     
     func updateLayout() {
         if !isPick {
+            [titleLabel, priceLabel].forEach {
+                $0.removeFromSuperview()
+            }
+            
+            menuStackView.addArrangedSubviews(titleLabel, priceLabel)
+            
             menuStackView.isHidden = false
             allMenuStackView.isHidden = true
         } else {
             
+            [pickImageView, titleLabel, priceLabel].forEach {
+                $0.removeFromSuperview()
+            }
+            
             allMenuStackView.addArrangedSubviews(pickImageView, titleLabel, priceLabel)
             
-            allMenuStackView.snp.makeConstraints { make in
+            allMenuStackView.snp.updateConstraints { make in
                 make.leading.equalTo(menuImageView.snp.trailing).offset(20)
                 make.trailing.equalToSuperview().inset(97)
                 make.centerY.equalTo(menuImageView.snp.centerY)
