@@ -368,7 +368,7 @@ extension MyReviewVC: MyReviewCVCDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func editButtonTapped(reviewId: String, restaurantName: String, score: Double, tagList: [String], content: String, image: [UIImage])  {
+    func editButtonTapped(reviewId: String, restaurantName: String, score: Double, tagList: [String], content: String, image: [String])  {
         // TODO: - 수정 API 붙이기
         let vc = ModuleFactory.resolve().makeReviewWriteVC()
         vc.isEdited = true
@@ -377,7 +377,7 @@ extension MyReviewVC: MyReviewCVCDelegate {
         vc.currentRate = score
         vc.tagList = tagList
         vc.content = content
-        vc.userSelectedImages = image
+        vc.imageURLList = image
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -397,7 +397,6 @@ extension MyReviewVC {
         ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser?.id ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
-                print("🙃\(data)")
                 self.reviewServerData.removeAll()
                 if let data = data as? [MyReviewEntity] {
                     for da in data {

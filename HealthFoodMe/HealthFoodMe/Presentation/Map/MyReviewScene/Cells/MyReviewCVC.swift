@@ -9,7 +9,7 @@ import UIKit
 
 protocol MyReviewCVCDelegate: AnyObject {
     func restaurantNameTapped(restaurantId: String)
-    func editButtonTapped(reviewId: String, restaurantName: String, score: Double, tagList: [String], content: String, image: [UIImage])
+    func editButtonTapped(reviewId: String, restaurantName: String, score: Double, tagList: [String], content: String, image: [String])
     func deleteButtonTapped(reviewId: String)
 }
 
@@ -40,7 +40,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     var starScore: Double = 0.0
     var tagList: [String] = []
     var content: String = ""
-    var image: [UIImage] = []
+    var image: [String] = []
     
     // MARK: - UI Components
     
@@ -367,8 +367,7 @@ extension MyReviewCVC {
         starScore = Double(reviewData.starRate)
         tagList = reviewData.tagList
         content = reviewData.reviewContents ?? ""
-//        if let reviewImageURLList
-//        image = reviewData.reviewImageURLList ?? []
+        image = reviewData.reviewImageURLList ?? []
         
         if isFoldRequired {
             moreTapButton.isHidden = false

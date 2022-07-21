@@ -37,6 +37,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     var selectedAssets: [PHAsset] = [PHAsset]()
     var userSelectedImages: [UIImage] = [UIImage]()
     var content: String = ""
+    var imageURLList: [String] = []
     
     // MARK: - UI Components
     
@@ -389,7 +390,6 @@ extension ReviewWriteVC {
     
     private func setEditedUI(){
         if isEdited {
-            print("currentRatea",self.currentRate)
             sliderView.setSliderValue(rate: self.currentRate)
             reviewTextView.text = self.content
             reviewTextView.textColor = .helfmeBlack
@@ -418,6 +418,7 @@ extension ReviewWriteVC {
                     print("🍎")
                 }
             }
+            print("🍎\(self.imageURLList)")
         }
     }
     
@@ -599,7 +600,6 @@ extension ReviewWriteVC {
     private func setAddTargets() {
         print("Tag Button count",tasteTagButton.count)
         tasteTagButton.forEach { button in
-            print("Tag Button ForEach")
             button.addTarget(self, action: #selector(didTapTasteTag), for: .touchUpInside)
         }
     }
