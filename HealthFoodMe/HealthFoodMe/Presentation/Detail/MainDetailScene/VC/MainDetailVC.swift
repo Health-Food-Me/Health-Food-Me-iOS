@@ -138,11 +138,20 @@ extension MainDetailVC {
         view.addSubviews(mainTableView,bottomView)
         let bottomSafeArea = safeAreaBottomInset()
         
-        reviewWriteCTAButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(4)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(40)
+        if UIDevice.current.hasNotch {
+            reviewWriteCTAButton.snp.makeConstraints { make in
+                make.top.equalToSuperview().offset(4)
+                make.leading.equalToSuperview().offset(20)
+                make.trailing.equalToSuperview().offset(-20)
+                make.height.equalTo(40)
+            }
+        } else {
+            reviewWriteCTAButton.snp.makeConstraints { make in
+                make.bottom.equalToSuperview().offset(-21)
+                make.leading.equalToSuperview().offset(20)
+                make.trailing.equalToSuperview().offset(-20)
+                make.height.equalTo(40)
+            }
         }
         
         bottomView.snp.makeConstraints { make in
