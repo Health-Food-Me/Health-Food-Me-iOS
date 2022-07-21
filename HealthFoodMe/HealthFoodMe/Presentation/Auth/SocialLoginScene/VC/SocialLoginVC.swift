@@ -89,7 +89,6 @@ extension SocialLoginVC {
         self.present(mainVC, animated: false)
     }
     
-    
     private func kakaoLogin() {
         if UserApi.isKakaoTalkLoginAvailable() {
             // 카카오톡 로그인. api 호출 결과를 클로저로 전달.

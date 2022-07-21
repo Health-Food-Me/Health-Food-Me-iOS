@@ -290,7 +290,7 @@ extension MainDetailVC: UITableViewDataSource {
             cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
                 .drive(onNext: {
                     self.mainInfoInitialReload = false
-                    self.isOpenned.toggle()
+//                    self.isOpenned.toggle()
                     self.mainTableView.reloadData()
                 }).disposed(by: disposeBag)
             cell.directionButtonTapped.asDriver(onErrorJustReturn: ())

@@ -22,6 +22,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     private var currentZoom: Double = 0
     private var currentRestaurantId: String = ""
     private var currentLocation: Location = Location.init(latitude: 0, longitude: 0)
+    private var currentScrapList: [ScrapListEntity] = []
     private var currentCategory: String = "" {
         didSet {
             if currentCategory != "" {
@@ -42,7 +43,6 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     }
     private var restaurantData: [MainMapEntity] = []
     var viewModel: MainMapViewModel!
-    var scrapList: [ScrapListEntity] = []
     
     
     // MARK: - UI Components
@@ -120,6 +120,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         bt.addAction(UIAction(handler: { _ in
             self.makeVibrate()
             bt.isSelected.toggle()
+            self.filterScrapData()
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
         bt.clipsToBounds = true
@@ -143,6 +144,12 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         bt.layer.cornerRadius = 28
         bt.layer.applyShadow(color: .helfmeBlack, alpha: 0.2, x: 0, y: 2, blur: 4, spread: 0)
         return bt
+    }()
+    
+    private lazy var scrapListEmptyToastView: UpperToastView = {
+        let toastView = UpperToastView(title: I18N.Map.Main.scrapEmptyGuide)
+      toastView.layer.cornerRadius = 20
+      return toastView
     }()
 
     private var mapDetailSummaryView = MapDetailSummaryView()
@@ -189,7 +196,7 @@ extension MainMapVC {
         searchBar.addSubviews(searchIconImageView)
         view.addSubviews(mapView, hamburgerButton, searchBar,
                          categoryCollectionView, mapDetailSummaryView, scrapButton,
-                         myLocationButton)
+                         myLocationButton,scrapListEmptyToastView)
         
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -252,6 +259,13 @@ extension MainMapVC {
             make.bottom.equalTo(mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
             make.width.height.equalTo(56)
         }
+        
+        scrapListEmptyToastView.snp.makeConstraints { make in
+            make.width.equalTo(300)
+            make.height.equalTo(40)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(mapDetailSummaryView.snp.bottom).offset(200)
+        }
     }
     
     private func setTapGesture() {
@@ -270,6 +284,44 @@ extension MainMapVC {
     
     private func registerCell() {
         MenuCategoryCVC.register(target: categoryCollectionView)
+    }
+    
+    private func filterScrapData() {
+        if scrapButton.isSelected {
+            if let userID = UserManager.shared.getUser?.id {
+                UserService.shared.getScrapList(userId: userID) { result in
+                    switch(result) {
+                        case .success(let entity):
+                            
+                            if let scrapList = entity as? [ScrapListEntity] {
+                                if scrapList.isEmpty { self.showUpperToast() }
+                                self.currentScrapList = scrapList
+                                if !self.currentCategory.isEmpty {
+                                    self.fetchCategoryList(zoom: self.currentZoom)
+                                } else {
+                                    self.mapView.scrapButtonSelected.accept(scrapList)
+                                }
+                            }
+                        default : break
+                    }
+                }
+            }
+        } else {
+            fetchRestaurantList(zoom: self.currentZoom)
+        }
+    }
+    
+    private func filterScrapData(_ list:[ScrapListEntity], _ mapList: [MapPointDataModel]) -> [MapPointDataModel] {
+        
+        var scrapList: [MapPointDataModel] = []
+        for scrapPoint in list {
+            if let item = mapList.first(where: { mapData in
+                return (mapData.latitude == scrapPoint.latitude)
+            }) {
+                scrapList.append(item)
+            }
+        }
+        return scrapList
     }
     
     private func setPanGesture() {
@@ -315,10 +367,11 @@ extension MainMapVC {
                             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                             self.view.layoutIfNeeded()
                         } completion: { _ in
-                            self.scrapButton.isHidden = false
-                            self.myLocationButton.isHidden = false
+                            
                         }
                     }
+                        self.scrapButton.isHidden = true
+                        self.myLocationButton.isHidden = true
                 default:
                     break
                 }
@@ -360,6 +413,8 @@ extension MainMapVC {
         self.myLocationButton.snp.updateConstraints { make in
             make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
         }
+        self.myLocationButton.isHidden = false
+        self.scrapButton.isHidden = false
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.layoutIfNeeded()
@@ -401,6 +456,9 @@ extension MainMapVC {
                     }
                 }
                 
+                self?.myLocationButton.isHidden = true
+                self?.scrapButton.isHidden = true
+                
                 UIView.animate(withDuration: 0.3, delay: 0) {
                     self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                     self?.view.layoutIfNeeded()
@@ -435,8 +493,8 @@ extension MainMapVC {
                 self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.view.layoutIfNeeded()
             } completion: { _ in
-                self.scrapButton.isHidden = false
-                self.myLocationButton.isHidden = false
+                self.scrapButton.isHidden = true
+                self.myLocationButton.isHidden = true
                 self.hamburgerButton.isHidden = false
                 self.searchBar.isHidden = false
                 self.categoryCollectionView.isHidden = false
@@ -592,11 +650,17 @@ extension MainMapVC {
                     if let data = data as? [MainMapEntity] {
                         self.restaurantData = data
                         var models = [MapPointDataModel]()
+                    
                         models = data.map({ entity in
                             entity.toDomain()
                         })
-                        self.makePoints(points: models).bind(to: self.mapView.rx.pointList)
-                            .disposed(by: self.disposeBag)
+                        if self.scrapButton.isSelected {
+                            self.mapView.scrapButtonSelected.accept(self.currentScrapList)
+                        } else {
+                            self.makePoints(points: models).bind(to: self.mapView.rx.pointList)
+                                .disposed(by: self.disposeBag)
+                        }
+
                     }
                 default:
                     break
@@ -617,8 +681,20 @@ extension MainMapVC {
                         models = data.map({ entity in
                             entity.toDomain()
                         })
-                        self.makePoints(points: models).bind(to: self.mapView.rx.categoryPointList)
-                            .disposed(by: self.disposeBag)
+                        if self.scrapButton.isSelected {
+                            var filterList: [ScrapListEntity] = []
+                            for model in models {
+                                if let item = self.currentScrapList.first(where: { $0.longtitude == model.longtitude } ){
+                                    filterList.append(item)
+                                 }
+                            }
+          
+                            self.mapView.scrapButtonSelected.accept(filterList)
+                        } else {
+                            self.makePoints(points: models).bind(to: self.mapView.rx.categoryPointList)
+                                .disposed(by: self.disposeBag)
+                        }
+
                     }
                 default:
                     break
@@ -649,5 +725,38 @@ extension MainMapVC {
                 break;
             }
         }
+    }
+}
+
+extension MainMapVC {
+    private func showUpperToast() {
+        makeVibrate()
+        scrapListEmptyToastView.snp.remakeConstraints { make in
+            make.width.equalTo(300)
+            make.height.equalTo(40)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-40)
+        }
+        
+        UIView.animate(withDuration: 0.7, delay: 0) {
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.hideUpperToast()
+            }
+        }
+    }
+
+    private func hideUpperToast() {
+        scrapListEmptyToastView.snp.remakeConstraints { make in
+            make.width.equalTo(300)
+            make.height.equalTo(40)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(mapDetailSummaryView.snp.bottom).offset(200)
+        }
+      
+      UIView.animate(withDuration: 0.5, delay: 0) {
+        self.view.layoutIfNeeded()
+      }
     }
 }
