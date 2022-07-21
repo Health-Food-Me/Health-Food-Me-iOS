@@ -742,11 +742,13 @@ extension MainMapVC {
 
 extension MainMapVC {
     private func showUpperToast() {
-      makeVibrate()
-        let topInset = calculateTopInset() * (-1)
-        scrapListEmptyToastView.snp.updateConstraints { make in
-            make.bottom.equalTo(mapDetailSummaryView.snp.bottom).offset(-21)
-     }
+      makeVibrate()        
+        scrapListEmptyToastView.snp.remakeConstraints { make in
+            make.width.equalTo(300)
+            make.height.equalTo(40)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-40)
+        }
 
       UIView.animate(withDuration: 0.7, delay: 0) {
         self.view.layoutIfNeeded()
@@ -758,9 +760,12 @@ extension MainMapVC {
     }
 
     private func hideUpperToast() {
-      self.scrapListEmptyToastView.snp.updateConstraints { make in
-          make.bottom.equalTo(mapDetailSummaryView.snp.bottom).offset(200)
-      }
+        scrapListEmptyToastView.snp.remakeConstraints { make in
+            make.width.equalTo(300)
+            make.height.equalTo(40)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(mapDetailSummaryView.snp.bottom).offset(200)
+        }
       
       UIView.animate(withDuration: 0.5, delay: 0) {
         self.view.layoutIfNeeded()
