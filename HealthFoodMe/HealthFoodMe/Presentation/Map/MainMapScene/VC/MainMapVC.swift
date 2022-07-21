@@ -288,7 +288,7 @@ extension MainMapVC {
     
     private func filterScrapData() {
         if scrapButton.isSelected {
-            if let userID = UserManager.shared.getUser?.id {
+            if let userID = UserManager.shared.getUser {
                 UserService.shared.getScrapList(userId: userID) { result in
                     switch(result) {
                         case .success(let entity):

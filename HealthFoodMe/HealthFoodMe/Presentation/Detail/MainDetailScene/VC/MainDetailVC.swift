@@ -31,7 +31,6 @@ class MainDetailVC: UIViewController {
     private var navigationTitle: String = ""
     private var isOpenned: Bool = false
     private var mainInfoInitialReload: Bool = true
-    private var restaurantName: String = ""
     var userLocation: Location?
     var restaurantId: String = ""
     var restaurantName: String = ""

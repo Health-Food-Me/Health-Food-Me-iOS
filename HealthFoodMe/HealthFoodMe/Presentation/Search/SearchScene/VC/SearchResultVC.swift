@@ -132,9 +132,9 @@ final class SearchResultVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setChildViewController()
+        setLayout()
         setUI()
         addBtnAction()
-        setLayout()
         setDelegate()
         registerCell()
     }
@@ -156,6 +156,7 @@ extension SearchResultVC {
             self.addChild(mapViewController)
             self.view.addSubview(mapViewController.view)
             mapViewController.didMove(toParent: self)
+            mapViewController.setSupplementMapType(mapType: .search)
         case .searchRecent:
             mapViewController.initialId = fromSearchCellInitial
             fetchSearchResultData(keyword: searchContent, fromRecent: false)
@@ -164,8 +165,8 @@ extension SearchResultVC {
             self.addChild(mapViewController)
             self.view.addSubview(mapViewController.view)
             mapViewController.didMove(toParent: self)
+            mapViewController.setSupplementMapType(mapType: .search)
         }
-        mapViewController.setSupplementMapType(mapType: .search)
     }
     
     private func fetchSearchResultData(keyword: String, fromRecent: Bool) {
@@ -190,6 +191,7 @@ extension SearchResultVC {
             self.addChild(self.mapViewController)
             self.view.addSubview(self.mapViewController.view)
             self.mapViewController.didMove(toParent: self)
+            self.mapViewController.setSupplementMapType(mapType: .search)
         }
     }
     

@@ -15,14 +15,16 @@ final class DetailSummaryView: UIView {
     
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.image = ImageLiterals.MainDetail.tempMuseum
+        iv.contentMode = .scaleAspectFit
+        iv.image = UIImage()
+        iv.layer.cornerRadius = 5
+        iv.clipsToBounds = true
         return iv
     }()
     
     private let restaurantNameLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "서브웨이 동대문역사문화공원역점"
+        lb.text = ""
         lb.textColor = .helfmeBlack
         lb.lineBreakMode = .byWordWrapping
         lb.numberOfLines = 0

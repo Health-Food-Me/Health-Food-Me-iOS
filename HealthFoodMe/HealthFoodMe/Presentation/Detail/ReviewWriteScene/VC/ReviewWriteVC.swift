@@ -26,7 +26,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     }
     private var editPhotoModel: PhotoDataModel = PhotoDataModel()
     
-    var userId = UserManager.shared.getUser?.id ?? ""
+    var userId = UserManager.shared.getUser ?? ""
     var restaurantName : String = ""
     var restaurantID = ""
     var reviewId = ""
