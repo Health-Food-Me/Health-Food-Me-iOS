@@ -42,6 +42,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     }
     private var restaurantData: [MainMapEntity] = []
     var viewModel: MainMapViewModel!
+    var scrapList: [ScrapListEntity] = []
     
     
     // MARK: - UI Components
