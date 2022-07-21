@@ -8,8 +8,8 @@
 import UIKit
 
 protocol MyReviewCVCDelegate: AnyObject {
-    func restaurantNameTapped()
-    func editButtonTapped(reviewId: String)
+    func restaurantNameTapped(restaurantId: String)
+    func editButtonTapped(reviewId: String, restaurantName: String)
     func deleteButtonTapped(reviewId: String)
 }
 
@@ -35,6 +35,8 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     var lineNumber: Int?
     var entitleHeight: CGFloat?
     var reviewId : String = ""
+    var restaurantId: String = ""
+    var restaurantName: String = ""
     
     // MARK: - UI Components
     
@@ -88,7 +90,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         bt.setTitle("편집", for: .normal)
         bt.setTitleColor(UIColor.helfmeGray2, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            self.delegate?.editButtonTapped(reviewId: self.reviewId)
+            self.delegate?.editButtonTapped(reviewId: self.reviewId, restaurantName: self.restaurantName)
         }), for: .touchUpInside)
         return bt
     }()
@@ -356,6 +358,8 @@ extension MyReviewCVC {
         reviewContents.text = text
         reviewContents.sizeToFit()
         reviewId = reviewData.reviewId
+//        restaurantId = reviewData.
+        restaurantName = reviewData.restaurantName
         
         if isFoldRequired {
             moreTapButton.isHidden = false
@@ -409,7 +413,7 @@ extension MyReviewCVC {
     
     @objc
     private func pushMainDetailVC() {
-        delegate?.restaurantNameTapped()
+        delegate?.restaurantNameTapped(restaurantId: restaurantId)
     }
 }
 

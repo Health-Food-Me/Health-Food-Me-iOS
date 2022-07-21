@@ -360,17 +360,19 @@ extension MyReviewVC: UICollectionViewDelegateFlowLayout {
 // MARK: - MyReviewCVCDelegate
 
 extension MyReviewVC: MyReviewCVCDelegate {
-    func restaurantNameTapped() {
+    func restaurantNameTapped(restaurantId: String) {
         let vc = ModuleFactory.resolve().makeMainDetailVC()
         vc.panGestureEnabled = false
+        vc.restaurantId = restaurantId
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func editButtonTapped(reviewId: String) {
+    func editButtonTapped(reviewId: String, restaurantName: String) {
         // TODO: - 수정 API 붙이기
         let vc = ModuleFactory.resolve().makeReviewWriteVC()
         vc.isEdited = true
         vc.reviewId = reviewId
+        vc.restaurantName = restaurantName
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -52,7 +52,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var restaurantTitleLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "샐러디 태릉입구점(임시)"
+        lb.text = self.restaurantName
         lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 16)
         return lb
