@@ -145,7 +145,7 @@ extension SocialLoginVC {
                 self.userManager.setSocialToken(token: self.accessToken)
                 if let data = data as? SocialLoginEntity {
                     self.userManager.updateAuthToken(data.accessToken, data.refreshToken)
-                    self.userManager.setCurrentUser(data.user)
+                    self.userManager.setCurrentUserWithId(data.user)
                 }
                 self.presentToMainMap()
             case .requestErr(let message):
@@ -248,7 +248,6 @@ extension SocialLoginVC: ASAuthorizationControllerDelegate {
             let tokenString = String(data: identityToken!, encoding: .utf8)
             
             userManager.setSocialType(isAppleLogin: true)
-            userManager.setUserId(userId: userIdentifier)
             
             if let token = tokenString {
                 self.accessToken = token

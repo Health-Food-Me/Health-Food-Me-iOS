@@ -1993,8 +1993,8 @@
 				EB085ED228716E1900361837 /* Sources */,
 				EB085ED328716E1900361837 /* Frameworks */,
 				EB085ED428716E1900361837 /* Resources */,
-				EBFAEB012885551B009C569C /* Run Script */,
 				F9EDBBC8D18259384215A033 /* [CP] Embed Pods Frameworks */,
+				EBFAEB012885551B009C569C /* Run Script */,
 			);
 			buildRules = (
 			);

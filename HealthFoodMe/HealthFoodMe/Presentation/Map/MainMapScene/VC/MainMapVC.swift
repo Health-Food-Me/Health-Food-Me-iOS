@@ -288,7 +288,7 @@ extension MainMapVC {
     
     private func filterScrapData() {
         if scrapButton.isSelected {
-            if let userID = UserManager.shared.getUser?.id {
+            if let userID = UserManager.shared.getUser {
                 UserService.shared.getScrapList(userId: userID) { result in
                     switch(result) {
                         case .success(let entity):
@@ -341,7 +341,7 @@ extension MainMapVC {
                 case .ended:
                     guard let self = self else { return }
                     if summaryViewTranslation.y < -90
-                        || (self.mapDetailSummaryView.frame.origin.y ?? 40 < 30) {
+                        || (self.mapDetailSummaryView.frame.origin.y < 30) {
                         self.mapDetailSummaryView.snp.updateConstraints { make in
                             make.top.equalToSuperview().inset(44)
                         }
@@ -501,7 +501,7 @@ extension MainMapVC {
             }
         }
         nextVC.restaurantId = self.currentRestaurantId
-        nextVC.location = self.currentLocation
+        nextVC.restaurantLocation = self.currentLocation
         if let lat = locationManager?.currentLatLng().lat,
            let lng = locationManager?.currentLatLng().lng {
             nextVC.userLocation = Location(latitude: lat, longitude: lng)
@@ -577,6 +577,7 @@ extension MainMapVC {
 
 extension MainMapVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        makeVibrate()
         selectedCategories[indexPath.row].toggle()
         setCurrentCategory(currentIndex: indexPath.row)
         return true
@@ -626,7 +627,7 @@ extension MainMapVC: HamburgerbarVCDelegate {
 
 extension MainMapVC: MapDetailSummaryViewDelegate {
     func MapDetailSummaryViewScarp() {
-        putScrap(userId: UserManager.shared.getUser?.id ?? "", restaurantId: currentRestaurantId)
+        putScrap(userId: UserManager.shared.getUser ?? "", restaurantId: currentRestaurantId)
     }
 }
 
@@ -704,7 +705,7 @@ extension MainMapVC {
     }
     
     private func fetchRestaurantSummary(id: String) {
-        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser?.id ?? "") { networkResult in
+        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? RestaurantSummaryEntity {

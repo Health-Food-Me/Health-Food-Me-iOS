@@ -25,7 +25,8 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     
     private let iconImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .center
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
         iv.image = ImageLiterals.MainDetail.locationIcon
         iv.isHidden = false
         return iv

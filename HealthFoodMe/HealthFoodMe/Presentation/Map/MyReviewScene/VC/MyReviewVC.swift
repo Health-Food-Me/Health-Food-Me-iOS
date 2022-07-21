@@ -394,7 +394,7 @@ extension MyReviewVC: MyReviewCVCDelegate {
 
 extension MyReviewVC {
     private func requestReviewListWithAPI() {
-        ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser?.id ?? "") { networkResult in
+        ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
                 self.reviewServerData.removeAll()
@@ -419,7 +419,6 @@ extension MyReviewVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? String {
-                    print(data, "성공")
                     completion()
                 }
             default:

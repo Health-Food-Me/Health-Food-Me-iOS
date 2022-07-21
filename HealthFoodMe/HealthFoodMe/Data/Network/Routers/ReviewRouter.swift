@@ -95,7 +95,6 @@ extension ReviewRouter: BaseRouter {
             }
             multiPart.append(Data(content.utf8), withName: "content")
             for (index, item) in image.enumerated() {
-                print(index, item)
                 if let imageData = item.pngData() {
                     multiPart.append(imageData, withName: "image", fileName: "image\(index).png", mimeType: "image/png")
                 }
