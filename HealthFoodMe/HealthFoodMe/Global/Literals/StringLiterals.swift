@@ -78,7 +78,7 @@ struct I18N {
             static let questionPhoto = "사진을 올려주세요"
             static let questionPhotoOption = "(선택)"
             static let questionPhotoSub =  "해당 가게와 무관한 사진을 첨부하면 노출 제한 처리될 수 있습니다. \n사진첨부 시 개인정보가 노출되지 않도록 유의해주세요."
-            static let writeReview = "리뷰 쓰기"
+            static let writeReview = "작성 완료"
             static let checkReviewToast = "별점과 맛 평가는 필수입니다."
             static let checkPhotoToast = "사진 첨부는 최대 3장까지만 가능합니다!"
         }
@@ -95,7 +95,8 @@ struct I18N {
     
     struct Map {
         struct Main {
-            static let searchBar = "식당 검색"
+            static let searchBar = "식당을 검색해보세요"
+            static let scrapEmptyGuide = "스크랩한 식당이 없습니다"
         }
         
         struct HamburgerBar {

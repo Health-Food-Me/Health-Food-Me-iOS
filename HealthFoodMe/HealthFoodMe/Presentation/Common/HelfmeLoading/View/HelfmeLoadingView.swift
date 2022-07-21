@@ -62,10 +62,8 @@ extension HelfmeLoadingView {
         self.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
     }
     
-    func show() {
-        guard let window = UIApplication.shared.windows.last else { return }
-        print("윈도우", window)
-        window.addSubview(self)
+    func show(_ view: UIView) {
+        view.addSubview(self)
         
         self.snp.makeConstraints {
             $0.edges.equalToSuperview()

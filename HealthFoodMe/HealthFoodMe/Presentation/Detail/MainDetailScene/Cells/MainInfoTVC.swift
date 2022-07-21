@@ -22,8 +22,12 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
     let telePhoneLabelTapped = PublishRelay<String>()
     var expandableData = MainDetailExpandableModel.init(location: "",
                                                         telephone: "",
-                                                        labelText: [" "],
-                                                        isExpandable: false)
+                                                        labelText: [],
+                                                        isExpandable: false) { didSet {
+        if !expandableData.location.isEmpty {
+            expandableTableView.reloadData()
+        }
+    }}
     var isInitialReload = true
     
     // MARK: - UI Components
@@ -74,7 +78,10 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
         registerCell()
         setDelegate()
         setTapGesture()
+        addObserver()
     }
+    
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -137,6 +144,8 @@ extension MainInfoTVC {
         detailSummaryView.setData(data: data)
         distanceLabel.text = "\(data.restaurant.distance)m"
         self.expandableData = data.restaurant.toDomain()
+        print("나와라~")
+        print(self.expandableData)
         
         initialReload()
     }
@@ -144,6 +153,13 @@ extension MainInfoTVC {
     func initialReload() {
         if isInitialReload {
             expandableTableView.reloadData()
+        }
+    }
+    private func addObserver() {
+        addObserverAction(.foldButtonClicked) { _ in
+            print("여기는?")
+            self.toggleCells()
+
         }
     }
     
@@ -156,11 +172,13 @@ extension MainInfoTVC {
 // MARK: TableViewDelegate
 
 extension MainInfoTVC: UITableViewDelegate {
+    
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 1 {
-            return 20
+            return CGFloat(isOpenned ? (4 + (expandableData.labelText.count * 19)) : 28)
         } else {
-            return 34
+            return 28
         }
     }
     
@@ -173,11 +191,7 @@ extension MainInfoTVC: UITableViewDelegate {
 
 extension MainInfoTVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (section == 1) && isOpenned {
-            return expandableData.labelText.count
-        } else {
-            return 1
-        }
+        return 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -186,32 +200,38 @@ extension MainInfoTVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ExpandableInfoTVC.className, for: indexPath) as? ExpandableInfoTVC else { return UITableViewCell() }
-        if indexPath.row == 0 && indexPath.section == 1 {
+        if indexPath.row == 1 && indexPath.section == 1 {
             cell.foldState = self.isOpenned
             cell.setUIWithIndex(indexPath: indexPath, isOpenned: self.isOpenned, expandableData: self.expandableData)
+            
         } else {
-            cell.setUIWithIndex(indexPath: indexPath, isOpenned: false, expandableData: self.expandableData)
+            cell.setUIWithIndex(indexPath: indexPath, isOpenned: self.isOpenned, expandableData: self.expandableData)
         }
-        cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
-            .drive { _ in
-                self.toggleCells()
-            }
-            .disposed(by: cell.disposeBag)
+
         cell.telePhoneLabelTapped.asDriver(onErrorJustReturn: "")
             .drive { phoneNumber in
                 self.telePhoneLabelTapped.accept(phoneNumber)
             }.disposed(by: cell.disposeBag)
+        cell.setFoldStateImage(isFolded: !self.isOpenned)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 1 {
+//            return isOpenned ? 400 : 100
+            return UITableView.automaticDimension
+        } else {
+            return UITableView.automaticDimension
+        }
     }
     
     private func toggleCells() {
         self.isOpenned.toggle()
         self.remakeConstraintsForCells()
         toggleButtonTapped.accept(())
-        if isOpenned {
-            self.expandableTableView.insertRows(at: makeIndexPaths(), with: .none)
-        } else {
-            self.expandableTableView.deleteRows(at: makeIndexPaths(), with: .none)
+        self.expandableTableView.reloadData()
+        UIView.animate(withDuration: 1, delay: 0) {
+            self.contentView.layoutIfNeeded()
         }
     }
     

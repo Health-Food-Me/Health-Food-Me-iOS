@@ -62,22 +62,20 @@ extension SplashVC {
     }
     
     private func checkLoginStatusAndPresentVC() {
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+        DispatchQueue.main.asyncAfter(deadline: .now()+2.5) {
             
             UIView.animate(withDuration: 1) {
                 self.animationView.alpha = 0
             } completion: { _ in
-                self.presentSocialLoginVC()
+                if self.userManager.isLogin == true {
+                    self.presentSocialLoginVC()
+                } else {
+                    self.presentSocialLoginVC()
+                }
             }
             
             
 
-//            print(self.userManager.isLogin)
-//            if self.userManager.isLogin == true {
-//                self.requestSocialLogin()
-//            } else {
-//                self.presentSocialLoginVC()
-//            }
         }
     }
 }
@@ -85,6 +83,16 @@ extension SplashVC {
 // MARK: - Network
 
 extension SplashVC {
+    private func reissuanceToken() {
+        userManager.reissuanceAccessToken { state in
+            if state {
+                self.presentMainMapVC()
+            } else {
+                self.presentSocialLoginVC()
+            }
+        }
+    }
+    
     private func requestSocialLogin() {
         var socialType = ""
         if userManager.isAppleLoginned {

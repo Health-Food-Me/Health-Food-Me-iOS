@@ -59,6 +59,7 @@ class MyReviewEmptyViewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     }()
   
     // MARK: - Life Cycle Part
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
