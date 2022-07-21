@@ -36,6 +36,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
                                               false, false, false,
                                               false, false] {
         didSet {
+            self.unselectMapPoint()
             categoryCollectionView.reloadData()
         }
     }
@@ -508,8 +509,8 @@ extension MainMapVC {
     
     @objc
     private func presentSearchVC() {
-        self.mapView.disableSelectPoint.accept(())
         self.makeVibrate()
+        self.unselectMapPoint()
         let nextVC = ModuleFactory.resolve().makeSearchVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
