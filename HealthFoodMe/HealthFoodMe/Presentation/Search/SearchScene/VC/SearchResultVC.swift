@@ -131,12 +131,18 @@ final class SearchResultVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setChildViewController()
-        setLayout()
-        setUI()
-        addBtnAction()
-        setDelegate()
-        registerCell()
+        
+        switch fromSearchType {
+        case .searchRecent:
+            setChildViewController()
+        default:
+            setChildViewController()
+            setLayout()
+            setUI()
+            addBtnAction()
+            setDelegate()
+            registerCell()
+        }
     }
 }
 
@@ -185,6 +191,7 @@ extension SearchResultVC {
         }
         requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lat, latitude: lng,
                                                                          keyword: keyword), fromRecent: fromRecent) {
+            print("여긴 아님")
             self.mapViewController.IDsForMap = self.searchResultList.map({
                 $0.id
             })
@@ -192,6 +199,11 @@ extension SearchResultVC {
             self.view.addSubview(self.mapViewController.view)
             self.mapViewController.didMove(toParent: self)
             self.mapViewController.setSupplementMapType(mapType: .search)
+            self.setLayout()
+            self.setUI()
+            self.addBtnAction()
+            self.setDelegate()
+            self.registerCell()
         }
     }
     

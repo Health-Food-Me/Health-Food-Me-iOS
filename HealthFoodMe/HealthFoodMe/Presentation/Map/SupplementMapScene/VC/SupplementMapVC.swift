@@ -116,7 +116,7 @@ extension SupplementMapVC {
     private func setLayout() {
         view.addSubviews(mapView, mapDetailSummaryView, myLocationButton,
                          statusTopView, customNavigationBar)
-        
+        print("4")
         statusTopView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.bottom.equalTo(customNavigationBar.snp.top)
