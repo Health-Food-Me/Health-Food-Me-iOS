@@ -9,14 +9,13 @@ import UIKit
 
 protocol MyReviewCVCDelegate: AnyObject {
     func restaurantNameTapped()
-    func editButtonTapped()
+    func editButtonTapped(reviewId: String)
     func deleteButtonTapped(reviewId: String)
 }
 
 class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     // MARK: - Properties
-    var isEdited = true
     
     static var isFromNib = false
     
@@ -89,7 +88,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         bt.setTitle("편집", for: .normal)
         bt.setTitleColor(UIColor.helfmeGray2, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            self.delegate?.editButtonTapped()
+            self.delegate?.editButtonTapped(reviewId: self.reviewId)
         }), for: .touchUpInside)
         return bt
     }()

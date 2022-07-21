@@ -17,7 +17,8 @@ enum Cell: Int {
 
 final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
-    var isEdited = MyReviewVC().isEdited //없애
+    var isEdited = false
+    
     private var photoModel: PhotoDataModel = PhotoDataModel() {
         didSet {
             photoCollectionView.reloadData()
@@ -376,7 +377,11 @@ extension ReviewWriteVC {
     }
     
     private func setNavigation() {
-        self.navigationItem.title = "리뷰 작성"
+        if isEdited {
+            self.navigationItem.title = "리뷰 편집"
+        } else {
+            self.navigationItem.title = "리뷰 작성"
+        }
         DispatchQueue.main.async {
             self.navigationController?.isNavigationBarHidden = false
         }
@@ -385,13 +390,23 @@ extension ReviewWriteVC {
         let backButton = UIButton()
         backButton.setImage(ImageLiterals.MainDetail.beforeIcon, for: .normal)
         backButton.tintColor = .helfmeBlack
-        backButton.addAction(UIAction(handler: { _ in
-            self.makeAlert(alertType: .logoutAlert,
-                           title: "리뷰작성을 취소하시겠습니까?",
-                           subtitle: "작성취소 시,\n 작성된 글은 저장되지 않습니다.") {
-                self.navigationController?.dismiss(animated: true)
-            }
-        }), for: .touchUpInside)
+        if isEdited {
+                    backButton.addAction(UIAction(handler: { _ in
+                            self.makeAlert(alertType: .logoutAlert,
+                                           title: "리뷰 편집을 취소하시겠습니까?",
+                                           subtitle: "편집 취소 시,\n 작성된 글은 저장되지 않습니다.") {
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                    }), for: .touchUpInside)
+                } else {
+                    backButton.addAction(UIAction(handler: { _ in
+                            self.makeAlert(alertType: .logoutAlert,
+                                           title: "리뷰작성을 취소하시겠습니까?",
+                                           subtitle: "작성취소 시,\n 수정된 글은 저장되지 않습니다.") {
+                                self.navigationController?.dismiss(animated: true)
+                            }
+                    }), for: .touchUpInside)
+                }
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
@@ -788,9 +803,9 @@ extension ReviewWriteVC {
                 }
             }
         }
-
+        
         if reviewTextView.text == I18N.Detail.Review.reviewPlaceholder{
-            reviewTextView.text = " "
+            reviewTextView.text = nil
         }
         guard let content = reviewTextView.text else { return }
         

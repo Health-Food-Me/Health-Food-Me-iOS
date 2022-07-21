@@ -63,6 +63,7 @@ class MainDetailVC: UIViewController {
     
     private var reviewWriteCTAButton: CTAButton = {
         let button = CTAButton(enableState: true, title: I18N.Detail.Main.reviewWriteCTATitle)
+        var isEdited = false
         button.isEnabled = true
         return button
     }()

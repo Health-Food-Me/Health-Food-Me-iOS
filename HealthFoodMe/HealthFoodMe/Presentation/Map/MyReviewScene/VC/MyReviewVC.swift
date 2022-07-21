@@ -364,9 +364,10 @@ extension MyReviewVC: MyReviewCVCDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func editButtonTapped() {
+    func editButtonTapped(reviewId: String) {
         // TODO: - 수정 API 붙이기
         let vc = ModuleFactory.resolve().makeReviewWriteVC()
+        vc.isEdited = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -409,7 +410,6 @@ extension MyReviewVC {
             case .success(let data):
                 if let data = data as? String {
                     print(data, "성공")
-                    print("🍎\(reviewId)")
                     completion()
                 }
             default:
