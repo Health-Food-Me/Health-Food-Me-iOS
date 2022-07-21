@@ -14,4 +14,9 @@ struct ScrapListEntity: Codable {
     let hashtag: [String]
     let address: String
     let latitude, longtitude: Double
+    
+    func toDomain() -> MapPointDataModel {
+        let model = MapPointDataModel.init(latitude: latitude, longtitude: longtitude, type: .healthFood)
+        return model
+    }
 }
