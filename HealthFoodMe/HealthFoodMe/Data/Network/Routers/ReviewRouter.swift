@@ -15,6 +15,7 @@ enum ReviewRouter {
     case getBlogReviewList(restaurantName: String)
     case requestReviewEnabled(userId: String, restaurantId: String)
     case requestReviewDelete(reviewId: String)
+    case requestReviewEdit(reviewId: String, score: Double, taste: String, good: [String], content: String, image: [UIImage], nameList: [String])
 }
 
 extension ReviewRouter: BaseRouter {
@@ -24,6 +25,8 @@ extension ReviewRouter: BaseRouter {
             return .post
         case .requestReviewDelete:
             return .delete
+        case .requestReviewEdit:
+            return .put
         default:
             return .get
         }
@@ -42,6 +45,8 @@ extension ReviewRouter: BaseRouter {
         case .requestReviewEnabled(let userId, let restaurantId):
             return "/review/check/\(userId)/\(restaurantId)"
         case .requestReviewDelete(let reviewId):
+            return "/review/\(reviewId)"
+        case .requestReviewEdit(let reviewId,_,_,_,_,_,_):
             return "/review/\(reviewId)"
         default:
             return ""
@@ -95,7 +100,27 @@ extension ReviewRouter: BaseRouter {
                     multiPart.append(imageData, withName: "image", fileName: "image\(index).png", mimeType: "image/png")
                 }
             }
+            return multiPart
+        case .requestReviewEdit(_,let score, let taste, let good, let content, let image, let nameList):
+            let multiPart = MultipartFormData()
             
+            multiPart.append(Data(String(score).utf8), withName: "score")
+            multiPart.append(Data(taste.utf8), withName: "taste")
+            good.forEach {
+                let data = Data(String($0).utf8)
+                multiPart.append(data, withName: "good")
+            }
+            multiPart.append(Data(content.utf8), withName: "content")
+            for (index, item) in image.enumerated() {
+                print(index, item)
+                if let imageData = item.pngData() {
+                    multiPart.append(imageData, withName: "image", fileName: "image\(index).png", mimeType: "image/png")
+                }
+            }
+            nameList.forEach {
+                let data = Data(String($0).utf8)
+                multiPart.append(data, withName: "nameList")
+            }
             return multiPart
         default: return MultipartFormData()
         }
@@ -111,7 +136,7 @@ extension ReviewRouter: BaseRouter {
         
         var header: HeaderType {
             switch self {
-            case .requestReviewWrite:
+            case .requestReviewWrite, .requestReviewEdit:
                 return .multiPartWithToken
             default:
                 return .withToken

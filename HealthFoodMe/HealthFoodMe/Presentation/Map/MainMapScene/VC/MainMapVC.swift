@@ -152,7 +152,6 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
       return toastView
     }()
 
-    
     private var mapDetailSummaryView = MapDetailSummaryView()
     
     // MARK: - View Life Cycle
@@ -166,8 +165,6 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         registerCell()
         setPanGesture()
         setMapView()
-        bindMapView()
-        sampleViewInputEvent()
         addObserver()
         self.bindViewModels()
     }
@@ -178,6 +175,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        bindMapView()
         setIntitialMapPoint()
     }
     
@@ -216,8 +214,6 @@ extension MainMapVC {
             make.width.equalTo(55)
             make.height.equalTo(52)
         }
-        
-
         
         searchBar.snp.makeConstraints { make in
             make.centerY.equalTo(hamburgerButton.snp.centerY)
@@ -470,24 +466,11 @@ extension MainMapVC {
             }).disposed(by: self.disposeBag)
     }
     
-    private func sampleViewInputEvent() {
-        makeDummyPoints()
-            .bind(to: mapView.rx.pointList)
-            .disposed(by: self.disposeBag)
-    }
-    
     private func addObserver() {
         addObserverAction(.moveFromHamburgerBar) { noti in
             if let screenCase = noti.object as? HamburgerType {
                 self.hamburgerbarVCDidTap(hamburgerType: screenCase)
             }
-        }
-    }
-    
-    private func makeDummyPoints() -> Observable<[MapPointDataModel]> {
-        return .create { observer in
-            observer.onNext([])
-            return Disposables.create()
         }
     }
     
@@ -657,7 +640,6 @@ extension MainMapVC {
             return Disposables.create()
         }
     }
-    
 
     private func fetchRestaurantList(zoom: Double) {
         if let lng = locationManager?.currentLatLng().lng,

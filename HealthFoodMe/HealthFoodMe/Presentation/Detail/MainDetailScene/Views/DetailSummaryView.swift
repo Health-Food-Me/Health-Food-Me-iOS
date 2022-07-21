@@ -80,7 +80,9 @@ final class DetailSummaryView: UIView {
 extension DetailSummaryView {
     func setData(data: MainDetailEntity) {
         logoImageView.setImage(with: data.restaurant.logo)
-        // 별점도 할당하기
+        starRateView.rate = data.restaurant.score
+        let score = round(data.restaurant.score * 10) / 10
+        rateLabel.text = "(\(score))"
         restaurantNameLabel.text = data.restaurant.name
     }
 }
