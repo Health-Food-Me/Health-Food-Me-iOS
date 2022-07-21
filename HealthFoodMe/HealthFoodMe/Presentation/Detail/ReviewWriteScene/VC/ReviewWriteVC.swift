@@ -29,7 +29,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     var userSelectedImages: [UIImage] = [UIImage]()
     var tasteSet = ""
     var feelingArray: [Bool] = [false, false, false]
-    var userId = ""
+    var userId = UserManager.shared.getUser?.id ?? ""
     var restaurantID = ""
     var reviewId = ""
     private var currentRate: Double = 0
