@@ -568,7 +568,7 @@ extension MainMapVC: HamburgerbarVCDelegate {
 
 extension MainMapVC: MapDetailSummaryViewDelegate {
     func MapDetailSummaryViewScarp() {
-        putScrap(userId: UserManager.shared.getUser?.id ?? "", restaurantId: currentRestaurantId)
+        putScrap(userId: UserManager.shared.getUser ?? "", restaurantId: currentRestaurantId)
     }
 }
 
@@ -628,7 +628,7 @@ extension MainMapVC {
     }
     
     private func fetchRestaurantSummary(id: String) {
-        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser?.id ?? "") { networkResult in
+        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? RestaurantSummaryEntity {

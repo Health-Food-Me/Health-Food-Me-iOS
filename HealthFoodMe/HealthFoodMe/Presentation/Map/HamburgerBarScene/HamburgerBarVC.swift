@@ -322,7 +322,7 @@ extension HamburgerBarVC {
     }
     
     private func fetchUserNickname() {
-        guard let userID = UserManager.shared.getUser?.id else { return }
+        guard let userID = UserManager.shared.getUser else { return }
         UserService.shared.getUserNickname(userId: userID) { result in
             switch(result) {
                 case .success(let result):

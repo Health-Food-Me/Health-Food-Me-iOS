@@ -177,7 +177,7 @@ extension UserWithdrawalVC {
     }
     
     private func deleteUser() {
-        guard let userID = UserManager.shared.getUser?.id else { return }
+        guard let userID = UserManager.shared.getUser else { return }
         UserService.shared.deleteUserNickname(userId: userID) { result in
             switch(result) {
                 case .success(_) :

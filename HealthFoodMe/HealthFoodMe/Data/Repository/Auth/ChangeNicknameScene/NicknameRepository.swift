@@ -26,7 +26,7 @@ final class DefaultNicknameRepository {
 
 extension DefaultNicknameRepository: NicknameRepository {
   func putNicknameChange(nickname: String) {
-      guard let userId = UserManager.shared.getUser?.id else { return }
+      guard let userId = UserManager.shared.getUser else { return }
       networkService.putUserNickname(userId: userId,
                                      nickname: nickname) { result in
           switch(result)
@@ -39,7 +39,7 @@ extension DefaultNicknameRepository: NicknameRepository {
   }
     
   func getUserNickname() {
-      guard let userID = UserManager.shared.getUser?.id else { return }
+      guard let userID = UserManager.shared.getUser else { return }
       UserService.shared.getUserNickname(userId: userID) { result in
           switch(result) {
               case .success(let result):

@@ -121,7 +121,7 @@ extension MainDetailVC {
         scrapButton.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
         scrapButton.addAction(UIAction(handler: { _ in
             scrapButton.isSelected.toggle()
-            self.putScrap(userId: UserManager.shared.getUser?.id ?? "", restaurantId: self.restaurantId)
+            self.putScrap(userId: UserManager.shared.getUser ?? "", restaurantId: self.restaurantId)
         }), for: .touchUpInside)
         
         reviewWriteCTAButton.layer.cornerRadius = 20
@@ -495,7 +495,7 @@ extension MainDetailVC: SwipeDismissDelegate {
 extension MainDetailVC {
     func fetchRestauranDetail(restaurantId: String, comletion: @escaping(() -> Void)) {
         if let location = userLocation {
-            RestaurantService.shared.fetchRestaurantDetail(restaurantId: restaurantId, userId: UserManager.shared.getUser?.id ?? "", latitude: location.latitude, longitude: location.longitude) { networkResult in
+            RestaurantService.shared.fetchRestaurantDetail(restaurantId: restaurantId, userId: UserManager.shared.getUser ?? "", latitude: location.latitude, longitude: location.longitude) { networkResult in
                 switch networkResult {
                 case .success(let data):
                     if let data = data as? MainDetailEntity {
@@ -515,7 +515,7 @@ extension MainDetailVC {
     }
     
     func requestReviewEnabled(restaurantId: String) {
-        ReviewService.shared.requestReviewEnabled(userId: UserManager.shared.getUser?.id ?? "", restaurantId: restaurantId) { networkResult in
+        ReviewService.shared.requestReviewEnabled(userId: UserManager.shared.getUser ?? "", restaurantId: restaurantId) { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? ReviewCheckEntity {
