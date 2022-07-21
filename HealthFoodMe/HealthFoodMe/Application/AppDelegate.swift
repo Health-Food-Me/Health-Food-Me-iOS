@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             case false:
                 if AuthApi.hasToken() {
-                    UserApi.shared.accessTokenInfo { d, error in
+                    UserApi.shared.accessTokenInfo { data, error in
                         if let error = error {
                             if let sdkError = error as? SdkError,
                                sdkError.isInvalidTokenError() == true {
