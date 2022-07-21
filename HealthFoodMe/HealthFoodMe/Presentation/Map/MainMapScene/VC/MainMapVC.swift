@@ -158,7 +158,6 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         registerCell()
         setPanGesture()
         setMapView()
-        bindMapView()
         addObserver()
         self.bindViewModels()
     }
@@ -169,6 +168,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        bindMapView()
         setIntitialMapPoint()
     }
     
