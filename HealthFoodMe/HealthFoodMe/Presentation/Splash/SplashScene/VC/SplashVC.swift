@@ -67,17 +67,15 @@ extension SplashVC {
             UIView.animate(withDuration: 1) {
                 self.animationView.alpha = 0
             } completion: { _ in
-                self.presentSocialLoginVC()
+                if self.userManager.isLogin == true {
+                    self.presentMainMapVC()
+                } else {
+                    self.presentSocialLoginVC()
+                }
             }
             
             
 
-//            print(self.userManager.isLogin)
-//            if self.userManager.isLogin == true {
-//                self.requestSocialLogin()
-//            } else {
-//                self.presentSocialLoginVC()
-//            }
         }
     }
 }
