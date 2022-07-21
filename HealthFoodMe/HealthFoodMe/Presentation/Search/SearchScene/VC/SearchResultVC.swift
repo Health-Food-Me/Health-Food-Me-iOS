@@ -300,7 +300,11 @@ extension SearchResultVC: UITextFieldDelegate {
 // MARK: - UITableViewDelegate
 
 extension SearchResultVC: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        mapViewController.initialId = searchResultList[indexPath.row].id
+        mapViewController.setInitialMapPoint()
+        viewMap()
+    }
 }
 
 // MARK: - UITableViewDataSource

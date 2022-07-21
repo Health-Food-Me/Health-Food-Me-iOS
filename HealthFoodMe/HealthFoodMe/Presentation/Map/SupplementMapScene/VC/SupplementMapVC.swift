@@ -146,7 +146,7 @@ extension SupplementMapVC {
         }
     }
     
-    private func setInitialMapPoint() {
+    func setInitialMapPoint() {
         
         switch mapType {
         case .search:
