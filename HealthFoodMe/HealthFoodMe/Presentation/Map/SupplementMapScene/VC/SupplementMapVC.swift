@@ -30,6 +30,7 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
     private let locationManager = NMFLocationManager.sharedInstance()
     private var currentRestaurantId: String = ""
     private var currentLocation: Location = Location.init(latitude: 0, longitude: 0)
+    private var currentSelectedPosition: MapPointDataModel?
     private var restaurantData: [MainMapEntity] = []
     private var isInitialPoint = false
     weak var delegate: SupplementMapVCDelegate?
@@ -160,6 +161,11 @@ extension SupplementMapVC {
                 let position = NMGLatLng.init(lat: initial.latitude, lng: initial.longtitude)
                 self.mapView.moveCameraPositionWithZoom(position, 200)
                 self.bindSetSelectPointForScrapVC(dataModel: initial)
+                self.restaurantData.forEach { entity in
+                    if entity.latitude == initial.latitude, entity.longitude == initial.longtitude {
+                        self.mapView.setSelectPoint.accept(entity.toDomain())
+                    }
+                }
             } else {
                 self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 200)
             }
@@ -299,6 +305,7 @@ extension SupplementMapVC {
         restaurantData.forEach { entity in
             if entity.id == id {
                 targetPosition = entity.toDomain()
+                self.mapView.setSelectPoint.accept(entity.toDomain())
             }
         }
         
@@ -306,6 +313,7 @@ extension SupplementMapVC {
             let NMGPosition = NMGLatLng.init(lat: position.latitude, lng: position.longtitude)
             self.mapView.moveCameraPositionWithZoom(NMGPosition, 200)
             self.currentLocation = Location(latitude: position.latitude, longitude: position.longtitude)
+            currentSelectedPosition = position
         } else {
             self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 200)
             self.currentLocation = Location(latitude: LocationLiterals.gangnamStation.lat, longitude: LocationLiterals.gangnamStation.lng)
@@ -329,9 +337,11 @@ extension SupplementMapVC {
         self.currentRestaurantId = restaurantId
         self.currentLocation = Location(latitude: dataModel.latitude, longitude: dataModel.longtitude)
         self.fetchRestaurantSummary(id: restaurantId)
+        currentSelectedPosition = dataModel
         myLocationButton.snp.updateConstraints { make in
             make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-12)
         }
+        
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.myLocationButton.transform = CGAffineTransform(translationX: 0, y: 0)
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
@@ -343,6 +353,7 @@ extension SupplementMapVC {
         let NMGPosition = NMGLatLng(lat: dataModel.latitude,
                                     lng: dataModel.longtitude)
         let restaurantId = self.matchRestaurantId(position: NMGPosition)
+        currentSelectedPosition = dataModel
         self.currentRestaurantId = restaurantId
         self.currentLocation = Location(latitude: dataModel.latitude, longitude: dataModel.longtitude)
         self.fetchRestaurantSummary(id: restaurantId)
@@ -410,6 +421,41 @@ extension SupplementMapVC {
                 make.bottom.equalTo(mapDetailViewTopCosntraint).offset(-12)
         }
         
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func showSummaryViewForResult() {
+        let summaryViewHeight: CGFloat = 189
+        self.mapDetailSummaryView.snp.updateConstraints { make in
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
+        }
+        
+        let mapDetailViewTopCosntraint = self.mapDetailSummaryView.snp.top
+        self.myLocationButton.snp.updateConstraints { make in
+                make.bottom.equalTo(mapDetailViewTopCosntraint).offset(-12)
+        }
+        if let position = self.currentSelectedPosition {
+            mapView.setSelectPoint.accept(position)
+        }
+        
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func hideSummaryView() {
+        self.mapView.disableSelectPoint.accept(())
+        self.mapDetailSummaryView.snp.updateConstraints { make in
+            make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
+        }
+        let bottomSafeArea = self.safeAreaBottomInset()
+        self.myLocationButton.snp.updateConstraints { make in
+            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
+        }
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.layoutIfNeeded()
