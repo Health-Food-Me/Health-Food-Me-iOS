@@ -21,5 +21,7 @@ target 'HealthFoodMe' do
   pod 'SwiftLint'
   pod 'BSImagePicker', '~> 3.1' 
   pod 'lottie-ios'
+pod 'ImageSlideShowSwift', :git => 'https://github.com/TeamBeMyPlan/ImageSlideShow.git', :branch => 'master'
+
   
 end
