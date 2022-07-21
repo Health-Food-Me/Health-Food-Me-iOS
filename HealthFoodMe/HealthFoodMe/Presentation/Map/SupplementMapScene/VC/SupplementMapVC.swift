@@ -26,10 +26,16 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
         case scrap
         case search
     }
-    var mapType = SupplementMapType.scrap
     private let disposeBag = DisposeBag()
     private let locationManager = NMFLocationManager.sharedInstance()
+    private var currentRestaurantId: String = ""
+    private var currentLocation: Location = Location.init(latitude: 0, longitude: 0)
+    private var restaurantData: [MainMapEntity] = []
+    private var isInitialPoint = false
     weak var delegate: SupplementMapVCDelegate?
+    var initialPoint: MapPointDataModel?
+    var mapType = SupplementMapType.scrap
+    var targetMarkerPointList: [MapPointDataModel] = []
     
     // MARK: - UI Components
     
@@ -87,8 +93,8 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
         setLayout()
         setMapView()
         bindMapView()
-        sampleViewInputEvent()
         setPanGesture()
+        setInitialMarker()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -129,11 +135,25 @@ extension SupplementMapVC {
             make.height.equalTo(UIScreen.main.bounds.height + 300)
         }
         
+        let bottomSafeArea = safeAreaBottomInset()
         myLocationButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(20)
-            make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-12)
+            make.bottom.equalTo(mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
             make.width.height.equalTo(56)
         }
+    }
+    
+    private func setInitialMapPoint() {
+        
+        if let initial = self.initialPoint {
+            let position = NMGLatLng.init(lat: initial.latitude, lng: initial.longtitude)
+            self.mapView.moveCameraPositionWithZoom(position, 200)
+            self.bindSetSelectPointForScrapVC(dataModel: initial)
+        } else {
+            self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 200)
+        }
+        isInitialPoint = true
+        
     }
     
     private func setPanGesture() {
@@ -201,9 +221,9 @@ extension SupplementMapVC {
                 guard let self = self else { return }
                 switch self.mapType {
                 case .search:
-                    self.bindSetSelectPointForSearchVC()
+                    self.bindSetSelectPointForSearchVC(dataModel: dataModel)
                 case .scrap:
-                    self.bindSetSelectPointForScrapVC()
+                    self.bindSetSelectPointForScrapVC(dataModel: dataModel)
                 }
             }).disposed(by: self.disposeBag)
     }
@@ -248,31 +268,15 @@ extension SupplementMapVC {
         }
     }
     
-    private func bindSetSelectPointForScrapVC() {
+    private func bindSetSelectPointForScrapVC(dataModel: MapPointDataModel) {
+        let NMGPosition = NMGLatLng(lat: dataModel.latitude,
+                                    lng: dataModel.longtitude)
+        let restaurantId = self.matchRestaurantId(position: NMGPosition)
+        self.currentRestaurantId = restaurantId
+        self.currentLocation = Location(latitude: dataModel.latitude, longitude: dataModel.longtitude)
+        self.fetchRestaurantSummary(id: restaurantId)
+        
         showSummaryView()
-    }
-    
-    private func sampleViewInputEvent() {
-        makeDummyPoints()
-            .bind(to: mapView.rx.pointList)
-            .disposed(by: self.disposeBag)
-    }
-    
-    private func makeDummyPoints() -> Observable<[MapPointDataModel]> {
-        return .create { observer in
-            let pointList: [MapPointDataModel] = .init([
-                MapPointDataModel.init(latitude: 37.5666805, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.567, longtitude: 126.9784147, type: .healthFood),
-                MapPointDataModel.init(latitude: 37.568, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.569, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.557, longtitude: 126.9784147, type: .healthFood),
-                MapPointDataModel.init(latitude: 37.571, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.572, longtitude: 126.9784147, type: .normalFood),
-                MapPointDataModel.init(latitude: 37.010, longtitude: 126.9784147, type: .normalFood)
-            ])
-            observer.onNext(pointList)
-            return Disposables.create()
-        }
     }
     
     private func transitionAndPresentMainDetailVC() {
@@ -347,6 +351,58 @@ extension SupplementMapVC {
             self.view.layoutIfNeeded()
         } completion: { _ in
             self.transitionAndPresentMainDetailVC()
+        }
+    }
+}
+
+// MARK: - Network
+
+extension SupplementMapVC {
+    private func fetchRestaurantSummary(id: String) {
+        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser?.id ?? "") { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? RestaurantSummaryEntity {
+                    self.mapDetailSummaryView.setData(data: data)
+                }
+            default:
+                break
+            }
+        }
+    }
+    
+    private func fetchRestaurantList(zoom: Double, completion: @escaping (() -> Void)) {
+        if let lng = locationManager?.currentLatLng().lng,
+           let lat = locationManager?.currentLatLng().lat {
+            RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: "") { networkResult in
+                switch networkResult {
+                case .success(let data):
+                    if let data = data as? [MainMapEntity] {
+                        self.restaurantData = data
+                        var models = [MapPointDataModel]()
+                        var targetModel = [MapPointDataModel]()
+                        models = data.map({ entity in
+                            entity.toDomain()
+                        })
+                        
+                        models.forEach { entity in
+                            self.targetMarkerPointList.forEach { point in
+                                if point.longtitude == entity.longtitude,
+                                   point.latitude == entity.latitude {
+                                    targetModel.append(entity)
+                                }
+                            }
+                        }
+                        
+                        self.makePoints(points: targetModel).bind(to: self.mapView.rx.pointList)
+                            .disposed(by: self.disposeBag)
+                        
+                        completion()
+                    }
+                default:
+                    break
+                }
+            }
         }
     }
 }
