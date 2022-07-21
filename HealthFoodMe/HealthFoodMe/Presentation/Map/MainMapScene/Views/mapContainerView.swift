@@ -283,6 +283,11 @@ extension NaverMapContainerView: NMFMapViewCameraDelegate {
       self.zoomLevelChange.accept(Int(mapView.zoomLevel))
     }
   }
+    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
+        if reason == 0 || reason == -3 {
+            self.zoomLevelChange.accept(Int(mapView.zoomLevel))
+        }
+    }
 }
 
 struct MapAccumulationCalculator {

@@ -29,6 +29,7 @@ class SocialLoginVC: UIViewController {
         lb.font = UIFont(name: AppFontName.GodoB, size: 58 * (screenWidth/375))
         lb.textColor = .mainRed
         lb.textAlignment = .center
+        lb.alpha = 0
         
         return lb
     }()
@@ -42,6 +43,8 @@ class SocialLoginVC: UIViewController {
         lb.textColor = .helfmeGray1
         lb.numberOfLines = 2
         lb.textAlignment = .center
+        lb.alpha = 0
+
 
         return lb
     }()
@@ -66,6 +69,7 @@ class SocialLoginVC: UIViewController {
         setLayout()
         setAddTarget()
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         showAnimation()
@@ -172,7 +176,7 @@ extension SocialLoginVC {
         view.addSubviews(titleLabel, subTitleLabel, kakaoLoginButton, appleLoginButton)
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(230)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(140)
             make.centerX.equalToSuperview().offset(2)
         }
         
@@ -196,12 +200,11 @@ extension SocialLoginVC {
     }
     
     private func showAnimation() {
-        titleLabel.snp.updateConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(140)
-        }
-        
-        UIView.animate(withDuration: 0.7,delay: 0.5) {
+
+        UIView.animate(withDuration: 0.7,delay: 0) {
             self.view.layoutIfNeeded()
+            self.titleLabel.alpha = 1
+            self.subTitleLabel.alpha = 1
             self.kakaoLoginButton.alpha = 1
             self.appleLoginButton.alpha = 1
         }

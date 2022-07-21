@@ -42,7 +42,7 @@ extension SplashVC {
         
         animationView.frame = self.view.bounds
         animationView.center = self.view.center
-        animationView.contentMode = .scaleAspectFit
+        animationView.contentMode = .scaleAspectFill
     }
     
     private func playAnimation() {
@@ -62,8 +62,15 @@ extension SplashVC {
     }
     
     private func checkLoginStatusAndPresentVC() {
-        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
-                            self.presentSocialLoginVC()
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+            
+            UIView.animate(withDuration: 1) {
+                self.animationView.alpha = 0
+            } completion: { _ in
+                self.presentSocialLoginVC()
+            }
+            
+            
 
 //            print(self.userManager.isLogin)
 //            if self.userManager.isLogin == true {
