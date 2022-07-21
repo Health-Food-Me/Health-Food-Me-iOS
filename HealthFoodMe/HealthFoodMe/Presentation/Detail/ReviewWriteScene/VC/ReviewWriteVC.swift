@@ -33,7 +33,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     var tasteSet = ""
     var feelingArray: [Bool] = [false, false, false]
     
-    var currentRate: Double = 0
+    var currentRate: Double = 2.5
     var tagList: [String] = []
     var selectedAssets: [PHAsset] = [PHAsset]()
     var userSelectedImages: [UIImage] = [UIImage]()
@@ -470,7 +470,7 @@ extension ReviewWriteVC {
     private func setLayout() {
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalToSuperview()
         }
         
         scrollView.addSubview(contentView)
