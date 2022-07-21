@@ -78,6 +78,7 @@ class SettingVC: UIViewController {
         label.text = I18N.Setting.termsTitle
         label.font = .NotoRegular(size: 14)
         label.textColor = UIColor.helfmeGray2
+        label.isHidden = true
         return label
     }()
     
@@ -87,6 +88,7 @@ class SettingVC: UIViewController {
         button.setTitleColor(UIColor.helfmeBlack, for: .normal)
         button.titleLabel?.font = .NotoRegular(size: 16)
         button.contentHorizontalAlignment = .left
+        button.isHidden = true
         return button
     }()
     
@@ -96,6 +98,7 @@ class SettingVC: UIViewController {
         button.setTitleColor(UIColor.helfmeBlack, for: .normal)
         button.titleLabel?.font = .NotoRegular(size: 16)
         button.contentHorizontalAlignment = .left
+        button.isHidden = true
         return button
     }()
     
@@ -105,6 +108,7 @@ class SettingVC: UIViewController {
         button.setTitleColor(UIColor.helfmeBlack, for: .normal)
         button.titleLabel?.font = .NotoRegular(size: 16)
         button.contentHorizontalAlignment = .left
+        button.isHidden = true
         return button
     }()
     
@@ -117,6 +121,7 @@ class SettingVC: UIViewController {
         setLayout()
         addButtonAction()
     }
+    
 }
 
 // MARK: - Methods

@@ -142,6 +142,7 @@ struct I18N {
     }
   
     struct Setting {
+        static let headerTitle = "설정"
         static let customerServiceTitle = "고객지원"
         static let askButtonTitle = "문의하기"
         static let askMailContent = "문의할 내용을 작성해주세요."

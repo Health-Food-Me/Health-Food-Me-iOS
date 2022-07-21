@@ -25,10 +25,7 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     
     private let iconImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.layer.cornerRadius = 5
-
+        iv.contentMode = .center
         iv.image = ImageLiterals.MainDetail.locationIcon
         iv.isHidden = false
         return iv
@@ -95,14 +92,14 @@ extension ExpandableInfoTVC {
         
         iconImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
-            make.width.height.equalTo(20)
-            make.top.equalToSuperview().offset(4)
+            make.width.height.equalTo(15)
+            make.top.equalToSuperview().offset(8)
         }
         
         infoLabel.snp.makeConstraints { make in
             make.leading.equalTo(iconImageView.snp.trailing).offset(12.5)
             make.bottom.equalToSuperview()
-            make.top.equalToSuperview().offset(4)
+            make.top.equalToSuperview().offset(3)
         }
         
         toggleButtonInfnoLabel.snp.makeConstraints { make in
