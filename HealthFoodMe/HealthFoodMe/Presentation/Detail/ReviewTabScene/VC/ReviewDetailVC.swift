@@ -30,8 +30,8 @@ class ReviewDetailVC: UIViewController {
     private var expendStateList: [Bool] = []
     var moreContentsButtonRect: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     
-    var restaurantId = ""
-    var restaurantName = ""
+    var restaurantId: String = "62d26c9bd11146a81ef18ea6"
+    var restaurantName: String = "샐러디태릉입구"
     
     var selectedCustomSegment = 0 {
         didSet {
@@ -66,6 +66,7 @@ class ReviewDetailVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        HelfmeLoadingView.shared.show(self.view)
         fetchData()
     }
 }
@@ -187,6 +188,9 @@ extension ReviewDetailVC {
         requestReviewListWithAPI() {
             self.requestBlogReviewListWithAPI()
             self.processViewModel(self.reviewServerData, self.blogReviewData)
+            HelfmeLoadingView.shared.hide(){
+                print("로딩 종료")
+            }
         }
     }
     
