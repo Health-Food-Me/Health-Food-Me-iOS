@@ -14,7 +14,7 @@ extension UIViewController {
     let toolBarKeyboard = UIToolbar()
     toolBarKeyboard.sizeToFit()
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    let btnDoneBar = UIBarButtonItem(title: "닫기", style: .done, target: self, action: #selector(self.dismissKeyBoard))
+    let btnDoneBar = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(self.dismissKeyBoard))
     toolBarKeyboard.items = [flexSpace, btnDoneBar]
     for (_, item) in textfields.enumerated() {
       item.inputAccessoryView = toolBarKeyboard
@@ -25,7 +25,7 @@ extension UIViewController {
     let toolBarKeyboard = UIToolbar()
     toolBarKeyboard.sizeToFit()
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    let btnDoneBar = UIBarButtonItem(title: "닫기", style: .done, target: self, action: #selector(self.dismissKeyBoard))
+    let btnDoneBar = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(self.dismissKeyBoard))
     toolBarKeyboard.items = [flexSpace, btnDoneBar]
       toolBarKeyboard.tintColor = UIColor.mainRed
     textView.inputAccessoryView = toolBarKeyboard
