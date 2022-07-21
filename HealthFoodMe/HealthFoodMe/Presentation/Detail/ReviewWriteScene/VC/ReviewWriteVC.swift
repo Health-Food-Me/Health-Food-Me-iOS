@@ -367,10 +367,9 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         removeKeyboardObserver()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         setAddTargets()
-
-        
     }
 }
 
@@ -393,6 +392,8 @@ extension ReviewWriteVC {
             print("currentRatea",self.currentRate)
             sliderView.setSliderValue(rate: self.currentRate)
             reviewTextView.text = self.content
+            reviewTextView.textColor = .helfmeBlack
+            tasteSet = tagList[0]
             for tag in tagList {
                 switch tag {
                 case I18N.Detail.Review.tagGood:
@@ -414,10 +415,9 @@ extension ReviewWriteVC {
                     tagStrong.isSelected = true
                     setButtonUI(button: tagStrong)
                 default:
-                    print("2️⃣")
+                    print("🍎")
                 }
             }
-            print("🍎\(tagList)")
         }
     }
     
@@ -997,16 +997,20 @@ extension ReviewWriteVC: ListPhotoCVCDelegate {
 
 extension ReviewWriteVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == .helfmeGray2 {
-            textView.text = nil
-            textView.textColor = .helfmeBlack
+        if !isEdited {
+            if textView.textColor == .helfmeGray2 {
+                textView.text = nil
+                textView.textColor = .helfmeBlack
+            }
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "리뷰를 작성해주세요 (최대 500자)"
-            textView.textColor = .helfmeGray2
+        if !isEdited {
+            if textView.text.isEmpty {
+                textView.text = "리뷰를 작성해주세요 (최대 500자)"
+                textView.textColor = .helfmeGray2
+            }
         }
     }
     

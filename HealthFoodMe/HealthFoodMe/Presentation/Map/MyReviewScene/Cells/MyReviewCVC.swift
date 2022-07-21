@@ -367,7 +367,8 @@ extension MyReviewCVC {
         starScore = Double(reviewData.starRate)
         tagList = reviewData.tagList
         content = reviewData.reviewContents ?? ""
-        //image = reviewData.reviewImageURLList ?? []
+//        if let reviewImageURLList
+//        image = reviewData.reviewImageURLList ?? []
         
         if isFoldRequired {
             moreTapButton.isHidden = false
