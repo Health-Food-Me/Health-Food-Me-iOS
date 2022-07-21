@@ -135,6 +135,11 @@ final class SearchResultVC: UIViewController {
 
 extension SearchResultVC {
     private func setChildViewController() {
+        mapViewController.IDsForMap = searchResultList.map({
+            $0.id
+        })
+        mapViewController.initialId = searchResultList.first?.id
+        mapViewController.navigationController?.navigationBar.isHidden = true
         self.addChild(mapViewController)
         self.view.addSubview(mapViewController.view)
         mapViewController.setSupplementMapType(mapType: .search)
@@ -292,13 +297,7 @@ extension SearchResultVC: UITextFieldDelegate {
 // MARK: - UITableViewDelegate
 
 extension SearchResultVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = ModuleFactory.resolve().makeSupplementMapVC(forSearchVC: true)
-        vc.navigationController?.isNavigationBarHidden = false
-        vc.navigationController?.isToolbarHidden = false
-        vc.navigationController?.setNavigationBarHidden(false, animated: false)
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+    
 }
 
 // MARK: - UITableViewDataSource

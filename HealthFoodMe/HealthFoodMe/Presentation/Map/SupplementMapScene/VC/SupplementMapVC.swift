@@ -34,6 +34,8 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
     private var isInitialPoint = false
     weak var delegate: SupplementMapVCDelegate?
     var initialPoint: MapPointDataModel?
+    var initialId: String?
+    var IDsForMap: [String] = []
     var mapType = SupplementMapType.scrap
     var targetMarkerPointList: [MapPointDataModel] = []
     
@@ -145,15 +147,24 @@ extension SupplementMapVC {
     
     private func setInitialMapPoint() {
         
-        if let initial = self.initialPoint {
-            let position = NMGLatLng.init(lat: initial.latitude, lng: initial.longtitude)
-            self.mapView.moveCameraPositionWithZoom(position, 200)
-            self.bindSetSelectPointForScrapVC(dataModel: initial)
-        } else {
-            self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 200)
+        switch mapType {
+        case .search:
+            if let id = initialId {
+                self.bindSetSelectPointForSearchVC(id: id)
+            } else {
+                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 200)
+            }
+            isInitialPoint = true
+        case .scrap:
+            if let initial = self.initialPoint {
+                let position = NMGLatLng.init(lat: initial.latitude, lng: initial.longtitude)
+                self.mapView.moveCameraPositionWithZoom(position, 200)
+                self.bindSetSelectPointForScrapVC(dataModel: initial)
+            } else {
+                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 200)
+            }
+            isInitialPoint = true
         }
-        isInitialPoint = true
-        
     }
     
     private func setPanGesture() {
@@ -277,6 +288,37 @@ extension SupplementMapVC {
             }
         }
         return id
+    }
+    
+    private func bindSetSelectPointForSearchVC(id: String) {
+        delegate?.supplementMapMarkerClicked()
+        self.currentRestaurantId = id
+        self.fetchRestaurantSummary(id: id)
+        
+        var targetPosition: MapPointDataModel?
+        restaurantData.forEach { entity in
+            if entity.id == id {
+                targetPosition = entity.toDomain()
+            }
+        }
+        
+        if let position = targetPosition {
+            let NMGPosition = NMGLatLng.init(lat: position.latitude, lng: position.longtitude)
+            self.mapView.moveCameraPositionWithZoom(NMGPosition, 200)
+            self.currentLocation = Location(latitude: position.latitude, longitude: position.longtitude)
+        } else {
+            self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 200)
+            self.currentLocation = Location(latitude: LocationLiterals.gangnamStation.lat, longitude: LocationLiterals.gangnamStation.lng)
+        }
+        
+        myLocationButton.snp.updateConstraints { make in
+            make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-12)
+        }
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.myLocationButton.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func bindSetSelectPointForSearchVC(dataModel: MapPointDataModel) {
@@ -426,15 +468,26 @@ extension SupplementMapVC {
                             entity.toDomain()
                         })
                         
-                        models.forEach { entity in
-                            self.targetMarkerPointList.forEach { point in
-                                if point.longtitude == entity.longtitude,
-                                   point.latitude == entity.latitude {
-                                    targetModel.append(entity)
+                        switch self.mapType {
+                        case .scrap:
+                            models.forEach { entity in
+                                self.targetMarkerPointList.forEach { point in
+                                    if point.longtitude == entity.longtitude,
+                                       point.latitude == entity.latitude {
+                                        targetModel.append(entity)
+                                    }
+                                }
+                            }
+                        case .search:
+                            data.forEach { entity in
+                                self.IDsForMap.forEach { id in
+                                    if entity.id == id {
+                                        targetModel.append(entity.toDomain())
+                                    }
                                 }
                             }
                         }
-                        
+
                         self.makePoints(points: targetModel).bind(to: self.mapView.rx.pointList)
                             .disposed(by: self.disposeBag)
                         

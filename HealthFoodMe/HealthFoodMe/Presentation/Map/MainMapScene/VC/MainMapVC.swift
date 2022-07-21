@@ -144,7 +144,6 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         return bt
     }()
 
-    
     private var mapDetailSummaryView = MapDetailSummaryView()
     
     // MARK: - View Life Cycle
