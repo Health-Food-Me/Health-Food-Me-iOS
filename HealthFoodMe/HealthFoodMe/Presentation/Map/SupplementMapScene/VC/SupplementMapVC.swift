@@ -252,7 +252,7 @@ extension SupplementMapVC {
         }
         let bottomSafeArea = self.safeAreaBottomInset()
         self.myLocationButton.snp.updateConstraints { make in
-            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
+            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset(-165)
         }
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.myLocationButton.transform = CGAffineTransform(translationX: 0, y: 0)
@@ -270,7 +270,7 @@ extension SupplementMapVC {
         }
         let bottomSafeArea = self.safeAreaBottomInset()
         self.myLocationButton.snp.updateConstraints { make in
-            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
+            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset(-165)
         }
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
