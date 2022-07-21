@@ -78,7 +78,7 @@ extension ScrapCVC {
 
 extension ScrapCVC {
     func setData(data: ScrapListEntity) {
-        storeImageView.image = UIImage(named: data.logo)
+        storeImageView.setImage(with: data.logo)
         storeNameLabel.text = data.name
         locationLabel.text = data.address
     }
