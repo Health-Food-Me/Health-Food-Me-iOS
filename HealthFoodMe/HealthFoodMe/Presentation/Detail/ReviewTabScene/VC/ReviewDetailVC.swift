@@ -70,6 +70,7 @@ class ReviewDetailVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
+        reviewCV.reloadData()
     }
 }
 
@@ -252,6 +253,7 @@ extension ReviewDetailVC {
                     for da in data {
                         self.reviewServerData.append(da.toDomain())
                     }
+                    self.reviewServerData.reverse()
                     print(data, "성공")
                 }
                 
