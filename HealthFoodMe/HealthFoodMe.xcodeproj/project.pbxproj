@@ -226,10 +226,10 @@
 		FD72FCC028834AB60092746F /* MainMapNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD72FCBF28834AB60092746F /* MainMapNavigationController.swift */; };
 		FDA3AEF82880612300D6CCB4 /* UserWithdrawalUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA3AEF22880612300D6CCB4 /* UserWithdrawalUseCase.swift */; };
 		FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */; };
+		FDC46A25288326AC00F62D20 /* splash_iOS.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC46A24288326AB00F62D20 /* splash_iOS.json */; };
 		FDCB3CC12888338300E6FBCE /* NicknameEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB3CC02888338300E6FBCE /* NicknameEntity.swift */; };
 		FDCB3CC328884F1700E6FBCE /* HamburgerBarNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB3CC228884F1700E6FBCE /* HamburgerBarNavigationController.swift */; };
 		FDCB3CC52888565400E6FBCE /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB3CC42888565400E6FBCE /* UserEntity.swift */; };
-		FDC46A25288326AC00F62D20 /* splash_iOS.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC46A24288326AB00F62D20 /* splash_iOS.json */; };
 		FDCD5B452881ACC100EAEF51 /* LocationLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCD5B442881ACC100EAEF51 /* LocationLiterals.swift */; };
 		FDCD5B472882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCD5B462882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift */; };
 		FDF2E1FA287EFA5B0007D4F9 /* SampleStarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF2E1F9287EFA5B0007D4F9 /* SampleStarVC.swift */; };
@@ -452,7 +452,7 @@
 		FD39FAD72880C69400A01CDA /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		FD582917287DC39A00CE62E8 /* mapContainerViewTouchDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerViewTouchDelegateProxy.swift; sourceTree = "<group>"; };
 		FD582918287DC39A00CE62E8 /* mapContainerView + Reactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "mapContainerView + Reactive.swift"; sourceTree = "<group>"; };
-		FD582919287DC39A00CE62E8 /* mapContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapContainerView.swift; sourceTree = "<group>"; };
+		FD582919287DC39A00CE62E8 /* mapContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = mapContainerView.swift; sourceTree = "<group>"; };
 		FD59028C288338D700D59D57 /* ReviewWriteNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteNavigationController.swift; sourceTree = "<group>"; };
 		FD72FC96288346480092746F /* UserWithdrawalViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserWithdrawalViewModel.swift; sourceTree = "<group>"; };
 		FD72FC97288346480092746F /* UserWithdrawlModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserWithdrawlModel.swift; sourceTree = "<group>"; };
@@ -464,10 +464,10 @@
 		FD72FCBF28834AB60092746F /* MainMapNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapNavigationController.swift; sourceTree = "<group>"; };
 		FDA3AEF22880612300D6CCB4 /* UserWithdrawalUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWithdrawalUseCase.swift; sourceTree = "<group>"; };
 		FDA54A3A287DEAB2009D5BCE /* CustomSegementControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegementControl.swift; sourceTree = "<group>"; };
+		FDC46A24288326AB00F62D20 /* splash_iOS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_iOS.json; sourceTree = "<group>"; };
 		FDCB3CC02888338300E6FBCE /* NicknameEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEntity.swift; sourceTree = "<group>"; };
 		FDCB3CC228884F1700E6FBCE /* HamburgerBarNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerBarNavigationController.swift; sourceTree = "<group>"; };
 		FDCB3CC42888565400E6FBCE /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
-		FDC46A24288326AB00F62D20 /* splash_iOS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_iOS.json; sourceTree = "<group>"; };
 		FDCD5B442881ACC100EAEF51 /* LocationLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationLiterals.swift; sourceTree = "<group>"; };
 		FDCD5B462882083200EAEF51 /* mapContainerViewCameraDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapContainerViewCameraDelegateProxy.swift; sourceTree = "<group>"; };
 		FDF2E1F9287EFA5B0007D4F9 /* SampleStarVC.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = SampleStarVC.swift; sourceTree = "<group>"; tabWidth = 4; };

@@ -24,7 +24,11 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     private var currentLocation: Location = Location.init(latitude: 0, longitude: 0)
     private var currentCategory: String = "" {
         didSet {
-            self.fetchRestaurantList(zoom: self.currentZoom)
+            if currentCategory != "" {
+                self.fetchCategoryList(zoom: self.currentZoom)
+            } else {
+                self.fetchRestaurantList(zoom: self.currentZoom)
+            }
         }
     }
     private let locationManager = NMFLocationManager.sharedInstance()
@@ -32,6 +36,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
                                               false, false, false,
                                               false, false] {
         didSet {
+            self.unselectMapPoint()
             categoryCollectionView.reloadData()
         }
     }
@@ -428,6 +433,13 @@ extension MainMapVC {
         }
     }
     
+    private func makeCurrentCategory() -> Observable<String> {
+        return .create { observer in
+            observer.onNext(self.currentCategory)
+            return Disposables.create()
+        }
+    }
+    
     private func transitionAndPresentMainDetailVC() {
         let nextVC = ModuleFactory.resolve().makeMainDetailVC()
         nextVC.translationClosure = {
@@ -497,8 +509,8 @@ extension MainMapVC {
     
     @objc
     private func presentSearchVC() {
-        self.mapView.disableSelectPoint.accept(())
         self.makeVibrate()
+        self.unselectMapPoint()
         let nextVC = ModuleFactory.resolve().makeSearchVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -602,6 +614,28 @@ extension MainMapVC {
                             entity.toDomain()
                         })
                         self.makePoints(points: models).bind(to: self.mapView.rx.pointList)
+                            .disposed(by: self.disposeBag)
+                    }
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    private func fetchCategoryList(zoom: Double) {
+        if let lng = locationManager?.currentLatLng().lng,
+           let lat = locationManager?.currentLatLng().lat {
+            RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
+                switch networkResult {
+                case .success(let data):
+                    if let data = data as? [MainMapEntity] {
+                        self.restaurantData = data
+                        var models = [MapPointDataModel]()
+                        models = data.map({ entity in
+                            entity.toDomain()
+                        })
+                        self.makePoints(points: models).bind(to: self.mapView.rx.categoryPointList)
                             .disposed(by: self.disposeBag)
                     }
                 default:
