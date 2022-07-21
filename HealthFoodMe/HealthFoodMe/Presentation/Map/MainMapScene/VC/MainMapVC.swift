@@ -289,7 +289,7 @@ extension MainMapVC {
                 case .ended:
                     guard let self = self else { return }
                     if summaryViewTranslation.y < -90
-                        || (self.mapDetailSummaryView.frame.origin.y ?? 40 < 30) {
+                        || (self.mapDetailSummaryView.frame.origin.y < 30) {
                         self.mapDetailSummaryView.snp.updateConstraints { make in
                             make.top.equalToSuperview().inset(44)
                         }

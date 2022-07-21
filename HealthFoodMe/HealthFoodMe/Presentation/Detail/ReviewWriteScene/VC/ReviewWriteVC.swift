@@ -796,10 +796,8 @@ extension ReviewWriteVC {
         
         let image = photoModel.userSelectedImages
         ReviewService.shared.requestReviewWrite(userId: userId, restaurantId: restaurantID, score: starScore, taste: taste, good: good, content: content, image: image) { networkResult in
-            dump(networkResult)
             switch networkResult {
             case .success(let data):
-                dump(data)
                 if let data = data as? ReviewWriteEntity {
                     print(data, "성공")
                 }

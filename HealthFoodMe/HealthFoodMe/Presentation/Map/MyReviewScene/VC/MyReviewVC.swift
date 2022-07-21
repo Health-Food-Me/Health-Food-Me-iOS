@@ -408,9 +408,6 @@ extension MyReviewVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? String {
-                    print(data, "성공")
-                    print("🍎\(reviewId)")
-                    completion()
                 }
             default:
                 break

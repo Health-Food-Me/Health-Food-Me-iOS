@@ -376,6 +376,12 @@ extension SupplementMapVC {
                 self.myLocationButton.isHidden = false
             }
         }
+        nextVC.restaurantId = self.currentRestaurantId
+        nextVC.restaurantLocation = self.currentLocation
+        if let lat = locationManager?.currentLatLng().lat,
+           let lng = locationManager?.currentLatLng().lng {
+            nextVC.userLocation = Location(latitude: lat, longitude: lng)
+        }
         let nav = UINavigationController(rootViewController: nextVC)
         nav.modalPresentationStyle = .overCurrentContext
         nav.modalTransitionStyle = .crossDissolve
