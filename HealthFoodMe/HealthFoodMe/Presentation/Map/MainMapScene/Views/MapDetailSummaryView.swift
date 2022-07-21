@@ -205,7 +205,7 @@ extension MapDetailSummaryView {
     private func makeConstraints() {
         tagCollectionView.snp.updateConstraints { make in
             if isDoubleLineHeight(tags: tagList) {
-                make.height.equalTo(43)
+                make.height.equalTo(47)
             } else {
                 make.height.equalTo(23)
             }

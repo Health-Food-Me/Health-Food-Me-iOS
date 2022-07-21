@@ -477,10 +477,8 @@ extension SearchVC: UITableViewDataSource {
             searchResultVC.delegate = self
             searchResultVC.fromSearchType = .searchCell
             searchResultVC.fromSearchCellInitial = searchResultList[indexPath.row].id
-            if let searchText = searchTextField.text {
-                searchResultVC.searchContent = searchText
-                searchResultVC.searchResultList = searchResultList
-            }
+            searchResultVC.searchContent = searchResultList[indexPath.row].storeName
+            searchResultVC.searchResultList = searchResultList
             navigationController?.pushViewController(searchResultVC, animated: false)
         }
     }

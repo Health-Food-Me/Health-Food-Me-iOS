@@ -24,7 +24,7 @@ final class DetailSummaryView: UIView {
     
     private let restaurantNameLabel: UILabel = {
         let lb = UILabel()
-        lb.text = ""
+        lb.text = " "
         lb.textColor = .helfmeBlack
         lb.lineBreakMode = .byWordWrapping
         lb.numberOfLines = 0
@@ -86,6 +86,7 @@ extension DetailSummaryView {
         let score = round(data.restaurant.score * 10) / 10
         rateLabel.text = "(\(score))"
         restaurantNameLabel.text = data.restaurant.name
+        restaurantNameLabel.sizeToFit()
     }
 }
 

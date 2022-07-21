@@ -164,7 +164,6 @@ extension SearchResultVC {
             mapViewController.didMove(toParent: self)
             mapViewController.setSupplementMapType(mapType: .search)
         case .searchRecent:
-            mapViewController.initialId = fromSearchCellInitial
             fetchSearchResultData(keyword: searchContent, fromRecent: false)
         default:
             mapViewController.initialId = searchResultList.first?.id
@@ -191,7 +190,6 @@ extension SearchResultVC {
         }
         requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lat, latitude: lng,
                                                                          keyword: keyword), fromRecent: fromRecent) {
-            print("여긴 아님")
             self.mapViewController.IDsForMap = self.searchResultList.map({
                 $0.id
             })
