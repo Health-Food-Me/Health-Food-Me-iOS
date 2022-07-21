@@ -405,7 +405,7 @@ extension SearchVC: UITextFieldDelegate {
 // MARK: - UITableViewDelegate
 
 extension SearchVC: UITableViewDelegate {
-    
+
 }
 
 // MARK: - UITableViewDataSource

@@ -47,10 +47,11 @@ struct Restaurant: Codable {
     let workTime: [String]
     let contact: String
     let isScrap: Bool
+    let score: Double
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case distance, name, logo, category, hashtag, address, workTime, contact, isScrap
+        case distance, name, logo, category, hashtag, address, workTime, contact, isScrap, score
     }
     
     private func getDay(index: Int) -> String {
