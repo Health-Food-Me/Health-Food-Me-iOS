@@ -95,7 +95,8 @@ struct I18N {
     
     struct Map {
         struct Main {
-            static let searchBar = "식당 검색"
+            static let searchBar = "식당을 검색해보세요"
+            static let scrapEmptyGuide = "스크랩한 식당이 없습니다"
         }
         
         struct HamburgerBar {

@@ -14,4 +14,5 @@ struct ScrapListEntity: Codable {
     let hashtag: [String]
     let address: String
     let latitude, longtitude: Double
+    
 }
