@@ -252,6 +252,7 @@ extension ReviewDetailVC {
                     for da in data {
                         self.reviewServerData.append(da.toDomain())
                     }
+                    self.reviewServerData.reverse()
                     print(data, "성공")
                 }
                 
