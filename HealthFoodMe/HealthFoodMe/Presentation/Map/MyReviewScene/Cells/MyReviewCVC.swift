@@ -356,8 +356,6 @@ extension MyReviewCVC {
         reviewContents.text = text
         reviewContents.sizeToFit()
         reviewId = reviewData.reviewId
-//        let restaurantId = reviewData.
-        print("!@#\(reviewId)")
         
         if isFoldRequired {
             moreTapButton.isHidden = false

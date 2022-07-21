@@ -78,6 +78,8 @@ class MyReviewVC: UIViewController {
         super.viewWillAppear(true)
         
         resetUI()
+        fetchData()
+        reviewCV.reloadData()
     }
 }
 
@@ -368,6 +370,7 @@ extension MyReviewVC: MyReviewCVCDelegate {
         // TODO: - 수정 API 붙이기
         let vc = ModuleFactory.resolve().makeReviewWriteVC()
         vc.isEdited = true
+        vc.reviewId = reviewId
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

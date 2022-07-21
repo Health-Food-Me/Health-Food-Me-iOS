@@ -24,12 +24,14 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
             photoCollectionView.reloadData()
         }
     }
+    var restaurantName : String = ""
     var selectedAssets: [PHAsset] = [PHAsset]()
     var userSelectedImages: [UIImage] = [UIImage]()
     var tasteSet = ""
     var feelingArray: [Bool] = [false, false, false]
-    var userId = "62d4e84f0ff2f900ea88bec3" //임시로 넣어준 userID
-    var restaurantID = "62d26c9bd11146a81ef18ea6" //임시로 넣어준 식당ID
+    var userId = ""
+    var restaurantID = ""
+    var reviewId = ""
     private var currentRate: Double = 0
     
     // MARK: - UI Components
@@ -376,6 +378,14 @@ extension ReviewWriteVC {
         photoCollectionView.dataSource = self
     }
     
+    
+    //리뷰 수정일 떄
+    private func setUI(){
+        if isEdited {
+            
+        }
+    }
+    
     private func setNavigation() {
         if isEdited {
             self.navigationItem.title = "리뷰 편집"
@@ -691,7 +701,11 @@ extension ReviewWriteVC {
         if !checkReview() {
             showReviewToast()
         } else {
-            requestReviewWrite()
+            if isEdited {
+                requestReviewEdit()
+            } else {
+                requestReviewWrite()
+            }
         }
     }
     
@@ -805,7 +819,7 @@ extension ReviewWriteVC {
         }
         
         if reviewTextView.text == I18N.Detail.Review.reviewPlaceholder{
-            reviewTextView.text = nil
+            reviewTextView.text = " "
         }
         guard let content = reviewTextView.text else { return }
         
@@ -819,6 +833,48 @@ extension ReviewWriteVC {
                     print(data, "성공")
                 }
                 self.dismiss(animated: true)
+            default:
+                break;
+            }
+        }
+    }
+    
+    func requestReviewEdit() {
+        let reviewId = self.reviewId
+        print("🍎\(reviewId)")
+        let starScore = self.currentRate
+        let taste = tasteSet
+        var good : [String] = []
+        for i in 0...2 {
+            if feelingArray[i] == true{
+                switch i{
+                case 0:
+                    good.append("# 약속 시 부담없는")
+                case 1:
+                    good.append("# 양 조절 쉬운")
+                case 2:
+                    good.append("# 든든한")
+                default:
+                    print("음")
+                }
+            }
+        }
+        
+        if reviewTextView.text == I18N.Detail.Review.reviewPlaceholder{
+            reviewTextView.text = " "
+        }
+        guard let content = reviewTextView.text else { return }
+        
+        let image = photoModel.userSelectedImages
+        ReviewService.shared.requestReviewEdit(reviewId: reviewId, score: starScore, taste: taste, good: good, content: content, image: image, nameList: [""]) { networkResult in
+            dump(networkResult)
+            switch networkResult {
+            case .success(let data):
+                dump(data)
+                if let data = data as? ReviewEditEntity {
+                    print(data, "성공")
+                }
+                self.navigationController?.popViewController(animated: true)
             default:
                 break;
             }
