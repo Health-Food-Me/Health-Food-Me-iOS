@@ -577,6 +577,7 @@ extension MainMapVC {
 
 extension MainMapVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        makeVibrate()
         selectedCategories[indexPath.row].toggle()
         setCurrentCategory(currentIndex: indexPath.row)
         return true
