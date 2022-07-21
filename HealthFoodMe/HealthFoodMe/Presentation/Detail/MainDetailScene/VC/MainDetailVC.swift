@@ -31,7 +31,10 @@ class MainDetailVC: UIViewController {
     private var navigationTitle: String = "서브웨이 테스트"
     private var isOpenned: Bool = false
     private var mainInfoInitialReload: Bool = true
-    var userLocation: Location?
+    var userLocation: Location? = {
+            let loc = Location(latitude: 37.49, longitude: 127.02)
+            return loc
+        }()
     var restaurantId: String = ""
     var restaurantName: String = ""
     var location: Location?
@@ -79,6 +82,7 @@ class MainDetailVC: UIViewController {
         setDelegate()
         bindViewModels()
         setButtonAction()
+        print("🍎\(self.restaurantId)")
         fetchRestauranDetail(restaurantId: self.restaurantId) {
             self.requestReviewEnabled(restaurantId: self.restaurantId)
         }
@@ -491,6 +495,7 @@ extension MainDetailVC {
     func fetchRestauranDetail(restaurantId: String, comletion: @escaping(() -> Void)) {
         if let location = userLocation {
             RestaurantService.shared.fetchRestaurantDetail(restaurantId: restaurantId, userId: UserManager.shared.getUser?.id ?? "", latitude: location.latitude, longitude: location.longitude) { networkResult in
+                print("🍎\(networkResult)")
                 switch networkResult {
                 case .success(let data):
                     if let data = data as? MainDetailEntity {
