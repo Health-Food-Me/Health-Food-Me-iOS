@@ -42,7 +42,7 @@ extension SplashVC {
         
         animationView.frame = self.view.bounds
         animationView.center = self.view.center
-        animationView.contentMode = .scaleAspectFit
+        animationView.contentMode = .scaleAspectFill
     }
     
     private func playAnimation() {

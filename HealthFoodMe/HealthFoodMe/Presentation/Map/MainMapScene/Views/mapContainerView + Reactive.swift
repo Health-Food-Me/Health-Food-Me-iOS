@@ -15,6 +15,12 @@ extension Reactive where Base: NaverMapContainerView {
             containerView.pointList.accept(points)
         }
     }
+    
+    internal var categoryPointList: Binder<[MapPointDataModel]> {
+        return Binder(self.base) { containerView, category in
+            containerView.categoryPointList.accept(category)
+        }
+    }
 }
 
 extension Reactive where Base: NaverMapContainerView {

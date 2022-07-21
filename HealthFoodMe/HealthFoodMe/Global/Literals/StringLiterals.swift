@@ -81,9 +81,6 @@ struct I18N {
             static let writeReview = "리뷰 쓰기"
             static let checkReviewToast = "별점과 맛 평가는 필수입니다."
             static let checkPhotoToast = "사진 첨부는 최대 3장까지만 가능합니다!"
-            
-            
-            
         }
     }
     
@@ -135,6 +132,12 @@ struct I18N {
         static let withHelfme = "헬푸미와 외식 걱정을 날려보세요!"
         static let dietStore = "다이어터도 즐길 수 있는 식당"
         static let goScrap = "스크랩하러 가기"
+    }
+    
+    struct MyReview {
+        static let myReviewTitle = "내가 쓴 리뷰"
+        static let enjoyRestaurant = "다이어터도 즐길 수 있는"
+        static let gotoFindRestaurant = "식당 보러 가기"
     }
   
     struct Setting {
