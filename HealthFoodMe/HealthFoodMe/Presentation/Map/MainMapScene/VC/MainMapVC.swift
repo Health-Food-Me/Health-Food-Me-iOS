@@ -348,7 +348,7 @@ extension MainMapVC {
                         
                         let bottomSafeArea = self.safeAreaBottomInset()
                         self.myLocationButton.snp.updateConstraints { make in
-                            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+20) * (-1))
+                            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((20) * (-1))
                         }
                         
                         UIView.animate(withDuration: 0.3, delay: 0) {
@@ -371,7 +371,7 @@ extension MainMapVC {
                         }
                     }
                         self.scrapButton.isHidden = true
-                        self.myLocationButton.isHidden = true
+                        self.myLocationButton.isHidden = false
                 default:
                     break
                 }
@@ -456,7 +456,7 @@ extension MainMapVC {
                     }
                 }
                 
-                self?.myLocationButton.isHidden = true
+                self?.myLocationButton.isHidden = false
                 self?.scrapButton.isHidden = true
                 
                 UIView.animate(withDuration: 0.3, delay: 0) {
@@ -494,7 +494,7 @@ extension MainMapVC {
                 self.view.layoutIfNeeded()
             } completion: { _ in
                 self.scrapButton.isHidden = true
-                self.myLocationButton.isHidden = true
+                self.myLocationButton.isHidden = false
                 self.hamburgerButton.isHidden = false
                 self.searchBar.isHidden = false
                 self.categoryCollectionView.isHidden = false

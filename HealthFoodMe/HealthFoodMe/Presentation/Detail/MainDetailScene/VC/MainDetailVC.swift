@@ -31,7 +31,10 @@ class MainDetailVC: UIViewController {
     private var navigationTitle: String = ""
     private var isOpenned: Bool = false
     private var mainInfoInitialReload: Bool = true
-    var userLocation: Location?
+    var userLocation: Location? = {
+            let loc = Location(latitude: 37.49, longitude: 127.02)
+            return loc
+        }()
     var restaurantId: String = ""
     var restaurantName: String = ""
     var restaurantLocation: Location?
@@ -80,6 +83,7 @@ class MainDetailVC: UIViewController {
         setDelegate()
         bindViewModels()
         setButtonAction()
+        print("🍎\(self.restaurantId)")
         fetchRestauranDetail(restaurantId: self.restaurantId) {
             self.requestReviewEnabled(restaurantId: self.restaurantId)
         }

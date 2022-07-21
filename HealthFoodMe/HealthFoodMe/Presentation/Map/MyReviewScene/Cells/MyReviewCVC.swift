@@ -421,7 +421,8 @@ extension MyReviewCVC {
     
     @objc
     private func pushMainDetailVC() {
-        delegate?.restaurantNameTapped(restaurantId: restaurantId)
+        delegate?.restaurantNameTapped(restaurantId: self.restaurantId)
+        print("🍎\(self.restaurantId)")
     }
 }
 
