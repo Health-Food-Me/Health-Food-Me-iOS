@@ -28,7 +28,7 @@ protocol ModuleFactoryProtocol {
     func makeCopingTabVC() -> CopingTabVC
     func makeReviewDetailVC() -> ReviewDetailVC
     func makeReviewWriteVC() -> ReviewWriteVC
-    func makeReviewWriteNavigationController(restaurantId: String) -> UINavigationController
+    func makeReviewWriteNavigationController(restaurantId: String, restaurantName: String) -> UINavigationController
     
     // MARK: - Search
     func makeSearchVC() -> SearchVC
@@ -152,9 +152,10 @@ class ModuleFactory: ModuleFactoryProtocol {
         return vc
     }
     
-    func makeReviewWriteNavigationController(restaurantId: String) -> UINavigationController {
+    func makeReviewWriteNavigationController(restaurantId: String, restaurantName: String) -> UINavigationController {
         let vc = ReviewWriteVC.controllerFromStoryboard(.reviewWrite)
         vc.restaurantID = restaurantId
+        vc.restaurantName = restaurantName
         guard let nc = UINavigationController(rootViewController: vc) as? UINavigationController else { return UINavigationController() }
         
         return nc

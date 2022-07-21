@@ -17,19 +17,27 @@ enum Cell: Int {
 
 final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
-    var isEdited = MyReviewVC().isEdited //없애
+    var isEdited = false
+    
     private var photoModel: PhotoDataModel = PhotoDataModel() {
         didSet {
             photoCollectionView.reloadData()
         }
     }
-    var selectedAssets: [PHAsset] = [PHAsset]()
-    var userSelectedImages: [UIImage] = [UIImage]()
+    
+    var userId = UserManager.shared.getUser?.id ?? ""
+    var restaurantName : String = ""
+    var restaurantID = ""
+    var reviewId = ""
     var tasteSet = ""
     var feelingArray: [Bool] = [false, false, false]
-    var userId = "62d4e84f0ff2f900ea88bec3" //임시로 넣어준 userID
-    var restaurantID = "62d26c9bd11146a81ef18ea6" //임시로 넣어준 식당ID
-    private var currentRate: Double = 0
+    
+    var currentRate: Double = 0
+    var tagList: [String] = []
+    var selectedAssets: [PHAsset] = [PHAsset]()
+    var userSelectedImages: [UIImage] = [UIImage]()
+    var content: String = ""
+    var imageURLList: [String] = []
     
     // MARK: - UI Components
     
@@ -49,7 +57,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     
     private lazy var restaurantTitleLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "샐러디 태릉입구점(임시)"
+        lb.text = self.restaurantName
         lb.textColor = .helfmeBlack
         lb.font = .NotoBold(size: 16)
         return lb
@@ -206,6 +214,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.cornerRadius = 14
         btn.tag = 2
         btn.addTarget(self, action: #selector(didTapFeelingTag), for: .touchUpInside)
+    
         return btn
     }()
     
@@ -346,18 +355,22 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         setNavigation()
         setLayout()
         registerCell()
-        setAddTargets()
         setTextView()
         addTapGesture()
         bindSlider()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        setEditedUI()
         setKeyboardObserver()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         removeKeyboardObserver()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setAddTargets()
     }
 }
 
@@ -375,8 +388,46 @@ extension ReviewWriteVC {
         photoCollectionView.dataSource = self
     }
     
+    private func setEditedUI(){
+        if isEdited {
+            sliderView.setSliderValue(rate: self.currentRate)
+            reviewTextView.text = self.content
+            reviewTextView.textColor = .helfmeBlack
+            tasteSet = tagList[0]
+            for tag in tagList {
+                switch tag {
+                case I18N.Detail.Review.tagGood:
+                    tagGood.isSelected = true
+                    setButtonUI(button: tagGood)
+                case I18N.Detail.Review.tagSoso:
+                    tagSoso.isSelected = true
+                    setButtonUI(button: tagSoso)
+                case I18N.Detail.Review.tagBad:
+                    tagBad.isSelected = true
+                    setButtonUI(button: tagBad)
+                case I18N.Detail.Review.tagNoBurden:
+                    tagNoBurden.isSelected = true
+                    setButtonUI(button: tagNoBurden)
+                case I18N.Detail.Review.tagEasy:
+                    tagEasy.isSelected = true
+                    setButtonUI(button: tagEasy)
+                case I18N.Detail.Review.tagStrong:
+                    tagStrong.isSelected = true
+                    setButtonUI(button: tagStrong)
+                default:
+                    print("🍎")
+                }
+            }
+            print("🍎\(self.imageURLList)")
+        }
+    }
+    
     private func setNavigation() {
-        self.navigationItem.title = "리뷰 작성"
+        if isEdited {
+            self.navigationItem.title = "리뷰 편집"
+        } else {
+            self.navigationItem.title = "리뷰 작성"
+        }
         DispatchQueue.main.async {
             self.navigationController?.isNavigationBarHidden = false
         }
@@ -385,13 +436,23 @@ extension ReviewWriteVC {
         let backButton = UIButton()
         backButton.setImage(ImageLiterals.MainDetail.beforeIcon, for: .normal)
         backButton.tintColor = .helfmeBlack
-        backButton.addAction(UIAction(handler: { _ in
-            self.makeAlert(alertType: .logoutAlert,
-                           title: "리뷰작성을 취소하시겠습니까?",
-                           subtitle: "작성취소 시,\n 작성된 글은 저장되지 않습니다.") {
-                self.navigationController?.dismiss(animated: true)
-            }
-        }), for: .touchUpInside)
+        if isEdited {
+                    backButton.addAction(UIAction(handler: { _ in
+                            self.makeAlert(alertType: .logoutAlert,
+                                           title: "리뷰 편집을 취소하시겠습니까?",
+                                           subtitle: "편집 취소 시,\n 작성된 글은 저장되지 않습니다.") {
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                    }), for: .touchUpInside)
+                } else {
+                    backButton.addAction(UIAction(handler: { _ in
+                            self.makeAlert(alertType: .logoutAlert,
+                                           title: "리뷰작성을 취소하시겠습니까?",
+                                           subtitle: "작성취소 시,\n 수정된 글은 저장되지 않습니다.") {
+                                self.navigationController?.dismiss(animated: true)
+                            }
+                    }), for: .touchUpInside)
+                }
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
@@ -537,8 +598,19 @@ extension ReviewWriteVC {
     }
     
     private func setAddTargets() {
+        print("Tag Button count",tasteTagButton.count)
         tasteTagButton.forEach { button in
             button.addTarget(self, action: #selector(didTapTasteTag), for: .touchUpInside)
+        }
+    }
+    
+    private func setButtonUI(button: UIButton) {
+        if button.isSelected {
+            button.layer.borderColor = UIColor.mainRed.cgColor
+            button.setTitleColor(UIColor.mainRed, for: UIControl.State.normal)
+        } else {
+            button.layer.borderColor = UIColor.helfmeGray2.cgColor
+            button.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         }
     }
     
@@ -548,15 +620,11 @@ extension ReviewWriteVC {
             guard let tagTitle = button.titleLabel?.text else { return }
             button.isSelected = sender == button
             if button.isSelected {
-                button.layer.borderColor = UIColor.mainRed.cgColor
-                button.setTitleColor(UIColor.mainRed, for: UIControl.State.normal)
                 tasteSet = tagTitle
-            } else {
-                button.layer.borderColor = UIColor.helfmeGray2.cgColor
-                button.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
             }
+            setButtonUI(button: button)
         }
-        print(tasteSet)
+        print("🍎\(self.tasteSet)")
     }
     
     @objc private func didTapFeelingTag(_ sender: UIButton) {
@@ -676,7 +744,11 @@ extension ReviewWriteVC {
         if !checkReview() {
             showReviewToast()
         } else {
-            requestReviewWrite()
+            if isEdited {
+                requestReviewEdit()
+            } else {
+                requestReviewWrite()
+            }
         }
     }
     
@@ -778,17 +850,17 @@ extension ReviewWriteVC {
             if feelingArray[i] == true{
                 switch i{
                 case 0:
-                    good.append("# 약속 시 부담없는")
+                    good.append(I18N.Detail.Review.tagNoBurden)
                 case 1:
-                    good.append("# 양 조절 쉬운")
+                    good.append(I18N.Detail.Review.tagEasy)
                 case 2:
-                    good.append("# 든든한")
+                    good.append(I18N.Detail.Review.tagStrong)
                 default:
                     print("음")
                 }
             }
         }
-
+        
         if reviewTextView.text == I18N.Detail.Review.reviewPlaceholder{
             reviewTextView.text = " "
         }
@@ -804,6 +876,48 @@ extension ReviewWriteVC {
                     print(data, "성공")
                 }
                 self.dismiss(animated: true)
+            default:
+                break;
+            }
+        }
+    }
+    
+    func requestReviewEdit() {
+        let reviewId = self.reviewId
+        print("🍎\(reviewId)")
+        let starScore = self.currentRate
+        let taste = tasteSet
+        var good : [String] = []
+        for i in 0...2 {
+            if feelingArray[i] == true{
+                switch i{
+                case 0:
+                    good.append("# 약속 시 부담 없는")
+                case 1:
+                    good.append("# 양 조절 쉬운")
+                case 2:
+                    good.append("# 든든한")
+                default:
+                    print("음")
+                }
+            }
+        }
+        
+        if reviewTextView.text == I18N.Detail.Review.reviewPlaceholder{
+            reviewTextView.text = " "
+        }
+        guard let content = reviewTextView.text else { return }
+        
+        let image = photoModel.userSelectedImages
+        ReviewService.shared.requestReviewEdit(reviewId: reviewId, score: starScore, taste: taste, good: good, content: content, image: image, nameList: [""]) { networkResult in
+            dump(networkResult)
+            switch networkResult {
+            case .success(let data):
+                dump(data)
+                if let data = data as? ReviewEditEntity {
+                    print(data, "성공")
+                }
+                self.navigationController?.popViewController(animated: true)
             default:
                 break;
             }
@@ -883,16 +997,20 @@ extension ReviewWriteVC: ListPhotoCVCDelegate {
 
 extension ReviewWriteVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == .helfmeGray2 {
-            textView.text = nil
-            textView.textColor = .helfmeBlack
+        if !isEdited {
+            if textView.textColor == .helfmeGray2 {
+                textView.text = nil
+                textView.textColor = .helfmeBlack
+            }
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "리뷰를 작성해주세요 (최대 500자)"
-            textView.textColor = .helfmeGray2
+        if !isEdited {
+            if textView.text.isEmpty {
+                textView.text = "리뷰를 작성해주세요 (최대 500자)"
+                textView.textColor = .helfmeGray2
+            }
         }
     }
     

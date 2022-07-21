@@ -33,6 +33,7 @@ class MainDetailVC: UIViewController {
     private var mainInfoInitialReload: Bool = true
     var userLocation: Location?
     var restaurantId: String = ""
+    var restaurantName: String = ""
     var location: Location?
     var panGestureEnabled = true
     var viewModel: MainDetailViewModel!
@@ -63,6 +64,7 @@ class MainDetailVC: UIViewController {
     
     private var reviewWriteCTAButton: CTAButton = {
         let button = CTAButton(enableState: true, title: I18N.Detail.Main.reviewWriteCTATitle)
+        var isEdited = false
         button.isEnabled = true
         return button
     }()
@@ -180,7 +182,7 @@ extension MainDetailVC {
     
     private func setButtonAction() {
         reviewWriteCTAButton.press {
-            let writeVC = ModuleFactory.resolve().makeReviewWriteNavigationController(restaurantId: self.restaurantId)
+            let writeVC = ModuleFactory.resolve().makeReviewWriteNavigationController(restaurantId: self.restaurantId, restaurantName: self.restaurantName)
             writeVC.modalPresentationStyle = .fullScreen
             self.present(writeVC, animated: true)
         }
@@ -497,6 +499,7 @@ extension MainDetailVC {
                         self.mainInfoTVC.setData(data: data)
                         self.menuTabVC.setData(data: data.menu)
                         self.reviewTabVC.restaurantName = data.restaurant.name
+                        self.restaurantName = data.restaurant.name
                     }
                 default:
                     print("통신 에러")

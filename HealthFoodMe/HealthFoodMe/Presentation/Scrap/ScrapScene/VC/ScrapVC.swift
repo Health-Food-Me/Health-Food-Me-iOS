@@ -153,6 +153,13 @@ extension ScrapVC: UICollectionViewDelegate {
         vc.navigationController?.isNavigationBarHidden = false
         vc.navigationController?.isToolbarHidden = false
         vc.navigationController?.setNavigationBarHidden(false, animated: false)
+        var pointList = [MapPointDataModel]()
+        scrapList.forEach { entity in
+            pointList.append(entity.toDomain())
+        }
+        let initialPoint = scrapList[indexPath.row]
+        vc.initialPoint = MapPointDataModel.init(latitude: initialPoint.latitude, longtitude: initialPoint.longtitude, type: .normalFood)
+        vc.targetMarkerPointList = pointList
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
