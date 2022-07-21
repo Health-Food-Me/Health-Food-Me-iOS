@@ -43,7 +43,7 @@ class CopingTabVC: UIViewController {
     }
     private let headerHeight = 130
     private let rowHeight = 38
-    private let bottomMargin = 120
+    private let bottomMargin = 115
     var swipeDelegate: SwipeDismissDelegate?
     
     // MARK: - UI Components
