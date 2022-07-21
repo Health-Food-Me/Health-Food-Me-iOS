@@ -15,7 +15,8 @@ final class DetailSummaryView: UIView {
     
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
         iv.image = ImageLiterals.MainDetail.tempMuseum
         return iv
     }()
