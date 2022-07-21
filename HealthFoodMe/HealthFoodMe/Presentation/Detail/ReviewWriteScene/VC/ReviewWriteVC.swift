@@ -470,7 +470,7 @@ extension ReviewWriteVC {
     private func setLayout() {
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalToSuperview()
         }
         
         scrollView.addSubview(contentView)
