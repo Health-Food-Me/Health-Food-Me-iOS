@@ -28,12 +28,13 @@ class MainDetailVC: UIViewController {
     private var reviewTabVC = ModuleFactory.resolve().makeReviewDetailVC()
     private var menuCase: TabMenuCase = .menu
     private var phoneMenuTouched: Bool = false
-    private var navigationTitle: String = "서브웨이 테스트"
+    private var navigationTitle: String = ""
     private var isOpenned: Bool = false
     private var mainInfoInitialReload: Bool = true
+    private var restaurantName: String = ""
     var userLocation: Location?
     var restaurantId: String = ""
-    var location: Location?
+    var restaurantLocation: Location?
     var panGestureEnabled = true
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
@@ -363,11 +364,17 @@ extension MainDetailVC: UITableViewDataSource {
         let actionSheet = UIAlertController(title: "길 찾기", message: nil, preferredStyle: .actionSheet)
         
         let kakaoAction = UIAlertAction(title: "카카오맵", style: UIAlertAction.Style.default, handler: { _ in
-            URLSchemeManager.shared.loadKakaoMapApp(myLocation: NameLocation(latitude: "37.4640070", longtitude: "126.9522394", name: "서울대학교"), destination: NameLocation(latitude: "37.5209436", longtitude: "127.1230074", name: "올림픽공원"))
+            if let myLocation = self.userLocation,
+               let destination = self.restaurantLocation {
+                URLSchemeManager.shared.loadKakaoMapApp(myLocation: NameLocation(latitude: myLocation.latitude, longtitude: myLocation.longitude, name: "현위치"), destination: NameLocation(latitude: destination.latitude, longtitude: destination.longitude, name: "올림픽공원"))
+            }
         })
         
         let naverAction = UIAlertAction(title: "네이버지도", style: UIAlertAction.Style.default, handler: { _ in
-            URLSchemeManager.shared.loadNaverMapApp(myLocation: NameLocation(latitude: "37.4640070", longtitude: "126.9522394", name: "서울대학교"), destination: NameLocation(latitude: "37.5209436", longtitude: "127.1230074", name: "올림픽공원"))
+            if let myLocation = self.userLocation,
+               let destination = self.restaurantLocation {
+                URLSchemeManager.shared.loadNaverMapApp(myLocation: NameLocation(latitude: myLocation.latitude, longtitude: myLocation.longitude, name: "현위치"), destination: NameLocation(latitude: destination.latitude, longtitude: destination.longitude, name: self.restaurantName))
+            }
         })
         
         let cancelAction = UIAlertAction(title: "취소", style: UIAlertAction.Style.cancel, handler: nil)
@@ -493,6 +500,7 @@ extension MainDetailVC {
                 case .success(let data):
                     if let data = data as? MainDetailEntity {
                         self.navigationTitle = data.restaurant.name
+                        self.restaurantName = data.restaurant.name
                         self.mainInfoTVC.isInitialReload = self.mainInfoInitialReload
                         self.mainInfoTVC.setData(data: data)
                         self.menuTabVC.setData(data: data.menu)

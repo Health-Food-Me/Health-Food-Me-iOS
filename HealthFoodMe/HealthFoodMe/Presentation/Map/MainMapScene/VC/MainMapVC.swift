@@ -443,7 +443,7 @@ extension MainMapVC {
             }
         }
         nextVC.restaurantId = self.currentRestaurantId
-        nextVC.location = self.currentLocation
+        nextVC.restaurantLocation = self.currentLocation
         if let lat = locationManager?.currentLatLng().lat,
            let lng = locationManager?.currentLatLng().lng {
             nextVC.userLocation = Location(latitude: lat, longitude: lng)
