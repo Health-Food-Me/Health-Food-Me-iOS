@@ -41,6 +41,7 @@ class MainDetailVC: UIViewController {
     var panGestureEnabled = true
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
+    var isInitialLoad = true
     
     // MARK: - UI Components
     
@@ -84,12 +85,16 @@ class MainDetailVC: UIViewController {
         setButtonAction()
         print("🍎\(self.restaurantId)")
         fetchRestauranDetail(restaurantId: self.restaurantId) {
+            self.isInitialLoad = false
             self.requestReviewEnabled(restaurantId: self.restaurantId)
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if !isInitialLoad {
+            self.requestReviewEnabled(restaurantId: self.restaurantId)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
