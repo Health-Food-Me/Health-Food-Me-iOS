@@ -63,7 +63,7 @@ final class MainInfoTVC: UITableViewCell, UITableViewRegisterable {
     
     private let distanceLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "593m"
+        lb.text = "0m"
         lb.textColor = .mainRed
         lb.font = .NotoMedium(size: 12)
         return lb
@@ -142,9 +142,15 @@ extension MainInfoTVC {
     
     func setData(data: MainDetailEntity) {
         detailSummaryView.setData(data: data)
-        distanceLabel.text = "\(data.restaurant.distance)m"
+        if data.restaurant.distance > 1000 {
+            let firstNumber = data.restaurant.distance / 1000
+            let secondNumber = (data.restaurant.distance / 100) % 10
+            let result = "\(firstNumber).\(secondNumber)"
+            distanceLabel.text = "\(result)km"
+        } else {
+            distanceLabel.text = "\(data.restaurant.distance)m"
+        }
         self.expandableData = data.restaurant.toDomain()
-        print("나와라~")
         print(self.expandableData)
         
         initialReload()
