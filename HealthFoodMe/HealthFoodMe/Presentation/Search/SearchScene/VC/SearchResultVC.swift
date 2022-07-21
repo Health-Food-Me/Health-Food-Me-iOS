@@ -148,7 +148,6 @@ extension SearchResultVC {
             $0.id
         })
         
-        mapViewController.setSupplementMapType(mapType: .search)
         mapViewController.navigationController?.navigationBar.isHidden = true
         mapViewController.delegate = self
         switch fromSearchType {
@@ -166,6 +165,7 @@ extension SearchResultVC {
             self.view.addSubview(mapViewController.view)
             mapViewController.didMove(toParent: self)
         }
+        mapViewController.setSupplementMapType(mapType: .search)
     }
     
     private func fetchSearchResultData(keyword: String, fromRecent: Bool) {

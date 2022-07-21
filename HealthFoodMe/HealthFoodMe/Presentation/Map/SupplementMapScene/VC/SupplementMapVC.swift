@@ -250,7 +250,7 @@ extension SupplementMapVC {
         self.mapDetailSummaryView.snp.updateConstraints { make in
             make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
         }
-        let bottomSafeArea = self.safeAreaBottomInset()
+        
         self.myLocationButton.snp.updateConstraints { make in
             make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset(-165)
         }
@@ -268,7 +268,7 @@ extension SupplementMapVC {
         self.mapDetailSummaryView.snp.updateConstraints { make in
             make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
         }
-        let bottomSafeArea = self.safeAreaBottomInset()
+        
         self.myLocationButton.snp.updateConstraints { make in
             make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset(-165)
         }

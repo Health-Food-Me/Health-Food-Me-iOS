@@ -405,7 +405,7 @@ extension SearchVC: UITextFieldDelegate {
 // MARK: - UITableViewDelegate
 
 extension SearchVC: UITableViewDelegate {
-
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -465,12 +465,10 @@ extension SearchVC: UITableViewDataSource {
             // 지도 눌러도 안바뀌는 화면으로 이동
             let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
             searchResultVC.delegate = self
-            searchResultVC.fromSearchType = .searchCell
+            searchResultVC.fromSearchType = .searchRecent
             searchResultVC.fromSearchCellInitial = searchList[indexPath.row].id
-            if let searchText = searchTextField.text {
-                searchResultVC.searchContent = searchList[indexPath.row].title
-                searchResultVC.searchResultList = searchResultList
-            }
+            searchResultVC.searchContent = searchList[indexPath.row].title
+            searchResultVC.searchResultList = searchResultList
             navigationController?.pushViewController(searchResultVC, animated: false)
             addSearchRecent(title: searchList[indexPath.row].title)
         case .searchResult:

@@ -408,6 +408,7 @@ extension MyReviewVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? String {
+                    completion()
                 }
             default:
                 break
