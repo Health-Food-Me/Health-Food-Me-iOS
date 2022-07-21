@@ -33,7 +33,7 @@ final class MapDetailSummaryView: UIView {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
-        iv.image = ImageLiterals.MainDetail.tempMuseum
+        iv.image = UIImage()
         iv.layer.cornerRadius = 5
         return iv
     }()
@@ -60,7 +60,7 @@ final class MapDetailSummaryView: UIView {
     
     private let restaurantNameLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "서브웨이 동대문역사문화공원역점"
+        lb.text = " "
         lb.textColor = .helfmeBlack
         lb.lineBreakMode = .byWordWrapping
         lb.numberOfLines = 0

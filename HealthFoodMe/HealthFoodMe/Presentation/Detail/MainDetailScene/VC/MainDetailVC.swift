@@ -38,6 +38,7 @@ class MainDetailVC: UIViewController {
     var panGestureEnabled = true
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
+    var scrapButtonInstance = UIButton()
     
     // MARK: - UI Components
     
@@ -124,6 +125,7 @@ extension MainDetailVC {
             scrapButton.isSelected.toggle()
             self.putScrap(userId: UserManager.shared.getUser ?? "", restaurantId: self.restaurantId)
         }), for: .touchUpInside)
+        scrapButtonInstance = scrapButton
         
         reviewWriteCTAButton.layer.cornerRadius = 20
         
@@ -507,6 +509,7 @@ extension MainDetailVC {
                         self.menuTabVC.setData(data: data.menu)
                         self.reviewTabVC.restaurantName = data.restaurant.name
                         self.restaurantName = data.restaurant.name
+                        self.scrapButtonInstance.isSelected = data.restaurant.isScrap
                     }
                 default:
                     print("통신 에러")
