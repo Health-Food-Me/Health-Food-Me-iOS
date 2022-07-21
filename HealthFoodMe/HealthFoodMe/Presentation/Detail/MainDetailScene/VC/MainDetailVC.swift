@@ -28,7 +28,7 @@ class MainDetailVC: UIViewController {
     private var reviewTabVC = ModuleFactory.resolve().makeReviewDetailVC()
     private var menuCase: TabMenuCase = .menu
     private var phoneMenuTouched: Bool = false
-    private var navigationTitle: String = "서브웨이 테스트"
+    private var navigationTitle: String = ""
     private var isOpenned: Bool = false
     private var mainInfoInitialReload: Bool = true
     var userLocation: Location? = {
@@ -37,11 +37,12 @@ class MainDetailVC: UIViewController {
         }()
     var restaurantId: String = ""
     var restaurantName: String = ""
-    var location: Location?
+    var restaurantLocation: Location?
     var panGestureEnabled = true
     var viewModel: MainDetailViewModel!
     var translationClosure: (() -> Void)?
     var isInitialLoad = true
+    var scrapButtonInstance = UIButton()
     
     // MARK: - UI Components
     
@@ -131,8 +132,9 @@ extension MainDetailVC {
         scrapButton.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
         scrapButton.addAction(UIAction(handler: { _ in
             scrapButton.isSelected.toggle()
-            self.putScrap(userId: UserManager.shared.getUser?.id ?? "", restaurantId: self.restaurantId)
+            self.putScrap(userId: UserManager.shared.getUser ?? "", restaurantId: self.restaurantId)
         }), for: .touchUpInside)
+        scrapButtonInstance = scrapButton
         
         reviewWriteCTAButton.layer.cornerRadius = 20
         
@@ -374,11 +376,17 @@ extension MainDetailVC: UITableViewDataSource {
         let actionSheet = UIAlertController(title: "길 찾기", message: nil, preferredStyle: .actionSheet)
         
         let kakaoAction = UIAlertAction(title: "카카오맵", style: UIAlertAction.Style.default, handler: { _ in
-            URLSchemeManager.shared.loadKakaoMapApp(myLocation: NameLocation(latitude: "37.4640070", longtitude: "126.9522394", name: "서울대학교"), destination: NameLocation(latitude: "37.5209436", longtitude: "127.1230074", name: "올림픽공원"))
+            if let myLocation = self.userLocation,
+               let destination = self.restaurantLocation {
+                URLSchemeManager.shared.loadKakaoMapApp(myLocation: NameLocation(latitude: myLocation.latitude, longtitude: myLocation.longitude, name: "현위치"), destination: NameLocation(latitude: destination.latitude, longtitude: destination.longitude, name: "올림픽공원"))
+            }
         })
         
         let naverAction = UIAlertAction(title: "네이버지도", style: UIAlertAction.Style.default, handler: { _ in
-            URLSchemeManager.shared.loadNaverMapApp(myLocation: NameLocation(latitude: "37.4640070", longtitude: "126.9522394", name: "서울대학교"), destination: NameLocation(latitude: "37.5209436", longtitude: "127.1230074", name: "올림픽공원"))
+            if let myLocation = self.userLocation,
+               let destination = self.restaurantLocation {
+                URLSchemeManager.shared.loadNaverMapApp(myLocation: NameLocation(latitude: myLocation.latitude, longtitude: myLocation.longitude, name: "현위치"), destination: NameLocation(latitude: destination.latitude, longtitude: destination.longitude, name: self.restaurantName))
+            }
         })
         
         let cancelAction = UIAlertAction(title: "취소", style: UIAlertAction.Style.cancel, handler: nil)
@@ -499,17 +507,18 @@ extension MainDetailVC: SwipeDismissDelegate {
 extension MainDetailVC {
     func fetchRestauranDetail(restaurantId: String, comletion: @escaping(() -> Void)) {
         if let location = userLocation {
-            RestaurantService.shared.fetchRestaurantDetail(restaurantId: restaurantId, userId: UserManager.shared.getUser?.id ?? "", latitude: location.latitude, longitude: location.longitude) { networkResult in
-                print("🍎\(networkResult)")
+            RestaurantService.shared.fetchRestaurantDetail(restaurantId: restaurantId, userId: UserManager.shared.getUser ?? "", latitude: location.latitude, longitude: location.longitude) { networkResult in
                 switch networkResult {
                 case .success(let data):
                     if let data = data as? MainDetailEntity {
                         self.navigationTitle = data.restaurant.name
+                        self.restaurantName = data.restaurant.name
                         self.mainInfoTVC.isInitialReload = self.mainInfoInitialReload
                         self.mainInfoTVC.setData(data: data)
                         self.menuTabVC.setData(data: data.menu)
                         self.reviewTabVC.restaurantName = data.restaurant.name
                         self.restaurantName = data.restaurant.name
+                        self.scrapButtonInstance.isSelected = data.restaurant.isScrap
                     }
                 default:
                     print("통신 에러")
@@ -520,7 +529,7 @@ extension MainDetailVC {
     }
     
     func requestReviewEnabled(restaurantId: String) {
-        ReviewService.shared.requestReviewEnabled(userId: UserManager.shared.getUser?.id ?? "", restaurantId: restaurantId) { networkResult in
+        ReviewService.shared.requestReviewEnabled(userId: UserManager.shared.getUser ?? "", restaurantId: restaurantId) { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? ReviewCheckEntity {

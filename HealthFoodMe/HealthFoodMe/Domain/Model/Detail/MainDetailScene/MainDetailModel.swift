@@ -12,8 +12,8 @@ struct MainDetailModel {
 }
 
 struct NameLocation {
-    let latitude: String
-    let longtitude: String
+    let latitude: Double
+    let longtitude: Double
     let name: String
 }
 
