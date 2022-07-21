@@ -9,7 +9,7 @@ import UIKit
 
 protocol MyReviewCVCDelegate: AnyObject {
     func restaurantNameTapped(restaurantId: String)
-    func editButtonTapped(reviewId: String, restaurantName: String)
+    func editButtonTapped(reviewId: String, restaurantName: String, score: Double, tagList: [String], content: String, image: [UIImage])
     func deleteButtonTapped(reviewId: String)
 }
 
@@ -37,6 +37,10 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     var reviewId : String = ""
     var restaurantId: String = ""
     var restaurantName: String = ""
+    var starScore: Double = 0.0
+    var tagList: [String] = []
+    var content: String = ""
+    var image: [UIImage] = []
     
     // MARK: - UI Components
     
@@ -90,7 +94,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         bt.setTitle("편집", for: .normal)
         bt.setTitleColor(UIColor.helfmeGray2, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            self.delegate?.editButtonTapped(reviewId: self.reviewId, restaurantName: self.restaurantName)
+            self.delegate?.editButtonTapped(reviewId: self.reviewId, restaurantName: self.restaurantName, score: self.starScore, tagList: self.tagList, content: self.content, image: self.image)
         }), for: .touchUpInside)
         return bt
     }()
@@ -358,8 +362,12 @@ extension MyReviewCVC {
         reviewContents.text = text
         reviewContents.sizeToFit()
         reviewId = reviewData.reviewId
-//        restaurantId = reviewData.
         restaurantName = reviewData.restaurantName
+        restaurantId = reviewData.restaurantId
+        starScore = Double(reviewData.starRate)
+        tagList = reviewData.tagList
+        content = reviewData.reviewContents ?? ""
+        //image = reviewData.reviewImageURLList ?? []
         
         if isFoldRequired {
             moreTapButton.isHidden = false

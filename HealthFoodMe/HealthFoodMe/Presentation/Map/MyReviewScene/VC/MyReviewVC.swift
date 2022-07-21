@@ -360,6 +360,7 @@ extension MyReviewVC: UICollectionViewDelegateFlowLayout {
 // MARK: - MyReviewCVCDelegate
 
 extension MyReviewVC: MyReviewCVCDelegate {
+    
     func restaurantNameTapped(restaurantId: String) {
         let vc = ModuleFactory.resolve().makeMainDetailVC()
         vc.panGestureEnabled = false
@@ -367,12 +368,16 @@ extension MyReviewVC: MyReviewCVCDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func editButtonTapped(reviewId: String, restaurantName: String) {
+    func editButtonTapped(reviewId: String, restaurantName: String, score: Double, tagList: [String], content: String, image: [UIImage])  {
         // TODO: - 수정 API 붙이기
         let vc = ModuleFactory.resolve().makeReviewWriteVC()
         vc.isEdited = true
         vc.reviewId = reviewId
         vc.restaurantName = restaurantName
+        vc.currentRate = score
+        vc.tagList = tagList
+        vc.content = content
+        vc.userSelectedImages = image
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -392,6 +397,7 @@ extension MyReviewVC {
         ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser?.id ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
+                print("🙃\(data)")
                 self.reviewServerData.removeAll()
                 if let data = data as? [MyReviewEntity] {
                     for da in data {

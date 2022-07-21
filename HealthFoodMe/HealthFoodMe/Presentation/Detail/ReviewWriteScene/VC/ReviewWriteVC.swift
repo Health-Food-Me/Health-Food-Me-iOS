@@ -24,15 +24,19 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
             photoCollectionView.reloadData()
         }
     }
-    var restaurantName : String = ""
-    var selectedAssets: [PHAsset] = [PHAsset]()
-    var userSelectedImages: [UIImage] = [UIImage]()
-    var tasteSet = ""
-    var feelingArray: [Bool] = [false, false, false]
+    
     var userId = UserManager.shared.getUser?.id ?? ""
+    var restaurantName : String = ""
     var restaurantID = ""
     var reviewId = ""
-    private var currentRate: Double = 0
+    var tasteSet = ""
+    var feelingArray: [Bool] = [false, false, false]
+    
+    var currentRate: Double = 0
+    var tagList: [String] = []
+    var selectedAssets: [PHAsset] = [PHAsset]()
+    var userSelectedImages: [UIImage] = [UIImage]()
+    var content: String = ""
     
     // MARK: - UI Components
     
@@ -209,6 +213,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.cornerRadius = 14
         btn.tag = 2
         btn.addTarget(self, action: #selector(didTapFeelingTag), for: .touchUpInside)
+    
         return btn
     }()
     
@@ -349,18 +354,23 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         setNavigation()
         setLayout()
         registerCell()
-        setAddTargets()
         setTextView()
         addTapGesture()
         bindSlider()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        setEditedUI()
         setKeyboardObserver()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         removeKeyboardObserver()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        setAddTargets()
+
+        
     }
 }
 
@@ -378,11 +388,36 @@ extension ReviewWriteVC {
         photoCollectionView.dataSource = self
     }
     
-    
-    //리뷰 수정일 떄
-    private func setUI(){
+    private func setEditedUI(){
         if isEdited {
-            
+            print("currentRatea",self.currentRate)
+            sliderView.setSliderValue(rate: self.currentRate)
+            reviewTextView.text = self.content
+            for tag in tagList {
+                switch tag {
+                case I18N.Detail.Review.tagGood:
+                    tagGood.isSelected = true
+                    setButtonUI(button: tagGood)
+                case I18N.Detail.Review.tagSoso:
+                    tagSoso.isSelected = true
+                    setButtonUI(button: tagSoso)
+                case I18N.Detail.Review.tagBad:
+                    tagBad.isSelected = true
+                    setButtonUI(button: tagBad)
+                case I18N.Detail.Review.tagNoBurden:
+                    tagNoBurden.isSelected = true
+                    setButtonUI(button: tagNoBurden)
+                case I18N.Detail.Review.tagEasy:
+                    tagEasy.isSelected = true
+                    setButtonUI(button: tagEasy)
+                case I18N.Detail.Review.tagStrong:
+                    tagStrong.isSelected = true
+                    setButtonUI(button: tagStrong)
+                default:
+                    print("2️⃣")
+                }
+            }
+            print("🍎\(tagList)")
         }
     }
     
@@ -562,8 +597,20 @@ extension ReviewWriteVC {
     }
     
     private func setAddTargets() {
+        print("Tag Button count",tasteTagButton.count)
         tasteTagButton.forEach { button in
+            print("Tag Button ForEach")
             button.addTarget(self, action: #selector(didTapTasteTag), for: .touchUpInside)
+        }
+    }
+    
+    private func setButtonUI(button: UIButton) {
+        if button.isSelected {
+            button.layer.borderColor = UIColor.mainRed.cgColor
+            button.setTitleColor(UIColor.mainRed, for: UIControl.State.normal)
+        } else {
+            button.layer.borderColor = UIColor.helfmeGray2.cgColor
+            button.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         }
     }
     
@@ -573,15 +620,11 @@ extension ReviewWriteVC {
             guard let tagTitle = button.titleLabel?.text else { return }
             button.isSelected = sender == button
             if button.isSelected {
-                button.layer.borderColor = UIColor.mainRed.cgColor
-                button.setTitleColor(UIColor.mainRed, for: UIControl.State.normal)
                 tasteSet = tagTitle
-            } else {
-                button.layer.borderColor = UIColor.helfmeGray2.cgColor
-                button.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
             }
+            setButtonUI(button: button)
         }
-        print(tasteSet)
+        print("🍎\(self.tasteSet)")
     }
     
     @objc private func didTapFeelingTag(_ sender: UIButton) {
@@ -807,11 +850,11 @@ extension ReviewWriteVC {
             if feelingArray[i] == true{
                 switch i{
                 case 0:
-                    good.append("# 약속 시 부담없는")
+                    good.append(I18N.Detail.Review.tagNoBurden)
                 case 1:
-                    good.append("# 양 조절 쉬운")
+                    good.append(I18N.Detail.Review.tagEasy)
                 case 2:
-                    good.append("# 든든한")
+                    good.append(I18N.Detail.Review.tagStrong)
                 default:
                     print("음")
                 }
@@ -849,7 +892,7 @@ extension ReviewWriteVC {
             if feelingArray[i] == true{
                 switch i{
                 case 0:
-                    good.append("# 약속 시 부담없는")
+                    good.append("# 약속 시 부담 없는")
                 case 1:
                     good.append("# 양 조절 쉬운")
                 case 2:
