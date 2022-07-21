@@ -135,6 +135,11 @@ final class SearchResultVC: UIViewController {
 
 extension SearchResultVC {
     private func setChildViewController() {
+        mapViewController.IDsForMap = searchResultList.map({
+            $0.id
+        })
+        mapViewController.initialId = searchResultList.first?.id
+        mapViewController.navigationController?.navigationBar.isHidden = true
         self.addChild(mapViewController)
         self.view.addSubview(mapViewController.view)
         mapViewController.setSupplementMapType(mapType: .search)
@@ -251,8 +256,10 @@ extension SearchResultVC {
     
     private func viewMap() {
         UIView.animate(withDuration: 0.2, animations: {
-            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 585)
+            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
         })
+        mapViewController.showSummaryViewForResult()
+        
         searchResultTableView.tableHeaderView?.frame.size.height = 40
         isMapView = true
         searchResultTableView.layer.shadowOpacity = 0.1
@@ -270,6 +277,7 @@ extension SearchResultVC {
             self.view.bringSubviewToFront(self.topView)
             self.view.bringSubviewToFront(self.searchTextField)
         }
+        mapViewController.hideSummaryView()
         searchResultTableView.tableHeaderView?.frame.size.height = 50
         isMapView = false
         searchResultTableView.layer.cornerRadius = 0
@@ -292,7 +300,11 @@ extension SearchResultVC: UITextFieldDelegate {
 // MARK: - UITableViewDelegate
 
 extension SearchResultVC: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        mapViewController.initialId = searchResultList[indexPath.row].id
+        mapViewController.setInitialMapPoint()
+        viewMap()
+    }
 }
 
 // MARK: - UITableViewDataSource

@@ -377,9 +377,14 @@ extension HamburgerBarVC {
             self.makeAlert(alertType: .logoutAlert,
                       title: I18N.HelfmeAlert.logout,
                       subtitle: I18N.HelfmeAlert.logoutContent) {
-                self.makeAlert(title: "", message: "로그아웃 성공 ~ ~ !")
+                let loginVC = ModuleFactory.resolve().makeLoginVC()
+                self.navigationController?.pushViewController(loginVC, animated: true)
             }
         }
+    }
+    
+    private func moveToLogin() {
+        
     }
     
     // MARK: - @objc Methods

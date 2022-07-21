@@ -16,7 +16,7 @@ import SwiftUI
 class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
     // MARK: - Properties
-    
+    private var initialMapOpened: Bool = false
     private let disposeBag = DisposeBag()
     private var isInitialPoint = false
     private var currentZoom: Double = 0
@@ -24,7 +24,11 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     private var currentLocation: Location = Location.init(latitude: 0, longitude: 0)
     private var currentCategory: String = "" {
         didSet {
-            self.fetchRestaurantList(zoom: self.currentZoom)
+            if currentCategory != "" {
+                self.fetchCategoryList(zoom: self.currentZoom)
+            } else {
+                self.fetchRestaurantList(zoom: self.currentZoom)
+            }
         }
     }
     private let locationManager = NMFLocationManager.sharedInstance()
@@ -32,11 +36,13 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
                                               false, false, false,
                                               false, false] {
         didSet {
+            self.unselectMapPoint()
             categoryCollectionView.reloadData()
         }
     }
     private var restaurantData: [MainMapEntity] = []
     var viewModel: MainMapViewModel!
+    var scrapList: [ScrapListEntity] = []
     
     
     // MARK: - UI Components
@@ -139,7 +145,6 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         return bt
     }()
 
-    
     private var mapDetailSummaryView = MapDetailSummaryView()
     
     // MARK: - View Life Cycle
@@ -153,8 +158,6 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         registerCell()
         setPanGesture()
         setMapView()
-        bindMapView()
-        sampleViewInputEvent()
         addObserver()
         self.bindViewModels()
     }
@@ -165,6 +168,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        bindMapView()
         setIntitialMapPoint()
     }
     
@@ -203,8 +207,6 @@ extension MainMapVC {
             make.width.equalTo(55)
             make.height.equalTo(52)
         }
-        
-
         
         searchBar.snp.makeConstraints { make in
             make.centerY.equalTo(hamburgerButton.snp.centerY)
@@ -270,8 +272,6 @@ extension MainMapVC {
         MenuCategoryCVC.register(target: categoryCollectionView)
     }
     
-
-    
     private func setPanGesture() {
         let panGesture = UIPanGestureRecognizer()
         mapDetailSummaryView.addGestureRecognizer(panGesture)
@@ -335,15 +335,16 @@ extension MainMapVC {
     }
     
     private func setIntitialMapPoint() {
-        
-        let NMGPosition = self.locationManager?.currentLatLng()
-        if let position = NMGPosition {
-            self.mapView.moveCameraPositionWithZoom(position, 2000)
-        } else {
-            self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
+        if !initialMapOpened {
+            initialMapOpened = true
+            let NMGPosition = self.locationManager?.currentLatLng()
+            if let position = NMGPosition {
+                self.mapView.moveCameraPositionWithZoom(position, 2000)
+            } else {
+                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
+            }
+            isInitialPoint = true
         }
-        isInitialPoint = true
-        
     }
     
     private func setMapView() {
@@ -407,12 +408,6 @@ extension MainMapVC {
             }).disposed(by: self.disposeBag)
     }
     
-    private func sampleViewInputEvent() {
-        makeDummyPoints()
-            .bind(to: mapView.rx.pointList)
-            .disposed(by: self.disposeBag)
-    }
-    
     private func addObserver() {
         addObserverAction(.moveFromHamburgerBar) { noti in
             if let screenCase = noti.object as? HamburgerType {
@@ -421,9 +416,9 @@ extension MainMapVC {
         }
     }
     
-    private func makeDummyPoints() -> Observable<[MapPointDataModel]> {
+    private func makeCurrentCategory() -> Observable<String> {
         return .create { observer in
-            observer.onNext([])
+            observer.onNext(self.currentCategory)
             return Disposables.create()
         }
     }
@@ -497,8 +492,8 @@ extension MainMapVC {
     
     @objc
     private func presentSearchVC() {
-        self.mapView.disableSelectPoint.accept(())
         self.makeVibrate()
+        self.unselectMapPoint()
         let nextVC = ModuleFactory.resolve().makeSearchVC()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -587,7 +582,6 @@ extension MainMapVC {
             return Disposables.create()
         }
     }
-    
 
     private func fetchRestaurantList(zoom: Double) {
         if let lng = locationManager?.currentLatLng().lng,
@@ -602,6 +596,28 @@ extension MainMapVC {
                             entity.toDomain()
                         })
                         self.makePoints(points: models).bind(to: self.mapView.rx.pointList)
+                            .disposed(by: self.disposeBag)
+                    }
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    private func fetchCategoryList(zoom: Double) {
+        if let lng = locationManager?.currentLatLng().lng,
+           let lat = locationManager?.currentLatLng().lat {
+            RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
+                switch networkResult {
+                case .success(let data):
+                    if let data = data as? [MainMapEntity] {
+                        self.restaurantData = data
+                        var models = [MapPointDataModel]()
+                        models = data.map({ entity in
+                            entity.toDomain()
+                        })
+                        self.makePoints(points: models).bind(to: self.mapView.rx.categoryPointList)
                             .disposed(by: self.disposeBag)
                     }
                 default:
