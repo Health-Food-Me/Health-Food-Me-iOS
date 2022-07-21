@@ -303,7 +303,7 @@ extension MyReviewVC: UICollectionViewDelegateFlowLayout {
         let isEmptyView: Bool = reviewData.count == 0
         if isEmptyView {
             let cellWidth = width
-            let cellHeight = cellWidth * 814/cellWidth
+            let cellHeight = UIScreen.main.bounds.height - (width * (148/width))
             return CGSize(width: cellWidth, height: cellHeight)
         } else {
             let cellWidth = width
