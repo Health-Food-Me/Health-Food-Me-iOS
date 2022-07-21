@@ -532,6 +532,7 @@ extension SearchVC {
                     for searchResultData in data {
                         self.searchResultList.append(searchResultData.toDomain())
                     }
+                    self.searchResultList = self.searchResultList.sorted(by: { $0.distance < $1.distance })
                     self.isSearchResult(fromRecent: fromRecent)
                     self.searchTableView.reloadData()
                 }
