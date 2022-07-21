@@ -159,7 +159,6 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         setPanGesture()
         setMapView()
         bindMapView()
-        sampleViewInputEvent()
         addObserver()
         self.bindViewModels()
     }
@@ -208,8 +207,6 @@ extension MainMapVC {
             make.width.equalTo(55)
             make.height.equalTo(52)
         }
-        
-
         
         searchBar.snp.makeConstraints { make in
             make.centerY.equalTo(hamburgerButton.snp.centerY)
@@ -274,8 +271,6 @@ extension MainMapVC {
     private func registerCell() {
         MenuCategoryCVC.register(target: categoryCollectionView)
     }
-    
-
     
     private func setPanGesture() {
         let panGesture = UIPanGestureRecognizer()
@@ -412,24 +407,11 @@ extension MainMapVC {
             }).disposed(by: self.disposeBag)
     }
     
-    private func sampleViewInputEvent() {
-        makeDummyPoints()
-            .bind(to: mapView.rx.pointList)
-            .disposed(by: self.disposeBag)
-    }
-    
     private func addObserver() {
         addObserverAction(.moveFromHamburgerBar) { noti in
             if let screenCase = noti.object as? HamburgerType {
                 self.hamburgerbarVCDidTap(hamburgerType: screenCase)
             }
-        }
-    }
-    
-    private func makeDummyPoints() -> Observable<[MapPointDataModel]> {
-        return .create { observer in
-            observer.onNext([])
-            return Disposables.create()
         }
     }
     
@@ -599,7 +581,6 @@ extension MainMapVC {
             return Disposables.create()
         }
     }
-    
 
     private func fetchRestaurantList(zoom: Double) {
         if let lng = locationManager?.currentLatLng().lng,

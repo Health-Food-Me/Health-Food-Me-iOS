@@ -233,8 +233,9 @@ extension SupplementMapVC {
         self.mapDetailSummaryView.snp.updateConstraints { make in
             make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
         }
-        myLocationButton.snp.updateConstraints { make in
-            make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-166)
+        let bottomSafeArea = self.safeAreaBottomInset()
+        self.myLocationButton.snp.updateConstraints { make in
+            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
         }
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.myLocationButton.transform = CGAffineTransform(translationX: 0, y: 0)
@@ -250,14 +251,42 @@ extension SupplementMapVC {
         self.mapDetailSummaryView.snp.updateConstraints { make in
             make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
         }
+        let bottomSafeArea = self.safeAreaBottomInset()
+        self.myLocationButton.snp.updateConstraints { make in
+            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
+        }
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.layoutIfNeeded()
         }
     }
     
-    private func bindSetSelectPointForSearchVC() {
+    private func makePoints(points: [MapPointDataModel]) -> Observable<[MapPointDataModel]> {
+        return .create { observer in
+            observer.onNext(points)
+            return Disposables.create()
+        }
+    }
+    
+    private func matchRestaurantId(position: NMGLatLng) -> String {
+        var id = ""
+        restaurantData.forEach { entity in
+            if entity.latitude == position.lat,
+               entity.longitude == position.lng {
+                id = entity.id
+            }
+        }
+        return id
+    }
+    
+    private func bindSetSelectPointForSearchVC(dataModel: MapPointDataModel) {
         delegate?.supplementMapMarkerClicked()
+        let NMGPosition = NMGLatLng(lat: dataModel.latitude,
+                                    lng: dataModel.longtitude)
+        let restaurantId = self.matchRestaurantId(position: NMGPosition)
+        self.currentRestaurantId = restaurantId
+        self.currentLocation = Location(latitude: dataModel.latitude, longitude: dataModel.longtitude)
+        self.fetchRestaurantSummary(id: restaurantId)
         myLocationButton.snp.updateConstraints { make in
             make.bottom.equalTo(mapDetailSummaryView.snp.top).offset(-12)
         }
@@ -333,9 +362,21 @@ extension SupplementMapVC {
         self.mapDetailSummaryView.snp.updateConstraints { make in
             make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
         }
+        
+        let mapDetailViewTopCosntraint = self.mapDetailSummaryView.snp.top
+        self.myLocationButton.snp.updateConstraints { make in
+                make.bottom.equalTo(mapDetailViewTopCosntraint).offset(-12)
+        }
+        
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func setInitialMarker() {
+        fetchRestaurantList(zoom: 2000) {
+            self.setInitialMapPoint()
         }
     }
     

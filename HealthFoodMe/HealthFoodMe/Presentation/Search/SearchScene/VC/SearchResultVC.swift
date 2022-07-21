@@ -292,7 +292,13 @@ extension SearchResultVC: UITextFieldDelegate {
 // MARK: - UITableViewDelegate
 
 extension SearchResultVC: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = ModuleFactory.resolve().makeSupplementMapVC(forSearchVC: true)
+        vc.navigationController?.isNavigationBarHidden = false
+        vc.navigationController?.isToolbarHidden = false
+        vc.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 // MARK: - UITableViewDataSource
