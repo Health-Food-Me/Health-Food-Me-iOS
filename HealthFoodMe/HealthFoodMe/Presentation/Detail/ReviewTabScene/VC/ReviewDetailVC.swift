@@ -69,7 +69,6 @@ class ReviewDetailVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        HelfmeLoadingView.shared.show(self.view)
         fetchData()
     }
 }
@@ -189,7 +188,7 @@ extension ReviewDetailVC {
             controller.navigationController?.navigationBar.barTintColor = .black
             controller.navigationController?.navigationBar.tintColor = .black
             controller.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-
+            
             controller.dismissOnPanGesture = true
             controller.slides = images
             controller.enableZoom = true
@@ -220,11 +219,7 @@ extension ReviewDetailVC {
         // 데이터를 서버에서 받아와야 함
         requestReviewListWithAPI() {
             self.requestBlogReviewListWithAPI()
-            self.processViewModel(self.reviewServerData, self.blogReviewData)
-            HelfmeLoadingView.shared.hide(){
-                print("로딩 종료")
-            }
-        }
+            self.processViewModel(self.reviewServerData, self.blogReviewData)        }
     }
     
     private func processViewModel(_ reviewDataList: [ReviewDataModel],
@@ -422,7 +417,7 @@ extension ReviewDetailVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if selectedCustomSegment == 0 {
-
+            
         } else if selectedCustomSegment == 1 {
             URLSchemeManager.shared.loadSafariApp(blogLink: blogReviewData[indexPath.row].blogURL)
         }
