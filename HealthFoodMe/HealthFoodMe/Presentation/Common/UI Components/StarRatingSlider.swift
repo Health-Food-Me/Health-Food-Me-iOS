@@ -13,6 +13,7 @@ final class StarRatingSlider: UIView {
   // MARK: - Properties
   private var previousValue: CGFloat = -1
   private var starWidth: CGFloat = 37
+  var initialValue: Double = 2.5
   var sliderValue : ( (Double) -> Void )?
 
   // MARK: - UI Components
@@ -35,7 +36,7 @@ final class StarRatingSlider: UIView {
   
   lazy var starContainerView: StarRatingView = {
     let starView = StarRatingView.init(starScale: starWidth)
-    starView.rate = 0
+    starView.rate = initialValue
     return starView
   }()
   
@@ -51,8 +52,6 @@ final class StarRatingSlider: UIView {
     self.init()
     self.starWidth = starWidth
     setUI()
-
-    
   }
 }
 
@@ -65,7 +64,12 @@ extension StarRatingSlider {
     starRateSlider.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
+    starContainerView.rate = initialValue
   }
+    
+    func setSliderValue(rate: Double) {
+        starContainerView.rate = rate
+    }
 }
 
 extension StarRatingSlider {
