@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Datum
 struct MyReviewEntity: Codable {
-    let restaurant, restaurantId: String
+    let restaurant, restaurnatId: String
     let score: Float
     let content, id: String
     let image: [MyReviewImage]
@@ -29,7 +29,7 @@ struct MyReviewEntity: Codable {
             imageList.append(img.url)
         }
         return MyReviewModel.init(reviewId: id, restaurantName: restaurant,
-                                  restaurantId: restaurantId,
+                                  restaurantId: restaurnatId,
                                   starRate: score,
                                   tagList: hashTagList,
                                   reviewImageURLList: imageList,
