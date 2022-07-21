@@ -371,10 +371,11 @@ extension MainMapVC {
                             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                             self.view.layoutIfNeeded()
                         } completion: { _ in
-                            self.scrapButton.isHidden = false
-                            self.myLocationButton.isHidden = false
+                            
                         }
                     }
+                        self.scrapButton.isHidden = true
+                        self.myLocationButton.isHidden = true
                 default:
                     break
                 }
@@ -416,6 +417,8 @@ extension MainMapVC {
         self.myLocationButton.snp.updateConstraints { make in
             make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
         }
+        self.myLocationButton.isHidden = false
+        self.scrapButton.isHidden = false
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.layoutIfNeeded()
@@ -456,6 +459,9 @@ extension MainMapVC {
                         make.bottom.equalTo(mapDetailViewTopCosntraint).offset(-12)
                     }
                 }
+                
+                self?.myLocationButton.isHidden = true
+                self?.scrapButton.isHidden = true
                 
                 UIView.animate(withDuration: 0.3, delay: 0) {
                     self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
@@ -504,8 +510,8 @@ extension MainMapVC {
                 self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.view.layoutIfNeeded()
             } completion: { _ in
-                self.scrapButton.isHidden = false
-                self.myLocationButton.isHidden = false
+                self.scrapButton.isHidden = true
+                self.myLocationButton.isHidden = true
                 self.hamburgerButton.isHidden = false
                 self.searchBar.isHidden = false
                 self.categoryCollectionView.isHidden = false
@@ -742,21 +748,21 @@ extension MainMapVC {
 
 extension MainMapVC {
     private func showUpperToast() {
-      makeVibrate()        
+        makeVibrate()
         scrapListEmptyToastView.snp.remakeConstraints { make in
             make.width.equalTo(300)
             make.height.equalTo(40)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-40)
         }
-
-      UIView.animate(withDuration: 0.7, delay: 0) {
-        self.view.layoutIfNeeded()
-      } completion: { _ in
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-          self.hideUpperToast()
+        
+        UIView.animate(withDuration: 0.7, delay: 0) {
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.hideUpperToast()
+            }
         }
-      }
     }
 
     private func hideUpperToast() {

@@ -66,7 +66,7 @@ struct Restaurant: Codable {
     }
     
     func toDomain() -> MainDetailExpandableModel {
-        if workTime.count == 1,
+        if workTime.count <= 1,
            let string = workTime.first {
             return MainDetailExpandableModel.init(location: address, telephone: contact,labelText: [string], isExpandable: false)
         } else {

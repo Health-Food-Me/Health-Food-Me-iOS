@@ -32,7 +32,10 @@ final class MapDetailSummaryView: UIView {
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
         iv.image = ImageLiterals.MainDetail.tempMuseum
+        iv.layer.cornerRadius = 5
+        
         return iv
     }()
     
