@@ -458,7 +458,7 @@ extension ReviewWriteVC {
         } else {
             backButton.addAction(UIAction(handler: { _ in
                 self.makeAlert(alertType: .logoutAlert,
-                               title: "리뷰작성을 취소하시겠습니까?",
+                               title: "리뷰 작성을 취소하시겠습니까?",
                                subtitle: "작성취소 시,\n 수정된 글은 저장되지 않습니다.") {
                     self.navigationController?.dismiss(animated: true)
                 }
