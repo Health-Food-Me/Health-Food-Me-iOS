@@ -28,7 +28,7 @@ final class MenuTabVC: UIViewController {
 	
 	var isMenu: Bool = true
 	var topScrollAnimationNotFinished: Bool = true
-	var menuData: [MenuDataModel] = MenuDataModel.sampleMenuData {
+	var menuData: [MenuDataModel] = [] {
 		didSet {
 			DispatchQueue.main.async {
 				self.menuCV.reloadData()

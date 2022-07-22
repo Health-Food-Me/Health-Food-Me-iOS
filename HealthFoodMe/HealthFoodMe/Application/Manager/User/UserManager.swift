@@ -20,6 +20,7 @@ final class UserManager {
     @UserDefaultWrapper<String>(key: "refreshToken") private(set) var refreshToken
     @UserDefaultWrapper<String>(key: "userIdentifier") private(set) var userIdentifier
     @UserDefaultWrapper<Bool>(key: "socialType") private(set) var isAppleLogin
+    @UserDefaultWrapper<String>(key: "userId") private(set) var userId
     
     var hasAccessToken: Bool { return self.accessToken != nil }
     var hasRefreshToken: Bool { return self.refreshToken != nil }
@@ -30,7 +31,7 @@ final class UserManager {
     var getSocialToken: String { return self.socialToken ?? "" }
     var getAccessToken: String { return self.accessToken ?? "" }
     var getRefreshToken: String { return self.refreshToken ?? "" }
-    var getUser: User? { return self.currentUser ?? nil }
+    var getUser: String? { return self.userId }
     
     // MARK: - Life Cycles
     
@@ -45,8 +46,9 @@ extension UserManager {
         self.refreshToken = refreshToken
     }
     
-    func setCurrentUser(_ currentUser: User) {
+    func setCurrentUserWithId(_ currentUser: User) {
         self.currentUser = currentUser
+        self.userId = currentUser.id
     }
     
     func setLoginStatus(isLoginned: Bool) {
@@ -73,6 +75,7 @@ extension UserManager {
         self.userIdentifier = nil
         self.socialToken = nil
         self.isAppleLogin = nil
+        self.userId = nil
     }
     
     func reissuanceAccessToken(completion: @escaping(Bool) -> Void) {

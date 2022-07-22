@@ -107,7 +107,7 @@ extension SplashVC {
                    let user = data?.user,
                    let access = data?.accessToken,
                    let refresh = data?.refreshToken {
-                    self.userManager.setCurrentUser(user)
+                    self.userManager.setCurrentUserWithId(user)
                     self.userManager.updateAuthToken(access, refresh)
                     self.presentMainMapVC()
                 }

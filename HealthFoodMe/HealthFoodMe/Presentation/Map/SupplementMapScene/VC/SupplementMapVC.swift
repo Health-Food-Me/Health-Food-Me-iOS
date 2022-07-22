@@ -116,7 +116,7 @@ extension SupplementMapVC {
     private func setLayout() {
         view.addSubviews(mapView, mapDetailSummaryView, myLocationButton,
                          statusTopView, customNavigationBar)
-        
+        print("4")
         statusTopView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.bottom.equalTo(customNavigationBar.snp.top)
@@ -250,7 +250,7 @@ extension SupplementMapVC {
         self.mapDetailSummaryView.snp.updateConstraints { make in
             make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
         }
-        let bottomSafeArea = self.safeAreaBottomInset()
+        
         self.myLocationButton.snp.updateConstraints { make in
             make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset(-165)
         }
@@ -268,7 +268,7 @@ extension SupplementMapVC {
         self.mapDetailSummaryView.snp.updateConstraints { make in
             make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
         }
-        let bottomSafeArea = self.safeAreaBottomInset()
+        
         self.myLocationButton.snp.updateConstraints { make in
             make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset(-165)
         }
@@ -375,6 +375,12 @@ extension SupplementMapVC {
             } completion: { _ in
                 self.myLocationButton.isHidden = false
             }
+        }
+        nextVC.restaurantId = self.currentRestaurantId
+        nextVC.restaurantLocation = self.currentLocation
+        if let lat = locationManager?.currentLatLng().lat,
+           let lng = locationManager?.currentLatLng().lng {
+            nextVC.userLocation = Location(latitude: lat, longitude: lng)
         }
         let nav = UINavigationController(rootViewController: nextVC)
         nav.modalPresentationStyle = .overCurrentContext
@@ -488,7 +494,7 @@ extension SupplementMapVC {
 
 extension SupplementMapVC {
     private func fetchRestaurantSummary(id: String) {
-        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser?.id ?? "") { networkResult in
+        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? RestaurantSummaryEntity {

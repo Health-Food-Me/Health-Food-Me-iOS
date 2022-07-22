@@ -303,7 +303,7 @@ extension MyReviewVC: UICollectionViewDelegateFlowLayout {
         let isEmptyView: Bool = reviewData.count == 0
         if isEmptyView {
             let cellWidth = width
-            let cellHeight = cellWidth * 814/cellWidth
+            let cellHeight = UIScreen.main.bounds.height - (width * (148/width))
             return CGSize(width: cellWidth, height: cellHeight)
         } else {
             let cellWidth = width
@@ -394,7 +394,7 @@ extension MyReviewVC: MyReviewCVCDelegate {
 
 extension MyReviewVC {
     private func requestReviewListWithAPI() {
-        ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser?.id ?? "") { networkResult in
+        ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
                 self.reviewServerData.removeAll()
@@ -419,7 +419,6 @@ extension MyReviewVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? String {
-                    print(data, "성공")
                     completion()
                 }
             default:

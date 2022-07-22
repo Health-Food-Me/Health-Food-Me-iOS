@@ -42,7 +42,7 @@ class HamburgerBarVC: UIViewController {
         return view
     }()
 
-    private var hellowStackView: UIStackView = {
+    private var helloStackView: UIStackView = {
         let st = UIStackView()
         st.axis = .vertical
         st.spacing = 3
@@ -60,6 +60,15 @@ class HamburgerBarVC: UIViewController {
         return st
     }()
     
+    private var nickNameWithButtonStackView: UIStackView = {
+        let st = UIStackView()
+        st.axis = .horizontal
+        st.spacing = 8
+        st.distribution = .equalSpacing
+        st.alignment = .center
+        return st
+    }()
+    
     private lazy var helloLabel: UILabel = {
         let lb = UILabel()
         lb.text = I18N.Map.HamburgerBar.hello
@@ -69,18 +78,21 @@ class HamburgerBarVC: UIViewController {
         return lb
     }()
     
-    private lazy var nickNameLabel: UILabel = {
-        let lb = UILabel()
+    private lazy var nickNameButton: UIButton = {
+        let button = UIButton()
         if let name = name {
-            lb.text = "\(name)님"
+            button.setTitle("\(name)", for: .normal)
         }
+        button.setTitleColor(.helfmeBlack, for: .normal)
+        button.titleLabel?.font = UIFont.NotoMedium(size: 18)
+        return button
+    }()
+    
+    private lazy var sirLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = "님"
         lb.textColor = .helfmeBlack
-        lb.font = UIFont.NotoRegular(size: 18)
-        
-        var text = name ?? ""
-        print(text)
-        lb.partFontChange(targetString: text, font: .NotoMedium(size: 18))
-        
+        lb.font = .NotoRegular(size: 18)
         return lb
     }()
     
@@ -184,7 +196,7 @@ extension HamburgerBarVC {
     private func setUI() {
         setButtons()
         setDivindingView()
-        setHellowStackView()
+        setStackView()
         self.view.backgroundColor = .clear
     }
     
@@ -212,16 +224,17 @@ extension HamburgerBarVC {
         }
     }
     
-    private func setHellowStackView() {
-        nickNameStackView.addArrangedSubviews(nickNameLabel, editNameButton)
-        hellowStackView.addArrangedSubviews(helloLabel, nickNameStackView, todayHelfmeLabel)
+    private func setStackView() {
+        nickNameStackView.addArrangedSubviews(nickNameButton, sirLabel)
+        nickNameWithButtonStackView.addArrangedSubviews(nickNameStackView, editNameButton)
+        helloStackView.addArrangedSubviews(helloLabel, nickNameWithButtonStackView, todayHelfmeLabel)
     }
 
     private func setLayout() {
         view.addSubviews(hamburgerBarView,nicknameChangeSuccessView)
     
         
-        hamburgerBarView.addSubviews(hellowStackView,
+        hamburgerBarView.addSubviews(helloStackView,
                                      storeButtonStackView, reportButtonStackView,
                                      settingButton, logoutButton, dividingLineViews[0],
                                      dividingLineViews[1], dividingLineViews[2])
@@ -240,19 +253,19 @@ extension HamburgerBarVC {
           make.centerX.equalToSuperview()
         }
         
-        hellowStackView.snp.makeConstraints { make in
+        helloStackView.snp.makeConstraints { make in
             make.top.equalTo(hamburgerBarView).inset(96)
             make.leading.equalTo(hamburgerBarView).inset(20)
         }
         
 //        editNameButton.snp.makeConstraints { make in
-//            make.centerY.equalTo(hellowStackView.snp.centerY)
-//            make.leading.equalTo(hellowStackView.snp.trailing).offset(8)
+//            make.centerY.equalTo(nickNameStackView.snp.centerY)
+//            make.leading.equalTo(nickNameStackView.snp.trailing).offset(8)
 //        }
-//
+
         dividingLineViews[0].snp.makeConstraints { make in
             make.width.equalTo(hamburgerBarView)
-            make.top.equalTo(hellowStackView.snp.bottom).offset(38)
+            make.top.equalTo(helloStackView.snp.bottom).offset(38)
             make.height.equalTo(1)
             make.leading.equalTo(hamburgerBarView).inset(0)
         }
@@ -322,13 +335,13 @@ extension HamburgerBarVC {
     }
     
     private func fetchUserNickname() {
-        guard let userID = UserManager.shared.getUser?.id else { return }
+        guard let userID = UserManager.shared.getUser else { return }
         UserService.shared.getUserNickname(userId: userID) { result in
             switch(result) {
                 case .success(let result):
                     guard let result = result as? UserEntity else { return }
-                    self.nickNameLabel.text = result.name
-                default : self.nickNameLabel.text = "헬푸미"
+                self.nickNameButton.setTitle(result.name, for: .normal)
+            default : self.nickNameButton.setTitle("헬푸미", for: .normal)
             }
         }
     }
@@ -336,7 +349,7 @@ extension HamburgerBarVC {
     private func addObserver() {
         addObserverAction(.nicknameChanged) { noti in
             if let nickname = noti.object as? String {
-                self.nickNameLabel.text = nickname
+                self.nickNameButton.setTitle(nickname, for: .normal)
             }
             self.nicknameChangeSuccess()
         }
@@ -344,9 +357,12 @@ extension HamburgerBarVC {
     
     private func addButtonAction() {
         editNameButton.press {
-            
             let nicknameVC = ModuleFactory.resolve().makeNicknameChangeVC()
-            
+            self.navigationController?.pushViewController(nicknameVC, animated: true)
+        }
+        
+        nickNameButton.press {
+            let nicknameVC = ModuleFactory.resolve().makeNicknameChangeVC()
             self.navigationController?.pushViewController(nicknameVC, animated: true)
         }
         

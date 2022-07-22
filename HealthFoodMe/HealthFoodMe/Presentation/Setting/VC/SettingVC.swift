@@ -20,7 +20,7 @@ class SettingVC: UIViewController {
     private var topTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .NotoBold(size: 16)
-        label.text = I18N.Setting.headerTitle
+        label.text = I18N.Map.HamburgerBar.setting
         label.textColor = UIColor.helfmeBlack
         return label
     }()

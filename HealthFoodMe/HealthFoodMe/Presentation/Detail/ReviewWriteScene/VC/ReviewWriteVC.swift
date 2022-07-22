@@ -24,15 +24,16 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
             photoCollectionView.reloadData()
         }
     }
+    private var editPhotoModel: PhotoDataModel = PhotoDataModel()
     
-    var userId = UserManager.shared.getUser?.id ?? ""
+    var userId = UserManager.shared.getUser ?? ""
     var restaurantName : String = ""
     var restaurantID = ""
     var reviewId = ""
     var tasteSet = ""
     var feelingArray: [Bool] = [false, false, false]
     
-    var currentRate: Double = 0
+    var currentRate: Double = 2.5
     var tagList: [String] = []
     var selectedAssets: [PHAsset] = [PHAsset]()
     var userSelectedImages: [UIImage] = [UIImage]()
@@ -214,7 +215,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         btn.layer.cornerRadius = 14
         btn.tag = 2
         btn.addTarget(self, action: #selector(didTapFeelingTag), for: .touchUpInside)
-    
+        
         return btn
     }()
     
@@ -352,6 +353,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setDelegate()
+        setEditedUI()
         setNavigation()
         setLayout()
         registerCell()
@@ -361,7 +363,6 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setEditedUI()
         setKeyboardObserver()
     }
     
@@ -415,10 +416,20 @@ extension ReviewWriteVC {
                     tagStrong.isSelected = true
                     setButtonUI(button: tagStrong)
                 default:
-                    print("🍎")
+                    return
                 }
             }
-            print("🍎\(self.imageURLList)")
+            
+            for image in imageURLList {
+                let url = URL(string: image)
+                DispatchQueue.global().async {
+                    let data = try? Data(contentsOf: url!)
+                    DispatchQueue.main.async {
+                        self.photoModel.userSelectedImages.append(UIImage(data: data!) ?? UIImage())
+                    }
+                }
+            }
+            
         }
     }
     
@@ -437,29 +448,29 @@ extension ReviewWriteVC {
         backButton.setImage(ImageLiterals.MainDetail.beforeIcon, for: .normal)
         backButton.tintColor = .helfmeBlack
         if isEdited {
-                    backButton.addAction(UIAction(handler: { _ in
-                            self.makeAlert(alertType: .logoutAlert,
-                                           title: "리뷰 편집을 취소하시겠습니까?",
-                                           subtitle: "편집 취소 시,\n 작성된 글은 저장되지 않습니다.") {
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                    }), for: .touchUpInside)
-                } else {
-                    backButton.addAction(UIAction(handler: { _ in
-                            self.makeAlert(alertType: .logoutAlert,
-                                           title: "리뷰작성을 취소하시겠습니까?",
-                                           subtitle: "작성취소 시,\n 수정된 글은 저장되지 않습니다.") {
-                                self.navigationController?.dismiss(animated: true)
-                            }
-                    }), for: .touchUpInside)
+            backButton.addAction(UIAction(handler: { _ in
+                self.makeAlert(alertType: .logoutAlert,
+                               title: "리뷰 편집을 취소하시겠습니까?",
+                               subtitle: "편집 취소 시,\n 작성된 글은 저장되지 않습니다.") {
+                    self.navigationController?.popViewController(animated: true)
                 }
+            }), for: .touchUpInside)
+        } else {
+            backButton.addAction(UIAction(handler: { _ in
+                self.makeAlert(alertType: .logoutAlert,
+                               title: "리뷰작성을 취소하시겠습니까?",
+                               subtitle: "작성취소 시,\n 수정된 글은 저장되지 않습니다.") {
+                    self.navigationController?.dismiss(animated: true)
+                }
+            }), for: .touchUpInside)
+        }
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
     private func setLayout() {
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalToSuperview()
         }
         
         scrollView.addSubview(contentView)
@@ -624,7 +635,6 @@ extension ReviewWriteVC {
             }
             setButtonUI(button: button)
         }
-        print("🍎\(self.tasteSet)")
     }
     
     @objc private func didTapFeelingTag(_ sender: UIButton) {
@@ -745,9 +755,19 @@ extension ReviewWriteVC {
             showReviewToast()
         } else {
             if isEdited {
-                requestReviewEdit()
+                HelfmeLoadingView.shared.show(self.view)
+                requestReviewEdit() {
+                    HelfmeLoadingView.shared.hide(){
+                        print("로딩 종료")
+                    }
+                }
             } else {
-                requestReviewWrite()
+                HelfmeLoadingView.shared.show(self.view)
+                requestReviewWrite() {
+                    HelfmeLoadingView.shared.hide(){
+                        print("로딩 종료")
+                    }
+                }
             }
         }
     }
@@ -842,7 +862,7 @@ extension ReviewWriteVC {
 // MARK: - Network
 
 extension ReviewWriteVC {
-    func requestReviewWrite() {
+    func requestReviewWrite(completion: @escaping(() -> Void)) {
         let starScore = self.currentRate
         let taste = tasteSet
         var good : [String] = []
@@ -868,12 +888,11 @@ extension ReviewWriteVC {
         
         let image = photoModel.userSelectedImages
         ReviewService.shared.requestReviewWrite(userId: userId, restaurantId: restaurantID, score: starScore, taste: taste, good: good, content: content, image: image) { networkResult in
-            dump(networkResult)
             switch networkResult {
             case .success(let data):
-                dump(data)
                 if let data = data as? ReviewWriteEntity {
                     print(data, "성공")
+                    completion()
                 }
                 self.dismiss(animated: true)
             default:
@@ -882,9 +901,8 @@ extension ReviewWriteVC {
         }
     }
     
-    func requestReviewEdit() {
+    func requestReviewEdit(completion: @escaping(() -> Void)) {
         let reviewId = self.reviewId
-        print("🍎\(reviewId)")
         let starScore = self.currentRate
         let taste = tasteSet
         var good : [String] = []
@@ -916,6 +934,7 @@ extension ReviewWriteVC {
                 dump(data)
                 if let data = data as? ReviewEditEntity {
                     print(data, "성공")
+                    completion()
                 }
                 self.navigationController?.popViewController(animated: true)
             default:

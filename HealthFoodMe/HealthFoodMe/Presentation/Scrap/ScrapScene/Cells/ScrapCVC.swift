@@ -25,6 +25,9 @@ class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     private var storeImageView: UIImageView = {
         let iv = UIImageView()
+        iv.layer.cornerRadius = 5
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
         return iv
     }()
     
