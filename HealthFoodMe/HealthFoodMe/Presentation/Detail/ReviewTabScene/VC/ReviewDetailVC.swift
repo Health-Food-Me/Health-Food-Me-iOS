@@ -24,7 +24,6 @@ class ReviewDetailVC: UIViewController {
     private var reviewData: [ReviewCellViewModel] = [] { didSet {
         fetchCutStringList()
         fetchExpendStateList()
-        reviewCV.reloadData()
     }}
     private var reviewServerData: [ReviewDataModel] = []
     private var blogReviewData: [BlogReviewDataModel] = []
@@ -167,6 +166,29 @@ extension ReviewDetailVC {
         textView.text = text
         textView.sizeToFit()
         return textView.frame.height
+    }
+    
+    private func caculateBlogReviewHeight() -> CGFloat {
+        let textView = UITextView()
+        textView.text =
+"""
+가
+나
+다
+"""
+        textView.font = .NotoRegular(size: 12)
+        textView.sizeToFit()
+        var contentHeight = textView.frame.height
+        
+        let titleTextView = UITextView()
+        titleTextView.text = "제목"
+        titleTextView.font = .NotoBold(size: 14)
+        var titleHeight = titleTextView.frame.height
+        
+        var totalHeight = titleHeight + contentHeight + 10 + 28 + 28
+        
+        return totalHeight
+        
     }
     
     private func addObserver() {
@@ -423,7 +445,6 @@ extension ReviewDetailVC: UICollectionViewDataSource {
         } else if selectedCustomSegment == 1 {
             URLSchemeManager.shared.loadSafariApp(blogLink: blogReviewData[indexPath.row].blogURL)
         }
-        
     }
 }
 
@@ -454,7 +475,7 @@ extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
                     return CGSize(width: cellWidth, height: cellHeight)
                 } else {
                     let cellWidth = width * 335/375
-                    let cellHeight = cellWidth * 158/335
+                    let cellHeight = caculateBlogReviewHeight()
                     return CGSize(width: cellWidth, height: cellHeight)
                 }
             }
