@@ -12,6 +12,7 @@ class MainMapNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let vc = makeMainMapVC()
+        vc.checkLocationStatus()
         pushViewController(vc, animated: true)
         
 
@@ -27,6 +28,4 @@ class MainMapNavigationController: UINavigationController {
         
         return vc
     }
-
-
 }

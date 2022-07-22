@@ -394,6 +394,7 @@ extension HamburgerBarVC {
                       title: I18N.HelfmeAlert.logout,
                       subtitle: I18N.HelfmeAlert.logoutContent) {
                 let loginVC = ModuleFactory.resolve().makeLoginVC()
+                UserManager.shared.clearUserInform()
                 self.navigationController?.pushViewController(loginVC, animated: true)
             }
         }

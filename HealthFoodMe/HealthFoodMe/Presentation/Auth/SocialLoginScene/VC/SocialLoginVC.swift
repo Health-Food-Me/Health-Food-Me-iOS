@@ -85,8 +85,12 @@ class SocialLoginVC: UIViewController {
 extension SocialLoginVC {
     private func presentToMainMap() {
         let mainVC = ModuleFactory.resolve().makeMainMapNavigationController()
-        mainVC.modalPresentationStyle = .overFullScreen
-        self.present(mainVC, animated: false)
+        if let window = UIApplication.shared.windows.first {    //
+            window.rootViewController = mainVC
+        } else {
+            mainVC.modalPresentationStyle = .overFullScreen
+            self.present(mainVC, animated: true, completion: nil)
+        }
     }
     
     private func kakaoLogin() {

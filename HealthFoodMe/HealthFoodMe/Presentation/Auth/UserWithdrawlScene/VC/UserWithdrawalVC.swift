@@ -182,6 +182,7 @@ extension UserWithdrawalVC {
             switch(result) {
                 case .success(_) :
                     let loginVC = ModuleFactory.resolve().makeLoginVC()
+                    UserManager.shared.clearUserInform()
                     self.navigationController?.pushViewController(loginVC, animated: true)
                 default: self.makeAlert(title: "오류", message: "네트워크를 확인해주세요")
             }

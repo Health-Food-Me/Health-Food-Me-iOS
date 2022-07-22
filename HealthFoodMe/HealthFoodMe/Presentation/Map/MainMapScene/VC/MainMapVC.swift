@@ -779,6 +779,17 @@ extension MainMapVC {
             self.view.layoutIfNeeded()
         }
     }
+    
+    func checkLocationStatus() {
+        switch clLocationManager.authorizationStatus {
+        case .authorizedAlways:
+            canUseLocation = true
+        case .authorizedWhenInUse:
+            canUseLocation = true
+        default:
+            break
+        }
+    }
 }
 
 extension MainMapVC: CLLocationManagerDelegate {

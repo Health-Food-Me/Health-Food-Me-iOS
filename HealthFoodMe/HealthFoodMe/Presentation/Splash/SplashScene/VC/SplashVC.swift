@@ -63,19 +63,15 @@ extension SplashVC {
     
     private func checkLoginStatusAndPresentVC() {
         DispatchQueue.main.asyncAfter(deadline: .now()+2.5) {
-            
             UIView.animate(withDuration: 1) {
                 self.animationView.alpha = 0
             } completion: { _ in
                 if self.userManager.isLogin == true {
-                    self.presentSocialLoginVC()
+                    self.reissuanceToken()
                 } else {
                     self.presentSocialLoginVC()
                 }
             }
-            
-            
-
         }
     }
 }
@@ -88,7 +84,7 @@ extension SplashVC {
             if state {
                 self.presentMainMapVC()
             } else {
-                self.presentSocialLoginVC()
+                self.requestSocialLogin()
             }
         }
     }
@@ -100,7 +96,7 @@ extension SplashVC {
         } else {
             socialType = "kakao"
         }
-        AuthService.shared.requestAuth(social: socialType, token: userManager.getSocialToken) { networkResult in
+        AuthService.shared.requestAuth(social: socialType, token: self.userManager.getSocialToken) { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? SocialLoginEntity?,
@@ -110,6 +106,8 @@ extension SplashVC {
                     self.userManager.setCurrentUserWithId(user)
                     self.userManager.updateAuthToken(access, refresh)
                     self.presentMainMapVC()
+                } else {
+                    self.presentSocialLoginVC()
                 }
             case .requestErr:
                 self.presentSocialLoginVC()
