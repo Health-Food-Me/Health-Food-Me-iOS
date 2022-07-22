@@ -2491,8 +2491,8 @@
 				INFOPLIST_FILE = HealthFoodMe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "헬푸미";
 				INFOPLIST_KEY_NSCameraUsageDescription = "리뷰 사진 촬영을 위해 시스템 카메라에 접근합니다";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받습니다";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "리뷰를 작성하기 위해 사용자의 갤러리에 접근합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -2529,8 +2529,8 @@
 				INFOPLIST_FILE = HealthFoodMe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "헬푸미";
 				INFOPLIST_KEY_NSCameraUsageDescription = "리뷰 사진 촬영을 위해 시스템 카메라에 접근합니다";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받습니다";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "리뷰를 작성하기 위해 사용자의 갤러리에 접근합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
