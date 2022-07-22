@@ -30,7 +30,7 @@ final class StarRatingSlider: UIView {
     slider.value = 0
     slider.addTarget(self,
                      action: #selector(sliderValueChanged),
-                     for: .valueChanged)
+                     for: .allTouchEvents)
     return slider
   }()
   
@@ -85,6 +85,7 @@ extension StarRatingSlider {
   }
   
   private func getPointValue(_ value: Float) -> CGFloat {
+      print("STAR",value)
     guard value > 0 else { return 0}
     if value >= 5 { return 5 }
     let intValue = Float(Int(value))
