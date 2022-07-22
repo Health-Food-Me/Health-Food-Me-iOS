@@ -60,6 +60,10 @@ extension MenuCellCVC {
         menuView.prepareView()
         self.isPick = menuData.isPick
         menuView.isPick = self.isPick
+        if let per = menuData.per {
+            menuView.gLabel.text = "(\(per)g당)"
+            menuView.gLabel.setAttributedText(targetFontList: ["당)" : .NotoRegular(size: 8), "(" : .NotoRegular(size: 8)], targetColorList: ["":.helfmeWhite])
+        }
         menuView.updateLayout()
         menuData.memuImageURL == nil ? (menuView.menuImageView.image = ImageLiterals.MenuTab.emptyCard) : menuView.menuImageView.setImage(with: menuData.memuImageURL ?? "")
         menuView.titleLabel.text = menuData.menuName
