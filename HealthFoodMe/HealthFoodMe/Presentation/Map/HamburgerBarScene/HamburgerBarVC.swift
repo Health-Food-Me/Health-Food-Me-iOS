@@ -28,7 +28,7 @@ class HamburgerBarVC: UIViewController {
     weak var delegate: HamburgerbarVCDelegate?
     var hambergurBarViewTranslation = CGPoint(x: 0, y: 0)
     var hambergurBarViewVelocity = CGPoint(x: 0, y: 0)
-    var name: String? = "배부른 현우는 행복해요"
+    var name: String? = " "
     private let screenWidth = UIScreen.main.bounds.width
     private var menuButtons: [UIButton] = []
     private let buttonTitles: [String] = ["스크랩한 식당", "내가 쓴 리뷰", "가게 제보하기",
