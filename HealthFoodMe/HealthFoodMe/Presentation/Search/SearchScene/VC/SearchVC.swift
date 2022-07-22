@@ -381,6 +381,7 @@ extension SearchVC {
 
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        HelfmeLoadingView.shared.show(self.view)
         textField.resignFirstResponder()
         if let text = searchTextField.text {
             let searchContent = text.trimmingCharacters(in: .whitespaces)
@@ -455,6 +456,7 @@ extension SearchVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch searchType {
         case .recent:
+            HelfmeLoadingView.shared.show(self.view)
             searchTextField.text = searchRecentList[indexPath.row]
             fetchSearchResultData(keyword: searchRecentList[indexPath.row], fromRecent: true)
             addSearchRecent(title: searchRecentList[indexPath.row])
@@ -538,6 +540,9 @@ extension SearchVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? [SearchResultEntity] {
+                    HelfmeLoadingView.shared.hide() {
+                        print("로딩 종료")
+                    }
                     self.searchResultList.removeAll()
                     for searchResultData in data {
                         self.searchResultList.append(searchResultData.toDomain())
