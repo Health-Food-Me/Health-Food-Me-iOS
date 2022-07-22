@@ -191,6 +191,9 @@ extension MapDetailSummaryView {
     }
     
     func setData(data: RestaurantSummaryEntity) {
+        
+        (data.logo == "" || data.logo == nil) ? logoImageView.image = ImageLiterals.MenuTab.emptyCard : logoImageView.setImage(with: data.logo)
+        
         logoImageView.setImage(with: data.logo)
         starRateView.rate = data.score
         scrapButton.isSelected = data.isScrap

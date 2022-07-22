@@ -70,7 +70,7 @@ extension MenuCellCVC {
         menuView.pickImageView.image = menuData.isPick ? UIImage(named: "icn_pick") : .none
         
         menuView.priceLabel.text = "\(menuData.menuPrice)원"
-        if menuData.menuKcal == nil {
+        if menuData.menuKcal == 0 {
             menuView.kcalView.isHidden = true
         } else {
             guard let menuKcal = menuData.menuKcal else { return }

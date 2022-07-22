@@ -112,6 +112,7 @@ extension SplashVC {
             case .requestErr:
                 self.presentSocialLoginVC()
             default:
+                self.presentSocialLoginVC()
                 print("소셜 토큰 에러")
             }
         }
