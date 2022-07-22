@@ -153,7 +153,7 @@ extension MainDetailVC {
         
         if UIDevice.current.hasNotch {
             reviewWriteCTAButton.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(4)
+                make.top.equalToSuperview().offset(8)
                 make.leading.equalToSuperview().offset(20)
                 make.trailing.equalToSuperview().offset(-20)
                 make.height.equalTo(40)

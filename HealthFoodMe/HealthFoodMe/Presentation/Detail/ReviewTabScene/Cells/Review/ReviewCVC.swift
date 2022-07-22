@@ -148,6 +148,7 @@ extension ReviewCVC {
         nameLabel.snp.makeConstraints { make in
             make.leading.equalTo(20)
             make.top.equalTo(reviewSeperatorView.snp.bottom).offset(28)
+            make.width.lessThanOrEqualTo(200)
             make.height.equalTo(nameLabel.font.lineHeight)
         }
         
