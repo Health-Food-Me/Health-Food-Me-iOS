@@ -340,15 +340,8 @@ extension SearchResultVC {
         } completion: { _ in
             self.view.bringSubviewToFront(self.topView)
             self.view.bringSubviewToFront(self.searchTextField)
+            self.navigationController?.popViewController(animated: false)
         }
-        mapViewController.hideSummaryView()
-        searchResultTableView.tableHeaderView?.frame.size.height = 50
-        isMapView = false
-        searchResultTableView.layer.cornerRadius = 0
-        searchResultTableView.layer.shadowOpacity = 0
-        searchResultLineView.isHidden = true
-        viewMapButton.isHidden = false
-        viewListButton.isHidden = true
     }
 }
 
