@@ -184,6 +184,8 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         setMapView()
         addObserver()
         self.bindViewModels()
+        
+        let temp: Double = 116.40000000000001
     }
     
     override func viewWillAppear(_ animated: Bool) {

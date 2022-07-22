@@ -50,6 +50,8 @@ class BaseService {
             
             switch decodingMode {
             case .model:
+                print("여기여기")
+                dump(decodedData)
                 return .success(decodedData.data ?? "None-Data")
                 
             case .message:

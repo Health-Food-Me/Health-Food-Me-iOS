@@ -74,7 +74,8 @@ extension MenuCellCVC {
             menuView.kcalView.isHidden = true
         } else {
             guard let menuKcal = menuData.menuKcal else { return }
-            menuView.kcalLabel.text = "\(menuKcal)"
+            let intKcal = Int(menuKcal)
+            menuView.kcalLabel.text = "\(intKcal)"
         }
     }
 }

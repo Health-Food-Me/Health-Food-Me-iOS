@@ -13,7 +13,7 @@ struct MenuDataModel: Codable {
     let memuImageURL: String?
     let menuName: String
     let menuPrice: Int
-    let menuKcal: Int?
+    let menuKcal: Double?
     let carbohydrates: Int?
     let protein: Int?
     let fat: Int?
