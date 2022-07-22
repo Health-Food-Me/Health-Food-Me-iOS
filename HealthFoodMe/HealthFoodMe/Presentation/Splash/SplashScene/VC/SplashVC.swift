@@ -105,6 +105,7 @@ extension SplashVC {
                    let refresh = data?.refreshToken {
                     self.userManager.setCurrentUserWithId(user)
                     self.userManager.updateAuthToken(access, refresh)
+                    self.userManager.setLoginStatus(isLoginned: true)
                     self.presentMainMapVC()
                 } else {
                     self.presentSocialLoginVC()
@@ -112,6 +113,7 @@ extension SplashVC {
             case .requestErr:
                 self.presentSocialLoginVC()
             default:
+                self.presentSocialLoginVC()
                 print("소셜 토큰 에러")
             }
         }

@@ -517,7 +517,10 @@ extension MainDetailVC {
             RestaurantService.shared.fetchRestaurantDetail(restaurantId: restaurantId, userId: UserManager.shared.getUser ?? "", latitude: location.latitude, longitude: location.longitude) { networkResult in
                 switch networkResult {
                 case .success(let data):
+                    dump(data)
+                    print("옵셔널")
                     if let data = data as? MainDetailEntity {
+                        print("성공")
                         self.navigationTitle = data.restaurant.name
                         self.restaurantName = data.restaurant.name
                         self.mainInfoTVC.isInitialReload = self.mainInfoInitialReload

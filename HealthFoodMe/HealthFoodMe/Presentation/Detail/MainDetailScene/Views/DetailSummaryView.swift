@@ -81,6 +81,8 @@ final class DetailSummaryView: UIView {
 
 extension DetailSummaryView {
     func setData(data: MainDetailEntity) {
+        
+        (data.restaurant.logo == "" || data.restaurant.logo == nil) ? logoImageView.image = ImageLiterals.MenuTab.emptyCard : logoImageView.setImage(with: data.restaurant.logo)
         logoImageView.setImage(with: data.restaurant.logo)
         starRateView.rate = data.restaurant.score
         let score = round(data.restaurant.score * 10) / 10

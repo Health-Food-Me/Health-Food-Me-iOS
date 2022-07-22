@@ -15,15 +15,28 @@ struct MainDetailEntity: Codable {
 
 // MARK: - Menu
 struct Menu: Codable {
-    let id, name: String
+    let id, name: String?
     let image: String?
-    let kcal, per: Int?
-    let price: Int
-    let isPick: Bool
+    let kcal: Double?
+    let per: Int?
+    let price: Int?
+    let isPick: Bool?
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case name, image, kcal, per, price, isPick
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        id = (try? container.decode(String.self, forKey: .id)) ?? ""
+        name = (try? container.decode(String.self, forKey: .name)) ?? ""
+        image = (try? container.decode(String.self, forKey: .image)) ?? ""
+        kcal = (try? container.decode(Double.self, forKey: .kcal)) ?? 0
+        per = (try? container.decode(Int.self, forKey: .per)) ?? 0
+        price = (try? container.decode(Int.self, forKey: .price)) ?? 0
+        isPick = (try? container.decode(Bool.self, forKey: .isPick)) ?? false
     }
     
     func toDomain() -> MenuDataModel {
@@ -39,7 +52,16 @@ struct Menu: Codable {
         } else {
             perText = nil
         }
-        return MenuDataModel.init(restaurantID: id, isPick: isPick, memuImageURL: imageURL, menuName: name, menuPrice: price, menuKcal: kcal, carbohydrates: nil, protein: nil, fat: nil, per: perText)
+        return MenuDataModel.init(restaurantID: id ?? "",
+                                  isPick: isPick ?? false,
+                                  memuImageURL: imageURL,
+                                  menuName: name ?? "",
+                                  menuPrice: price ?? 0,
+                                  menuKcal: kcal,
+                                  carbohydrates: nil,
+                                  protein: nil,
+                                  fat: nil,
+                                  per: perText)
     }
 }
 
