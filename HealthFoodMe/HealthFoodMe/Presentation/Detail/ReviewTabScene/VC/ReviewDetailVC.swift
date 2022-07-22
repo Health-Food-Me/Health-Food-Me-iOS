@@ -24,7 +24,6 @@ class ReviewDetailVC: UIViewController {
     private var reviewData: [ReviewCellViewModel] = [] { didSet {
         fetchCutStringList()
         fetchExpendStateList()
-        reviewCV.reloadData()
     }}
     private var reviewServerData: [ReviewDataModel] = []
     private var blogReviewData: [BlogReviewDataModel] = []
@@ -423,7 +422,6 @@ extension ReviewDetailVC: UICollectionViewDataSource {
         } else if selectedCustomSegment == 1 {
             URLSchemeManager.shared.loadSafariApp(blogLink: blogReviewData[indexPath.row].blogURL)
         }
-        
     }
 }
 
@@ -454,7 +452,7 @@ extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
                     return CGSize(width: cellWidth, height: cellHeight)
                 } else {
                     let cellWidth = width * 335/375
-                    let cellHeight = cellWidth * 158/335
+                    let cellHeight = cellWidth * 156/335
                     return CGSize(width: cellWidth, height: cellHeight)
                 }
             }
