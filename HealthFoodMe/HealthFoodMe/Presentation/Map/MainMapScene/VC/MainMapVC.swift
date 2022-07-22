@@ -411,7 +411,7 @@ extension MainMapVC {
             initialMapOpened = true
             let NMGPosition = self.locationManager?.currentLatLng()
             if NMGPosition != nil {
-                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
+                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 1600)
             }
             isInitialPoint = true
         }

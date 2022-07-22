@@ -50,7 +50,7 @@ extension NaverMapContainerView {
         naverMapView = NMFNaverMapView(frame: self.frame)
         naverMapView.mapView.positionMode = .direction
         naverMapView.mapView.locationOverlay.hidden = true
-        naverMapView.mapView.moveCamera(NMFCameraUpdate(position: NMFCameraPosition(LocationLiterals.gangnamStation, zoom: 11.7)))
+        naverMapView.mapView.moveCamera(NMFCameraUpdate(position: NMFCameraPosition(LocationLiterals.gangnamStation, zoom: 10.5)))
         naverMapView.showZoomControls = false
         addSubview(naverMapView)
         
@@ -356,7 +356,8 @@ struct MapAccumulationCalculator {
             case 100 ..< 200          : return 14
             case 200 ..< 500          : return 13
             case 500 ..< 1000         : return 12
-            case 1000 ..< 2000        : return 11
+            case 1000 ..< 1500        : return 11
+        case 1500 ..< 2000 : return 10.7
             case 2000 ..< 5000        : return 10
             case 5000 ..< 10000       : return 9
             case 10000 ..< 20000      : return 8
