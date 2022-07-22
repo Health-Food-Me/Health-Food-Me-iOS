@@ -66,6 +66,7 @@ final class NicknameChangeVC: UIViewController {
     textField.textColor = .helfmeBlack
     textField.font = UIFont.NotoMedium(size: 16)
     textField.clearButtonMode = .whileEditing
+    textField.autocorrectionType = .no
     return textField
   }()
   
@@ -313,8 +314,8 @@ extension NicknameChangeVC {
       let keyboardRectangle = keyboardFrame.cgRectValue
       let keyboardHeight = keyboardRectangle.height
       
-      let bottomContraint = (keyboardHeight) * (-1)
-      changeCTAButton.snp.updateConstraints { make in
+      let bottomContraint = (keyboardHeight) * (-1) + 20
+        changeCTAButton.snp.updateConstraints { make in
         make.bottom.equalTo(view.safeAreaLayoutGuide).offset(bottomContraint)
       }
     }

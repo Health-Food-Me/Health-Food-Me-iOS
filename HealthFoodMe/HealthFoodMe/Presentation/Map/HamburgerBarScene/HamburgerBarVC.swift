@@ -447,7 +447,7 @@ extension HamburgerBarVC: MFMailComposeViewControllerDelegate {
         let mailComposeVC = MFMailComposeViewController()
         if MFMailComposeViewController.canSendMail() {
             mailComposeVC.mailComposeDelegate = self
-            mailComposeVC.setToRecipients(["0inn1220@gmail.com"])
+            mailComposeVC.setToRecipients(["hfmlove5252@gmail.com"])
             mailComposeVC.setSubject(title)
             mailComposeVC.setMessageBody(content, isHTML: false)
             self.present(mailComposeVC, animated: true, completion: nil)
