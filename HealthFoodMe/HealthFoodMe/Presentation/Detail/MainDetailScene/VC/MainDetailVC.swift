@@ -389,10 +389,17 @@ extension MainDetailVC: UITableViewDataSource {
             }
         })
         
+        let appleAction = UIAlertAction(title: "Apple Maps", style: UIAlertAction.Style.default, handler: { _ in
+            if let destination = self.restaurantLocation {
+                URLSchemeManager.shared.loadAppleMapApp(location: Location.init(latitude: destination.latitude, longitude: destination.longitude))
+            }
+        })
+        
         let cancelAction = UIAlertAction(title: "취소", style: UIAlertAction.Style.cancel, handler: nil)
         
         actionSheet.addAction(kakaoAction)
         actionSheet.addAction(naverAction)
+        actionSheet.addAction(appleAction)
         actionSheet.addAction(cancelAction)
         
         self.present(actionSheet, animated: true)

@@ -190,6 +190,7 @@ extension SearchResultVC {
         }
         requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lat, latitude: lng,
                                                                          keyword: keyword), fromRecent: fromRecent) {
+            self.mapViewController.initialId = self.fromSearchCellInitial
             self.mapViewController.IDsForMap = self.searchResultList.map({
                 $0.id
             })

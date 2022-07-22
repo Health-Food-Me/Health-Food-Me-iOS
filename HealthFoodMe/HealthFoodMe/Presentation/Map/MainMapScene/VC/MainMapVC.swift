@@ -15,6 +15,12 @@ import SnapKit
 class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
     // MARK: - Properties
+    private lazy var clLocationManager: CLLocationManager = {
+        let manager = CLLocationManager()
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.delegate = self
+        return manager
+    }()
     private var initialMapOpened: Bool = false
     private let disposeBag = DisposeBag()
     private var isInitialPoint = false
@@ -138,6 +144,15 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
                 let NMGPosition = self.locationManager?.currentLatLng()
                 if let position = NMGPosition {
                     self.mapView.moveCameraPositionWithZoom(position, 200)
+                }
+            } else {
+                switch self.clLocationManager.authorizationStatus {
+                case .denied:
+                    self.clLocationManager.requestWhenInUseAuthorization()
+                case .notDetermined, .restricted:
+                    self.clLocationManager.requestWhenInUseAuthorization()
+                default:
+                    break
                 }
             }
         }), for: .touchUpInside)
@@ -762,6 +777,17 @@ extension MainMapVC {
         
         UIView.animate(withDuration: 0.5, delay: 0) {
             self.view.layoutIfNeeded()
+        }
+    }
+    
+    func checkLocationStatus() {
+        switch clLocationManager.authorizationStatus {
+        case .authorizedAlways:
+            canUseLocation = true
+        case .authorizedWhenInUse:
+            canUseLocation = true
+        default:
+            break
         }
     }
 }
