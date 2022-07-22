@@ -50,7 +50,7 @@ extension NaverMapContainerView {
         naverMapView = NMFNaverMapView(frame: self.frame)
         naverMapView.mapView.positionMode = .direction
         naverMapView.mapView.locationOverlay.hidden = true
-        naverMapView.mapView.moveCamera(NMFCameraUpdate(position: NMFCameraPosition(LocationLiterals.gangnamStation, zoom: 11)))
+        naverMapView.mapView.moveCamera(NMFCameraUpdate(position: NMFCameraPosition(LocationLiterals.gangnamStation, zoom: 11.7)))
         naverMapView.showZoomControls = false
         addSubview(naverMapView)
         
