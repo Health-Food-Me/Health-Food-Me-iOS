@@ -2482,16 +2482,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = HealthFoodMe/HealthFoodMe.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = FY8N9XTH66;
+				DEVELOPMENT_TEAM = 4QG3GC35LA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HealthFoodMe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "헬푸미";
 				INFOPLIST_KEY_NSCameraUsageDescription = "리뷰 사진 촬영을 위해 시스템 카메라에 접근합니다";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
+				INFOPLIST_KEY_NSLocationUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "리뷰를 작성하기 위해 사용자의 갤러리에 접근합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -2505,9 +2507,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
+				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.releasedf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2529,7 +2531,9 @@
 				INFOPLIST_FILE = HealthFoodMe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "헬푸미";
 				INFOPLIST_KEY_NSCameraUsageDescription = "리뷰 사진 촬영을 위해 시스템 카메라에 접근합니다";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
+				INFOPLIST_KEY_NSLocationUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "리뷰를 작성하기 위해 사용자의 갤러리에 접근합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -2543,7 +2547,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
+				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.releasedf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = healthfood_distribution;
 				SWIFT_EMIT_LOC_STRINGS = YES;

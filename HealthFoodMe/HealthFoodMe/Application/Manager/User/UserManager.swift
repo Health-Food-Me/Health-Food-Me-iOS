@@ -59,7 +59,7 @@ extension UserManager {
         self.isAppleLogin = isAppleLogin
     }
     
-    func setUserId(userId: String) {
+    func setUserIdForApple(userId: String) {
         self.userIdentifier = userId
     }
     
