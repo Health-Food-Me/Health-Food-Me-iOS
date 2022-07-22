@@ -150,6 +150,7 @@ extension SupplementMapVC {
         
         switch mapType {
         case .search:
+            print(initialId, "체크")
             if let id = initialId {
                 self.bindSetSelectPointForSearchVC(id: id)
             } else {

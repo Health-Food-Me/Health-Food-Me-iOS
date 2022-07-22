@@ -76,13 +76,5 @@ extension MenuCellCVC {
             guard let menuKcal = menuData.menuKcal else { return }
             menuView.kcalLabel.text = "\(menuKcal)"
         }
-
-//        영양정보 부분
-//        menuDetailView.titleLabel.text = menuData.menuName
-//        menuDetailView.pickImageView.image = menuData.isPick ? UIImage(named: "icn_pick") : .none
-//        menuDetailView.carbohydrateAmountLabel.text = "\(menuData.carbohydrates)g"
-//        menuDetailView.proteinAmountLabel.text = "\(menuData.protein)g"
-//        menuDetailView.fatsAmountLabel.text = "\(menuData.fat)g"
-//        menuDetailView.kcalLabel.text = "\(menuData.menuKcal)"
     }
 }
