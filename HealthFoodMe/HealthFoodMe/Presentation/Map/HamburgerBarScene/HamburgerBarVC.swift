@@ -256,6 +256,7 @@ extension HamburgerBarVC {
         helloStackView.snp.makeConstraints { make in
             make.top.equalTo(hamburgerBarView).inset(96)
             make.leading.equalTo(hamburgerBarView).inset(20)
+            make.trailing.equalTo(hamburgerBarView).inset(10)
         }
         
 //        editNameButton.snp.makeConstraints { make in
