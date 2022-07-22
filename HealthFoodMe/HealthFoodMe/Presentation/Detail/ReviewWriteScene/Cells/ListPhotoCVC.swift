@@ -18,12 +18,12 @@ final class ListPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
     static var isFromNib = false
     weak var delegate: ListPhotoCVCDelegate?
     var indexPath: Int = 0
+    var isEdited = ReviewWriteVC().isEdited
   
     // MARK: - UI Components
     
     lazy var photoImageView: UIImageView = {
         let imageView = UIImageView()
-//        imageView.image = ImageLiterals.ReviewWrite.addPhotoIcon
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         return imageView
@@ -41,6 +41,7 @@ final class ListPhotoCVC: UICollectionViewCell, UICollectionViewRegisterable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
+        print("1️⃣\(self.isEdited)")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,6 +56,16 @@ extension ListPhotoCVC {
     
     func setImage(_ image: UIImage) {
         photoImageView.image = image
+    }
+    
+    func setImageURL(_ url: String) {
+        let url = URL(string: url)
+        DispatchQueue.global().async {
+            let data = try? Data(contentsOf: url!)
+            DispatchQueue.main.async {
+                self.photoImageView.image = UIImage(data: data!)
+            }
+        }
     }
     
     func setLayout() {

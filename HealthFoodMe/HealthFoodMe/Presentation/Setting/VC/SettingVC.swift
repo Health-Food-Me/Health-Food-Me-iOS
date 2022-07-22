@@ -20,7 +20,7 @@ class SettingVC: UIViewController {
     private var topTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .NotoBold(size: 16)
-        label.text = I18N.Auth.ChangeNickname.headerTitle
+        label.text = I18N.Map.HamburgerBar.setting
         label.textColor = UIColor.helfmeBlack
         return label
     }()
@@ -78,6 +78,7 @@ class SettingVC: UIViewController {
         label.text = I18N.Setting.termsTitle
         label.font = .NotoRegular(size: 14)
         label.textColor = UIColor.helfmeGray2
+        label.isHidden = true
         return label
     }()
     
@@ -87,6 +88,7 @@ class SettingVC: UIViewController {
         button.setTitleColor(UIColor.helfmeBlack, for: .normal)
         button.titleLabel?.font = .NotoRegular(size: 16)
         button.contentHorizontalAlignment = .left
+        button.isHidden = true
         return button
     }()
     
@@ -96,6 +98,7 @@ class SettingVC: UIViewController {
         button.setTitleColor(UIColor.helfmeBlack, for: .normal)
         button.titleLabel?.font = .NotoRegular(size: 16)
         button.contentHorizontalAlignment = .left
+        button.isHidden = true
         return button
     }()
     
@@ -105,6 +108,7 @@ class SettingVC: UIViewController {
         button.setTitleColor(UIColor.helfmeBlack, for: .normal)
         button.titleLabel?.font = .NotoRegular(size: 16)
         button.contentHorizontalAlignment = .left
+        button.isHidden = true
         return button
     }()
     
@@ -117,6 +121,7 @@ class SettingVC: UIViewController {
         setLayout()
         addButtonAction()
     }
+    
 }
 
 // MARK: - Methods
@@ -241,7 +246,7 @@ extension SettingVC: MFMailComposeViewControllerDelegate {
         let mailComposeVC = MFMailComposeViewController()
         if MFMailComposeViewController.canSendMail() {
             mailComposeVC.mailComposeDelegate = self
-            mailComposeVC.setToRecipients(["0inn1220@gmail.com"])
+            mailComposeVC.setToRecipients(["hfmlove5252@gmail.com"])
             mailComposeVC.setSubject(title)
             mailComposeVC.setMessageBody(content, isHTML: false)
             self.present(mailComposeVC, animated: true, completion: nil)

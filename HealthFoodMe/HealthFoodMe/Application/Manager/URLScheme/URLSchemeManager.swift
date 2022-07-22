@@ -59,6 +59,12 @@ final class URLSchemeManager: NSObject {
         }
     }
     
+    func loadAppleMapApp(location: Location) {
+        if let url = NSURL(string: "http://maps.apple.com/?ll=\(location.latitude),\(location.longitude)"),
+           UIApplication.shared.canOpenURL(url as URL) {
+            UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+        }
+    }
 }
 
 enum NaverTerms: String{

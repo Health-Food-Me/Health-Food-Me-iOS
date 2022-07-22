@@ -128,7 +128,7 @@ final class SearchVC: UIViewController {
     // MARK: - View Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
-        initTextField()
+        setRecentTextField()
     }
     
     override func viewDidLoad() {
@@ -189,9 +189,6 @@ extension SearchVC {
 // MARK: - Methods
 
 extension SearchVC {
-    private func initTextField() {
-        searchTextField.becomeFirstResponder()
-    }
     
     private func setRecentTextField() {
         if searchType == .recent {
@@ -384,6 +381,7 @@ extension SearchVC {
 
 extension SearchVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        HelfmeLoadingView.shared.show(self.view)
         textField.resignFirstResponder()
         if let text = searchTextField.text {
             let searchContent = text.trimmingCharacters(in: .whitespaces)
@@ -405,7 +403,7 @@ extension SearchVC: UITextFieldDelegate {
 // MARK: - UITableViewDelegate
 
 extension SearchVC: UITableViewDelegate {
-
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -458,16 +456,30 @@ extension SearchVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch searchType {
         case .recent:
+            HelfmeLoadingView.shared.show(self.view)
             searchTextField.text = searchRecentList[indexPath.row]
             fetchSearchResultData(keyword: searchRecentList[indexPath.row], fromRecent: true)
             addSearchRecent(title: searchRecentList[indexPath.row])
         case .search:
-            // 지도 눌러도 안바뀌는 화면으로 이동
-            print("\(searchList[indexPath.row].title) 식당 상세 페이지로 이동")
+            searchTextField.text = searchList[indexPath.row].title
+            let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
+            searchResultVC.delegate = self
+            searchResultVC.fromSearchType = .searchRecent
+            searchResultVC.fromSearchCellInitial = searchList[indexPath.row].id
+            searchResultVC.searchContent = searchList[indexPath.row].title
+            searchResultVC.searchResultList = searchResultList
+            navigationController?.pushViewController(searchResultVC, animated: false)
             addSearchRecent(title: searchList[indexPath.row].title)
         case .searchResult:
-            // 지도 누르면 리스트로 바뀌는 화면으로 이동
-            print("\(searchResultList[indexPath.row].storeName) 식당 상세 페이지로 이동")
+            searchTextField.text = searchResultList[indexPath.row].storeName
+            let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
+            searchResultVC.delegate = self
+            searchResultVC.fromSearchType = .searchCell
+            searchResultVC.fromSearchCellInitial = searchResultList[indexPath.row].id
+            searchResultVC.searchContent = searchResultList[indexPath.row].storeName
+            searchResultVC.searchResultList = searchResultList
+            navigationController?.pushViewController(searchResultVC, animated: false)
+            addSearchRecent(title: searchResultList[indexPath.row].storeName)
         }
     }
 }
@@ -528,6 +540,9 @@ extension SearchVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? [SearchResultEntity] {
+                    HelfmeLoadingView.shared.hide() {
+                        print("로딩 종료")
+                    }
                     self.searchResultList.removeAll()
                     for searchResultData in data {
                         self.searchResultList.append(searchResultData.toDomain())

@@ -16,6 +16,7 @@ class MyReviewEmptyViewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     // MARK: - Properties
     
     static var isFromNib = false
+    let btnWidth = UIScreen.main.bounds.width * (180/375)
     weak var delegate: MyReviewEmptyViewDelegate?
   
     // MARK: - UI Components
@@ -41,7 +42,7 @@ class MyReviewEmptyViewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         btn.backgroundColor = .mainRed
         btn.setTitleColor(UIColor.helfmeWhite, for: .normal)
         btn.titleLabel?.font = .NotoBold(size: 16)
-        btn.layer.cornerRadius = 24
+        btn.layer.cornerRadius = btnWidth * (44/180) / 2
         btn.addTarget(self, action: #selector(popToMainVC), for: .touchUpInside)
         return btn
     }()
@@ -59,6 +60,7 @@ class MyReviewEmptyViewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     }()
   
     // MARK: - Life Cycle Part
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -86,7 +88,6 @@ extension MyReviewEmptyViewCVC {
         }
         
         myReviewButton.snp.makeConstraints {
-            let btnWidth = UIScreen.main.bounds.width * (180/375)
             $0.width.equalTo(btnWidth)
             $0.height.equalTo(btnWidth * (44/180))
         }

@@ -8,6 +8,7 @@
 import UIKit
 
 import SnapKit
+import NMapsMap
 
 protocol SearchResultVCDelegate: AnyObject {
     func searchResultVCSearchType(type: SearchType)
@@ -17,10 +18,18 @@ final class SearchResultVC: UIViewController {
     
     // MARK: - Properties
     
+    enum FromSearchType {
+        case searchRecent
+        case searchCell
+        case searchResult
+    }
+    var fromSearchType = FromSearchType.searchResult
+    var fromSearchCellInitial: String = ""
     var searchContent: String = ""
     weak var delegate: SearchResultVCDelegate?
     private var isMapView: Bool = true
     var searchResultList: [SearchResultDataModel] = []
+    private let locationManager = NMFLocationManager.sharedInstance()
     private let mapViewController: SupplementMapVC = {
         let vc = ModuleFactory.resolve().makeSupplementMapVC(forSearchVC: true)
         return vc
@@ -122,12 +131,18 @@ final class SearchResultVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setChildViewController()
-        setUI()
-        addBtnAction()
-        setLayout()
-        setDelegate()
-        registerCell()
+        
+        switch fromSearchType {
+        case .searchRecent:
+            setChildViewController()
+        default:
+            setChildViewController()
+            setLayout()
+            setUI()
+            addBtnAction()
+            setDelegate()
+            registerCell()
+        }
     }
 }
 
@@ -138,13 +153,57 @@ extension SearchResultVC {
         mapViewController.IDsForMap = searchResultList.map({
             $0.id
         })
-        mapViewController.initialId = searchResultList.first?.id
+        
         mapViewController.navigationController?.navigationBar.isHidden = true
-        self.addChild(mapViewController)
-        self.view.addSubview(mapViewController.view)
-        mapViewController.setSupplementMapType(mapType: .search)
         mapViewController.delegate = self
-        mapViewController.didMove(toParent: self)
+        switch fromSearchType {
+        case .searchCell:
+            mapViewController.initialId = fromSearchCellInitial
+            self.addChild(mapViewController)
+            self.view.addSubview(mapViewController.view)
+            mapViewController.didMove(toParent: self)
+            mapViewController.setSupplementMapType(mapType: .search)
+        case .searchRecent:
+            fetchSearchResultData(keyword: searchContent, fromRecent: false)
+        default:
+            mapViewController.initialId = searchResultList.first?.id
+            self.addChild(mapViewController)
+            self.view.addSubview(mapViewController.view)
+            mapViewController.didMove(toParent: self)
+            mapViewController.setSupplementMapType(mapType: .search)
+        }
+    }
+    
+    private func fetchSearchResultData(keyword: String, fromRecent: Bool) {
+        let NMGPosition = self.locationManager?.currentLatLng()
+        var lng: Double = 0.0
+        var lat: Double = 0.0
+        if let position = NMGPosition {
+            lng = position.lng
+            lat = position.lat
+        } else {
+            lng = LocationLiterals.gangnamStation.lng
+            lat = LocationLiterals.gangnamStation.lat
+        }
+        if let text = searchTextField.text {
+            searchContent = text
+        }
+        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lat, latitude: lng,
+                                                                         keyword: keyword), fromRecent: fromRecent) {
+            self.mapViewController.initialId = self.fromSearchCellInitial
+            self.mapViewController.IDsForMap = self.searchResultList.map({
+                $0.id
+            })
+            self.addChild(self.mapViewController)
+            self.view.addSubview(self.mapViewController.view)
+            self.mapViewController.didMove(toParent: self)
+            self.mapViewController.setSupplementMapType(mapType: .search)
+            self.setLayout()
+            self.setUI()
+            self.addBtnAction()
+            self.setDelegate()
+            self.registerCell()
+        }
     }
     
     private func setUI() {
@@ -155,11 +214,17 @@ extension SearchResultVC {
     
     private func addBtnAction() {
         backButton.press {
-            if self.isMapView {
-                self.viewList()
-            } else {
+            switch self.fromSearchType {
+            case .searchRecent:
                 self.delegate?.searchResultVCSearchType(type: .recent)
                 self.navigationController?.popViewController(animated: false)
+            default:
+                if self.isMapView {
+                    self.viewList()
+                } else {
+                    self.delegate?.searchResultVCSearchType(type: .recent)
+                    self.navigationController?.popViewController(animated: false)
+                }
             }
         }
         
@@ -276,15 +341,8 @@ extension SearchResultVC {
         } completion: { _ in
             self.view.bringSubviewToFront(self.topView)
             self.view.bringSubviewToFront(self.searchTextField)
+            self.navigationController?.popViewController(animated: false)
         }
-        mapViewController.hideSummaryView()
-        searchResultTableView.tableHeaderView?.frame.size.height = 50
-        isMapView = false
-        searchResultTableView.layer.cornerRadius = 0
-        searchResultTableView.layer.shadowOpacity = 0
-        searchResultLineView.isHidden = true
-        viewMapButton.isHidden = false
-        viewListButton.isHidden = true
     }
 }
 
@@ -352,5 +410,23 @@ extension SearchResultVC: SupplementMapVCDelegate {
 // MARK: - Network
 
 extension SearchResultVC {
-    
+    private func requestRestaurantSearchResult(searchRequest: SearchRequestEntity, fromRecent: Bool, completion: @escaping(() -> Void)) {
+        RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: searchRequest.longitude,
+                                                                                                  latitude: searchRequest.latitude,
+                                                                                                  keyword: searchRequest.keyword)) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? [SearchResultEntity] {
+                    self.searchResultList.removeAll()
+                    for searchResultData in data {
+                        self.searchResultList.append(searchResultData.toDomain())
+                    }
+                    self.searchResultList = self.searchResultList.sorted(by: { $0.distance < $1.distance })
+                    completion()
+                }
+            default:
+                break;
+            }
+        }
+    }
 }

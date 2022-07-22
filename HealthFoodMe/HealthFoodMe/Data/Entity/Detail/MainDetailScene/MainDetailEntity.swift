@@ -28,12 +28,18 @@ struct Menu: Codable {
     
     func toDomain() -> MenuDataModel {
         var imageURL: String?
+        var perText: String?
         if image == "" {
             imageURL = nil
         } else {
             imageURL = image
         }
-        return MenuDataModel.init(restaurantID: id, isPick: isPick, memuImageURL: imageURL, menuName: name, menuPrice: price, menuKcal: kcal, carbohydrates: nil, protein: nil, fat: nil)
+        if let per = self.per {
+            perText = String(per)
+        } else {
+            perText = nil
+        }
+        return MenuDataModel.init(restaurantID: id, isPick: isPick, memuImageURL: imageURL, menuName: name, menuPrice: price, menuKcal: kcal, carbohydrates: nil, protein: nil, fat: nil, per: perText)
     }
 }
 
@@ -67,7 +73,7 @@ struct Restaurant: Codable {
     }
     
     func toDomain() -> MainDetailExpandableModel {
-        if workTime.count == 1,
+        if workTime.count <= 1,
            let string = workTime.first {
             return MainDetailExpandableModel.init(location: address, telephone: contact,labelText: [string], isExpandable: false)
         } else {

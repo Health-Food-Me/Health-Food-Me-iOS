@@ -31,8 +31,10 @@ final class MapDetailSummaryView: UIView {
     
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.image = ImageLiterals.MainDetail.tempMuseum
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        iv.image = UIImage()
+        iv.layer.cornerRadius = 5
         return iv
     }()
     
@@ -58,7 +60,7 @@ final class MapDetailSummaryView: UIView {
     
     private let restaurantNameLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "서브웨이 동대문역사문화공원역점"
+        lb.text = " "
         lb.textColor = .helfmeBlack
         lb.lineBreakMode = .byWordWrapping
         lb.numberOfLines = 0
@@ -203,7 +205,7 @@ extension MapDetailSummaryView {
     private func makeConstraints() {
         tagCollectionView.snp.updateConstraints { make in
             if isDoubleLineHeight(tags: tagList) {
-                make.height.equalTo(43)
+                make.height.equalTo(47)
             } else {
                 make.height.equalTo(23)
             }

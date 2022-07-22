@@ -63,6 +63,7 @@
 		695758F928857FDC00E36789 /* ReviewWriteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758F828857FDC00E36789 /* ReviewWriteEntity.swift */; };
 		69D7074B2888062E00C2C278 /* ReviewDeleteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D7074A2888062E00C2C278 /* ReviewDeleteEntity.swift */; };
 		69D7074D28885B9900C2C278 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69D7074C28885B9900C2C278 /* GoogleService-Info.plist */; };
+		69D7074F28888D6500C2C278 /* ReviewEditEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D7074E28888D6500C2C278 /* ReviewEditEntity.swift */; };
 		A90CFDCF2885B4DC0018AB94 /* SearchDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90CFDCE2885B4DC0018AB94 /* SearchDataModel.swift */; };
 		A90CFDD12885B4E70018AB94 /* SearchResultDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90CFDD02885B4E70018AB94 /* SearchResultDataModel.swift */; };
 		A90ED6252886644400FCE149 /* SearchEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90ED6222886644400FCE149 /* SearchEntity.swift */; };
@@ -298,6 +299,7 @@
 		695758F828857FDC00E36789 /* ReviewWriteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteEntity.swift; sourceTree = "<group>"; };
 		69D7074A2888062E00C2C278 /* ReviewDeleteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDeleteEntity.swift; sourceTree = "<group>"; };
 		69D7074C28885B9900C2C278 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		69D7074E28888D6500C2C278 /* ReviewEditEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewEditEntity.swift; sourceTree = "<group>"; };
 		A90CFDC82885B1880018AB94 /* SearchEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEntity.swift; sourceTree = "<group>"; };
 		A90CFDCA2885B2730018AB94 /* SearchResultEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultEntity.swift; sourceTree = "<group>"; };
 		A90CFDCE2885B4DC0018AB94 /* SearchDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataModel.swift; sourceTree = "<group>"; };
@@ -1804,6 +1806,7 @@
 			children = (
 				EBFAEB2F2885F2F7009C569C /* MyReviewEntity.swift */,
 				69D7074A2888062E00C2C278 /* ReviewDeleteEntity.swift */,
+				69D7074E28888D6500C2C278 /* ReviewEditEntity.swift */,
 			);
 			path = MyReviewScene;
 			sourceTree = "<group>";
@@ -1990,8 +1993,8 @@
 				EB085ED228716E1900361837 /* Sources */,
 				EB085ED328716E1900361837 /* Frameworks */,
 				EB085ED428716E1900361837 /* Resources */,
-				EBFAEB012885551B009C569C /* Run Script */,
 				F9EDBBC8D18259384215A033 /* [CP] Embed Pods Frameworks */,
+				EBFAEB012885551B009C569C /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -2216,6 +2219,7 @@
 				FD72FCBD28834A190092746F /* NicknameChangeVC.swift in Sources */,
 				EBF66AC1287227F500DE0ED1 /* UIStackView+.swift in Sources */,
 				EBF66AF1287227F500DE0ED1 /* ShowToast.swift in Sources */,
+				69D7074F28888D6500C2C278 /* ReviewEditEntity.swift in Sources */,
 				EBF66AC4287227F500DE0ED1 /* UIButton+.swift in Sources */,
 				A90ED6332886652B00FCE149 /* SearchResultEntity.swift in Sources */,
 				FDA3AEF82880612300D6CCB4 /* UserWithdrawalUseCase.swift in Sources */,
@@ -2487,8 +2491,8 @@
 				INFOPLIST_FILE = HealthFoodMe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "헬푸미";
 				INFOPLIST_KEY_NSCameraUsageDescription = "리뷰 사진 촬영을 위해 시스템 카메라에 접근합니다";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받습니다";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "리뷰를 작성하기 위해 사용자의 갤러리에 접근합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -2525,8 +2529,8 @@
 				INFOPLIST_FILE = HealthFoodMe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "헬푸미";
 				INFOPLIST_KEY_NSCameraUsageDescription = "리뷰 사진 촬영을 위해 시스템 카메라에 접근합니다";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받습니다";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재위치를 가져와 내 주변에 식당, 지도에 현재위치를 표시합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "리뷰를 작성하기 위해 사용자의 갤러리에 접근합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

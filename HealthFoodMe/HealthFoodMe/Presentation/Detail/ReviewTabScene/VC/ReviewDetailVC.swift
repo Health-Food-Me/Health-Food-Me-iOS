@@ -32,8 +32,8 @@ class ReviewDetailVC: UIViewController {
     private var expendStateList: [Bool] = []
     var moreContentsButtonRect: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     
-    var restaurantId = ""
-    var restaurantName = ""
+    var restaurantId: String = "62d26c9bd11146a81ef18ea6"
+    var restaurantName: String = "샐러디태릉입구"
     
     var selectedCustomSegment = 0 {
         didSet {
@@ -70,6 +70,7 @@ class ReviewDetailVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
+        reviewCV.reloadData()
     }
 }
 
@@ -188,7 +189,7 @@ extension ReviewDetailVC {
             controller.navigationController?.navigationBar.barTintColor = .black
             controller.navigationController?.navigationBar.tintColor = .black
             controller.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-
+            
             controller.dismissOnPanGesture = true
             controller.slides = images
             controller.enableZoom = true
@@ -219,8 +220,7 @@ extension ReviewDetailVC {
         // 데이터를 서버에서 받아와야 함
         requestReviewListWithAPI() {
             self.requestBlogReviewListWithAPI()
-            self.processViewModel(self.reviewServerData, self.blogReviewData)
-        }
+            self.processViewModel(self.reviewServerData, self.blogReviewData)        }
     }
     
     private func processViewModel(_ reviewDataList: [ReviewDataModel],
@@ -253,6 +253,7 @@ extension ReviewDetailVC {
                     for da in data {
                         self.reviewServerData.append(da.toDomain())
                     }
+                    self.reviewServerData.reverse()
                     print(data, "성공")
                 }
                 
@@ -418,7 +419,7 @@ extension ReviewDetailVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if selectedCustomSegment == 0 {
-
+            
         } else if selectedCustomSegment == 1 {
             URLSchemeManager.shared.loadSafariApp(blogLink: blogReviewData[indexPath.row].blogURL)
         }

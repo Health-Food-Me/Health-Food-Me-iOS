@@ -25,7 +25,8 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     
     private let iconImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .center
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
         iv.image = ImageLiterals.MainDetail.locationIcon
         iv.isHidden = false
         return iv
@@ -33,32 +34,31 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     
     private let infoLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "월요일 09:00~20:00"
+        lb.text = "월요일 00:00 ~ 24:00"
         lb.textAlignment = .left
         lb.textColor = .helfmeGray1
         lb.font = .NotoMedium(size: 12)
+        lb.numberOfLines = 0
+        lb.sizeToFit()
         lb.isUserInteractionEnabled = true
+        lb.lineBreakMode = .byClipping
         return lb
     }()
     
     private lazy var toggleButtonInfnoLabel: UIButton = {
         let bt = UIButton()
         bt.addAction(UIAction(handler: { _ in
-            bt.isSelected.toggle()
-            self.toggleButtonTapped.accept(())
-            self.postObserverAction(.foldButtonClicked,object: self.foldState)
+            self.postObserverAction(.foldButtonClicked)
         }), for: .touchUpInside)
-        bt.isHidden = true
+        bt.isHidden = false
         return bt
     }()
     
     private lazy var toggleButton: UIButton = {
         let bt = UIButton()
-        bt.setImage(ImageLiterals.MainDetail.showdownIcon, for: .normal)
-        bt.setImage(ImageLiterals.MainDetail.showupIcon, for: .selected)
+        bt.setBackgroundImage(ImageLiterals.MainDetail.showdownIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            bt.isSelected.toggle()
-            self.toggleButtonTapped.accept(())
+            self.postObserverAction(.foldButtonClicked)
         }), for: .touchUpInside)
         return bt
     }()
@@ -69,12 +69,15 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
         setLayout()
-        addObservers()
 
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        removeObserverAction(.foldButtonClicked)
     }
 }
 
@@ -90,30 +93,35 @@ extension ExpandableInfoTVC {
         
         iconImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
-            make.width.height.equalTo(20)
-            make.centerY.equalToSuperview()
+            make.width.height.equalTo(15)
+            make.top.equalToSuperview().offset(8)
         }
         
         infoLabel.snp.makeConstraints { make in
             make.leading.equalTo(iconImageView.snp.trailing).offset(12.5)
-            make.centerY.equalTo(iconImageView.snp.centerY)
+            make.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(3)
         }
         
         toggleButtonInfnoLabel.snp.makeConstraints { make in
-            make.center.equalTo(infoLabel)
+            make.center.equalTo(infoLabel.snp.center)
             make.width.equalTo(infoLabel.snp.width)
             make.height.equalTo(infoLabel.snp.height)
         }
         
         toggleButton.snp.makeConstraints { make in
+            make.width.equalTo(24)
+            make.height.equalTo(24)
             make.leading.equalTo(infoLabel.snp.trailing).offset(2)
-            make.centerY.equalTo(infoLabel.snp.centerY)
+            make.centerY.equalTo(iconImageView).offset(2)
         }
     }
     
-    private func addObservers() {
-        addObserverAction(.foldButtonClicked) { _ in
-            self.toggleButton.isSelected.toggle()
+    func setFoldStateImage(isFolded: Bool) {
+        if isFolded {
+            toggleButton.setBackgroundImage(ImageLiterals.MainDetail.showdownIcon, for: .normal)
+        } else {
+            toggleButton.setBackgroundImage(ImageLiterals.MainDetail.showupIcon, for: .normal)
         }
     }
     
@@ -125,24 +133,47 @@ extension ExpandableInfoTVC {
         case 0:
             iconImageView.image = ImageLiterals.MainDetail.locationIcon
             infoLabel.text = expandableData.location
-            toggleButtonInfnoLabel.isHidden = true
+                toggleButtonInfnoLabel.isHidden = true
         case 1:
-            print(isOpenned,"isOpened",indexPath.row)
             iconImageView.image = ImageLiterals.MainDetail.timeIcon
-            toggleButtonInfnoLabel.isHidden = false
             toggleButton.isHidden = !expandableData.isExpandable
+                print("@@#@#@",expandableData.labelText)
             if expandableData.labelText.count > 0 {
-                infoLabel.text = expandableData.labelText[indexPath.row]
+                print("2")
+
+                var result = ""
+                for line in expandableData.labelText {
+                    result += line
+                    result += "\n"
+                }
+                infoLabel.text = result
+                infoLabel.sizeToFit()
+                toggleButton.isHidden = false
+                toggleButtonInfnoLabel.isHidden = false
+                toggleButtonInfnoLabel.isEnabled = true
+                toggleButton.isEnabled = true
+
+
+            } else {
+                toggleButton.isHidden = true
+                toggleButton.isEnabled = false
+                toggleButton.setBackgroundImage(UIImage(), for: .disabled)
+                toggleButton.setImage(UIImage(), for: .disabled)
+                toggleButtonInfnoLabel.isHidden = true
+                toggleButtonInfnoLabel.isEnabled = false
+                infoLabel.text = "영업시간 정보 없음"
+
+                infoLabel.sizeToFit()
             }
-            infoLabel.sizeToFit()
+
         default:
             iconImageView.image = ImageLiterals.MainDetail.phoneIcon
             let telephoneString = expandableData.telephone
             let attributeString = NSMutableAttributedString(string: telephoneString)
             attributeString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: telephoneString.count))
             infoLabel.attributedText = attributeString
+                toggleButtonInfnoLabel.isHidden = true
             setTapGesture()
-            toggleButtonInfnoLabel.isHidden = true
         }
         
         iconImageView.isHidden = !isFirstRow

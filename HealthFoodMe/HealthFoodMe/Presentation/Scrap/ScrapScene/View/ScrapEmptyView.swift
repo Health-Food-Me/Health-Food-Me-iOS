@@ -17,6 +17,7 @@ class ScrapEmptyView: UIView {
     
     // MARK: - Properties
     
+    let btnWidth = UIScreen.main.bounds.width * (180/375)
     weak var delegate: ScrapEmptyViewDelegate?
     
     // MARK: - UI Components
@@ -43,7 +44,7 @@ class ScrapEmptyView: UIView {
         btn.backgroundColor = .mainRed
         btn.setTitleColor(UIColor.helfmeWhite, for: .normal)
         btn.titleLabel?.font = .NotoBold(size: 16)
-        btn.layer.cornerRadius = 24
+        btn.layer.cornerRadius = btnWidth * (44/180) / 2
         btn.addTarget(self, action: #selector(popToMainMapVC), for: .touchUpInside)
         return btn
     }()
@@ -91,14 +92,14 @@ extension ScrapEmptyView {
         addSubviews(scrapStackView)
         
         scrapStackView.snp.makeConstraints {
-            $0.centerX.equalTo(safeAreaLayoutGuide)
+            $0.centerX.equalToSuperview()
             $0.centerY.equalTo(safeAreaLayoutGuide).offset(-48)
         }
         
         scrapButton.snp.makeConstraints {
-            let btnWidth = UIScreen.main.bounds.width * (180/375)
             $0.width.equalTo(btnWidth)
             $0.height.equalTo(btnWidth * (44/180))
+            $0.centerX.equalToSuperview()
         }
     }
 }

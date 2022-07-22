@@ -11,17 +11,23 @@ import UIKit
 import NMapsMap
 import RxSwift
 import SnapKit
-import SwiftUI
 
 class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     
     // MARK: - Properties
+    private lazy var clLocationManager: CLLocationManager = {
+        let manager = CLLocationManager()
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.delegate = self
+        return manager
+    }()
     private var initialMapOpened: Bool = false
     private let disposeBag = DisposeBag()
     private var isInitialPoint = false
     private var currentZoom: Double = 0
     private var currentRestaurantId: String = ""
     private var currentLocation: Location = Location.init(latitude: 0, longitude: 0)
+    private var currentScrapList: [ScrapListEntity] = []
     private var currentCategory: String = "" {
         didSet {
             if currentCategory != "" {
@@ -41,8 +47,8 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         }
     }
     private var restaurantData: [MainMapEntity] = []
+    private var canUseLocation = false
     var viewModel: MainMapViewModel!
-    var scrapList: [ScrapListEntity] = []
     
     
     // MARK: - UI Components
@@ -120,6 +126,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         bt.addAction(UIAction(handler: { _ in
             self.makeVibrate()
             bt.isSelected.toggle()
+            self.filterScrapData()
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
         bt.clipsToBounds = true
@@ -132,10 +139,21 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         let bt = UIButton()
         bt.setImage(ImageLiterals.Map.mylocationIcon, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            self.makeVibrate()
-            let NMGPosition = self.locationManager?.currentLatLng()
-            if let position = NMGPosition {
-                self.mapView.moveCameraPositionWithZoom(position, 200)
+            if self.canUseLocation {
+                self.makeVibrate()
+                let NMGPosition = self.locationManager?.currentLatLng()
+                if let position = NMGPosition {
+                    self.mapView.moveCameraPositionWithZoom(position, 200)
+                }
+            } else {
+                switch self.clLocationManager.authorizationStatus {
+                case .denied:
+                    self.clLocationManager.requestWhenInUseAuthorization()
+                case .notDetermined, .restricted:
+                    self.clLocationManager.requestWhenInUseAuthorization()
+                default:
+                    break
+                }
             }
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
@@ -144,7 +162,13 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         bt.layer.applyShadow(color: .helfmeBlack, alpha: 0.2, x: 0, y: 2, blur: 4, spread: 0)
         return bt
     }()
-
+    
+    private lazy var scrapListEmptyToastView: UpperToastView = {
+        let toastView = UpperToastView(title: I18N.Map.Main.scrapEmptyGuide)
+        toastView.layer.cornerRadius = 20
+        return toastView
+    }()
+    
     private var mapDetailSummaryView = MapDetailSummaryView()
     
     // MARK: - View Life Cycle
@@ -189,7 +213,7 @@ extension MainMapVC {
         searchBar.addSubviews(searchIconImageView)
         view.addSubviews(mapView, hamburgerButton, searchBar,
                          categoryCollectionView, mapDetailSummaryView, scrapButton,
-                         myLocationButton)
+                         myLocationButton,scrapListEmptyToastView)
         
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -252,6 +276,13 @@ extension MainMapVC {
             make.bottom.equalTo(mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
             make.width.height.equalTo(56)
         }
+        
+        scrapListEmptyToastView.snp.makeConstraints { make in
+            make.width.equalTo(300)
+            make.height.equalTo(40)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(mapDetailSummaryView.snp.bottom).offset(200)
+        }
     }
     
     private func setTapGesture() {
@@ -272,6 +303,44 @@ extension MainMapVC {
         MenuCategoryCVC.register(target: categoryCollectionView)
     }
     
+    private func filterScrapData() {
+        if scrapButton.isSelected {
+            if let userID = UserManager.shared.getUser {
+                UserService.shared.getScrapList(userId: userID) { result in
+                    switch(result) {
+                    case .success(let entity):
+                        
+                        if let scrapList = entity as? [ScrapListEntity] {
+                            if scrapList.isEmpty { self.showUpperToast() }
+                            self.currentScrapList = scrapList
+                            if !self.currentCategory.isEmpty {
+                                self.fetchCategoryList(zoom: self.currentZoom)
+                            } else {
+                                self.mapView.scrapButtonSelected.accept(scrapList)
+                            }
+                        }
+                    default : break
+                    }
+                }
+            }
+        } else {
+            fetchRestaurantList(zoom: self.currentZoom)
+        }
+    }
+    
+    private func filterScrapData(_ list:[ScrapListEntity], _ mapList: [MapPointDataModel]) -> [MapPointDataModel] {
+        
+        var scrapList: [MapPointDataModel] = []
+        for scrapPoint in list {
+            if let item = mapList.first(where: { mapData in
+                return (mapData.latitude == scrapPoint.latitude)
+            }) {
+                scrapList.append(item)
+            }
+        }
+        return scrapList
+    }
+    
     private func setPanGesture() {
         let panGesture = UIPanGestureRecognizer()
         mapDetailSummaryView.addGestureRecognizer(panGesture)
@@ -289,14 +358,14 @@ extension MainMapVC {
                 case .ended:
                     guard let self = self else { return }
                     if summaryViewTranslation.y < -90
-                        || (self.mapDetailSummaryView.frame.origin.y ?? 40 < 30) {
+                        || (self.mapDetailSummaryView.frame.origin.y < 30) {
                         self.mapDetailSummaryView.snp.updateConstraints { make in
                             make.top.equalToSuperview().inset(44)
                         }
                         
                         let bottomSafeArea = self.safeAreaBottomInset()
                         self.myLocationButton.snp.updateConstraints { make in
-                            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+20) * (-1))
+                            make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((20) * (-1))
                         }
                         
                         UIView.animate(withDuration: 0.3, delay: 0) {
@@ -315,10 +384,11 @@ extension MainMapVC {
                             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                             self.view.layoutIfNeeded()
                         } completion: { _ in
-                            self.scrapButton.isHidden = false
-                            self.myLocationButton.isHidden = false
+                            
                         }
                     }
+                    self.scrapButton.isHidden = true
+                    self.myLocationButton.isHidden = false
                 default:
                     break
                 }
@@ -338,9 +408,7 @@ extension MainMapVC {
         if !initialMapOpened {
             initialMapOpened = true
             let NMGPosition = self.locationManager?.currentLatLng()
-            if let position = NMGPosition {
-                self.mapView.moveCameraPositionWithZoom(position, 2000)
-            } else {
+            if NMGPosition != nil {
                 self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
             }
             isInitialPoint = true
@@ -360,6 +428,8 @@ extension MainMapVC {
         self.myLocationButton.snp.updateConstraints { make in
             make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((bottomSafeArea+5) * (-1))
         }
+        self.myLocationButton.isHidden = false
+        self.scrapButton.isHidden = false
         UIView.animate(withDuration: 0.3, delay: 0) {
             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.layoutIfNeeded()
@@ -401,6 +471,9 @@ extension MainMapVC {
                     }
                 }
                 
+                self?.myLocationButton.isHidden = false
+                self?.scrapButton.isHidden = true
+                
                 UIView.animate(withDuration: 0.3, delay: 0) {
                     self?.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                     self?.view.layoutIfNeeded()
@@ -435,7 +508,7 @@ extension MainMapVC {
                 self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.view.layoutIfNeeded()
             } completion: { _ in
-                self.scrapButton.isHidden = false
+                self.scrapButton.isHidden = true
                 self.myLocationButton.isHidden = false
                 self.hamburgerButton.isHidden = false
                 self.searchBar.isHidden = false
@@ -443,7 +516,7 @@ extension MainMapVC {
             }
         }
         nextVC.restaurantId = self.currentRestaurantId
-        nextVC.location = self.currentLocation
+        nextVC.restaurantLocation = self.currentLocation
         if let lat = locationManager?.currentLatLng().lat,
            let lng = locationManager?.currentLatLng().lng {
             nextVC.userLocation = Location(latitude: lat, longitude: lng)
@@ -519,6 +592,7 @@ extension MainMapVC {
 
 extension MainMapVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        makeVibrate()
         selectedCategories[indexPath.row].toggle()
         setCurrentCategory(currentIndex: indexPath.row)
         return true
@@ -568,7 +642,7 @@ extension MainMapVC: HamburgerbarVCDelegate {
 
 extension MainMapVC: MapDetailSummaryViewDelegate {
     func MapDetailSummaryViewScarp() {
-        putScrap(userId: UserManager.shared.getUser?.id ?? "", restaurantId: currentRestaurantId)
+        putScrap(userId: UserManager.shared.getUser ?? "", restaurantId: currentRestaurantId)
     }
 }
 
@@ -582,53 +656,75 @@ extension MainMapVC {
             return Disposables.create()
         }
     }
-
+    
     private func fetchRestaurantList(zoom: Double) {
-        if let lng = locationManager?.currentLatLng().lng,
-           let lat = locationManager?.currentLatLng().lat {
-            RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
-                switch networkResult {
-                case .success(let data):
-                    if let data = data as? [MainMapEntity] {
-                        self.restaurantData = data
-                        var models = [MapPointDataModel]()
-                        models = data.map({ entity in
-                            entity.toDomain()
-                        })
-                        self.makePoints(points: models).bind(to: self.mapView.rx.pointList)
-                            .disposed(by: self.disposeBag)
+        if canUseLocation {
+            if let lng = locationManager?.currentLatLng().lng,
+               let lat = locationManager?.currentLatLng().lat {
+                RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
+                    switch networkResult {
+                    case .success(let data):
+                        if let data = data as? [MainMapEntity] {
+                            self.restaurantData = data
+                            var models = [MapPointDataModel]()
+                            
+                            models = data.map({ entity in
+                                entity.toDomain()
+                            })
+                            if self.scrapButton.isSelected {
+                                self.mapView.scrapButtonSelected.accept(self.currentScrapList)
+                            } else {
+                                self.makePoints(points: models).bind(to: self.mapView.rx.pointList)
+                                    .disposed(by: self.disposeBag)
+                            }
+                            
+                        }
+                    default:
+                        break
                     }
-                default:
-                    break
                 }
             }
         }
     }
     
     private func fetchCategoryList(zoom: Double) {
-        if let lng = locationManager?.currentLatLng().lng,
-           let lat = locationManager?.currentLatLng().lat {
-            RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
-                switch networkResult {
-                case .success(let data):
-                    if let data = data as? [MainMapEntity] {
-                        self.restaurantData = data
-                        var models = [MapPointDataModel]()
-                        models = data.map({ entity in
-                            entity.toDomain()
-                        })
-                        self.makePoints(points: models).bind(to: self.mapView.rx.categoryPointList)
-                            .disposed(by: self.disposeBag)
+        if canUseLocation {
+            if let lng = locationManager?.currentLatLng().lng,
+               let lat = locationManager?.currentLatLng().lat {
+                RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
+                    switch networkResult {
+                    case .success(let data):
+                        if let data = data as? [MainMapEntity] {
+                            self.restaurantData = data
+                            var models = [MapPointDataModel]()
+                            models = data.map({ entity in
+                                entity.toDomain()
+                            })
+                            if self.scrapButton.isSelected {
+                                var filterList: [ScrapListEntity] = []
+                                for model in models {
+                                    if let item = self.currentScrapList.first(where: { $0.longtitude == model.longtitude } ){
+                                        filterList.append(item)
+                                    }
+                                }
+                                
+                                self.mapView.scrapButtonSelected.accept(filterList)
+                            } else {
+                                self.makePoints(points: models).bind(to: self.mapView.rx.categoryPointList)
+                                    .disposed(by: self.disposeBag)
+                            }
+                            
+                        }
+                    default:
+                        break
                     }
-                default:
-                    break
                 }
             }
         }
     }
     
     private func fetchRestaurantSummary(id: String) {
-        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser?.id ?? "") { networkResult in
+        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? RestaurantSummaryEntity {
@@ -649,5 +745,83 @@ extension MainMapVC {
                 break;
             }
         }
+    }
+}
+
+extension MainMapVC {
+    private func showUpperToast() {
+        makeVibrate()
+        scrapListEmptyToastView.snp.remakeConstraints { make in
+            make.width.equalTo(300)
+            make.height.equalTo(40)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-40)
+        }
+        
+        UIView.animate(withDuration: 0.7, delay: 0) {
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.hideUpperToast()
+            }
+        }
+    }
+    
+    private func hideUpperToast() {
+        scrapListEmptyToastView.snp.remakeConstraints { make in
+            make.width.equalTo(300)
+            make.height.equalTo(40)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(mapDetailSummaryView.snp.bottom).offset(200)
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func checkLocationStatus() {
+        switch clLocationManager.authorizationStatus {
+        case .authorizedAlways:
+            canUseLocation = true
+        case .authorizedWhenInUse:
+            canUseLocation = true
+        default:
+            break
+        }
+    }
+}
+
+extension MainMapVC: CLLocationManagerDelegate {
+    func locationManager(_ locationManager: NMFLocationManager!, didChangeAuthStatus status: CLAuthorizationStatus) {
+        switch status {
+            
+        case .notDetermined:
+            break
+        case .restricted:
+            break
+        case .denied:
+            break
+        case .authorizedAlways:
+            locationManager.startUpdatingLocation()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.mapView.naverMapView.mapView.positionMode = .normal
+                self.canUseLocation = true
+                self.fetchRestaurantList(zoom: 2000)
+            }
+        case .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.mapView.naverMapView.mapView.positionMode = .normal
+                self.canUseLocation = true
+                self.fetchRestaurantList(zoom: 2000)
+            }
+        @unknown default:
+            break
+        }
+    }
+    
+    func locationManagerDidStartLocationUpdates(_ locationManager: NMFLocationManager!) {
+        self.canUseLocation = true
     }
 }

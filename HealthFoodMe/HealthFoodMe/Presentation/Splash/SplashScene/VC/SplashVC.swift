@@ -62,22 +62,16 @@ extension SplashVC {
     }
     
     private func checkLoginStatusAndPresentVC() {
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            
+        DispatchQueue.main.asyncAfter(deadline: .now()+2.5) {
             UIView.animate(withDuration: 1) {
                 self.animationView.alpha = 0
             } completion: { _ in
-                self.presentSocialLoginVC()
+                if self.userManager.isLogin == true {
+                    self.reissuanceToken()
+                } else {
+                    self.presentSocialLoginVC()
+                }
             }
-            
-            
-
-//            print(self.userManager.isLogin)
-//            if self.userManager.isLogin == true {
-//                self.requestSocialLogin()
-//            } else {
-//                self.presentSocialLoginVC()
-//            }
         }
     }
 }
@@ -85,6 +79,16 @@ extension SplashVC {
 // MARK: - Network
 
 extension SplashVC {
+    private func reissuanceToken() {
+        userManager.reissuanceAccessToken { state in
+            if state {
+                self.presentMainMapVC()
+            } else {
+                self.requestSocialLogin()
+            }
+        }
+    }
+    
     private func requestSocialLogin() {
         var socialType = ""
         if userManager.isAppleLoginned {
@@ -92,16 +96,18 @@ extension SplashVC {
         } else {
             socialType = "kakao"
         }
-        AuthService.shared.requestAuth(social: socialType, token: userManager.getSocialToken) { networkResult in
+        AuthService.shared.requestAuth(social: socialType, token: self.userManager.getSocialToken) { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? SocialLoginEntity?,
                    let user = data?.user,
                    let access = data?.accessToken,
                    let refresh = data?.refreshToken {
-                    self.userManager.setCurrentUser(user)
+                    self.userManager.setCurrentUserWithId(user)
                     self.userManager.updateAuthToken(access, refresh)
                     self.presentMainMapVC()
+                } else {
+                    self.presentSocialLoginVC()
                 }
             case .requestErr:
                 self.presentSocialLoginVC()

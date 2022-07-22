@@ -78,6 +78,8 @@ class MyReviewVC: UIViewController {
         super.viewWillAppear(true)
         
         resetUI()
+        fetchData()
+        reviewCV.reloadData()
     }
 }
 
@@ -301,7 +303,7 @@ extension MyReviewVC: UICollectionViewDelegateFlowLayout {
         let isEmptyView: Bool = reviewData.count == 0
         if isEmptyView {
             let cellWidth = width
-            let cellHeight = cellWidth * 814/cellWidth
+            let cellHeight = UIScreen.main.bounds.height - (width * (148/width))
             return CGSize(width: cellWidth, height: cellHeight)
         } else {
             let cellWidth = width
@@ -358,15 +360,24 @@ extension MyReviewVC: UICollectionViewDelegateFlowLayout {
 // MARK: - MyReviewCVCDelegate
 
 extension MyReviewVC: MyReviewCVCDelegate {
-    func restaurantNameTapped() {
+    
+    func restaurantNameTapped(restaurantId: String) {
         let vc = ModuleFactory.resolve().makeMainDetailVC()
         vc.panGestureEnabled = false
+        vc.restaurantId = restaurantId
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func editButtonTapped() {
+    func editButtonTapped(reviewId: String, restaurantName: String, score: Double, tagList: [String], content: String, image: [String])  {
         // TODO: - 수정 API 붙이기
         let vc = ModuleFactory.resolve().makeReviewWriteVC()
+        vc.isEdited = true
+        vc.reviewId = reviewId
+        vc.restaurantName = restaurantName
+        vc.currentRate = score
+        vc.tagList = tagList
+        vc.content = content
+        vc.imageURLList = image
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -383,7 +394,7 @@ extension MyReviewVC: MyReviewCVCDelegate {
 
 extension MyReviewVC {
     private func requestReviewListWithAPI() {
-        ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser?.id ?? "") { networkResult in
+        ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
                 self.reviewServerData.removeAll()
@@ -408,8 +419,6 @@ extension MyReviewVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? String {
-                    print(data, "성공")
-                    print("🍎\(reviewId)")
                     completion()
                 }
             default:

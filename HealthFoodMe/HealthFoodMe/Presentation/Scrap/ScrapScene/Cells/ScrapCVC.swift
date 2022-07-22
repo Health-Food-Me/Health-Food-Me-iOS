@@ -25,6 +25,9 @@ class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     private var storeImageView: UIImageView = {
         let iv = UIImageView()
+        iv.layer.cornerRadius = 5
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
         return iv
     }()
     
@@ -34,6 +37,12 @@ class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
         btn.setImage(ImageLiterals.Scrap.bookmarkInactiveIcon, for: .selected)
         btn.addTarget(self, action: #selector(didTapScrapButton(_:)), for: .touchUpInside)
         return btn
+    }()
+    
+    private var lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .helfmeLineGray
+        return view
     }()
     
     private var storeNameLabel: UILabel = {
@@ -90,8 +99,8 @@ extension ScrapCVC {
     }
     
     private func setLayout() {
-        contentView.addSubviews(storeImageView, scrapButton, storeNameLabel,
-                                locationLabel)
+        contentView.addSubviews(storeImageView, scrapButton, lineView,
+                                storeNameLabel, locationLabel)
         
         storeImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -102,6 +111,12 @@ extension ScrapCVC {
         scrapButton.snp.makeConstraints {
             $0.top.trailing.equalToSuperview().inset(8)
             $0.height.width.equalTo(28)
+        }
+        
+        lineView.snp.makeConstraints {
+            $0.top.equalTo(storeImageView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1)
         }
         
         storeNameLabel.snp.makeConstraints {

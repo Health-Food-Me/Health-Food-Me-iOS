@@ -66,6 +66,7 @@ class UserWithdrawalVC: UIViewController {
     textField.textColor = .helfmeBlack
     textField.font = UIFont.NotoMedium(size: 16)
     textField.clearButtonMode = .whileEditing
+    textField.autocorrectionType = .no
     return textField
   }()
   
@@ -177,11 +178,12 @@ extension UserWithdrawalVC {
     }
     
     private func deleteUser() {
-        guard let userID = UserManager.shared.getUser?.id else { return }
+        guard let userID = UserManager.shared.getUser else { return }
         UserService.shared.deleteUserNickname(userId: userID) { result in
             switch(result) {
                 case .success(_) :
                     let loginVC = ModuleFactory.resolve().makeLoginVC()
+                    UserManager.shared.clearUserInform()
                     self.navigationController?.pushViewController(loginVC, animated: true)
                 default: self.makeAlert(title: "오류", message: "네트워크를 확인해주세요")
             }
@@ -231,7 +233,7 @@ extension UserWithdrawalVC {
       let keyboardRectangle = keyboardFrame.cgRectValue
       let keyboardHeight = keyboardRectangle.height
       
-      let bottomContraint = (keyboardHeight) * (-1)
+      let bottomContraint = (keyboardHeight) * (-1) + 20
       changeCTAButton.snp.updateConstraints { make in
         make.bottom.equalTo(view.safeAreaLayoutGuide).offset(bottomContraint)
       }

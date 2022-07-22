@@ -8,15 +8,14 @@
 import UIKit
 
 protocol MyReviewCVCDelegate: AnyObject {
-    func restaurantNameTapped()
-    func editButtonTapped()
+    func restaurantNameTapped(restaurantId: String)
+    func editButtonTapped(reviewId: String, restaurantName: String, score: Double, tagList: [String], content: String, image: [String])
     func deleteButtonTapped(reviewId: String)
 }
 
 class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     // MARK: - Properties
-    var isEdited = true
     
     static var isFromNib = false
     
@@ -36,6 +35,12 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     var lineNumber: Int?
     var entitleHeight: CGFloat?
     var reviewId : String = ""
+    var restaurantId: String = ""
+    var restaurantName: String = ""
+    var starScore: Double = 0.0
+    var tagList: [String] = []
+    var content: String = ""
+    var image: [String] = []
     
     // MARK: - UI Components
     
@@ -89,7 +94,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         bt.setTitle("편집", for: .normal)
         bt.setTitleColor(UIColor.helfmeGray2, for: .normal)
         bt.addAction(UIAction(handler: { _ in
-            self.delegate?.editButtonTapped()
+            self.delegate?.editButtonTapped(reviewId: self.reviewId, restaurantName: self.restaurantName, score: self.starScore, tagList: self.tagList, content: self.content, image: self.image)
         }), for: .touchUpInside)
         return bt
     }()
@@ -357,8 +362,12 @@ extension MyReviewCVC {
         reviewContents.text = text
         reviewContents.sizeToFit()
         reviewId = reviewData.reviewId
-//        let restaurantId = reviewData.
-        print("!@#\(reviewId)")
+        restaurantName = reviewData.restaurantName
+        restaurantId = reviewData.restaurantId
+        starScore = Double(reviewData.starRate)
+        tagList = reviewData.tagList
+        content = reviewData.reviewContents ?? ""
+        image = reviewData.reviewImageURLList ?? []
         
         if isFoldRequired {
             moreTapButton.isHidden = false
@@ -412,7 +421,8 @@ extension MyReviewCVC {
     
     @objc
     private func pushMainDetailVC() {
-        delegate?.restaurantNameTapped()
+        delegate?.restaurantNameTapped(restaurantId: self.restaurantId)
+        print("🍎\(self.restaurantId)")
     }
 }
 
