@@ -28,7 +28,7 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
         lb.font = UIFont.NotoRegular(size: 12)
-        lb.numberOfLines = 4
+        lb.numberOfLines = 3
         return lb
     }()
     
