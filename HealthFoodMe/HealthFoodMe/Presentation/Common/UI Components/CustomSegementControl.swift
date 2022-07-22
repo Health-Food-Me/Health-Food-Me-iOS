@@ -78,7 +78,7 @@ extension CustomSegmentControl {
     private func setUI() {
         guard titleList.count > 0 else { return }
         backgroundColor = containerColor
-        layer.cornerRadius = 16
+        layer.cornerRadius = 20
         selectedView.backgroundColor = selectColor
         selectedView.layer.cornerRadius = 16
         containerStackView.backgroundColor = .clear
