@@ -98,6 +98,7 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
         bindMapView()
         setPanGesture()
         setInitialMarker()
+        setDelegate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -146,11 +147,14 @@ extension SupplementMapVC {
         }
     }
     
+    private func setDelegate() {
+        mapDetailSummaryView.delegate = self
+    }
+    
     func setInitialMapPoint() {
         
         switch mapType {
         case .search:
-            print(initialId, "체크")
             if let id = initialId {
                 self.bindSetSelectPointForSearchVC(id: id)
             } else {
@@ -491,6 +495,12 @@ extension SupplementMapVC {
     }
 }
 
+extension SupplementMapVC: MapDetailSummaryViewDelegate {
+    func MapDetailSummaryViewScarp() {
+        putScrap(userId: UserManager.shared.getUser ?? "", restaurantId: currentRestaurantId)
+    }
+}
+
 // MARK: - Network
 
 extension SupplementMapVC {
@@ -549,6 +559,17 @@ extension SupplementMapVC {
                 default:
                     break
                 }
+            }
+        }
+    }
+    
+    private func putScrap(userId: String, restaurantId: String) {
+        UserService.shared.putScrap(userId: userId, restaurantId: restaurantId) { networkResult in
+            switch networkResult {
+            case .success(let message):
+                print(message)
+            default:
+                break;
             }
         }
     }
