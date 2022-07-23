@@ -184,8 +184,6 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         setMapView()
         addObserver()
         self.bindViewModels()
-        
-        let temp: Double = 116.40000000000001
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -411,7 +409,7 @@ extension MainMapVC {
             initialMapOpened = true
             let NMGPosition = self.locationManager?.currentLatLng()
             if NMGPosition != nil {
-                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 1600)
+                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
             }
             isInitialPoint = true
         }
