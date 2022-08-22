@@ -38,7 +38,7 @@ final class MapDetailSummaryView: UIView {
         return iv
     }()
     
-    private lazy var scrapButton: UIButton =  {
+    lazy var scrapButton: UIButton =  {
         let bt = UIButton()
         bt.setImage(ImageLiterals.MainDetail.scrapIcon, for: .normal)
         bt.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)

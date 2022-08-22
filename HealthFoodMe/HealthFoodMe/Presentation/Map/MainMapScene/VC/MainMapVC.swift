@@ -498,7 +498,8 @@ extension MainMapVC {
     
     private func transitionAndPresentMainDetailVC() {
         let nextVC = ModuleFactory.resolve().makeMainDetailVC()
-        nextVC.translationClosure = {
+        nextVC.translationClosure = { scrapChanged in
+            self.mapDetailSummaryView.scrapButton.isSelected = scrapChanged
             self.mapDetailSummaryView.isHidden = false
             let summaryViewHeight: CGFloat = 189
             self.mapDetailSummaryView.snp.updateConstraints { make in
