@@ -131,14 +131,21 @@ final class SearchResultVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setChildViewController()
         switch fromSearchType {
         case .searchRecent:
-            setChildViewController()
-        default:
-            setChildViewController()
+            break
+        case .searchCell:
             setLayout()
             setUI()
+            setResultVCForSummary()
+            addBtnAction()
+            setDelegate()
+            registerCell()
+        default:
+            setLayout()
+            setUI()
+            viewMap()
             addBtnAction()
             setDelegate()
             registerCell()
@@ -209,7 +216,6 @@ extension SearchResultVC {
     private func setUI() {
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .helfmeWhite
-        viewMap()
     }
     
     private func addBtnAction() {
@@ -321,10 +327,25 @@ extension SearchResultVC {
     
     private func viewMap() {
         UIView.animate(withDuration: 0.2, animations: {
+            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 585)
+        })
+        
+        mapViewController.showSummaryViewForResult()
+        
+        setUIForViewMap()
+    }
+    
+    private func setResultVCForSummary() {
+        UIView.animate(withDuration: 0.2, animations: {
             self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
         })
         mapViewController.showSummaryViewForResult()
+        mapViewController.setSelectPointForSummary()
         
+        setUIForViewMap()
+    }
+    
+    private func setUIForViewMap() {
         searchResultTableView.tableHeaderView?.frame.size.height = 40
         isMapView = true
         searchResultTableView.layer.shadowOpacity = 0.1
@@ -359,9 +380,11 @@ extension SearchResultVC: UITextFieldDelegate {
 
 extension SearchResultVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        mapViewController.initialId = searchResultList[indexPath.row].id
-        mapViewController.setInitialMapPoint()
-        viewMap()
+        if searchResultTableView.frame.origin.y < UIScreen.main.bounds.height / 2 {
+            mapViewController.initialId = searchResultList[indexPath.row].id
+            mapViewController.setInitialMapPoint(needShowSummary: true)
+            setResultVCForSummary()
+        }
     }
 }
 
