@@ -18,8 +18,8 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     static var isFromNib: Bool = false
     var foldState: Bool = false
     let disposeBag = DisposeBag()
-    let toggleButtonTapped = PublishRelay<Void>()
     let telePhoneLabelTapped = PublishRelay<String>()
+    private let toggleButtonTapped = PublishRelay<Void>()
     
     // MARK: - UI Components
     
@@ -137,14 +137,20 @@ extension ExpandableInfoTVC {
         case 1:
             iconImageView.image = ImageLiterals.MainDetail.timeIcon
             toggleButton.isHidden = !expandableData.isExpandable
-                print("@@#@#@",expandableData.labelText)
+            let currentDay = Date().dayNumberOfWeek()
+            
             if expandableData.labelText.count > 0 {
-                print("2")
 
                 var result = ""
                 for line in expandableData.labelText {
-                    result += line
-                    result += "\n"
+                    if  isOpenned       &&
+                        currentDay >= 0 &&
+                        !expandableData.labelText[currentDay].isEmpty {
+                        result += line
+                        result += "\n"
+                    } else {
+                        result = expandableData.labelText[currentDay]
+                    }
                 }
                 infoLabel.text = result
                 infoLabel.sizeToFit()
