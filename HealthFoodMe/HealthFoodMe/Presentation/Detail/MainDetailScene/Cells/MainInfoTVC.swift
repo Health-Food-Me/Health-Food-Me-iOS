@@ -163,9 +163,7 @@ extension MainInfoTVC {
     }
     private func addObserver() {
         addObserverAction(.foldButtonClicked) { _ in
-            print("여기는?")
             self.toggleCells()
-
         }
     }
     
@@ -209,7 +207,6 @@ extension MainInfoTVC: UITableViewDataSource {
         if indexPath.row == 1 && indexPath.section == 1 {
             cell.foldState = self.isOpenned
             cell.setUIWithIndex(indexPath: indexPath, isOpenned: self.isOpenned, expandableData: self.expandableData)
-            
         } else {
             cell.setUIWithIndex(indexPath: indexPath, isOpenned: self.isOpenned, expandableData: self.expandableData)
         }
@@ -224,7 +221,6 @@ extension MainInfoTVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 1 {
-//            return isOpenned ? 400 : 100
             return UITableView.automaticDimension
         } else {
             return UITableView.automaticDimension
