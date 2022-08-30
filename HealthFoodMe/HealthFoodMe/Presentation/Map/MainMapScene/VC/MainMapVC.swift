@@ -357,13 +357,14 @@ extension MainMapVC {
                     }
                 case .ended:
                     guard let self = self else { return }
+                    let summaryViewHeight: CGFloat = 189
+                    
                     if summaryViewTranslation.y < -90
                         || (self.mapDetailSummaryView.frame.origin.y < 30) {
                         self.mapDetailSummaryView.snp.updateConstraints { make in
                             make.top.equalToSuperview().inset(44)
                         }
                         
-                        let bottomSafeArea = self.safeAreaBottomInset()
                         self.myLocationButton.snp.updateConstraints { make in
                             make.bottom.equalTo(self.mapDetailSummaryView.snp.top).offset((20) * (-1))
                         }
@@ -373,10 +374,15 @@ extension MainMapVC {
                             self.view.layoutIfNeeded()
                         } completion: { _ in
                             self.transitionAndPresentMainDetailVC()
+                            self.scrapButton.isHidden = true
+                            self.myLocationButton.isHidden = false
                         }
                         
+                    } else if summaryViewTranslation.y > 15
+                                && self.mapDetailSummaryView.frame.origin.y > UIScreen.main.bounds.height - summaryViewHeight {
+                        self.mapView.disableSelectPoint.accept(())
+                        self.hideMapDetailSummaryView()
                     } else {
-                        let summaryViewHeight: CGFloat = 189
                         self.mapDetailSummaryView.snp.updateConstraints { make in
                             make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
                         }
@@ -384,11 +390,10 @@ extension MainMapVC {
                             self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
                             self.view.layoutIfNeeded()
                         } completion: { _ in
-                            
+                            self.scrapButton.isHidden = true
+                            self.myLocationButton.isHidden = false
                         }
                     }
-                    self.scrapButton.isHidden = true
-                    self.myLocationButton.isHidden = false
                 default:
                     break
                 }
@@ -421,6 +426,10 @@ extension MainMapVC {
     
     private func unselectMapPoint() {
         self.mapView.disableSelectPoint.accept(())
+        hideMapDetailSummaryView()
+    }
+    
+    private func hideMapDetailSummaryView() {
         self.mapDetailSummaryView.snp.updateConstraints { make in
             make.top.equalToSuperview().inset(UIScreen.main.bounds.height)
         }
@@ -498,7 +507,8 @@ extension MainMapVC {
     
     private func transitionAndPresentMainDetailVC() {
         let nextVC = ModuleFactory.resolve().makeMainDetailVC()
-        nextVC.translationClosure = {
+        nextVC.translationClosure = { scrapChanged in
+            self.mapDetailSummaryView.scrapButton.isSelected = scrapChanged
             self.mapDetailSummaryView.isHidden = false
             let summaryViewHeight: CGFloat = 189
             self.mapDetailSummaryView.snp.updateConstraints { make in

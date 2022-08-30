@@ -236,7 +236,8 @@ extension SearchVC {
         if let text = searchTextField.text {
             searchContent = text
         }
-        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lat, latitude: lng,
+        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lat,
+                                                                         latitude: lng,
                                                                          keyword: keyword), fromRecent: fromRecent)
     }
     
