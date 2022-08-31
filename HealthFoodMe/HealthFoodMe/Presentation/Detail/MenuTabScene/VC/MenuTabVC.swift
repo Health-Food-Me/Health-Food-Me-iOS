@@ -22,6 +22,10 @@ enum TabMenuCase: Int {
 	case review = 2
 }
 
+enum SectionLayout: CaseIterable {
+	case menu, menuImage
+}
+
 final class MenuTabVC: UIViewController {
 	
 	// MARK: - Properties
@@ -42,7 +46,7 @@ final class MenuTabVC: UIViewController {
 	
 	// MARK: - UI Components
 	
-	private var headerView = HeaderView()
+//	private var headerView = HeaderView()
 	
 	private lazy var menuCV: UICollectionView = {
 		let layout = UICollectionViewFlowLayout()
@@ -82,7 +86,7 @@ extension MenuTabVC {
 	private func setDelegate() {
 		menuCV.delegate = self
 		menuCV.dataSource = self
-		headerView.delegate = self
+//		headerView.delegate = self
 	}
 	
 	private func setUI() {
@@ -99,6 +103,7 @@ extension MenuTabVC {
 	
 	private func registerCell() {
 		MenuCellCVC.register(target: menuCV)
+		AllImageCVC.register(target: menuCV)
 	}
 	
 	private func bindGesture() {
@@ -187,16 +192,30 @@ extension MenuTabVC: UICollectionViewDelegate {
 
 extension MenuTabVC: UICollectionViewDataSource {
 	
+	func numberOfSections(in collectionView: UICollectionView) -> Int {
+		return 2
+	}
+	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return menuData.count
+		let sectionType = SectionLayout.allCases[section]
+		let count : Int = sectionType == .menu ? menuData.count : 1
+		return count
 	}
 		
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let cell = menuCV.dequeueReusableCell(withReuseIdentifier: MenuCellCVC.className, for: indexPath) as? MenuCellCVC
-		else { return UICollectionViewCell() }
-		cell.setData(menuData: menuData[indexPath.row])
-		cell.changeCustomView(isMenu: isMenu)
-		return cell
+		let sectionType = SectionLayout.allCases[indexPath.section]
+		switch sectionType{
+		case .menu:
+			guard let menuCell = menuCV.dequeueReusableCell(withReuseIdentifier: MenuCellCVC.className, for: indexPath) as? MenuCellCVC
+			else { return UICollectionViewCell() }
+			menuCell.setData(menuData: menuData[indexPath.row])
+			menuCell.changeCustomView(isMenu: isMenu)
+			return menuCell
+		case .menuImage:
+			guard let imageCell = menuCV.dequeueReusableCell(withReuseIdentifier: AllImageCVC.className, for: indexPath) as? AllImageCVC
+			else { return UICollectionViewCell() }
+			return imageCell
+		}
 	}
 }
 
@@ -211,7 +230,13 @@ extension MenuTabVC: UICollectionViewDelegateFlowLayout {
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-		return UIEdgeInsets(top: 20, left: 20, bottom: 120, right: 20)
+		let sectionType = SectionLayout.allCases[section]
+		switch sectionType{
+		case .menu:
+			return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+		case .menuImage:
+			return UIEdgeInsets(top: 20, left: 20, bottom: 120, right: 20)
+		}
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
