@@ -39,7 +39,7 @@ class WebViewVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        webView.load(URLRequest(url: url!))
+        setConfigureButton()
     }
     
     override func viewDidLayoutSubviews() {
@@ -52,5 +52,28 @@ class WebViewVC: UIViewController {
 extension WebViewVC {
     private func setUI() {
         view.addSubviews(webView)
+        view.backgroundColor = .systemBackground
+        webView.load(URLRequest(url: url!))
+    }
+    
+    private func setConfigureButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Done",
+            style: .done,
+            target: self,
+            action: #selector(didTapDone)
+        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .refresh,
+            target: self,
+            action: #selector(didTapRefresh))
+    }
+    
+    @objc private func didTapDone() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func didTapRefresh() {
+        webView.load(URLRequest(url: url!))
     }
 }
