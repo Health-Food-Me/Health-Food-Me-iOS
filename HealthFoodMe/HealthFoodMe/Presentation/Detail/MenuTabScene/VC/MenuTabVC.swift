@@ -9,6 +9,7 @@ import UIKit
 
 import SnapKit
 import RxSwift
+import ImageSlideShowSwift
 
 protocol ScrollDeliveryDelegate: AnyObject {
 	func scrollStarted(velocity: CGFloat, scrollView: UIScrollView)
@@ -71,6 +72,7 @@ final class MenuTabVC: UIViewController {
 		registerCell()
 		addGesture()
 		bindGesture()
+		addObserver()
 	}
 }
 
@@ -139,6 +141,35 @@ extension MenuTabVC {
 		pickModel += notPickModel
 		
 		self.menuData = pickModel
+	}
+	
+	private func addObserver() {
+		addObserverAction(.menuPhotoClicked) { noti in
+			if let slideData = noti.object as? ImageSlideDataModel {
+				self.clickPhotos(index: slideData.clickedIndex, urls: slideData.imgURLs)
+			}
+		}
+	}
+	
+	func clickPhotos(index: Int,urls: [String]){
+		let images :[ImageSlideShowProtocol] = urls.enumerated().map { index,url in
+			
+			ImageForSlide(title: "\(index+1)/\(urls.count)", url: URL(string: url)!)
+		}
+		
+		ImageSlideShowViewController.presentFrom(self) { controller in
+			controller.navigationBarTintColor = .black
+			controller.navigationController?.navigationBar.backgroundColor = .black
+			controller.navigationController?.navigationBar.barTintColor = .black
+			controller.navigationController?.navigationBar.tintColor = .black
+			controller.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+			
+			controller.dismissOnPanGesture = true
+			controller.slides = images
+			controller.enableZoom = true
+			controller.initialIndex = index
+			controller.view.backgroundColor = .black
+		}
 	}
 }
 

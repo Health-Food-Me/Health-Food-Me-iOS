@@ -13,6 +13,7 @@ class AllImageCVC: UICollectionViewCell, UICollectionViewRegisterable {
     // MARK: - Properties
     
     static var isFromNib = false
+    let imgURLList = ["123", "123", "123", "123"] // 테스트용
     
     // MARK: - UI Components
     lazy var menuImageCV: UICollectionView = {
@@ -64,7 +65,7 @@ extension AllImageCVC {
 extension AllImageCVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7 //임시로 넣어둔 값 (서버 붙일때 수정 예정)
+        return 4 //임시로 넣어둔 값 (서버 붙일때 수정 예정)
     }
         
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -85,12 +86,14 @@ extension AllImageCVC: UICollectionViewDelegateFlowLayout {
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) // 수정 필요
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let imageSlideData = ImageSlideDataModel.init(clickedIndex: indexPath.row,
+                                                      imgURLs: imgURLList ?? [])
+        postObserverAction(.menuPhotoClicked,object: imageSlideData)
     }
 }
 
