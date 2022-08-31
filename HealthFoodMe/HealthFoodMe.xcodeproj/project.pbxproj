@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B07FD3128BFD845004D84A8 /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B07FD3028BFD845004D84A8 /* WebViewVC.swift */; };
 		3B089C4A287D877B00DA80B9 /* GodoB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B089C49287D876F00DA80B9 /* GodoB.ttf */; };
 		3B089C4B287D877F00DA80B9 /* GodoB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B089C48287D876F00DA80B9 /* GodoB.otf */; };
 		3B0B25542876BBE400950539 /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0B254E2876BBE300950539 /* NotoSansCJKkr-Regular.otf */; };
@@ -242,6 +243,7 @@
 /* Begin PBXFileReference section */
 		10784F48AA025AF791D137F1 /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		20F003D15CC754E358383110 /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
+		3B07FD3028BFD845004D84A8 /* WebViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
 		3B089C48287D876F00DA80B9 /* GodoB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoB.otf; sourceTree = "<group>"; };
 		3B089C49287D876F00DA80B9 /* GodoB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoB.ttf; sourceTree = "<group>"; };
 		3B0B254D28757C7100950539 /* HealthFoodMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthFoodMe.entitlements; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 			children = (
 				3B723CA22881AB8A00822B7C /* ReviewDetailVC.swift */,
 				3B723CA42881B36F00822B7C /* ReviewDetail.storyboard */,
+				3B07FD3028BFD845004D84A8 /* WebViewVC.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -2227,6 +2230,7 @@
 				3B723C8B287FF81800822B7C /* TagCVC.swift in Sources */,
 				FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */,
 				EBF66AF0287227F500DE0ED1 /* BaseVC.swift in Sources */,
+				3B07FD3128BFD845004D84A8 /* WebViewVC.swift in Sources */,
 				EB6A44D328737CC400749582 /* MainDetailModel.swift in Sources */,
 				A93252B5287F2CA6001EDF50 /* ScrapCVC.swift in Sources */,
 				EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */,
@@ -2509,7 +2513,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
+				PROVISIONING_PROFILE_SPECIFIER = HealthFoodMe_Dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

@@ -305,6 +305,14 @@ extension ReviewDetailVC {
             self.reviewCV.reloadData()
         }
     }
+    
+    // MARK: - loadWebview
+    private func didTabBlogReview(blogReviewURL: String) {
+        guard let blogURL = URL(string: blogReviewURL) else {return}
+        let vc = WebViewVC(url: blogURL)
+        let navVC = UINavigationController(rootViewController: vc)
+        present(navVC, animated: true)
+    }
 }
 
 extension ReviewDetailVC: UIScrollViewDelegate {
@@ -443,7 +451,7 @@ extension ReviewDetailVC: UICollectionViewDataSource {
         if selectedCustomSegment == 0 {
             
         } else if selectedCustomSegment == 1 {
-            URLSchemeManager.shared.loadSafariApp(blogLink: blogReviewData[indexPath.row].blogURL)
+            didTabBlogReview(blogReviewURL: blogReviewData[indexPath.row].blogURL)
         }
     }
 }
