@@ -46,7 +46,7 @@ final class MenuTabVC: UIViewController {
 	
 	// MARK: - UI Components
 	
-//	private var headerView = HeaderView()
+	//	private var headerView = HeaderView()
 	
 	private lazy var menuCV: UICollectionView = {
 		let layout = UICollectionViewFlowLayout()
@@ -104,6 +104,8 @@ extension MenuTabVC {
 	private func registerCell() {
 		MenuCellCVC.register(target: menuCV)
 		AllImageCVC.register(target: menuCV)
+		menuCV.register(ImageHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ImageHeaderView.identifier
+		)
 	}
 	
 	private func bindGesture() {
@@ -201,7 +203,15 @@ extension MenuTabVC: UICollectionViewDataSource {
 		let count : Int = sectionType == .menu ? menuData.count : 1
 		return count
 	}
-		
+	
+	func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+		if kind == UICollectionView.elementKindSectionHeader {
+			let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ImageHeaderView", for: indexPath)
+			return header
+		}
+		return UICollectionReusableView()
+	}
+	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let sectionType = SectionLayout.allCases[indexPath.section]
 		switch sectionType{
@@ -229,13 +239,23 @@ extension MenuTabVC: UICollectionViewDelegateFlowLayout {
 		return CGSize(width: cellWidth, height: cellHeight)
 	}
 	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+		let sectionType = SectionLayout.allCases[section]
+		switch sectionType{
+		case .menu:
+			return CGSize(width: collectionView.frame.width, height: 0)
+		case .menuImage:
+			return CGSize(width: collectionView.frame.width, height: 34)
+		}
+	}
+	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
 		let sectionType = SectionLayout.allCases[section]
 		switch sectionType{
 		case .menu:
 			return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 		case .menuImage:
-			return UIEdgeInsets(top: 20, left: 20, bottom: 120, right: 20)
+			return UIEdgeInsets(top: 6, left: 20, bottom: 120, right: 20)
 		}
 	}
 	

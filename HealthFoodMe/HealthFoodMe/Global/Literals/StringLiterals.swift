@@ -53,6 +53,7 @@ struct I18N {
             static let carbohydrate = "탄수화물"
             static let protein = "단백질"
             static let fats = "지방"
+            static let imageHeader = "메뉴 전체보기"
         }
         
         struct Review {

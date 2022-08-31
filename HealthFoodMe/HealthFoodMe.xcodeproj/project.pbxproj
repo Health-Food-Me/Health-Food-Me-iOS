@@ -62,6 +62,7 @@
 		695758F4288545CC00E36789 /* CopingTabEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758F3288545CC00E36789 /* CopingTabEntity.swift */; };
 		695758F928857FDC00E36789 /* ReviewWriteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758F828857FDC00E36789 /* ReviewWriteEntity.swift */; };
 		696DD00F28BF950A0011CCEE /* AllImageCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696DD00E28BF950A0011CCEE /* AllImageCVC.swift */; };
+		696DD01128BFB93B0011CCEE /* ImageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696DD01028BFB93B0011CCEE /* ImageHeaderView.swift */; };
 		69A878F828BD06C5008D0D97 /* ImageCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A878F728BD06C5008D0D97 /* ImageCVC.swift */; };
 		69D7074B2888062E00C2C278 /* ReviewDeleteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D7074A2888062E00C2C278 /* ReviewDeleteEntity.swift */; };
 		69D7074D28885B9900C2C278 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69D7074C28885B9900C2C278 /* GoogleService-Info.plist */; };
@@ -300,6 +301,7 @@
 		695758F3288545CC00E36789 /* CopingTabEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingTabEntity.swift; sourceTree = "<group>"; };
 		695758F828857FDC00E36789 /* ReviewWriteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteEntity.swift; sourceTree = "<group>"; };
 		696DD00E28BF950A0011CCEE /* AllImageCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllImageCVC.swift; sourceTree = "<group>"; };
+		696DD01028BFB93B0011CCEE /* ImageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHeaderView.swift; sourceTree = "<group>"; };
 		69A878F728BD06C5008D0D97 /* ImageCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCVC.swift; sourceTree = "<group>"; };
 		69D7074A2888062E00C2C278 /* ReviewDeleteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDeleteEntity.swift; sourceTree = "<group>"; };
 		69D7074C28885B9900C2C278 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -816,6 +818,7 @@
 				69028BAF2874A60E00373984 /* HeaderView.swift */,
 				69028BA72874675800373984 /* MenuView.swift */,
 				69028BA9287467F100373984 /* MenuDetailView.swift */,
+				696DD01028BFB93B0011CCEE /* ImageHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2288,6 +2291,7 @@
 				EBFAEB0D28856388009C569C /* LogEventType.swift in Sources */,
 				EBF66AFD287227F500DE0ED1 /* calculateTopInset.swift in Sources */,
 				EBF66ACF287227F500DE0ED1 /* Result+.swift in Sources */,
+				696DD01128BFB93B0011CCEE /* ImageHeaderView.swift in Sources */,
 				3BB0FCE3288705E200C3862C /* BlogReviewListEntity.swift in Sources */,
 				A93252C628808B82001EDF50 /* ReviewDeleteAlertView.swift in Sources */,
 				EBF66AD7287227F500DE0ED1 /* Presentable.swift in Sources */,
