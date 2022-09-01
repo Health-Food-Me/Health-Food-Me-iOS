@@ -11,9 +11,9 @@ import SnapKit
 class ImageHeaderView: UICollectionReusableView {
 
     // MARK: - Properties
-    static let identifier = "ImageHeaderView"
-
+    
     // MARK: - UI Components
+    
     lazy var imageHeaderLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack

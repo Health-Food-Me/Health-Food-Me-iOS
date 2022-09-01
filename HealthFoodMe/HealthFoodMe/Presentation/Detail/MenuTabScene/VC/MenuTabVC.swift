@@ -106,8 +106,7 @@ extension MenuTabVC {
 	private func registerCell() {
 		MenuCellCVC.register(target: menuCV)
 		AllImageCVC.register(target: menuCV)
-		menuCV.register(ImageHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ImageHeaderView.identifier
-		)
+		menuCV.register(ImageHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ImageHeaderView.className)
 	}
 	
 	private func bindGesture() {
