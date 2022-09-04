@@ -41,4 +41,82 @@ platform :ios do
     add_git_tag(tag: "v#{version_number}")
     push_to_git_remote
   end
+
+lane :release do
+  # 5. keychain 초기화 🔑
+  create_keychain(
+    name: ENV["KEYCHAIN_NAME"],
+    password: ENV["KEYCHAIN_PASSWORD"],
+    timeout: 1800,
+    default_keychain: true,
+    unlock: true,
+    lock_when_sleeps: false
+  )
+
+  app_store_connect_api_key(
+    key_id: ENV["APP_STORE_CONNECT_API_KEY_ID"],
+    issuer_id: ENV["APP_STORE_CONNECT_API_ISSUER_ID"],
+    key_content: ENV["APP_STORE_CONNECT_API_KEY_CONTENT"]
+    )
+
+  # 6. match를 실행하여 인증서 및 프로파일 불러오기 ✍🏼
+  match(
+    git_url: "git@github.com:Health-Food-Me/Health-Food-Me-iOS.git",
+    storage_mode: "git",
+    type: "appstore",
+    readonly: true,
+    keychain_name: ENV["KEYCHAIN_NAME"],
+    keychain_password: ENV["KEYCHAIN_PASSWORD"]
+    )
+
+  # 7. 빌드 및 내보내기 🏗
+  gym(
+    workspace: ENV["XCWORKSPACE"],
+    scheme: ENV["PRODUCTION_SCHEME"],
+    configuration: "Release",
+    export_options: {
+      method: "app-store",
+      signingStyle: "manual"
+    }
+    )
+
+  # 8. 앱스토어 업로드 🎉
+  deliver(
+    submit_for_review: true,
+    force: true,
+    skip_screenshots: true,
+    automatic_release: true,
+    precheck_include_in_app_purchases: false,
+    app_review_information: {
+      demo_user: "demo@user.net",
+      demo_password: "DEMO-PASSWORD"
+      }
+    )
+end
+
+# lane이 모두 완료된 뒤 호출됨
+after_all do |lane|
+  # 9. 배포 결과 슬랙 노티 🚨
+  slack_after_lane(
+    message: "",
+    payload: {
+      "Version" => lane_context[SharedValues::VERSION_NUMBER],
+      "Build number" => lane_context[SharedValues::BUILD_NUMBER],
+      "Date" => Time.new.to_s
+      }
+    )
+end
+
+# 에러 발생 시 호출 됨
+error do |lane, exception|
+  slack_when_error_occured(
+    message: "",
+    payload: {
+      "Version" => lane_context[SharedValues::VERSION_NUMBER],
+      "Build number" => lane_context[SharedValues::BUILD_NUMBER],
+      "Date" => Time.new.to_s,
+      "Error Info" => exception.message
+      }
+    )
+end
 end
