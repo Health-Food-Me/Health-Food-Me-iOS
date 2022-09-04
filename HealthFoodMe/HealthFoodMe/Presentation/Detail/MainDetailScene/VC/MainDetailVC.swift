@@ -32,15 +32,15 @@ class MainDetailVC: UIViewController {
     private var isOpenned: Bool = false
     private var mainInfoInitialReload: Bool = true
     var userLocation: Location? = {
-            let loc = Location(latitude: 37.49, longitude: 127.02)
-            return loc
-        }()
+        let loc = Location(latitude: 37.49, longitude: 127.02)
+        return loc
+    }()
     var restaurantId: String = ""
     var restaurantName: String = ""
     var restaurantLocation: Location?
     var panGestureEnabled = true
     var viewModel: MainDetailViewModel!
-    var translationClosure: (() -> Void)?
+    var translationClosure: ((Bool) -> Void)?
     var isInitialLoad = true
     var scrapButtonInstance = UIButton()
     
@@ -119,7 +119,7 @@ extension MainDetailVC {
         backButton.addAction(UIAction(handler: { _ in
             if self.panGestureEnabled {
                 self.dismiss(animated: false) {
-                    self.translationClosure?()
+                    self.translationClosure?(self.scrapButtonInstance.isSelected)
                 }
             } else {
                 self.navigationController?.popViewController(animated: true)
@@ -214,14 +214,16 @@ extension MainDetailVC {
                     switch sender.state {
                     case .changed:
                         UIView.animate(withDuration: 0.1) {
-                          if windowTranslation.y > 0 {
-                            self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
-                          }
+                            if windowTranslation.y > 0 {
+                                self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
+                            }
                         }
                     case .ended:
                         if windowTranslation.y > 130 {
                             self?.dismiss(animated: false) {
-                                self?.translationClosure?()
+                                if let scrapChanged = self?.scrapButtonInstance.isSelected {
+                                    self?.translationClosure?(scrapChanged)
+                                }
                             }
                         } else {
                             self?.view.snp.updateConstraints { make in
@@ -300,7 +302,7 @@ extension MainDetailVC: UITableViewDataSource {
             cell.toggleButtonTapped.asDriver(onErrorJustReturn: ())
                 .drive(onNext: {
                     self.mainInfoInitialReload = false
-//                    self.isOpenned.toggle()
+                    //                    self.isOpenned.toggle()
                     self.mainTableView.reloadData()
                 }).disposed(by: disposeBag)
             cell.directionButtonTapped.asDriver(onErrorJustReturn: ())
@@ -366,7 +368,7 @@ extension MainDetailVC: UITableViewDataSource {
                     
                     self.detailTabTitleHeader.moveWithContinuousRatio(ratio: ratio)
                 }.disposed(by: cell.disposeBag)
-
+            
             return cell
         }
     }
@@ -414,10 +416,10 @@ extension MainDetailVC: ScrollDeliveryDelegate {
         self.mainTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         setNavigationTitle(isShown: false)
         switch(type) {
-            case .menu:     menuTabVC.topScrollAnimationNotFinished = true
-            case .coping:   copingTabVC.topScrollAnimationNotFinished = true
-            case .review:
-                reviewTabVC.topScrollAnimationNotFinished = true
+        case .menu:     menuTabVC.topScrollAnimationNotFinished = true
+        case .coping:   copingTabVC.topScrollAnimationNotFinished = true
+        case .review:
+            reviewTabVC.topScrollAnimationNotFinished = true
         }
     }
     
@@ -431,17 +433,17 @@ extension MainDetailVC: ScrollDeliveryDelegate {
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < 10 {
             switch(menuCase) {
-                case .menu: menuTabVC.topScrollAnimationNotFinished = true
-                case .coping: copingTabVC.topScrollAnimationNotFinished = true
-                case .review: reviewTabVC.topScrollAnimationNotFinished = true
+            case .menu: menuTabVC.topScrollAnimationNotFinished = true
+            case .coping: copingTabVC.topScrollAnimationNotFinished = true
+            case .review: reviewTabVC.topScrollAnimationNotFinished = true
             }
         }
         
         if scrollView.contentOffset.y > 50 {
             switch(menuCase) {
-                case .menu: menuTabVC.topScrollAnimationNotFinished = false
-                case .coping: copingTabVC.topScrollAnimationNotFinished = false
-                case .review: reviewTabVC.topScrollAnimationNotFinished = false
+            case .menu: menuTabVC.topScrollAnimationNotFinished = false
+            case .coping: copingTabVC.topScrollAnimationNotFinished = false
+            case .review: reviewTabVC.topScrollAnimationNotFinished = false
             }
         }
     }
@@ -452,35 +454,37 @@ extension MainDetailVC: CopingGestureDelegate {
         if panGestureEnabled {
             panGesture.rx.event.asDriver { _ in .never() }
                 .drive(onNext: { [weak self] sender in
-                
+                    
                     let windowTranslation = sender.translation(in: self?.view)
                     switch sender.state {
                     case .changed:
-                            self?.mainTableView.isScrollEnabled = false
-                            if self?.mainTableView.contentOffset.y == 0 {
-                                UIView.animate(withDuration: 0.1) {
-                                  if windowTranslation.y > 0 {
+                        self?.mainTableView.isScrollEnabled = false
+                        if self?.mainTableView.contentOffset.y == 0 {
+                            UIView.animate(withDuration: 0.1) {
+                                if windowTranslation.y > 0 {
                                     self?.view.transform = CGAffineTransform(translationX: 0, y: windowTranslation.y)
-                                  }
                                 }
                             }
-
-                        case .ended:
-                            self?.mainTableView.isScrollEnabled = true
-                            if windowTranslation.y > 130 &&
-                                self?.mainTableView.contentOffset.y ?? 0 < 30 {
-                                self?.dismiss(animated: false) {
-                                    self?.translationClosure?()
-                                }
-                            } else {
-                                self?.view.snp.updateConstraints { make in
-                                    make.edges.equalToSuperview()
-                                }
-                                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
-                                    self?.view.transform = CGAffineTransform(translationX: 0, y: 0)
-                                    self?.view.layoutIfNeeded()
+                        }
+                        
+                    case .ended:
+                        self?.mainTableView.isScrollEnabled = true
+                        if windowTranslation.y > 130 &&
+                            self?.mainTableView.contentOffset.y ?? 0 < 30 {
+                            self?.dismiss(animated: false) {
+                                if let scrapChanged = self?.scrapButtonInstance.isSelected {
+                                    self?.translationClosure?(scrapChanged)
                                 }
                             }
+                        } else {
+                            self?.view.snp.updateConstraints { make in
+                                make.edges.equalToSuperview()
+                            }
+                            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                                self?.view.transform = CGAffineTransform(translationX: 0, y: 0)
+                                self?.view.layoutIfNeeded()
+                            }
+                        }
                     default:
                         break
                     }
@@ -499,7 +503,7 @@ extension MainDetailVC: SwipeDismissDelegate {
         if panGestureEnabled {
             if mainTableView.contentOffset.y == 0 {
                 self.dismiss(animated: false) {
-                    self.translationClosure?()
+                    self.translationClosure?(self.scrapButtonInstance.isSelected)
                 }
             }
         }
@@ -514,7 +518,6 @@ extension MainDetailVC {
             RestaurantService.shared.fetchRestaurantDetail(restaurantId: restaurantId, userId: UserManager.shared.getUser ?? "", latitude: location.latitude, longitude: location.longitude) { networkResult in
                 switch networkResult {
                 case .success(let data):
-                    dump(data)
                     if let data = data as? MainDetailEntity {
                         self.navigationTitle = data.restaurant.name
                         self.restaurantName = data.restaurant.name
