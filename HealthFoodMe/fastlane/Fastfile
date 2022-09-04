@@ -22,4 +22,23 @@ platform :ios do
     build_app(workspace: "HealthFoodMe.xcworkspace", scheme: "HealthFoodMe")
     upload_to_testflight
   end
+
+  lane :set_version do |options|
+    case options[:version]
+    when "major", "minor", "patch"
+      increment_version_number(bump_type: options[:version])
+    else
+      increment_version_number(version_number: options[:version])
+    end
+  
+    increment_build_number(
+      build_number: Time.new.strftime("%Y.%m%d.%H%M") # 2021년 4월 17일 14시 53분 -> 2021.0417.1453
+      )
+    version_number = "#{lane_context[SharedValues::VERSION_NUMBER]}(#{lane_context[SharedValues::BUILD_NUMBER]})"
+    commit_version_bump(
+      message: "Update version - #{version_number}"
+      )
+    add_git_tag(tag: "v#{version_number}")
+    push_to_git_remote
+  end
 end
