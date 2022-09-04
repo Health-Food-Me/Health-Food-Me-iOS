@@ -61,6 +61,9 @@
 		695758EE28830E3F00E36789 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758ED28830E3F00E36789 /* Splash.storyboard */; };
 		695758F4288545CC00E36789 /* CopingTabEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758F3288545CC00E36789 /* CopingTabEntity.swift */; };
 		695758F928857FDC00E36789 /* ReviewWriteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758F828857FDC00E36789 /* ReviewWriteEntity.swift */; };
+		696DD00F28BF950A0011CCEE /* AllImageCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696DD00E28BF950A0011CCEE /* AllImageCVC.swift */; };
+		696DD01128BFB93B0011CCEE /* ImageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696DD01028BFB93B0011CCEE /* ImageHeaderView.swift */; };
+		69A878F828BD06C5008D0D97 /* ImageCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A878F728BD06C5008D0D97 /* ImageCVC.swift */; };
 		69D7074B2888062E00C2C278 /* ReviewDeleteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D7074A2888062E00C2C278 /* ReviewDeleteEntity.swift */; };
 		69D7074D28885B9900C2C278 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69D7074C28885B9900C2C278 /* GoogleService-Info.plist */; };
 		69D7074F28888D6500C2C278 /* ReviewEditEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D7074E28888D6500C2C278 /* ReviewEditEntity.swift */; };
@@ -297,6 +300,9 @@
 		695758ED28830E3F00E36789 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		695758F3288545CC00E36789 /* CopingTabEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingTabEntity.swift; sourceTree = "<group>"; };
 		695758F828857FDC00E36789 /* ReviewWriteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteEntity.swift; sourceTree = "<group>"; };
+		696DD00E28BF950A0011CCEE /* AllImageCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllImageCVC.swift; sourceTree = "<group>"; };
+		696DD01028BFB93B0011CCEE /* ImageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHeaderView.swift; sourceTree = "<group>"; };
+		69A878F728BD06C5008D0D97 /* ImageCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCVC.swift; sourceTree = "<group>"; };
 		69D7074A2888062E00C2C278 /* ReviewDeleteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDeleteEntity.swift; sourceTree = "<group>"; };
 		69D7074C28885B9900C2C278 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		69D7074E28888D6500C2C278 /* ReviewEditEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewEditEntity.swift; sourceTree = "<group>"; };
@@ -800,6 +806,8 @@
 			isa = PBXGroup;
 			children = (
 				69028BA52874673600373984 /* MenuCellCVC.swift */,
+				69A878F728BD06C5008D0D97 /* ImageCVC.swift */,
+				696DD00E28BF950A0011CCEE /* AllImageCVC.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -818,6 +826,7 @@
 				69028BAF2874A60E00373984 /* HeaderView.swift */,
 				69028BA72874675800373984 /* MenuView.swift */,
 				69028BA9287467F100373984 /* MenuDetailView.swift */,
+				696DD01028BFB93B0011CCEE /* ImageHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2192,6 +2201,7 @@
 				EBFAEAFE28851C09009C569C /* UserManager.swift in Sources */,
 				FD72FC9D288346480092746F /* UserWithdrawlModel.swift in Sources */,
 				EBF66AFE287227F500DE0ED1 /* makeVibrate.swift in Sources */,
+				69A878F828BD06C5008D0D97 /* ImageCVC.swift in Sources */,
 				FDF2E1FC287EFC710007D4F9 /* StarRatingSlider.swift in Sources */,
 				695758DE28811E9D00E36789 /* Config.swift in Sources */,
 				EBD19262287DBC1800EA053E /* MapDetailSummaryView.swift in Sources */,
@@ -2255,6 +2265,7 @@
 				EBFAEB312885F2F7009C569C /* MyReviewRepository.swift in Sources */,
 				EBFAEB332885F2F7009C569C /* MyReviewVC.swift in Sources */,
 				A93252B1287F2AF9001EDF50 /* ScrapVC.swift in Sources */,
+				696DD00F28BF950A0011CCEE /* AllImageCVC.swift in Sources */,
 				EBF66AF5287227F500DE0ED1 /* Logger.swift in Sources */,
 				FD72FC9E288346480092746F /* UserWithdrawalVC.swift in Sources */,
 				EBFAEB412885F43E009C569C /* MyReviewCVC.swift in Sources */,
@@ -2280,6 +2291,7 @@
 				EBFAEB0D28856388009C569C /* LogEventType.swift in Sources */,
 				EBF66AFD287227F500DE0ED1 /* calculateTopInset.swift in Sources */,
 				EBF66ACF287227F500DE0ED1 /* Result+.swift in Sources */,
+				696DD01128BFB93B0011CCEE /* ImageHeaderView.swift in Sources */,
 				3BB0FCE3288705E200C3862C /* BlogReviewListEntity.swift in Sources */,
 				A93252C628808B82001EDF50 /* ReviewDeleteAlertView.swift in Sources */,
 				EBF66AD7287227F500DE0ED1 /* Presentable.swift in Sources */,
@@ -2509,7 +2521,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = healthFood_dev;
+				PROVISIONING_PROFILE_SPECIFIER = HealthFoodMe_Dev;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

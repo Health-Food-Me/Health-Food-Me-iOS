@@ -9,6 +9,7 @@ import UIKit
 
 import SnapKit
 import RxSwift
+import ImageSlideShowSwift
 
 protocol ScrollDeliveryDelegate: AnyObject {
 	func scrollStarted(velocity: CGFloat, scrollView: UIScrollView)
@@ -20,6 +21,10 @@ enum TabMenuCase: Int {
 	case menu = 0
 	case coping = 1
 	case review = 2
+}
+
+enum SectionLayout: CaseIterable {
+	case menu, menuImage
 }
 
 final class MenuTabVC: UIViewController {
@@ -42,7 +47,7 @@ final class MenuTabVC: UIViewController {
 	
 	// MARK: - UI Components
 	
-	private var headerView = HeaderView()
+	//	private var headerView = HeaderView()
 	
 	private lazy var menuCV: UICollectionView = {
 		let layout = UICollectionViewFlowLayout()
@@ -67,6 +72,7 @@ final class MenuTabVC: UIViewController {
 		registerCell()
 		addGesture()
 		bindGesture()
+		addObserver()
 	}
 }
 
@@ -82,7 +88,7 @@ extension MenuTabVC {
 	private func setDelegate() {
 		menuCV.delegate = self
 		menuCV.dataSource = self
-		headerView.delegate = self
+//		headerView.delegate = self
 	}
 	
 	private func setUI() {
@@ -99,6 +105,8 @@ extension MenuTabVC {
 	
 	private func registerCell() {
 		MenuCellCVC.register(target: menuCV)
+		AllImageCVC.register(target: menuCV)
+		menuCV.register(ImageHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ImageHeaderView.className)
 	}
 	
 	private func bindGesture() {
@@ -132,6 +140,35 @@ extension MenuTabVC {
 		pickModel += notPickModel
 		
 		self.menuData = pickModel
+	}
+	
+	private func addObserver() {
+		addObserverAction(.menuPhotoClicked) { noti in
+			if let slideData = noti.object as? ImageSlideDataModel {
+				self.clickPhotos(index: slideData.clickedIndex, urls: slideData.imgURLs)
+			}
+		}
+	}
+	
+	func clickPhotos(index: Int,urls: [String]){
+		let images :[ImageSlideShowProtocol] = urls.enumerated().map { index,url in
+			
+			ImageForSlide(title: "\(index+1)/\(urls.count)", url: URL(string: url)!)
+		}
+		
+		ImageSlideShowViewController.presentFrom(self) { controller in
+			controller.navigationBarTintColor = .black
+			controller.navigationController?.navigationBar.backgroundColor = .black
+			controller.navigationController?.navigationBar.barTintColor = .black
+			controller.navigationController?.navigationBar.tintColor = .black
+			controller.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+			
+			controller.dismissOnPanGesture = true
+			controller.slides = images
+			controller.enableZoom = true
+			controller.initialIndex = index
+			controller.view.backgroundColor = .black
+		}
 	}
 }
 
@@ -187,16 +224,38 @@ extension MenuTabVC: UICollectionViewDelegate {
 
 extension MenuTabVC: UICollectionViewDataSource {
 	
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return menuData.count
+	func numberOfSections(in collectionView: UICollectionView) -> Int {
+		return 2
 	}
-		
+	
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		let sectionType = SectionLayout.allCases[section]
+		let count : Int = sectionType == .menu ? menuData.count : 1
+		return count
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+		if kind == UICollectionView.elementKindSectionHeader {
+			let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ImageHeaderView", for: indexPath)
+			return header
+		}
+		return UICollectionReusableView()
+	}
+	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let cell = menuCV.dequeueReusableCell(withReuseIdentifier: MenuCellCVC.className, for: indexPath) as? MenuCellCVC
-		else { return UICollectionViewCell() }
-		cell.setData(menuData: menuData[indexPath.row])
-		cell.changeCustomView(isMenu: isMenu)
-		return cell
+		let sectionType = SectionLayout.allCases[indexPath.section]
+		switch sectionType{
+		case .menu:
+			guard let menuCell = menuCV.dequeueReusableCell(withReuseIdentifier: MenuCellCVC.className, for: indexPath) as? MenuCellCVC
+			else { return UICollectionViewCell() }
+			menuCell.setData(menuData: menuData[indexPath.row])
+			menuCell.changeCustomView(isMenu: isMenu)
+			return menuCell
+		case .menuImage:
+			guard let imageCell = menuCV.dequeueReusableCell(withReuseIdentifier: AllImageCVC.className, for: indexPath) as? AllImageCVC
+			else { return UICollectionViewCell() }
+			return imageCell
+		}
 	}
 }
 
@@ -210,8 +269,24 @@ extension MenuTabVC: UICollectionViewDelegateFlowLayout {
 		return CGSize(width: cellWidth, height: cellHeight)
 	}
 	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+		let sectionType = SectionLayout.allCases[section]
+		switch sectionType{
+		case .menu:
+			return CGSize(width: collectionView.frame.width, height: 0)
+		case .menuImage:
+			return CGSize(width: collectionView.frame.width, height: 34)
+		}
+	}
+	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-		return UIEdgeInsets(top: 20, left: 20, bottom: 120, right: 20)
+		let sectionType = SectionLayout.allCases[section]
+		switch sectionType{
+		case .menu:
+			return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+		case .menuImage:
+			return UIEdgeInsets(top: 6, left: 20, bottom: 120, right: 20)
+		}
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
