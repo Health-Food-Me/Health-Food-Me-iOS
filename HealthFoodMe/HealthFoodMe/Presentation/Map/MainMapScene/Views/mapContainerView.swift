@@ -232,8 +232,13 @@ extension NaverMapContainerView {
                             return true
                         }
                 }
-                marker.isHideCollidedMarkers = true
-                marker.captionText = "Marker \(index)"
+                if let caption = point.restaurantName {
+                    marker.captionText = caption
+                    marker.captionTextSize = 14
+                    marker.captionMinZoom = 12
+                    marker.captionColor = .helfmeBlack
+                }
+                marker.isHideCollidedMarkers = false
                 marker.isHideCollidedCaptions = true
                 marker.isHideCollidedSymbols = true
                 self.markers.append(marker)
