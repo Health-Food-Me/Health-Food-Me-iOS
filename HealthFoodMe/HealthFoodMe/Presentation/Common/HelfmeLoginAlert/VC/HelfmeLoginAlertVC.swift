@@ -104,6 +104,5 @@ extension HelfmeLoginAlertVC {
             $0.trailing.equalToSuperview().inset(8)
             $0.width.height.equalTo(28)
         }
-
     }
 }
