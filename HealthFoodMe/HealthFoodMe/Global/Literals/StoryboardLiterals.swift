@@ -36,6 +36,8 @@ enum Storyboards: String {
     case reviewEmptyView = "ReviewEmptyView"
     case supplementMap = "SupplementMap"
     case myReview = "MyReview"
+    
+    case helfmeLoginAlert = "HelfmeLoginAlert"
 }
 
 extension UIStoryboard {

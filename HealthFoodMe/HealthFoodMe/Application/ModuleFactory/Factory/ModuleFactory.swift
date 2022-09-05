@@ -21,6 +21,7 @@ protocol ModuleFactoryProtocol {
     func makeHamburgerBarNavigationController() -> HamburgerBarNavigationController
     func makeSupplementMapVC(forSearchVC: Bool) -> SupplementMapVC
     func makeMyReviewVC() -> MyReviewVC
+    func makeHelfmeLoginAlertVC() -> HelfmeLoginAlertVC
     
     // MARK: - Detail
     func makeMainDetailVC() -> MainDetailVC
@@ -39,6 +40,7 @@ protocol ModuleFactoryProtocol {
     
     // MARK: - Spalsh
     func makeSplashVC() -> SplashVC
+    
     // MARK: - Setting
     func makeSettingVC() -> SettingVC
 }
@@ -126,6 +128,11 @@ class ModuleFactory: ModuleFactoryProtocol {
         let vc = MyReviewVC.controllerFromStoryboard(.myReview)
         vc.viewModel = viewModel
         
+        return vc
+    }
+    
+    func makeHelfmeLoginAlertVC() -> HelfmeLoginAlertVC {
+        let vc = HelfmeLoginAlertVC.controllerFromStoryboard(.helfmeLoginAlert)
         return vc
     }
     
