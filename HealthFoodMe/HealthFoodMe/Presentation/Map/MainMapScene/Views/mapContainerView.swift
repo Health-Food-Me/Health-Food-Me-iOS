@@ -203,7 +203,7 @@ extension NaverMapContainerView {
     
     private func setPointMarkers(_ points: [MapPointDataModel]) {
         DispatchQueue.global(qos: .default).async {
-            for point in points {
+            for (index, point) in points.enumerated() {
                 let marker = NMFMarker()
                 marker.position = NMGLatLng.init(lat: point.latitude, lng: point.longtitude)
                 switch point.type {
@@ -232,6 +232,10 @@ extension NaverMapContainerView {
                             return true
                         }
                 }
+                marker.isHideCollidedMarkers = true
+                marker.captionText = "Marker \(index)"
+                marker.isHideCollidedCaptions = true
+                marker.isHideCollidedSymbols = true
                 self.markers.append(marker)
             }
             DispatchQueue.main.async { [weak self] in
