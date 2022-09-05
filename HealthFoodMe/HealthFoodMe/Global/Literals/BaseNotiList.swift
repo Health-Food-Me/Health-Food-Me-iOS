@@ -14,6 +14,7 @@ enum BaseNotiList: String {
   case withdrawalButtonClicked
   case moveFromHamburgerBar
   case reviewPhotoClicked
+  case menuPhotoClicked
   
   static func makeNotiName(list: BaseNotiList) -> NSNotification.Name {
     return Notification.Name(String(describing: list))
