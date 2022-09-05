@@ -12,6 +12,8 @@ class HelfmeLoginAlertVC: UIViewController {
     // MARK: - Properties
     
     let width = UIScreen.main.bounds.width
+    let loginButtonWidth = UIScreen.main.bounds.width - 127
+    let deleteButtonWidth = UIScreen.main.bounds.width - 347
     
     //MARK: - UI Components
     
@@ -43,6 +45,11 @@ class HelfmeLoginAlertVC: UIViewController {
         return button
     }()
     
+    private let alertDeleteBtn: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(ImageLiterals.Common.alertDeleteBtn, for: .normal)
+        return button
+    }()
     
     //MARK: - View Life Cycle
     
@@ -63,7 +70,10 @@ extension HelfmeLoginAlertVC {
     
     private func setLayout() {
         view.addSubviews(loginAlertView)
-        loginAlertView.addSubviews(alertMessage, kakaoLoginButton, appleLoginButton)
+        loginAlertView.addSubviews(alertMessage,
+                                   kakaoLoginButton,
+                                   appleLoginButton,
+                                   alertDeleteBtn)
         
         loginAlertView.snp.makeConstraints {
             let logoutWidth = width * (288/375)
@@ -77,8 +87,6 @@ extension HelfmeLoginAlertVC {
             $0.top.equalToSuperview().inset(32)
         }
         
-        let loginButtonWidth = UIScreen.main.bounds.width - 127
-        
         kakaoLoginButton.snp.makeConstraints {
             $0.top.equalTo(alertMessage.snp.bottom).offset(24)
             $0.leading.trailing.equalToSuperview().inset(20)
@@ -91,6 +99,11 @@ extension HelfmeLoginAlertVC {
             $0.height.equalTo(loginButtonWidth * 42/248)
         }
         
+        alertDeleteBtn.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(8)
+            $0.trailing.equalToSuperview().inset(8)
+            $0.width.height.equalTo(28)
+        }
 
     }
 }

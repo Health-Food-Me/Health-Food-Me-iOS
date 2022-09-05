@@ -17,6 +17,7 @@ struct ImageLiterals {
         static let starIcon_filled = UIImage(named: "btn_star_05")
         static let kakaoLoginBtn = UIImage(named: "btn_loginAlert_kakao")
         static let appleLoginBtn = UIImage(named: "btn_loginAlert_apple")
+        static let alertDeleteBtn = UIImage(named: "btn_alertdelete")
     }
     
     struct MainDetail {
