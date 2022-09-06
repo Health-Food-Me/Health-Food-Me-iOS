@@ -664,8 +664,18 @@ extension MainMapVC: HamburgerbarVCDelegate {
 }
 
 extension MainMapVC: MapDetailSummaryViewDelegate {
-    func MapDetailSummaryViewScarp() {
-        putScrap(userId: UserManager.shared.getUserId ?? "", restaurantId: currentRestaurantId)
+    func MapDetailSummaryViewScarp(isBrowsing: Bool) {
+        if isBrowsing {
+            let alert = ModuleFactory.resolve().makeHelfmeLoginAlertVC()
+            alert.modalPresentationStyle = .overFullScreen
+            alert.modalTransitionStyle = .crossDissolve
+            alert.loginSuccessClosure = { loginSuccess in
+                
+            }
+            self.present(alert, animated: true)
+        } else {
+            putScrap(userId: UserManager.shared.getUserId ?? "", restaurantId: currentRestaurantId)
+        }
     }
 }
 
