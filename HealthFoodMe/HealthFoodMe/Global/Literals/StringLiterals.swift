@@ -53,6 +53,7 @@ struct I18N {
             static let carbohydrate = "탄수화물"
             static let protein = "단백질"
             static let fats = "지방"
+            static let imageHeader = "메뉴 전체보기"
         }
         
         struct Review {
@@ -91,11 +92,16 @@ struct I18N {
         static let networkError = "네트워크 상태를 확인해주세요"
         static let copyComplete = "📑 주소가 복사되었습니다"
         static let notOpenTravelSpot = "추후 오픈될 예정입니다"
+        static let alertLoginMessage =
+        """
+        선택하신 기능은
+        간편 로그인 후 이용 가능합니다!
+        """
     }
     
     struct Map {
         struct Main {
-            static let searchBar = "식당을 검색해보세요"
+            static let searchBar = "식당, 음식 검색"
             static let scrapEmptyGuide = "스크랩한 식당이 없습니다"
         }
         
