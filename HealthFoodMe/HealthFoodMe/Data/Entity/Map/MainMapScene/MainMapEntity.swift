@@ -24,6 +24,16 @@ struct MainMapEntity: Codable {
         } else {
             pointerType = .normalFood
         }
-        return MapPointDataModel.init(latitude: latitude, longtitude: longitude, type: pointerType)
+        return MapPointDataModel.init(latitude: latitude, longtitude: longitude, restaurantName: nil, type: pointerType)
+    }
+    
+    func toDomainWithCaption() -> MapPointDataModel {
+        var pointerType: PointerType
+        if isDietRestaurant {
+            pointerType = .healthFood
+        } else {
+            pointerType = .normalFood
+        }
+        return MapPointDataModel.init(latitude: latitude, longtitude: longitude, restaurantName: name, type: pointerType)
     }
 }

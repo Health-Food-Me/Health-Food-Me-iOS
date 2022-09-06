@@ -149,9 +149,9 @@ extension MapDetailSummaryView {
         }
         
         scrapButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(35)
-            make.trailing.equalToSuperview().inset(20)
-            make.width.height.equalTo(24)
+            make.top.equalToSuperview().inset(23)
+            make.trailing.equalToSuperview().inset(8)
+            make.width.height.equalTo(48)
         }
         
         titleTagStackView.addArrangedSubviews(restaurantNameLabel, starRateStackView, tagCollectionView)

@@ -357,7 +357,7 @@
 		EB6A44D028737CC400749582 /* MainDetailEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailEntity.swift; sourceTree = "<group>"; };
 		EB6A44E82873BED500749582 /* MainMapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapUseCase.swift; sourceTree = "<group>"; };
 		EB6A44E92873BED500749582 /* MainMapRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapRepository.swift; sourceTree = "<group>"; };
-		EB6A44EA2873BED500749582 /* MainMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapModel.swift; sourceTree = "<group>"; };
+		EB6A44EA2873BED500749582 /* MainMapModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = MainMapModel.swift; sourceTree = "<group>"; };
 		EB6A44EB2873BED500749582 /* MainMapVC.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = MainMapVC.swift; sourceTree = "<group>"; tabWidth = 4; };
 		EB6A44EC2873BED500749582 /* MainMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewModel.swift; sourceTree = "<group>"; };
 		EB6A44ED2873BED500749582 /* MainMapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapEntity.swift; sourceTree = "<group>"; };

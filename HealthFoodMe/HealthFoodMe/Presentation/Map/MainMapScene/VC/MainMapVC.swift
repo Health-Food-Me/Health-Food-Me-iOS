@@ -679,7 +679,7 @@ extension MainMapVC {
                             var models = [MapPointDataModel]()
                             
                             models = data.map({ entity in
-                                entity.toDomain()
+                                entity.toDomainWithCaption()
                             })
                             if self.scrapButton.isSelected {
                                 self.mapView.scrapButtonSelected.accept(self.currentScrapList)
@@ -708,7 +708,7 @@ extension MainMapVC {
                             self.restaurantData = data
                             var models = [MapPointDataModel]()
                             models = data.map({ entity in
-                                entity.toDomain()
+                                entity.toDomainWithCaption()
                             })
                             if self.scrapButton.isSelected {
                                 var filterList: [ScrapListEntity] = []

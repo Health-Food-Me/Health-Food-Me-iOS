@@ -158,7 +158,7 @@ extension ScrapVC: UICollectionViewDelegate {
             pointList.append(entity.toDomain())
         }
         let initialPoint = scrapList[indexPath.row]
-        vc.initialPoint = MapPointDataModel.init(latitude: initialPoint.latitude, longtitude: initialPoint.longtitude, type: .normalFood)
+        vc.initialPoint = MapPointDataModel.init(latitude: initialPoint.latitude, longtitude: initialPoint.longtitude, restaurantName: nil, type: .normalFood)
         vc.targetMarkerPointList = pointList
         self.navigationController?.pushViewController(vc, animated: true)
     }

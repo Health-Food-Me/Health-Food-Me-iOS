@@ -10,6 +10,7 @@ import UIKit
 struct MapPointDataModel {
   let latitude: Double
   let longtitude: Double
+  let restaurantName: String?
   let type: PointerType
 }
 
