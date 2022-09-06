@@ -102,7 +102,7 @@ extension SplashVC {
                    let refresh = data?.refreshToken {
                     self.userManager.setCurrentUserWithId(user)
                     self.userManager.updateHelfmeToken(access, refresh)
-                    self.userManager.setLoginStatus(isLoginned: true)
+                    self.userManager.setLoginStatus(true)
                     self.presentMainMapVC()
                 } else {
                     self.presentSocialLoginVC()

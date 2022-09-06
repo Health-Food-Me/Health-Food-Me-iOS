@@ -29,7 +29,7 @@ final class UserManager {
     @UserDefaultWrapper<Bool>(key: "isBrowsing") private(set) var isBrowsingFlow
     
     // 애플로그인을 위한 userID
-    @UserDefaultWrapper<String>(key: "userIdentifier") private(set) var userIdentifier
+    @UserDefaultWrapper<String>(key: "userIdentifier") private(set) var appleUserIdentifier
     
     // socialType
     @UserDefaultWrapper<Bool>(key: "socialType") private(set) var isAppleLogin
@@ -62,7 +62,7 @@ extension UserManager {
     }
     
     /// 둘러보기 플로우의 여부를 저장합니다.
-    func updateBorwsingstate(isBrwosingFlow: Bool) {
+    func setBrowsingState(_ isBrwosingFlow: Bool) {
         self.isBrowsingFlow = isBrwosingFlow
     }
     
@@ -73,7 +73,7 @@ extension UserManager {
     }
     
     /// 현재 로그인상태인지에 대해 Bool타입으로 저장합니다.
-    func setLoginStatus(isLoginned: Bool) {
+    func setLoginStatus(_ isLoginned: Bool) {
         self.currentLoginStatus = isLoginned
     }
     
@@ -84,7 +84,7 @@ extension UserManager {
     
     /// appleLogin의 경우 userID를 저장해 놓습니다.
     func setUserIdForApple(userId: String) {
-        self.userIdentifier = userId
+        self.appleUserIdentifier = userId
     }
     
     /// socialToken을 저장해놓고 사용합니다.
@@ -98,7 +98,7 @@ extension UserManager {
         self.refreshToken = nil
         self.currentUser = nil
         self.currentLoginStatus = nil
-        self.userIdentifier = nil
+        self.appleUserIdentifier = nil
         self.socialToken = nil
         self.isAppleLogin = nil
         self.userId = nil
