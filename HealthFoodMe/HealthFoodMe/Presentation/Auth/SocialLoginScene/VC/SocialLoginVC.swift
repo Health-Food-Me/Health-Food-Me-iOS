@@ -64,8 +64,9 @@ class SocialLoginVC: UIViewController {
         let button = UIButton()
         button.setTitle("둘러보기", for: .normal)
         button.setTitleColor(UIColor.helfmeGray2, for: .normal)
-        button.titleLabel?.font = .NotoRegular(size: 16)
+        button.titleLabel?.font = .NotoRegular(size: 13)
         button.setUnderline()
+        button.alpha = 0
         return button
     }()
     
@@ -155,7 +156,8 @@ extension SocialLoginVC {
                 if let data = data as? SocialLoginEntity {
                     self.userManager.updateHelfmeToken(data.accessToken, data.refreshToken)
                     self.userManager.setCurrentUserWithId(data.user)
-                    self.userManager.setLoginStatus(isLoginned: true)
+                    self.userManager.setLoginStatus(true)
+                    self.userManager.setBrowsingState(false)
                     self.presentToMainMap()
                 }
             case .requestErr(let message):
@@ -202,7 +204,6 @@ extension SocialLoginVC {
             make.centerX.equalToSuperview()
             make.width.equalTo(browseButtonwidth)
             make.height.equalTo(browseButtonwidth * 19/48)
-            
         }
         
         appleLoginButton.snp.makeConstraints { make in
@@ -226,6 +227,7 @@ extension SocialLoginVC {
             self.subTitleLabel.alpha = 1
             self.kakaoLoginButton.alpha = 1
             self.appleLoginButton.alpha = 1
+            self.browseButton.alpha = 1
         }
     }
     
@@ -245,6 +247,8 @@ extension SocialLoginVC {
     }
     
     @objc func startBrowseFlow() {
+        userManager.clearUserInform()
+        userManager.setBrowsingState(true)
         presentToMainMap()
     }
 }
