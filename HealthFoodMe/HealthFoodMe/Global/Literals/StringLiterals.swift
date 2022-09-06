@@ -92,6 +92,11 @@ struct I18N {
         static let networkError = "네트워크 상태를 확인해주세요"
         static let copyComplete = "📑 주소가 복사되었습니다"
         static let notOpenTravelSpot = "추후 오픈될 예정입니다"
+        static let alertLoginMessage =
+        """
+        선택하신 기능은
+        간편 로그인 후 이용 가능합니다!
+        """
     }
     
     struct Map {

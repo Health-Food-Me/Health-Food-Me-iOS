@@ -30,7 +30,6 @@ class SocialLoginVC: UIViewController {
         lb.textColor = .mainRed
         lb.textAlignment = .center
         lb.alpha = 0
-        
         return lb
     }()
     
@@ -44,8 +43,6 @@ class SocialLoginVC: UIViewController {
         lb.numberOfLines = 2
         lb.textAlignment = .center
         lb.alpha = 0
-
-
         return lb
     }()
     
@@ -60,6 +57,15 @@ class SocialLoginVC: UIViewController {
         let button = UIButton()
         button.setBackgroundImage(ImageLiterals.Auth.appleLoginBtn, for: .normal)
         button.alpha = 0
+        return button
+    }()
+    
+    private let browseButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("둘러보기", for: .normal)
+        button.setTitleColor(UIColor.helfmeGray2, for: .normal)
+        button.titleLabel?.font = .NotoRegular(size: 16)
+        button.setUnderline()
         return button
     }()
     
@@ -177,7 +183,7 @@ extension SocialLoginVC {
     }
 
     private func setLayout() {
-        view.addSubviews(titleLabel, subTitleLabel, kakaoLoginButton, appleLoginButton)
+        view.addSubviews(titleLabel, subTitleLabel, kakaoLoginButton, appleLoginButton, browseButton)
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(140)
@@ -190,8 +196,18 @@ extension SocialLoginVC {
         }
         
         let loginButtonWidth = UIScreen.main.bounds.width - 100
+        let browseButtonwidth = UIScreen.main.bounds.width - 327
+        
+        browseButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(85)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(browseButtonwidth)
+            make.height.equalTo(browseButtonwidth * 19/48)
+            
+        }
+        
         appleLoginButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(120)
+            make.bottom.equalTo(browseButton.snp.top).offset(-16)
             make.leading.trailing.equalToSuperview().inset(50)
             make.height.equalTo(loginButtonWidth * 41/275)
         }
