@@ -41,9 +41,15 @@ extension AuthRouter: BaseRouter {
     var parameters: RequestParams {
         switch self {
         case .postSocialLogin(let social, let token):
+            let os = "iOS"
+            let osVersion = UIDevice.iOSVersion
+            let deviceInfo = UIDevice.iPhoneModel
+            let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "errorVersion"
+
             let requestBody: [String: Any] = [
                 "social": social,
-                "token": token
+                "token": token,
+                "agent": [os, osVersion, deviceInfo, appVersion].joined(separator: ";")
             ]
             return .requestBody(requestBody)
         case .withdrawal(let userId):
