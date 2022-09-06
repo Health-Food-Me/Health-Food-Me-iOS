@@ -91,7 +91,7 @@ class SocialLoginVC: UIViewController {
 extension SocialLoginVC {
     private func presentToMainMap() {
         let mainVC = ModuleFactory.resolve().makeMainMapNavigationController()
-        if let window = UIApplication.shared.windows.first {    //
+        if let window = UIApplication.shared.windows.first {
             window.rootViewController = mainVC
         } else {
             mainVC.modalPresentationStyle = .overFullScreen
@@ -135,7 +135,6 @@ extension SocialLoginVC {
                 print(error)
             } else {
                 if let userID = user?.id {
-                    self.userManager.setUserIdForApple(userId: String(userID))
                     self.userManager.setSocialType(isAppleLogin: false)
                     self.postSocialLoginData()
                 }
@@ -154,11 +153,11 @@ extension SocialLoginVC {
             case .success(let data):
                 self.userManager.setSocialToken(token: self.accessToken)
                 if let data = data as? SocialLoginEntity {
-                    self.userManager.updateAuthToken(data.accessToken, data.refreshToken)
+                    self.userManager.updateHelfmeToken(data.accessToken, data.refreshToken)
                     self.userManager.setCurrentUserWithId(data.user)
                     self.userManager.setLoginStatus(isLoginned: true)
+                    self.presentToMainMap()
                 }
-                self.presentToMainMap()
             case .requestErr(let message):
                 print("SocialLogin - requestErr: \(message)")
             case .pathErr:
@@ -233,6 +232,7 @@ extension SocialLoginVC {
     private func setAddTarget() {
         kakaoLoginButton.addTarget(self, action: #selector(doKakaoLogin), for: .touchUpInside)
         appleLoginButton.addTarget(self, action: #selector(doAppleLogin), for: .touchUpInside)
+        browseButton.addTarget(self, action: #selector(startBrowseFlow), for: .touchUpInside)
     }
     
     // MARK: - @objc Methods
@@ -242,6 +242,10 @@ extension SocialLoginVC {
     
     @objc func doAppleLogin() {
         appleLogin()
+    }
+    
+    @objc func startBrowseFlow() {
+        presentToMainMap()
     }
 }
 
