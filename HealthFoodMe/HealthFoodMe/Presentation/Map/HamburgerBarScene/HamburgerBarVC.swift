@@ -197,6 +197,7 @@ class HamburgerBarVC: UIViewController {
         addButtonAction()
         addObserver()
         fetchUserNickname()
+        updateUIWithBrowsingState()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -204,7 +205,6 @@ class HamburgerBarVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         showHamburgerBarWithAnimation()
-        updateUIWithBrowsingState()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
