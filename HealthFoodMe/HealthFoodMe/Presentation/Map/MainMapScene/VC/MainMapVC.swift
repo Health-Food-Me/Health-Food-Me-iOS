@@ -21,6 +21,9 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         manager.delegate = self
         return manager
     }()
+    private var isBrowsing: Bool {
+        return UserManager.shared.isBrowsing
+    }
     private var initialMapOpened: Bool = false
     private let disposeBag = DisposeBag()
     private var isInitialPoint = false
@@ -38,9 +41,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         }
     }
     private let locationManager = NMFLocationManager.sharedInstance()
-    private var selectedCategories: [Bool] = [false, false, false,
-                                              false, false, false,
-                                              false, false] {
+    private var selectedCategories: [Bool] = Array(repeating: false, count: 10) {
         didSet {
             self.unselectMapPoint()
             categoryCollectionView.reloadData()
@@ -125,8 +126,20 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         bt.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
         bt.addAction(UIAction(handler: { _ in
             self.makeVibrate()
-            bt.isSelected.toggle()
-            self.filterScrapData()
+            if self.isBrowsing {
+                let alert = ModuleFactory.resolve().makeHelfmeLoginAlertVC()
+                alert.modalPresentationStyle = .overFullScreen
+                alert.modalTransitionStyle = .crossDissolve
+                alert.loginSuccessClosure = { loginSuccess in
+                    if loginSuccess {
+                        self.fetchRestaurantList(zoom: 2000)
+                    }
+                }
+                self.present(alert, animated: true)
+            } else {
+                bt.isSelected.toggle()
+                self.filterScrapData()
+            }
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
         bt.clipsToBounds = true
@@ -305,7 +318,7 @@ extension MainMapVC {
     
     private func filterScrapData() {
         if scrapButton.isSelected {
-            if let userID = UserManager.shared.getUser {
+            if let userID = UserManager.shared.getUserId {
                 UserService.shared.getScrapList(userId: userID) { result in
                     switch(result) {
                     case .success(let entity):
@@ -651,8 +664,18 @@ extension MainMapVC: HamburgerbarVCDelegate {
 }
 
 extension MainMapVC: MapDetailSummaryViewDelegate {
-    func MapDetailSummaryViewScarp() {
-        putScrap(userId: UserManager.shared.getUser ?? "", restaurantId: currentRestaurantId)
+    func MapDetailSummaryViewScarp(isBrowsing: Bool) {
+        if isBrowsing {
+            let alert = ModuleFactory.resolve().makeHelfmeLoginAlertVC()
+            alert.modalPresentationStyle = .overFullScreen
+            alert.modalTransitionStyle = .crossDissolve
+            alert.loginSuccessClosure = { loginSuccess in
+                
+            }
+            self.present(alert, animated: true)
+        } else {
+            putScrap(userId: UserManager.shared.getUserId ?? "", restaurantId: currentRestaurantId)
+        }
     }
 }
 
@@ -734,7 +757,7 @@ extension MainMapVC {
     }
     
     private func fetchRestaurantSummary(id: String) {
-        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser ?? "") { networkResult in
+        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUserId ?? "browsing") { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? RestaurantSummaryEntity {

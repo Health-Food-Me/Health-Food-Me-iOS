@@ -195,7 +195,7 @@ extension SearchResultVC {
         if let text = searchTextField.text {
             searchContent = text
         }
-        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lat, latitude: lng,
+        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lng, latitude: lat,
                                                                          keyword: keyword), fromRecent: fromRecent) {
             self.mapViewController.initialId = self.fromSearchCellInitial
             self.mapViewController.IDsForMap = self.searchResultList.map({

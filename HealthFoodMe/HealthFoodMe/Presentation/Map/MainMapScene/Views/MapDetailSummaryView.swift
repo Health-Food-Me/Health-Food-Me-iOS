@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol MapDetailSummaryViewDelegate: AnyObject {
-    func MapDetailSummaryViewScarp()
+    func MapDetailSummaryViewScarp(isBrowsing: Bool)
 }
 
 final class MapDetailSummaryView: UIView {
@@ -18,6 +18,9 @@ final class MapDetailSummaryView: UIView {
     // MARK: - Properties
     
     private var tagList = [String]()
+    private var isBrowsing: Bool {
+        return UserManager.shared.isBrowsing
+    }
     weak var delegate: MapDetailSummaryViewDelegate?
     
     // MARK: - UI Components
@@ -43,8 +46,12 @@ final class MapDetailSummaryView: UIView {
         bt.setImage(ImageLiterals.MainDetail.scrapIcon, for: .normal)
         bt.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
         bt.addAction(UIAction(handler: { _ in
+            guard !self.isBrowsing else {
+                self.delegate?.MapDetailSummaryViewScarp(isBrowsing: true)
+                return
+            }
             bt.isSelected.toggle()
-            self.delegate?.MapDetailSummaryViewScarp()
+            self.delegate?.MapDetailSummaryViewScarp(isBrowsing: false)
         }), for: .touchUpInside)
         return bt
     }()

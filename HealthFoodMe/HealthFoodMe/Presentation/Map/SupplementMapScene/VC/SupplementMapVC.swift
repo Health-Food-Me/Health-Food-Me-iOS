@@ -529,8 +529,18 @@ extension SupplementMapVC {
 }
 
 extension SupplementMapVC: MapDetailSummaryViewDelegate {
-    func MapDetailSummaryViewScarp() {
-        putScrap(userId: UserManager.shared.getUser ?? "", restaurantId: currentRestaurantId)
+    func MapDetailSummaryViewScarp(isBrowsing: Bool) {
+        if isBrowsing {
+            let alert = ModuleFactory.resolve().makeHelfmeLoginAlertVC()
+            alert.modalPresentationStyle = .overFullScreen
+            alert.modalTransitionStyle = .crossDissolve
+            alert.loginSuccessClosure = { loginSuccess in
+                
+            }
+            self.present(alert, animated: true)
+        } else {
+            putScrap(userId: UserManager.shared.getUserId ?? "", restaurantId: currentRestaurantId)
+        }
     }
 }
 
@@ -538,7 +548,7 @@ extension SupplementMapVC: MapDetailSummaryViewDelegate {
 
 extension SupplementMapVC {
     private func fetchRestaurantSummary(id: String) {
-        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser ?? "") { networkResult in
+        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUserId ?? "browsing") { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? RestaurantSummaryEntity {
