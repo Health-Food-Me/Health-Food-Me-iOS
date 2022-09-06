@@ -29,6 +29,9 @@ class HamburgerBarVC: UIViewController {
     var hambergurBarViewTranslation = CGPoint(x: 0, y: 0)
     var hambergurBarViewVelocity = CGPoint(x: 0, y: 0)
     var name: String? = " "
+    private var isBrowsing: Bool {
+        return UserManager.shared.isBrowsing
+    }
     private let screenWidth = UIScreen.main.bounds.width
     private var menuButtons: [UIButton] = []
     private let buttonTitles: [String] = ["스크랩한 식당", "내가 쓴 리뷰", "가게 제보하기",
@@ -94,6 +97,30 @@ class HamburgerBarVC: UIViewController {
         lb.textColor = .helfmeBlack
         lb.font = .NotoRegular(size: 18)
         return lb
+    }()
+    
+    private lazy var needLoginButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("로그인이 필요해요", for: .normal)
+        button.setTitleColor(.helfmeBlack, for: .normal)
+        button.titleLabel?.font = UIFont.NotoMedium(size: 18)
+        return button
+    }()
+    
+    private lazy var needLoginImageButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageLiterals.HamburgerBar.editNameBtn, for: .normal)
+        
+        return button
+    }()
+    
+    private var needLoginStackView: UIStackView = {
+        let st = UIStackView()
+        st.axis = .horizontal
+        st.spacing = 8
+        st.distribution = .equalSpacing
+        st.alignment = .center
+        return st
     }()
     
     private lazy var todayHelfmeLabel: UILabel = {
@@ -177,6 +204,7 @@ class HamburgerBarVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         showHamburgerBarWithAnimation()
+        updateUIWithBrowsingState()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -226,6 +254,7 @@ extension HamburgerBarVC {
     
     private func setStackView() {
         nickNameStackView.addArrangedSubviews(nickNameButton, sirLabel)
+        needLoginStackView.addArrangedSubviews(needLoginButton, needLoginImageButton)
         nickNameWithButtonStackView.addArrangedSubviews(nickNameStackView, editNameButton)
         helloStackView.addArrangedSubviews(helloLabel, nickNameWithButtonStackView, todayHelfmeLabel)
     }
@@ -336,7 +365,7 @@ extension HamburgerBarVC {
     }
     
     private func fetchUserNickname() {
-        guard let userID = UserManager.shared.getUser else { return }
+        guard let userID = UserManager.shared.getUserId else { return }
         UserService.shared.getUserNickname(userId: userID) { result in
             switch(result) {
                 case .success(let result):
@@ -367,14 +396,22 @@ extension HamburgerBarVC {
             self.navigationController?.pushViewController(nicknameVC, animated: true)
         }
         
-        menuButtons[0].press {  
-            self.dismiss(animated: false)
-            self.postObserverAction(.moveFromHamburgerBar,object: HamburgerType.scrap)
+        menuButtons[0].press {
+            if self.isBrowsing {
+                self.presentSocialLoginAlert()
+            } else {
+                self.dismiss(animated: false)
+                self.postObserverAction(.moveFromHamburgerBar,object: HamburgerType.scrap)
+            }
         }
         
         menuButtons[1].press {
-            self.dismiss(animated: false)
-            self.postObserverAction(.moveFromHamburgerBar,object: HamburgerType.myReview)
+            if self.isBrowsing {
+                self.presentSocialLoginAlert()
+            } else {
+                self.dismiss(animated: false)
+                self.postObserverAction(.moveFromHamburgerBar,object: HamburgerType.myReview)
+            }
         }
         
         menuButtons[2].press {
@@ -399,10 +436,45 @@ extension HamburgerBarVC {
                 self.navigationController?.pushViewController(loginVC, animated: true)
             }
         }
+        
+        [needLoginButton, needLoginImageButton].forEach {
+            $0.press {
+                self.presentSocialLoginAlert()
+            }
+        }
     }
     
-    private func moveToLogin() {
-        
+    private func presentSocialLoginAlert() {
+        let alert = ModuleFactory.resolve().makeHelfmeLoginAlertVC()
+        alert.modalPresentationStyle = .overFullScreen
+        alert.modalTransitionStyle = .crossDissolve
+        alert.loginSuccessClosure = { loginSuccess in
+            if loginSuccess {
+                self.updateUIWithBrowsingState()
+            }
+        }
+        self.present(alert, animated: true)
+    }
+    
+    private func updateUIWithBrowsingState() {
+        updateHelloStackView()
+        logoutButton.isHidden = isBrowsing
+    }
+    
+    private func updateHelloStackView() {
+        if isBrowsing {
+            helloStackView.subviews.forEach {
+                $0.removeFromSuperview()
+            }
+            helloStackView.addArrangedSubviews(needLoginStackView)
+        } else {
+            guard helloStackView.subviews.count != 3 else { return }
+            nickNameButton.setTitle(UserManager.shared.getUserNickname, for: .normal)
+            helloStackView.subviews.forEach {
+                $0.removeFromSuperview()
+            }
+            helloStackView.addArrangedSubviews(helloLabel, nickNameWithButtonStackView, todayHelfmeLabel)
+        }
     }
     
     // MARK: - @objc Methods
