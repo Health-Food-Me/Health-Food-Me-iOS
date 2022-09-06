@@ -41,9 +41,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         }
     }
     private let locationManager = NMFLocationManager.sharedInstance()
-    private var selectedCategories: [Bool] = [false, false, false,
-                                              false, false, false,
-                                              false, false] {
+    private var selectedCategories: [Bool] = Array(repeating: false, count: 8) {
         didSet {
             self.unselectMapPoint()
             categoryCollectionView.reloadData()
@@ -320,7 +318,7 @@ extension MainMapVC {
     
     private func filterScrapData() {
         if scrapButton.isSelected {
-            if let userID = UserManager.shared.getUser {
+            if let userID = UserManager.shared.getUserId {
                 UserService.shared.getScrapList(userId: userID) { result in
                     switch(result) {
                     case .success(let entity):
@@ -667,7 +665,7 @@ extension MainMapVC: HamburgerbarVCDelegate {
 
 extension MainMapVC: MapDetailSummaryViewDelegate {
     func MapDetailSummaryViewScarp() {
-        putScrap(userId: UserManager.shared.getUser ?? "", restaurantId: currentRestaurantId)
+        putScrap(userId: UserManager.shared.getUserId ?? "", restaurantId: currentRestaurantId)
     }
 }
 
@@ -749,7 +747,7 @@ extension MainMapVC {
     }
     
     private func fetchRestaurantSummary(id: String) {
-        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser ?? "") { networkResult in
+        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUserId ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? RestaurantSummaryEntity {

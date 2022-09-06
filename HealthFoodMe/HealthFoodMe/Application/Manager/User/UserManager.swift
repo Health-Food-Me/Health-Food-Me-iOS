@@ -45,7 +45,8 @@ final class UserManager {
     var getSocialToken: String { return self.socialToken ?? "" }
     var getAccessToken: String { return self.accessToken ?? "" }
     var getRefreshToken: String { return self.refreshToken ?? "" }
-    var getUser: String? { return self.userId }
+    var getUserId: String? { return self.userId }
+    var getUserNickname: String? { return self.currentUser?.name ?? "" }
     
     // MARK: - Life Cycles
     

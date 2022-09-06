@@ -394,7 +394,7 @@ extension MyReviewVC: MyReviewCVCDelegate {
 
 extension MyReviewVC {
     private func requestReviewListWithAPI() {
-        ReviewService.shared.requestUserReview(userId: UserManager.shared.getUser ?? "") { networkResult in
+        ReviewService.shared.requestUserReview(userId: UserManager.shared.getUserId ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
                 self.reviewServerData.removeAll()

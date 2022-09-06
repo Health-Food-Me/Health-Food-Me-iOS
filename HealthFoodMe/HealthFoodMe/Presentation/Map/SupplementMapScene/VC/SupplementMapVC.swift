@@ -530,7 +530,7 @@ extension SupplementMapVC {
 
 extension SupplementMapVC: MapDetailSummaryViewDelegate {
     func MapDetailSummaryViewScarp() {
-        putScrap(userId: UserManager.shared.getUser ?? "", restaurantId: currentRestaurantId)
+        putScrap(userId: UserManager.shared.getUserId ?? "", restaurantId: currentRestaurantId)
     }
 }
 
@@ -538,7 +538,7 @@ extension SupplementMapVC: MapDetailSummaryViewDelegate {
 
 extension SupplementMapVC {
     private func fetchRestaurantSummary(id: String) {
-        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUser ?? "") { networkResult in
+        RestaurantService.shared.fetchRestaurantSummary(restaurantId: id, userId: UserManager.shared.getUserId ?? "") { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? RestaurantSummaryEntity {

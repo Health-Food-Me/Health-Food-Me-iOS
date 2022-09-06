@@ -31,6 +31,9 @@ class MainDetailVC: UIViewController {
     private var navigationTitle: String = ""
     private var isOpenned: Bool = false
     private var mainInfoInitialReload: Bool = true
+    private var isBrowsing: Bool {
+        return UserManager.shared.isBrowsing
+    }
     var userLocation: Location? = {
         let loc = Location(latitude: 37.49, longitude: 127.02)
         return loc
@@ -132,7 +135,7 @@ extension MainDetailVC {
         scrapButton.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
         scrapButton.addAction(UIAction(handler: { _ in
             scrapButton.isSelected.toggle()
-            self.putScrap(userId: UserManager.shared.getUser ?? "", restaurantId: self.restaurantId)
+            self.putScrap(userId: UserManager.shared.getUserId ?? "", restaurantId: self.restaurantId)
         }), for: .touchUpInside)
         scrapButtonInstance = scrapButton
         
@@ -518,7 +521,7 @@ extension MainDetailVC: SwipeDismissDelegate {
 extension MainDetailVC {
     func fetchRestauranDetail(restaurantId: String, comletion: @escaping(() -> Void)) {
         if let location = userLocation {
-            RestaurantService.shared.fetchRestaurantDetail(restaurantId: restaurantId, userId: UserManager.shared.getUser ?? "", latitude: location.latitude, longitude: location.longitude) { networkResult in
+            RestaurantService.shared.fetchRestaurantDetail(restaurantId: restaurantId, userId: UserManager.shared.getUserId ?? "", latitude: location.latitude, longitude: location.longitude) { networkResult in
                 switch networkResult {
                 case .success(let data):
                     if let data = data as? MainDetailEntity {
@@ -540,7 +543,7 @@ extension MainDetailVC {
     }
     
     func requestReviewEnabled(restaurantId: String) {
-        ReviewService.shared.requestReviewEnabled(userId: UserManager.shared.getUser ?? "", restaurantId: restaurantId) { networkResult in
+        ReviewService.shared.requestReviewEnabled(userId: UserManager.shared.getUserId ?? "", restaurantId: restaurantId) { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? ReviewCheckEntity {
