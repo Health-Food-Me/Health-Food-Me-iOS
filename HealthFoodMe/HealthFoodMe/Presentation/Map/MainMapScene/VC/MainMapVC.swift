@@ -21,6 +21,9 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         manager.delegate = self
         return manager
     }()
+    private var isBrowsing: Bool {
+        return UserManager.shared.isBrowsing
+    }
     private var initialMapOpened: Bool = false
     private let disposeBag = DisposeBag()
     private var isInitialPoint = false
@@ -125,8 +128,20 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         bt.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
         bt.addAction(UIAction(handler: { _ in
             self.makeVibrate()
-            bt.isSelected.toggle()
-            self.filterScrapData()
+            if self.isBrowsing {
+                let alert = ModuleFactory.resolve().makeHelfmeLoginAlertVC()
+                alert.modalPresentationStyle = .overFullScreen
+                alert.modalTransitionStyle = .crossDissolve
+                alert.loginSuccessClosure = { loginSuccess in
+                    if loginSuccess {
+                        self.fetchRestaurantList(zoom: 2000)
+                    }
+                }
+                self.present(alert, animated: true)
+            } else {
+                bt.isSelected.toggle()
+                self.filterScrapData()
+            }
         }), for: .touchUpInside)
         bt.backgroundColor = .helfmeWhite
         bt.clipsToBounds = true
