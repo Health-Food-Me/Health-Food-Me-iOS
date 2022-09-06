@@ -41,7 +41,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
         }
     }
     private let locationManager = NMFLocationManager.sharedInstance()
-    private var selectedCategories: [Bool] = Array(repeating: false, count: 8) {
+    private var selectedCategories: [Bool] = Array(repeating: false, count: 10) {
         didSet {
             self.unselectMapPoint()
             categoryCollectionView.reloadData()
