@@ -46,6 +46,9 @@
 		69028BAC2874681700373984 /* MenuTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BAB2874681700373984 /* MenuTabVC.swift */; };
 		69028BB02874A60E00373984 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69028BAF2874A60E00373984 /* HeaderView.swift */; };
 		690AB5492875C1B200DE72D4 /* MenuDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690AB5482875C1B200DE72D4 /* MenuDataModel.swift */; };
+		690BAF3628C7C2BB004ACB6E /* CategoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BAF3528C7C2BB004ACB6E /* CategoryCVC.swift */; };
+		690BAF3828C7C31F004ACB6E /* CategoryTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BAF3728C7C31F004ACB6E /* CategoryTVC.swift */; };
+		690BAF3F28C8D2C8004ACB6E /* CopingTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BAF3E28C8D2C8004ACB6E /* CopingTVC.swift */; };
 		695758B9287D7C0B00E36789 /* MenuTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758B8287D7C0B00E36789 /* MenuTab.storyboard */; };
 		695758BD287DA4CD00E36789 /* ReviewWrite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695758BC287DA4CD00E36789 /* ReviewWrite.storyboard */; };
 		695758BF287DA50000E36789 /* ReviewWriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695758BE287DA50000E36789 /* ReviewWriteVC.swift */; };
@@ -288,6 +291,9 @@
 		69028BAB2874681700373984 /* MenuTabVC.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = MenuTabVC.swift; sourceTree = "<group>"; tabWidth = 4; usesTabs = 1; };
 		69028BAF2874A60E00373984 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		690AB5482875C1B200DE72D4 /* MenuDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDataModel.swift; sourceTree = "<group>"; };
+		690BAF3528C7C2BB004ACB6E /* CategoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCVC.swift; sourceTree = "<group>"; };
+		690BAF3728C7C31F004ACB6E /* CategoryTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTVC.swift; sourceTree = "<group>"; };
+		690BAF3E28C8D2C8004ACB6E /* CopingTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopingTVC.swift; sourceTree = "<group>"; };
 		695758B8287D7C0B00E36789 /* MenuTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MenuTab.storyboard; sourceTree = "<group>"; };
 		695758BC287DA4CD00E36789 /* ReviewWrite.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReviewWrite.storyboard; sourceTree = "<group>"; };
 		695758BE287DA50000E36789 /* ReviewWriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteVC.swift; sourceTree = "<group>"; };
@@ -745,6 +751,9 @@
 			isa = PBXGroup;
 			children = (
 				695758DB2881128300E36789 /* ContentTVC.swift */,
+				690BAF3528C7C2BB004ACB6E /* CategoryCVC.swift */,
+				690BAF3728C7C31F004ACB6E /* CategoryTVC.swift */,
+				690BAF3E28C8D2C8004ACB6E /* CopingTVC.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2231,6 +2240,7 @@
 				FDF2E1FC287EFC710007D4F9 /* StarRatingSlider.swift in Sources */,
 				695758DE28811E9D00E36789 /* Config.swift in Sources */,
 				EBD19262287DBC1800EA053E /* MapDetailSummaryView.swift in Sources */,
+				690BAF3F28C8D2C8004ACB6E /* CopingTVC.swift in Sources */,
 				EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */,
 				EB6A45172874276B00749582 /* DetailTabTitleHeader.swift in Sources */,
 				FD39FACE2880C30100A01CDA /* NicknameChangeUseCase.swift in Sources */,
@@ -2265,6 +2275,7 @@
 				FDA54A3B287DEAB2009D5BCE /* CustomSegementControl.swift in Sources */,
 				EBF66AF0287227F500DE0ED1 /* BaseVC.swift in Sources */,
 				3B07FD3128BFD845004D84A8 /* WebViewVC.swift in Sources */,
+				690BAF3828C7C31F004ACB6E /* CategoryTVC.swift in Sources */,
 				EB6A44D328737CC400749582 /* MainDetailModel.swift in Sources */,
 				A93252B5287F2CA6001EDF50 /* ScrapCVC.swift in Sources */,
 				EBF66ABE287227F500DE0ED1 /* UITextView+.swift in Sources */,
@@ -2289,6 +2300,7 @@
 				EBF66AE3287227F500DE0ED1 /* NetworkResult.swift in Sources */,
 				EB6A45262875C3A000749582 /* TabContainerCVC.swift in Sources */,
 				FDCB3CC12888338300E6FBCE /* NicknameEntity.swift in Sources */,
+				690BAF3628C7C2BB004ACB6E /* CategoryCVC.swift in Sources */,
 				FDCB3CC52888565400E6FBCE /* UserEntity.swift in Sources */,
 				EBFAEB312885F2F7009C569C /* MyReviewRepository.swift in Sources */,
 				EBFAEB332885F2F7009C569C /* MyReviewVC.swift in Sources */,
