@@ -151,7 +151,6 @@ extension MainInfoTVC {
             distanceLabel.text = "\(data.restaurant.distance)m"
         }
         self.expandableData = data.restaurant.toDomain()
-        print(self.expandableData)
         
         initialReload()
     }
