@@ -15,7 +15,8 @@ struct SocialLoginEntity: Codable {
 
 // MARK: - User
 struct User: Codable {
-    let id, name, email, agent: String
+    let id, name, agent: String
+    let email: String?
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
