@@ -79,6 +79,7 @@ extension SplashVC {
 // MARK: - Network
 
 extension SplashVC {
+    // 토큰 재발급에 성공하면 메인으로, 실패하면 소셜로그인으로
     private func reissuanceToken() {
         userManager.reissuanceAccessToken { state in
             if state {
@@ -90,12 +91,8 @@ extension SplashVC {
     }
     
     private func requestSocialLogin() {
-        var socialType = ""
-        if userManager.isAppleLoginned {
-            socialType = "apple"
-        } else {
-            socialType = "kakao"
-        }
+        let socialType = userManager.isAppleLoginned ? "apple" : "kakao"
+        
         AuthService.shared.requestAuth(social: socialType, token: self.userManager.getSocialToken) { networkResult in
             switch networkResult {
             case .success(let data):
@@ -104,8 +101,8 @@ extension SplashVC {
                    let access = data?.accessToken,
                    let refresh = data?.refreshToken {
                     self.userManager.setCurrentUserWithId(user)
-                    self.userManager.updateAuthToken(access, refresh)
-                    self.userManager.setLoginStatus(isLoginned: true)
+                    self.userManager.updateHelfmeToken(access, refresh)
+                    self.userManager.setLoginStatus(true)
                     self.presentMainMapVC()
                 } else {
                     self.presentSocialLoginVC()

@@ -30,7 +30,6 @@ class SocialLoginVC: UIViewController {
         lb.textColor = .mainRed
         lb.textAlignment = .center
         lb.alpha = 0
-        
         return lb
     }()
     
@@ -44,8 +43,6 @@ class SocialLoginVC: UIViewController {
         lb.numberOfLines = 2
         lb.textAlignment = .center
         lb.alpha = 0
-
-
         return lb
     }()
     
@@ -59,6 +56,16 @@ class SocialLoginVC: UIViewController {
     private lazy var appleLoginButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(ImageLiterals.Auth.appleLoginBtn, for: .normal)
+        button.alpha = 0
+        return button
+    }()
+    
+    private let browseButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("둘러보기", for: .normal)
+        button.setTitleColor(UIColor.helfmeGray2, for: .normal)
+        button.titleLabel?.font = .NotoRegular(size: 13)
+        button.setUnderline()
         button.alpha = 0
         return button
     }()
@@ -85,7 +92,7 @@ class SocialLoginVC: UIViewController {
 extension SocialLoginVC {
     private func presentToMainMap() {
         let mainVC = ModuleFactory.resolve().makeMainMapNavigationController()
-        if let window = UIApplication.shared.windows.first {    //
+        if let window = UIApplication.shared.windows.first {
             window.rootViewController = mainVC
         } else {
             mainVC.modalPresentationStyle = .overFullScreen
@@ -129,7 +136,6 @@ extension SocialLoginVC {
                 print(error)
             } else {
                 if let userID = user?.id {
-                    self.userManager.setUserIdForApple(userId: String(userID))
                     self.userManager.setSocialType(isAppleLogin: false)
                     self.postSocialLoginData()
                 }
@@ -148,11 +154,12 @@ extension SocialLoginVC {
             case .success(let data):
                 self.userManager.setSocialToken(token: self.accessToken)
                 if let data = data as? SocialLoginEntity {
-                    self.userManager.updateAuthToken(data.accessToken, data.refreshToken)
+                    self.userManager.updateHelfmeToken(data.accessToken, data.refreshToken)
                     self.userManager.setCurrentUserWithId(data.user)
-                    self.userManager.setLoginStatus(isLoginned: true)
+                    self.userManager.setLoginStatus(true)
+                    self.userManager.setBrowsingState(false)
+                    self.presentToMainMap()
                 }
-                self.presentToMainMap()
             case .requestErr(let message):
                 print("SocialLogin - requestErr: \(message)")
             case .pathErr:
@@ -177,7 +184,7 @@ extension SocialLoginVC {
     }
 
     private func setLayout() {
-        view.addSubviews(titleLabel, subTitleLabel, kakaoLoginButton, appleLoginButton)
+        view.addSubviews(titleLabel, subTitleLabel, kakaoLoginButton, appleLoginButton, browseButton)
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(140)
@@ -190,8 +197,17 @@ extension SocialLoginVC {
         }
         
         let loginButtonWidth = UIScreen.main.bounds.width - 100
+        let browseButtonwidth = UIScreen.main.bounds.width - 327
+        
+        browseButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(85)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(browseButtonwidth)
+            make.height.equalTo(browseButtonwidth * 19/48)
+        }
+        
         appleLoginButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(120)
+            make.bottom.equalTo(browseButton.snp.top).offset(-16)
             make.leading.trailing.equalToSuperview().inset(50)
             make.height.equalTo(loginButtonWidth * 41/275)
         }
@@ -211,12 +227,14 @@ extension SocialLoginVC {
             self.subTitleLabel.alpha = 1
             self.kakaoLoginButton.alpha = 1
             self.appleLoginButton.alpha = 1
+            self.browseButton.alpha = 1
         }
     }
     
     private func setAddTarget() {
         kakaoLoginButton.addTarget(self, action: #selector(doKakaoLogin), for: .touchUpInside)
         appleLoginButton.addTarget(self, action: #selector(doAppleLogin), for: .touchUpInside)
+        browseButton.addTarget(self, action: #selector(startBrowseFlow), for: .touchUpInside)
     }
     
     // MARK: - @objc Methods
@@ -226,6 +244,12 @@ extension SocialLoginVC {
     
     @objc func doAppleLogin() {
         appleLogin()
+    }
+    
+    @objc func startBrowseFlow() {
+        userManager.clearUserInform()
+        userManager.setBrowsingState(true)
+        presentToMainMap()
     }
 }
 

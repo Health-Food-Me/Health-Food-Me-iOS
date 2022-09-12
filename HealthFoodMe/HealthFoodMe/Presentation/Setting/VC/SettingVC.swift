@@ -15,6 +15,10 @@ class SettingVC: UIViewController {
     
     private let schemeManager = URLSchemeManager.shared
     
+    private var isBrowsing: Bool {
+        return UserManager.shared.isBrowsing
+    }
+    
     // MARK: - UI Components
     
     private var topTitleLabel: UILabel = {
@@ -119,9 +123,9 @@ class SettingVC: UIViewController {
         super.viewDidLoad()
         setUI()
         setLayout()
+        updateUIWithBrowsingState()
         addButtonAction()
     }
-    
 }
 
 // MARK: - Methods
@@ -219,7 +223,11 @@ extension SettingVC {
         }
         
         reportButton.press(animated: false) {
-            self.presentReportMail(title: I18N.Setting.reportTitle, content: I18N.Setting.reportMailContent)
+            if self.isBrowsing {
+                self.presentSocialLoginAlert()
+            } else {
+                self.presentReportMail(title: I18N.Setting.reportTitle, content: I18N.Setting.reportMailContent)
+            }
         }
     
         withdrawalButton.press(animated: false) {
@@ -237,6 +245,36 @@ extension SettingVC {
         
         naverMapLicenseButton.press(animated: false) {
             self.schemeManager.loadSafariApp(blogLink: NaverTerms.naverMapOpensource.rawValue)
+        }
+    }
+    
+    private func presentSocialLoginAlert() {
+        let alert = ModuleFactory.resolve().makeHelfmeLoginAlertVC()
+        alert.modalPresentationStyle = .overFullScreen
+        alert.modalTransitionStyle = .crossDissolve
+        alert.loginSuccessClosure = { loginSuccess in
+            if loginSuccess {
+                self.updateUIWithBrowsingState()
+            }
+        }
+        self.present(alert, animated: true)
+    }
+    
+    private func updateUIWithBrowsingState() {
+        withdrawalButton.isHidden = isBrowsing
+        updateReportButtonConstraints()
+    }
+    
+    private func updateReportButtonConstraints() {
+        reportButton.snp.remakeConstraints { make in
+            if self.isBrowsing {
+                make.top.equalTo(self.askButton.snp.bottom).offset(36)
+            } else {
+                make.top.equalTo(self.withdrawalButton.snp.bottom).offset(36)
+            }
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+            make.height.equalTo(16)
         }
     }
 }

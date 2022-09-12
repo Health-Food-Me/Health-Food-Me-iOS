@@ -16,7 +16,7 @@ struct ScrapListEntity: Codable {
     let latitude, longtitude: Double
     
     func toDomain() -> MapPointDataModel {
-        let model = MapPointDataModel.init(latitude: latitude, longtitude: longtitude, type: .healthFood)
+        let model = MapPointDataModel.init(latitude: latitude, longtitude: longtitude, restaurantName: name, type: .healthFood)
         return model
     }
 }

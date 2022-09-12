@@ -15,18 +15,13 @@ struct SocialLoginEntity: Codable {
 
 // MARK: - User
 struct User: Codable {
-    let id, social: String
-    let v: Int
-    let refreshToken: String
-    let scrapRestaurants: [String]
-    let socialID, name: String
+    let id, name, agent: String
+    let email: String?
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case social
-        case v = "__v"
-        case refreshToken, scrapRestaurants
-        case socialID = "socialId"
         case name
+        case email
+        case agent
     }
 }
