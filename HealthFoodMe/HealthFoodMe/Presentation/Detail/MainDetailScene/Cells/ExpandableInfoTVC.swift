@@ -141,18 +141,33 @@ extension ExpandableInfoTVC {
             
             if expandableData.labelText.count > 0 {
 
-                var result = ""
-                for line in expandableData.labelText {
+                var result = NSMutableAttributedString()
+                for (index,line) in expandableData.labelText.enumerated() {
                     if  isOpenned       &&
                         currentDay >= 0 &&
                         !expandableData.labelText[currentDay].isEmpty {
-                        result += line
-                        result += "\n"
+                        let attributedStr = NSMutableAttributedString(string: "\(line)\n")
+                        
+                        let font: UIFont = index == currentDay ?
+                        UIFont.NotoBold(size: 12) : UIFont.NotoMedium(size: 12)
+                        
+                        let textColor: UIColor = index == currentDay ?
+                        UIColor.black : UIColor.helfmeGray1
+                        
+                        attributedStr.addAttributes([.font: font,
+                                                        .foregroundColor: textColor]
+                                                        ,range: NSRange(location: 0, length: attributedStr.string.count))
+
+                        result.append(attributedStr)
                     } else {
-                        result = expandableData.labelText[currentDay]
+                        let attributedString =  NSMutableAttributedString(string: expandableData.labelText[currentDay])
+                        attributedString.addAttributes([.font: UIFont.NotoMedium(size: 12),
+                                                        .foregroundColor: UIColor.helfmeGray1]
+                                                        ,range: NSRange(location: 0, length: attributedString.string.count))
+                        result = attributedString
                     }
                 }
-                infoLabel.text = result
+                infoLabel.attributedText = result
                 infoLabel.sizeToFit()
                 toggleButton.isHidden = false
                 toggleButtonInfnoLabel.isHidden = false
