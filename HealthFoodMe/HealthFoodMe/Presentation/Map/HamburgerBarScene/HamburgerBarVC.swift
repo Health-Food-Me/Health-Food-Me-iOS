@@ -442,7 +442,7 @@ extension HamburgerBarVC {
         
         [needLoginButton, needLoginImageButton].forEach {
             $0.press {
-                self.presentSocialLoginAlert()
+                self.pushSocialLoginVC()
             }
         }
     }
