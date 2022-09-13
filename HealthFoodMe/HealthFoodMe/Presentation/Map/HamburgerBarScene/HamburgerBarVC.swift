@@ -442,7 +442,7 @@ extension HamburgerBarVC {
         
         [needLoginButton, needLoginImageButton].forEach {
             $0.press {
-                self.pushSocialLoginVC()
+                self.presentSocialLoginVC()
             }
         }
     }
@@ -458,6 +458,13 @@ extension HamburgerBarVC {
                 self.pushSocialLoginVC()
             }
         }
+    }
+    
+    private func presentSocialLoginVC() {
+        let loginVC = ModuleFactory.resolve().makeLoginVC()
+        loginVC.modalTransitionStyle = .crossDissolve
+        loginVC.modalPresentationStyle = .fullScreen
+        self.present(loginVC, animated: true)
     }
     
     private func pushSocialLoginVC() {
