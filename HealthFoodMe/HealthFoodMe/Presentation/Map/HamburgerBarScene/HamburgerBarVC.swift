@@ -461,10 +461,12 @@ extension HamburgerBarVC {
     }
     
     private func presentSocialLoginVC() {
-        let loginVC = ModuleFactory.resolve().makeLoginVC()
-        loginVC.modalTransitionStyle = .crossDissolve
-        loginVC.modalPresentationStyle = .fullScreen
-        self.present(loginVC, animated: true)
+        let rootViewController = ModuleFactory.resolve().makeLoginVC()
+        let navigation = UINavigationController(rootViewController: rootViewController)
+        navigation.isNavigationBarHidden = true
+        navigation.modalTransitionStyle = .crossDissolve
+        navigation.modalPresentationStyle = .fullScreen
+        self.present(navigation, animated: true)
     }
     
     private func pushSocialLoginVC() {
