@@ -154,19 +154,24 @@ extension MainDetailVC {
         view.addSubviews(mainTableView,bottomView)
         let bottomSafeArea = safeAreaBottomInset()
         
+        let reviewWriteButtonWidth = UIScreen.main.bounds.width * (335 / 375)
+        let reviewWriteButtonHeight = reviewWriteButtonWidth * (44/335)
+
+        
         if UIDevice.current.hasNotch {
             reviewWriteCTAButton.snp.makeConstraints { make in
                 make.top.equalToSuperview().offset(8)
-                make.leading.equalToSuperview().offset(20)
-                make.trailing.equalToSuperview().offset(-20)
-                make.height.equalTo(40)
+                make.centerX.equalToSuperview()
+                make.width.equalTo(reviewWriteButtonWidth)
+                make.height.equalTo(reviewWriteButtonHeight)
             }
         } else {
             reviewWriteCTAButton.snp.makeConstraints { make in
                 make.bottom.equalToSuperview().offset(-21)
-                make.leading.equalToSuperview().offset(20)
-                make.trailing.equalToSuperview().offset(-20)
-                make.height.equalTo(40)
+                make.centerX.equalToSuperview()
+                make.width.equalTo(reviewWriteButtonWidth)
+                make.height.equalTo(reviewWriteButtonHeight)
+
             }
         }
         

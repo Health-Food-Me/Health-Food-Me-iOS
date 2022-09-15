@@ -9,6 +9,7 @@ import UIKit
 
 import SnapKit
 import MessageUI
+import KakaoSDKUser
 
 enum HamburgerType {
     case editName
@@ -431,17 +432,46 @@ extension HamburgerBarVC {
             self.makeAlert(alertType: .logoutAlert,
                       title: I18N.HelfmeAlert.logout,
                       subtitle: I18N.HelfmeAlert.logoutContent) {
-                let loginVC = ModuleFactory.resolve().makeLoginVC()
-                UserManager.shared.clearUserInform()
-                self.navigationController?.pushViewController(loginVC, animated: true)
+                if UserManager.shared.isAppleLoginned {
+                    
+                } else {
+                    self.logoutWithKakao()
+                }
             }
         }
         
         [needLoginButton, needLoginImageButton].forEach {
             $0.press {
-                self.presentSocialLoginAlert()
+                self.presentSocialLoginVC()
             }
         }
+    }
+    
+    private func logoutWithKakao() {
+        UserApi.shared.logout {(error) in
+            if let error = error {
+                print(error)
+            }
+            else {
+                print("카카오 로그아웃 완료")
+                UserManager.shared.clearUserInform()
+                self.pushSocialLoginVC()
+            }
+        }
+    }
+    
+    private func presentSocialLoginVC() {
+        let rootViewController = ModuleFactory.resolve().makeLoginVC()
+        let navigation = UINavigationController(rootViewController: rootViewController)
+        navigation.isNavigationBarHidden = true
+        navigation.modalTransitionStyle = .crossDissolve
+        navigation.modalPresentationStyle = .fullScreen
+        self.present(navigation, animated: true)
+    }
+    
+    private func pushSocialLoginVC() {
+        let loginVC = ModuleFactory.resolve().makeLoginVC()
+        self.navigationController?.pushViewController(loginVC, animated: true)
     }
     
     private func presentSocialLoginAlert() {
