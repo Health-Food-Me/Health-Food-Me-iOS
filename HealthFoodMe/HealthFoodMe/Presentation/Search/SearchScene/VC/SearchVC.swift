@@ -129,7 +129,7 @@ final class SearchVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         setRecentTextField()
-        searchTextField.becomeFirstResponder()
+        //searchTextField.becomeFirstResponder()
     }
     
     override func viewDidLoad() {
