@@ -52,7 +52,7 @@ extension BaseRouter {
             
         case .reissuance:
             request.setValue(HeaderContent.json.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
-            request.setValue(UserManager.shared.getAccessToken, forHTTPHeaderField: HTTPHeaderField.accesstokenForReissuance.rawValue)
+            request.setValue(UserManager.shared.getAccessToken, forHTTPHeaderField: HTTPHeaderField.accesstoken.rawValue)
             request.setValue(UserManager.shared.getRefreshToken, forHTTPHeaderField: HTTPHeaderField.refreshtoken.rawValue)
         }
         
