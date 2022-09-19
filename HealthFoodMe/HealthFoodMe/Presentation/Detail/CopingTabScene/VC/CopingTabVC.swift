@@ -20,6 +20,9 @@ class CopingTabVC: UIViewController {
     // MARK: - Properties
     private var copingTVC = CopingTVC()
     private let disposeBag = DisposeBag()
+//    private var categoryTabData: [CopingTabEntity] = []
+    private var category: String = ""
+    private var contentData: Content = Content(recommend: [], tip: [])
     var topScrollAnimationNotFinished: Bool = true
     weak var delegate: ScrollDeliveryDelegate?
     var panDelegate: CopingGestureDelegate?
@@ -28,7 +31,7 @@ class CopingTabVC: UIViewController {
     
     // MARK: - UI Components
     
-    private lazy var copingTableView: UITableView = {
+    private lazy var copingTabTableView: UITableView = {
         let tv = UITableView(frame: .zero, style: .plain)
         tv.separatorStyle = .none
         tv.backgroundColor = .white
@@ -42,12 +45,11 @@ class CopingTabVC: UIViewController {
         return tv
     }()
     
-//    CopingTVC().restaurantId = self.restaurantId
-    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchData()
         setLayout()
         setDelegate()
         registerCell()
@@ -60,9 +62,9 @@ class CopingTabVC: UIViewController {
 extension CopingTabVC {
     
     private func setLayout() {
-        view.addSubviews(copingTableView)
+        view.addSubviews(copingTabTableView)
         
-        copingTableView.snp.makeConstraints { make in
+        copingTabTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
@@ -71,13 +73,18 @@ extension CopingTabVC {
     }
     
     private func registerCell() {
-        CategoryTVC.register(target: copingTableView)
-        CopingTVC.register(target: copingTableView)
+        CategoryTVC.register(target: copingTabTableView)
+        CopingTVC.register(target: copingTabTableView)
     }
     
     private func setDelegate() {
-        copingTableView.delegate = self
-        copingTableView.dataSource = self
+        copingTabTableView.delegate = self
+        copingTabTableView.dataSource = self
+    }
+    
+    private func fetchData() {
+        getMenuPrescription()
+        copingTabTableView.reloadData()
     }
     
     private func addPanGesture() {
@@ -108,11 +115,34 @@ extension CopingTabVC {
     }
 }
 
+// MARK: - Network
+
+extension CopingTabVC {
+    func getMenuPrescription() {
+        RestaurantService.shared.getMenuPrescription(restaurantId: restaurantId) { networkResult in
+            print(networkResult)
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? CopingTabEntity {
+                    print("🍎카테고리 \(data.category)")
+                    print("🍎외식대처법 내용 \(data.content)")
+                    self.category = data.category
+                    self.contentData = data.content
+                }
+                self.copingTabTableView.reloadData()
+            default:
+                break;
+            }
+        }
+    }
+}
+
 extension CopingTabVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 50 //카테고리 개수가 한개면 높이 0
+            return 50
+            
         } else {
             return 1000
         }
@@ -137,9 +167,12 @@ extension CopingTabVC: UITableViewDataSource {
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CopingTVC.className, for: indexPath) as? CopingTVC else { return UITableViewCell() }
             
-//            copingTVC.restaurantId = self.restaurantId
-//            print(copingTVC.restaurantId + "✈️")
+            print("🍎두 번째self.contentData\(self.contentData)")
+            cell.setData(category: category, data: contentData)
+        
             return cell
         }
     }
 }
+
+

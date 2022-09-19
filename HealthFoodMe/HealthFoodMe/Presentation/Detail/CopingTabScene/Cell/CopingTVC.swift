@@ -70,12 +70,12 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
     // MARK: - Life Cycle Part
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        fetchData()
+//        fetchData()
         checkEmptyView()
         setLayout()
         setDelegate()
         registerCell()
-        print(restaurantId + "✈️✈️")
+        print("🍎외식대처법 내용은 과연? \(recommendList)")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -132,37 +132,15 @@ extension CopingTVC {
         copingTableView.dataSource = self
     }
     
-    private func fetchData() {
-        getMenuPrescription()
-        copingTableView.reloadData()
+    func setData(category: String, data: Content){
+        self.categoryLabel.text = category
+        self.recommendList = data.recommend
+        self.eatingList = data.tip
     }
     
     private func updateTableViewLayout() {
         copingTableView.snp.updateConstraints { make in
             make.height.equalTo(headerHeight * 2 + rowHeight * (recommendList.count + eatingList.count) + bottomMargin)
-        }
-    }
-}
-
-// MARK: - Network
-
-extension CopingTVC {
-    func getMenuPrescription() {
-        RestaurantService.shared.getMenuPrescription(restaurantId: restaurantId) { networkResult in
-            print(networkResult)
-            switch networkResult {
-            case .success(let data):
-                if let data = data as? CopingTabEntity {
-                    print(data, "🍎성공")
-                    print(self.recommendList)
-                    self.categoryLabel.text = " # \(data.category)"
-                    self.recommendList = data.content.recommend
-                    self.eatingList = data.content.tip
-                }
-                self.copingTableView.reloadData()
-            default:
-                break;
-            }
         }
     }
 }
