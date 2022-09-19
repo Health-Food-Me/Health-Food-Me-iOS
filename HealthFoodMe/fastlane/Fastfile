@@ -77,7 +77,7 @@ lane :release do
       method: "app-store",
       signingStyle: "manual"
     }
-    )
+  )
 
   # 8. 앱스토어 업로드 🎉
   deliver(
@@ -93,18 +93,6 @@ lane :release do
     )
 end
 
-# lane이 모두 완료된 뒤 호출됨
-after_all do |lane|
-  # 9. 배포 결과 슬랙 노티 🚨
-  slack_after_lane(
-    message: "",
-    payload: {
-      "Version" => lane_context[SharedValues::VERSION_NUMBER],
-      "Build number" => lane_context[SharedValues::BUILD_NUMBER],
-      "Date" => Time.new.to_s
-      }
-    )
-end
 
 # 에러 발생 시 호출 됨
 error do |lane, exception|
@@ -117,5 +105,23 @@ error do |lane, exception|
       "Error Info" => exception.message
       }
     )
+  end
 end
+
+# match 인증서 파일 생성 -> 관리자용
+
+platform :ios do
+  lane :matchByTeam do
+      match(git_branch: "master", type: "appstore", username: "ckrgkswnsgh@icloud.com")
+      match(git_branch: "master", type: "development", username: "ckrgkswnsgh@icloud.com")
+  end
+end
+
+# match 인증서 받아오기 -> 팀원용
+
+platform :ios do
+  lane :matchReadOnly do
+      match(git_branch: "master", type: "appstore", username: "ckrgkswnsgh@icloud.com", readonly: true)
+      match(git_branch: "master", type: "development", username: "ckrgkswnsgh@icloud.com", readonly: true)
+  end
 end
