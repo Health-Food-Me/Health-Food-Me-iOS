@@ -2523,10 +2523,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = HealthFoodMe/HealthFoodMe.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 202209071;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = FY8N9XTH66;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FY8N9XTH66;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HealthFoodMe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "헬푸미";
@@ -2550,6 +2552,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.healthFoodMe.release";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.healthFoodMe.release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2564,9 +2567,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = HealthFoodMe/HealthFoodMe.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 202209071;
 				DEVELOPMENT_TEAM = FY8N9XTH66;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FY8N9XTH66;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HealthFoodMe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "헬푸미";
@@ -2590,6 +2595,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.healthFoodMe.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.healthFoodMe.release";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.healthFoodMe.release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
