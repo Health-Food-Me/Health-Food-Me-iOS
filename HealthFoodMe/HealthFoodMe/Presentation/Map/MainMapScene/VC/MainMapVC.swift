@@ -694,6 +694,11 @@ extension MainMapVC {
         if canUseLocation {
             if let lng = locationManager?.currentLatLng().lng,
                let lat = locationManager?.currentLatLng().lat {
+                
+                if currentCategory.isEmpty {
+                    currentCategory = MainMapCategory.allCategoryString
+                }
+                
                 RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
                     switch networkResult {
                     case .success(let data):

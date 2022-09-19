@@ -70,6 +70,11 @@ extension BaseRouter {
             components?.queryItems = queryParams
             request.url = components?.url
             
+//            let percentEncodedQuery = (components?.percentEncodedQuery.map { $0 + "&" } ?? "") + self.query(query)
+//            components?.percentEncodedQuery = percentEncodedQuery
+//            request.url
+//            request.url = components?.url
+            
         case .requestBody(let body):
             request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
             
