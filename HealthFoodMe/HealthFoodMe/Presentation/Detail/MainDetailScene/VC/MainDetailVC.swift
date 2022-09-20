@@ -360,7 +360,6 @@ extension MainDetailVC: UITableViewDataSource {
             reviewTabVC.swipeDismissDelegate = self
             
             copingTabVC.restaurantId = self.restaurantId
-            reviewTabVC.restaurantName = self.restaurantName
             reviewTabVC.restaurantId = self.restaurantId
             
             self.addChild(menuTabVC)

@@ -9,7 +9,7 @@ import Alamofire
 import UIKit
 
 enum ReviewRouter {
-    case requestReviewWrite(userName: String, userId: String, restaurantName: String, restaurantId: String, score: Double, taste: String, good: [String], content: String, image: [UIImage])
+    case requestReviewWrite(userId: String, restaurantId: String, score: Double, taste: String, good: [String], content: String, image: [UIImage])
     case getReviewList(restaurantId: String)
     case requestUserReview(userId: String)
     case getBlogReviewList(restaurantName: String)
@@ -38,7 +38,7 @@ extension ReviewRouter: BaseRouter {
             return "review/restaurant/\(restaurantId)/"
         case .requestUserReview(let userId):
             return "/review/user/\(userId)"
-        case .requestReviewWrite(_,let userId,_,let restaurantId,_,_,_,_,_):
+        case .requestReviewWrite(let userId,let restaurantId,_,_,_,_,_):
             return "/review/\(userId)/\(restaurantId)"
         case .getBlogReviewList(let restaurantName):
             return "review/restaurant/\(restaurantName)/blog"
@@ -84,7 +84,7 @@ extension ReviewRouter: BaseRouter {
     
     var multipart: MultipartFormData {
         switch self {
-        case .requestReviewWrite(_,_,_,_,let score, let taste, let good, let content, let image):
+        case .requestReviewWrite(_,_,let score, let taste, let good, let content, let image):
             let multiPart = MultipartFormData()
             
             multiPart.append(Data(String(score).utf8), withName: "score")
