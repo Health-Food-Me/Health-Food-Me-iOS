@@ -26,6 +26,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
     }
     private var editPhotoModel: PhotoDataModel = PhotoDataModel()
     
+    var userName = ""
     var userId = UserManager.shared.getUserId ?? ""
     var restaurantName : String = ""
     var restaurantID = ""
@@ -887,7 +888,7 @@ extension ReviewWriteVC {
         guard let content = reviewTextView.text else { return }
         
         let image = photoModel.userSelectedImages
-        ReviewService.shared.requestReviewWrite(userId: userId, restaurantId: restaurantID, score: starScore, taste: taste, good: good, content: content, image: image) { networkResult in
+        ReviewService.shared.requestReviewWrite(userName: userName, userId: userId, restaurantName: restaurantName, restaurantId: restaurantID, score: starScore, taste: taste, good: good, content: content, image: image) { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? ReviewWriteEntity {

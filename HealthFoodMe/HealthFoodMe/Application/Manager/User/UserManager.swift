@@ -23,6 +23,9 @@ final class UserManager {
     @UserDefaultWrapper<String>(key: "refreshToken") private(set) var refreshToken
     
     // 헬푸미 userId
+    @UserDefaultWrapper<String>(key: "userName") private(set) var userName
+    
+    // 헬푸미 userId
     @UserDefaultWrapper<String>(key: "userId") private(set) var userId
     
     // 둘러보기 플로우 판단
@@ -71,6 +74,7 @@ extension UserManager {
     func setCurrentUserWithId(_ currentUser: User) {
         self.currentUser = currentUser
         self.userId = currentUser.id
+        self.userName = currentUser.name
     }
     
     /// 현재 로그인상태인지에 대해 Bool타입으로 저장합니다.
