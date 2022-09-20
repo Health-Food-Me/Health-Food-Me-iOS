@@ -336,6 +336,7 @@ extension MainMapVC {
                 }
             }
         } else {
+            resetCurrentCategory()
             fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
         }
     }
@@ -572,6 +573,11 @@ extension MainMapVC {
         if !hasCurrent {
             currentCategory = ""
         }
+    }
+    
+    private func resetCurrentCategory() {
+        selectedCategories = Array(repeating: false, count: 10)
+        currentCategory = ""
     }
     
     private func matchRestaurantId(position: NMGLatLng) -> String {
