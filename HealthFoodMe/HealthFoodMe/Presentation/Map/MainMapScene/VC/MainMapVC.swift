@@ -322,9 +322,8 @@ extension MainMapVC {
                 UserService.shared.getScrapList(userId: userID) { result in
                     switch(result) {
                     case .success(let entity):
-                        
                         if let scrapList = entity as? [ScrapListEntity] {
-                            if scrapList.isEmpty { self.showUpperToast() }
+                            self.showUpperToast(scrapCount: scrapList.count)
                             self.currentScrapList = scrapList
                             if !self.currentCategory.isEmpty {
                                 self.fetchCategoryList(zoom: MapLiterals.ZoomScale.Maximum)
@@ -783,8 +782,10 @@ extension MainMapVC {
 }
 
 extension MainMapVC {
-    private func showUpperToast() {
-        makeVibrate()
+    private func showUpperToast(scrapCount: Int) {
+        scrapListEmptyToastView.title = (scrapCount == 0
+                                         ? I18N.Map.Main.scrapEmptyGuide
+                                         : "\(scrapCount)개의 스크랩 식당이 있습니다")
         scrapListEmptyToastView.snp.remakeConstraints { make in
             make.width.equalTo(300)
             make.height.equalTo(40)
