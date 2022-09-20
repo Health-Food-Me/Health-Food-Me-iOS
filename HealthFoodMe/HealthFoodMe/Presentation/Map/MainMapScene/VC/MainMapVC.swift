@@ -327,7 +327,7 @@ extension MainMapVC {
                             if scrapList.isEmpty { self.showUpperToast() }
                             self.currentScrapList = scrapList
                             if !self.currentCategory.isEmpty {
-                                self.fetchCategoryList(zoom: self.currentZoom)
+                                self.fetchCategoryList(zoom: MapLiterals.ZoomScale.Maximum)
                             } else {
                                 self.mapView.scrapButtonSelected.accept(scrapList)
                             }
@@ -337,7 +337,7 @@ extension MainMapVC {
                 }
             }
         } else {
-            fetchRestaurantList(zoom: self.currentZoom)
+            fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
         }
     }
     
@@ -470,7 +470,7 @@ extension MainMapVC {
                 guard let self = self else { return }
                 let accumulate = MapAccumulationCalculator.zoomLevelToDistance(level: zoomLevel)
                 self.currentZoom = Double(accumulate)
-                self.fetchRestaurantList(zoom: Double(accumulate))
+                self.fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
             }).disposed(by: self.disposeBag)
         
         mapView.setSelectPoint
