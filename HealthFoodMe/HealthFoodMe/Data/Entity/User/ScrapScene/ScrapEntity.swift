@@ -9,4 +9,6 @@ import Foundation
 
 struct ScrapEntity: Codable {
     let isScrap: Bool
+    let userId: String
+    let restaurantId: String
 }
