@@ -34,9 +34,9 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     private var currentCategory: String = "" {
         didSet {
             if currentCategory != "" {
-                self.fetchCategoryList(zoom: self.currentZoom)
+                self.fetchCategoryList(zoom: MapLiterals.ZoomScale.Maximum)
             } else {
-                self.fetchRestaurantList(zoom: self.currentZoom)
+                self.fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
             }
         }
     }
@@ -132,7 +132,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
                 alert.modalTransitionStyle = .crossDissolve
                 alert.loginSuccessClosure = { loginSuccess in
                     if loginSuccess {
-                        self.fetchRestaurantList(zoom: 2000)
+                        self.fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
                     }
                 }
                 self.present(alert, animated: true)
@@ -427,7 +427,7 @@ extension MainMapVC {
             initialMapOpened = true
             let NMGPosition = self.locationManager?.currentLatLng()
             if NMGPosition != nil {
-                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
+                self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.gangnamStation, Int(MapLiterals.ZoomScale.KM1_5))
             }
             isInitialPoint = true
         }
@@ -694,7 +694,8 @@ extension MainMapVC {
         if canUseLocation {
             if let lng = locationManager?.currentLatLng().lng,
                let lat = locationManager?.currentLatLng().lat {
-                RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
+                
+                RestaurantService.shared.fetchRestaurantList(longitude: lng, latitude: lat, zoom: zoom, category: currentCategory) { networkResult in
                     switch networkResult {
                     case .success(let data):
                         if let data = data as? [MainMapEntity] {
@@ -724,7 +725,7 @@ extension MainMapVC {
         if canUseLocation {
             if let lng = locationManager?.currentLatLng().lng,
                let lat = locationManager?.currentLatLng().lat {
-                RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
+                RestaurantService.shared.fetchRestaurantList(longitude: lng, latitude: lat, zoom: zoom, category: currentCategory) { networkResult in
                     switch networkResult {
                     case .success(let data):
                         if let data = data as? [MainMapEntity] {
@@ -840,14 +841,14 @@ extension MainMapVC: CLLocationManagerDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.mapView.naverMapView.mapView.positionMode = .normal
                 self.canUseLocation = true
-                self.fetchRestaurantList(zoom: 2000)
+                self.fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
             }
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.mapView.naverMapView.mapView.positionMode = .normal
                 self.canUseLocation = true
-                self.fetchRestaurantList(zoom: 2000)
+                self.fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
             }
         @unknown default:
             break

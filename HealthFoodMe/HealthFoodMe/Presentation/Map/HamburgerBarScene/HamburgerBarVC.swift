@@ -433,7 +433,8 @@ extension HamburgerBarVC {
                       title: I18N.HelfmeAlert.logout,
                       subtitle: I18N.HelfmeAlert.logoutContent) {
                 if UserManager.shared.isAppleLoginned {
-                    
+                    UserManager.shared.clearUserInform()
+                    self.pushSocialLoginVC()
                 } else {
                     self.logoutWithKakao()
                 }

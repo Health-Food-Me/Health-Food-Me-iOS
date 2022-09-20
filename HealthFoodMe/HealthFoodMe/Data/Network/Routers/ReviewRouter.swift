@@ -43,7 +43,7 @@ extension ReviewRouter: BaseRouter {
         case .getBlogReviewList(let restaurantName):
             return "review/restaurant/\(restaurantName)/blog"
         case .requestReviewEnabled(let userId, let restaurantId):
-            return "/review/check/\(userId)/\(restaurantId)"
+            return "/user/check/\(userId)/\(restaurantId)"
         case .requestReviewDelete(let reviewId):
             return "/review/\(reviewId)"
         case .requestReviewEdit(let reviewId,_,_,_,_,_,_):
