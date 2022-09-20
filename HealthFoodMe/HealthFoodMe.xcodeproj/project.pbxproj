@@ -94,6 +94,8 @@
 		A938BB8E287D221200B8DE07 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A938BB8D287D221200B8DE07 /* Search.storyboard */; };
 		A938BB90287D222800B8DE07 /* MainDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A938BB8F287D222800B8DE07 /* MainDetail.storyboard */; };
 		A9525F712873E1750065EB1D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9525F702873E1750065EB1D /* SearchVC.swift */; };
+		A96B711728D98F6A001B2335 /* SearchRecentDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B711628D98F6A001B2335 /* SearchRecentDataModel.swift */; };
+		A96B711928D99EA1001B2335 /* SearchCategoryRequestEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B711828D99EA1001B2335 /* SearchCategoryRequestEntity.swift */; };
 		A9E593C42874104200B0F8B5 /* SearchRecentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E593C32874104200B0F8B5 /* SearchRecentTVC.swift */; };
 		A9E593C72874266200B0F8B5 /* SearchRecent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E593C62874266200B0F8B5 /* SearchRecent.swift */; };
 		A9E593CF2876C26900B0F8B5 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9E593CE2876C26900B0F8B5 /* Color.xcassets */; };
@@ -338,6 +340,8 @@
 		A938BB8D287D221200B8DE07 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		A938BB8F287D222800B8DE07 /* MainDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainDetail.storyboard; sourceTree = "<group>"; };
 		A9525F702873E1750065EB1D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		A96B711628D98F6A001B2335 /* SearchRecentDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecentDataModel.swift; sourceTree = "<group>"; };
+		A96B711828D99EA1001B2335 /* SearchCategoryRequestEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCategoryRequestEntity.swift; sourceTree = "<group>"; };
 		A9E593C32874104200B0F8B5 /* SearchRecentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecentTVC.swift; sourceTree = "<group>"; };
 		A9E593C62874266200B0F8B5 /* SearchRecent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecent.swift; sourceTree = "<group>"; };
 		A9E593CE2876C26900B0F8B5 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
@@ -872,6 +876,7 @@
 			children = (
 				A90CFDCE2885B4DC0018AB94 /* SearchDataModel.swift */,
 				A90CFDD02885B4E70018AB94 /* SearchResultDataModel.swift */,
+				A96B711628D98F6A001B2335 /* SearchRecentDataModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -882,6 +887,7 @@
 				A90ED6222886644400FCE149 /* SearchEntity.swift */,
 				A90ED6232886644400FCE149 /* SearchRequestEntity.swift */,
 				A90ED6242886644400FCE149 /* SearchResultEntity.swift */,
+				A96B711828D99EA1001B2335 /* SearchCategoryRequestEntity.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -2237,6 +2243,7 @@
 				EB6A451B2875365B00749582 /* TabIndicator.swift in Sources */,
 				A93252BA287F3E73001EDF50 /* ScrapEmptyView.swift in Sources */,
 				A9325274287D3065001EDF50 /* SearchResultTVC.swift in Sources */,
+				A96B711728D98F6A001B2335 /* SearchRecentDataModel.swift in Sources */,
 				EB6A44D528737CC400749582 /* MainDetailViewModel.swift in Sources */,
 				EBA8C14D2882A73C009DBA49 /* UserRouter.swift in Sources */,
 				3B18D8AC287AB7CD009AF9E7 /* HamburgerBarVC.swift in Sources */,
@@ -2355,6 +2362,7 @@
 				A93252AD287F09D0001EDF50 /* SearchEmptyView.swift in Sources */,
 				695758E02881228700E36789 /* CopingHeaderView.swift in Sources */,
 				3B9332A22888643200543683 /* MyReviewEmptyViewCVC.swift in Sources */,
+				A96B711928D99EA1001B2335 /* SearchCategoryRequestEntity.swift in Sources */,
 				695758EC28830E3000E36789 /* SplashVC.swift in Sources */,
 				A90ED6322886652800FCE149 /* SearchRequestEntity.swift in Sources */,
 				EBF66ACC287227F500DE0ED1 /* BaseNotiList.swift in Sources */,

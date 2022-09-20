@@ -31,7 +31,7 @@ final class SearchVC: UIViewController {
         }
     }
     var searchContent: String = ""
-    var searchRecentList: [String] = []
+    var searchRecentList: [SearchRecentDataModel] = []
     var searchList: [SearchDataModel] = []
     var searchResultList: [SearchResultDataModel] = []
     private var searchEmptyView = SearchEmptyView()
@@ -210,7 +210,7 @@ extension SearchVC {
     private func setData() {
         let savedSearchRecent = realm?.objects(SearchRecent.self)
         savedSearchRecent?.forEach { object in
-            searchRecentList.insert(object.title, at: 0)
+            searchRecentList.insert(SearchRecentDataModel(title: object.title, isCategory: object.isCategory), at: 0)
         }
     }
     
@@ -327,17 +327,17 @@ extension SearchVC {
         SearchResultTVC.register(target: searchTableView)
     }
     
-    func addSearchRecent(title: String) {
+    func addSearchRecent(title: String, isCategory: Bool) {
         try? realm?.write {
             if let savedSearchRecent = realm?.objects(SearchRecent.self).filter("title == '\(title)'") {
                 realm?.delete(savedSearchRecent)
-                searchRecentList = searchRecentList.filter { $0 != title }
+                searchRecentList = searchRecentList.filter { $0.title != title }
             }
             let searchRecent = SearchRecent()
             searchRecent.title = title
             realm?.add(searchRecent)
         }
-        searchRecentList.insert(title, at: 0)
+        searchRecentList.insert(SearchRecentDataModel(title: title, isCategory: isCategory), at: 0)
     }
     
     private func isSearchRecent() {
@@ -365,7 +365,7 @@ extension SearchVC {
             searchTextField.resignFirstResponder()
             if let text = searchTextField.text {
                 if !searchList.isEmpty {
-                    addSearchRecent(title: text)
+                    addSearchRecent(title: text, isCategory: false)
                 }
             }
             searchTableView.tableHeaderView = searchHeaderView
@@ -426,7 +426,7 @@ extension SearchVC: UITableViewDataSource {
         switch searchType {
         case .recent:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchRecentTVC.className, for: indexPath) as? SearchRecentTVC else { return UITableViewCell() }
-            cell.setData(data: searchRecentList[indexPath.row])
+            cell.setData(data: searchRecentList[indexPath.row].title)
             cell.index = indexPath.row
             cell.delegate = self
             return cell
@@ -459,9 +459,9 @@ extension SearchVC: UITableViewDataSource {
         switch searchType {
         case .recent:
             HelfmeLoadingView.shared.show(self.view)
-            searchTextField.text = searchRecentList[indexPath.row]
-            fetchSearchResultData(keyword: searchRecentList[indexPath.row], fromRecent: true)
-            addSearchRecent(title: searchRecentList[indexPath.row])
+            searchTextField.text = searchRecentList[indexPath.row].title
+            fetchSearchResultData(keyword: searchRecentList[indexPath.row].title, fromRecent: true)
+            addSearchRecent(title: searchRecentList[indexPath.row].title, isCategory: searchRecentList[indexPath.row].isCategory)
         case .search:
             searchTextField.text = searchList[indexPath.row].title
             let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
@@ -469,9 +469,10 @@ extension SearchVC: UITableViewDataSource {
             searchResultVC.fromSearchType = .searchRecent
             searchResultVC.fromSearchCellInitial = searchList[indexPath.row].id
             searchResultVC.searchContent = searchList[indexPath.row].title
+            searchResultVC.isCategory = searchList[indexPath.row].isCategory
             searchResultVC.searchResultList = searchResultList
             navigationController?.pushViewController(searchResultVC, animated: false)
-            addSearchRecent(title: searchList[indexPath.row].title)
+            addSearchRecent(title: searchList[indexPath.row].title, isCategory: searchList[indexPath.row].isCategory)
         case .searchResult:
             searchTextField.text = searchResultList[indexPath.row].storeName
             let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
@@ -479,9 +480,10 @@ extension SearchVC: UITableViewDataSource {
             searchResultVC.fromSearchType = .searchCell
             searchResultVC.fromSearchCellInitial = searchResultList[indexPath.row].id
             searchResultVC.searchContent = searchResultList[indexPath.row].storeName
+            searchResultVC.isCategory = searchRecentList[indexPath.row].isCategory
             searchResultVC.searchResultList = searchResultList
             navigationController?.pushViewController(searchResultVC, animated: false)
-            addSearchRecent(title: searchResultList[indexPath.row].storeName)
+            addSearchRecent(title: searchResultList[indexPath.row].storeName, isCategory: searchRecentList[indexPath.row].isCategory)
         }
     }
 }
