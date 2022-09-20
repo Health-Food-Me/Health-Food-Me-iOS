@@ -234,7 +234,9 @@ extension NaverMapContainerView {
                 }
                 if let caption = point.restaurantName {
                     marker.captionText = caption
-                    marker.captionTextSize = 14
+                    marker.captionHaloColor = .helfmeWhite
+                    marker.isForceShowCaption = false
+                    marker.captionTextSize = 12
                     marker.captionMinZoom = 12
                     marker.captionColor = .helfmeBlack
                 }
@@ -260,6 +262,8 @@ extension NaverMapContainerView {
         }).first else { return }
         if let seletedMark = self.selectedMarker,
            let type = selectedMarkerType?.type {
+            seletedMark.isForceShowCaption = false
+            seletedMark.zIndex = 0
             switch type {
                 case .healthFood:
                     setHealthMarkState(mark: seletedMark, selectState: false)
@@ -274,6 +278,8 @@ extension NaverMapContainerView {
                 setNormalMarkState(mark: marker, selectState: true)
         }
         self.selectedMarker = marker
+        self.selectedMarker?.zIndex = 100
+        self.selectedMarker?.isForceShowCaption = true
         self.selectedMarkerType = selectedPoint
     }
     
