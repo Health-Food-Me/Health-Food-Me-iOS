@@ -410,12 +410,15 @@ extension ReviewWriteVC {
                 case I18N.Detail.Review.tagNoBurden:
                     tagNoBurden.isSelected = true
                     setButtonUI(button: tagNoBurden)
+                    feelingArray[0] = true
                 case I18N.Detail.Review.tagEasy:
                     tagEasy.isSelected = true
                     setButtonUI(button: tagEasy)
+                    feelingArray[1] = true
                 case I18N.Detail.Review.tagStrong:
                     tagStrong.isSelected = true
                     setButtonUI(button: tagStrong)
+                    feelingArray[2] = true
                 default:
                     return
                 }
@@ -648,7 +651,7 @@ extension ReviewWriteVC {
             sender.layer.borderColor = UIColor.helfmeGray2.cgColor
             sender.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
         }
-        print(feelingArray)
+        print("➡️ \(feelingArray)")
     }
     
     private func checkMaxLength(_ textView: UITextView) {
