@@ -8,13 +8,15 @@
 import Foundation
 
 struct RestaurantSummaryEntity: Codable {
-    let id, name, logo, category: String
-    let hashtag: [String]
+    let id, name, logo: String
+    let category: [String]
     let score: Double
     let isScrap: Bool
+    let longitude: Double
+    let latitude: Double
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case name, logo, category, hashtag, score, isScrap
+        case name, logo, category, score, isScrap, longitude, latitude
     }
 }
