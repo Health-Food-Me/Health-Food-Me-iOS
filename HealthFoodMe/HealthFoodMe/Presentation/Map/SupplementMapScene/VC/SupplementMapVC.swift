@@ -155,7 +155,7 @@ extension SupplementMapVC {
             if let id = initialId {
                 self.setInitialPointForSearchVC(id: id, needShowSummary: needShowSummary)
             } else {
-                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 200)
+                self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.gangnamStation, 200)
             }
         case .scrap:
             if let initial = self.initialPoint {
@@ -168,7 +168,7 @@ extension SupplementMapVC {
                     }
                 }
             } else {
-                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 200)
+                self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.gangnamStation, 200)
             }
         }
     }
@@ -353,8 +353,8 @@ extension SupplementMapVC {
     }
     
     private func setCurrentPositionToGangnam() {
-        self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 200)
-        self.currentLocation = Location(latitude: LocationLiterals.gangnamStation.lat, longitude: LocationLiterals.gangnamStation.lng)
+        self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.gangnamStation, 200)
+        self.currentLocation = Location(latitude: MapLiterals.Location.gangnamStation.lat, longitude: MapLiterals.Location.gangnamStation.lng)
     }
     
     private func bindSetSelectPointForSearchVC(dataModel: MapPointDataModel) {
@@ -479,7 +479,7 @@ extension SupplementMapVC {
     }
     
     func setSelectPointForSummary() {
-        self.selectPointByID(zoom: 2000) {
+        self.selectPointByID(zoom: MapLiterals.ZoomScale.Maximum) {
             if let position = self.currentSelectedPosition {
                 self.mapView.setSelectPoint.accept(position)
             }
@@ -507,7 +507,7 @@ extension SupplementMapVC {
     }
     
     private func setInitialMarker() {
-        fetchRestaurantList(zoom: 2000) {
+        fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum) {
             self.setInitialMapPoint(needShowSummary: false)
         }
     }
@@ -563,7 +563,7 @@ extension SupplementMapVC {
     private func fetchRestaurantList(zoom: Double, completion: @escaping (() -> Void)) {
         if let lng = locationManager?.currentLatLng().lng,
            let lat = locationManager?.currentLatLng().lat {
-            RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: "") { networkResult in
+            RestaurantService.shared.fetchRestaurantList(longitude: lng, latitude: lat, zoom: zoom, category: "") { networkResult in
                 switch networkResult {
                 case .success(let data):
                     if let data = data as? [MainMapEntity] {
@@ -609,7 +609,7 @@ extension SupplementMapVC {
     private func selectPointByID(zoom: Double, completion: @escaping (() -> Void)) {
         if let lng = locationManager?.currentLatLng().lng,
            let lat = locationManager?.currentLatLng().lat {
-            RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: "") { networkResult in
+            RestaurantService.shared.fetchRestaurantList(longitude: lng, latitude: lat, zoom: zoom, category: "") { networkResult in
                 switch networkResult {
                 case .success(let data):
                     if let data = data as? [MainMapEntity], let targetId = self.initialId {

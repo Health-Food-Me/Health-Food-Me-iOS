@@ -122,6 +122,7 @@
 		EB6A4528287664D600749582 /* ExpandableInfoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A4527287664D600749582 /* ExpandableInfoTVC.swift */; };
 		EB793F2728874989000F5232 /* RestaurantSummaryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB793F2628874989000F5232 /* RestaurantSummaryEntity.swift */; };
 		EB793F2928882999000F5232 /* ReviewCheckEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB793F2828882998000F5232 /* ReviewCheckEntity.swift */; };
+		EB9615D628D8A4A900B81158 /* HelfMeEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9615D528D8A4A900B81158 /* HelfMeEncoder.swift */; };
 		EBA8C142288205C5009DBA49 /* SupplementMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8C141288205C5009DBA49 /* SupplementMapVC.swift */; };
 		EBA8C14428820608009DBA49 /* SupplementMap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBA8C14328820608009DBA49 /* SupplementMap.storyboard */; };
 		EBA8C14828828E64009DBA49 /* RestaurantService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8C14728828E64009DBA49 /* RestaurantService.swift */; };
@@ -355,7 +356,7 @@
 		EB6A44D028737CC400749582 /* MainDetailEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailEntity.swift; sourceTree = "<group>"; };
 		EB6A44E82873BED500749582 /* MainMapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapUseCase.swift; sourceTree = "<group>"; };
 		EB6A44E92873BED500749582 /* MainMapRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapRepository.swift; sourceTree = "<group>"; };
-		EB6A44EA2873BED500749582 /* MainMapModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = MainMapModel.swift; sourceTree = "<group>"; };
+		EB6A44EA2873BED500749582 /* MainMapModel.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = MainMapModel.swift; sourceTree = "<group>"; };
 		EB6A44EB2873BED500749582 /* MainMapVC.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = MainMapVC.swift; sourceTree = "<group>"; tabWidth = 4; };
 		EB6A44EC2873BED500749582 /* MainMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewModel.swift; sourceTree = "<group>"; };
 		EB6A44ED2873BED500749582 /* MainMapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapEntity.swift; sourceTree = "<group>"; };
@@ -369,6 +370,7 @@
 		EB6A4527287664D600749582 /* ExpandableInfoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableInfoTVC.swift; sourceTree = "<group>"; };
 		EB793F2628874989000F5232 /* RestaurantSummaryEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSummaryEntity.swift; sourceTree = "<group>"; };
 		EB793F2828882998000F5232 /* ReviewCheckEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCheckEntity.swift; sourceTree = "<group>"; };
+		EB9615D528D8A4A900B81158 /* HelfMeEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelfMeEncoder.swift; sourceTree = "<group>"; };
 		EBA8C141288205C5009DBA49 /* SupplementMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementMapVC.swift; sourceTree = "<group>"; };
 		EBA8C14328820608009DBA49 /* SupplementMap.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SupplementMap.storyboard; sourceTree = "<group>"; };
 		EBA8C14728828E64009DBA49 /* RestaurantService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantService.swift; sourceTree = "<group>"; };
@@ -1601,6 +1603,7 @@
 				EBF66A86287227F500DE0ED1 /* EventLogger.swift */,
 				EBF66A87287227F500DE0ED1 /* BaseService.swift */,
 				EBF66A88287227F500DE0ED1 /* BaseRouter.swift */,
+				EB9615D528D8A4A900B81158 /* HelfMeEncoder.swift */,
 				EBF66A89287227F500DE0ED1 /* NetworkResult.swift */,
 				EBF66A8A287227F500DE0ED1 /* HeaderType.swift */,
 			);
@@ -2233,6 +2236,7 @@
 				EBD19262287DBC1800EA053E /* MapDetailSummaryView.swift in Sources */,
 				EBF66B0A2872B21F00DE0ED1 /* StringLiterals.swift in Sources */,
 				EB6A45172874276B00749582 /* DetailTabTitleHeader.swift in Sources */,
+				EB9615D628D8A4A900B81158 /* HelfMeEncoder.swift in Sources */,
 				FD39FACE2880C30100A01CDA /* NicknameChangeUseCase.swift in Sources */,
 				EB6A451B2875365B00749582 /* TabIndicator.swift in Sources */,
 				A93252BA287F3E73001EDF50 /* ScrapEmptyView.swift in Sources */,

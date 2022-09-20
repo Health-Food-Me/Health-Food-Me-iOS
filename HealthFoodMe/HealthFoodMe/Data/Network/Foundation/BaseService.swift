@@ -50,8 +50,6 @@ class BaseService {
             
             switch decodingMode {
             case .model:
-                print("여기여기")
-                dump(decodedData)
                 return .success(decodedData.data ?? "None-Data")
                 
             case .message:
@@ -82,7 +80,10 @@ class BaseService {
         }
     }
     
-    func requestObject<T: Codable>(_ target: BaseRouter, type: T.Type, decodingMode: DecodingMode, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func requestObject<T: Codable>(_ target: BaseRouter,
+                                   type: T.Type,
+                                   decodingMode: DecodingMode,
+                                   completion: @escaping (NetworkResult<Any>) -> Void) {
         AFManager.request(target).responseData { response in
             switch response.result {
             case .success:
