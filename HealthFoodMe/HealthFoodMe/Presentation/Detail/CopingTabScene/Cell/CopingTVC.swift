@@ -75,7 +75,6 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
         setLayout()
         setDelegate()
         registerCell()
-        print("🍎외식대처법 내용은 과연? \(recommendList)")
     }
     
     required init?(coder aDecoder: NSCoder) {

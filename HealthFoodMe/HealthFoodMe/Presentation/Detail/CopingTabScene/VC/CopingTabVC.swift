@@ -20,7 +20,6 @@ class CopingTabVC: UIViewController {
     // MARK: - Properties
     private var copingTVC = CopingTVC()
     private let disposeBag = DisposeBag()
-//    private var categoryTabData: [CopingTabEntity] = []
     private var category: String = ""
     private var contentData: Content = Content(recommend: [], tip: [])
     var topScrollAnimationNotFinished: Bool = true
@@ -124,8 +123,6 @@ extension CopingTabVC {
             switch networkResult {
             case .success(let data):
                 if let data = data as? CopingTabEntity {
-                    print("🍎카테고리 \(data.category)")
-                    print("🍎외식대처법 내용 \(data.content)")
                     self.category = data.category
                     self.contentData = data.content
                 }
@@ -166,10 +163,7 @@ extension CopingTabVC: UITableViewDataSource {
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CopingTVC.className, for: indexPath) as? CopingTVC else { return UITableViewCell() }
-            
-            print("🍎두 번째self.contentData\(self.contentData)")
             cell.setData(category: category, data: contentData)
-        
             return cell
         }
     }
