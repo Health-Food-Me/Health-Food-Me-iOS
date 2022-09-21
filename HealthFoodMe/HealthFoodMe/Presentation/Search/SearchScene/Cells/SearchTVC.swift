@@ -29,6 +29,13 @@ final class SearchTVC: UITableViewCell, UITableViewRegisterable {
         return lb
     }()
     
+    private var lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 239.0 / 255.0, green: 239.0 / 255.0, blue: 239.0 / 255.0, alpha: 1.0)
+        view.isHidden = true
+        return view
+    }()
+    
     // MARK: - View Life Cycle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -46,14 +53,47 @@ final class SearchTVC: UITableViewCell, UITableViewRegisterable {
 
 extension SearchTVC {
     func setData(data: SearchDataModel) {
-        if data.isDiet {
+        if data.isCategory {
+            setCategoryImage(name: data.title)
+            lineView.isHidden = false
+        }
+        else if data.isDiet {
             searchImageView.image = ImageLiterals.Search.dietIcon
+            lineView.isHidden = true
         } else {
             searchImageView.image = ImageLiterals.Search.normalIcon
+            lineView.isHidden = true
         }
         searchLabel.text = data.title
         searchLabel.textColor = .helfmeBlack
         searchLabel.partColorChange(targetString: searchContent, textColor: .mainRed)
+    }
+    
+    private func setCategoryImage(name: String) {
+        switch (name) {
+        case "샐러드":
+            searchImageView.image = ImageLiterals.Map.saladIcon
+        case "포케":
+            searchImageView.image = ImageLiterals.Map.pokeIcon
+        case "샌드위치":
+            searchImageView.image = ImageLiterals.Map.sandwichIcon
+        case "키토김밥":
+            searchImageView.image = ImageLiterals.Map.kimbapIcon
+        case "샤브샤브":
+            searchImageView.image = ImageLiterals.Map.shabushabuIcon
+        case "보쌈":
+            searchImageView.image = ImageLiterals.Map.bossamIcon
+        case "스테이크":
+            searchImageView.image = ImageLiterals.Map.steakIcon
+        case "덮밥":
+            searchImageView.image = ImageLiterals.Map.dupbapIcon
+        case "고깃집":
+            searchImageView.image = ImageLiterals.Map.meatIcon
+        case "도시락":
+            searchImageView.image = ImageLiterals.Map.dosirakIcon
+        default:
+            return
+        }
     }
     
     private func setUI() {
@@ -62,7 +102,7 @@ extension SearchTVC {
     }
     
     private func setLayout() {
-        contentView.addSubviews(searchImageView, searchLabel)
+        contentView.addSubviews(searchImageView, searchLabel, lineView)
         
         searchImageView.snp.makeConstraints {
             $0.leading.equalTo(safeAreaLayoutGuide).inset(20)
@@ -74,6 +114,12 @@ extension SearchTVC {
         searchLabel.snp.makeConstraints {
             $0.leading.equalTo(searchImageView.snp.trailing).offset(12)
             $0.centerY.equalTo(safeAreaLayoutGuide)
+        }
+        
+        lineView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1)
+            $0.bottom.equalToSuperview()
         }
     }
 }

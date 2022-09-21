@@ -126,7 +126,7 @@ struct I18N {
     }
     
     struct Search {
-        static let search = "식당 검색"
+        static let search = "식당, 음식 검색"
         static let searchRecent = "최근 검색어"
         static let searchMap = "지도 보기"
         static let searchList = "목록 보기"
