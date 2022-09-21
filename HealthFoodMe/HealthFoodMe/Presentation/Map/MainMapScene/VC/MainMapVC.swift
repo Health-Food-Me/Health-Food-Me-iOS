@@ -34,9 +34,9 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
     private var currentCategory: String = "" {
         didSet {
             if currentCategory != "" {
-                self.fetchCategoryList(zoom: self.currentZoom)
+                self.fetchCategoryList(zoom: MapLiterals.ZoomScale.Maximum)
             } else {
-                self.fetchRestaurantList(zoom: self.currentZoom)
+                self.fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
             }
         }
     }
@@ -132,7 +132,7 @@ class MainMapVC: UIViewController, NMFLocationManagerDelegate {
                 alert.modalTransitionStyle = .crossDissolve
                 alert.loginSuccessClosure = { loginSuccess in
                     if loginSuccess {
-                        self.fetchRestaurantList(zoom: 2000)
+                        self.fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
                     }
                 }
                 self.present(alert, animated: true)
@@ -322,12 +322,11 @@ extension MainMapVC {
                 UserService.shared.getScrapList(userId: userID) { result in
                     switch(result) {
                     case .success(let entity):
-                        
                         if let scrapList = entity as? [ScrapListEntity] {
-                            if scrapList.isEmpty { self.showUpperToast() }
+                            self.showUpperToast(scrapCount: scrapList.count)
                             self.currentScrapList = scrapList
                             if !self.currentCategory.isEmpty {
-                                self.fetchCategoryList(zoom: self.currentZoom)
+                                self.fetchCategoryList(zoom: MapLiterals.ZoomScale.Maximum)
                             } else {
                                 self.mapView.scrapButtonSelected.accept(scrapList)
                             }
@@ -337,7 +336,8 @@ extension MainMapVC {
                 }
             }
         } else {
-            fetchRestaurantList(zoom: self.currentZoom)
+            resetCurrentCategory()
+            fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
         }
     }
     
@@ -427,7 +427,7 @@ extension MainMapVC {
             initialMapOpened = true
             let NMGPosition = self.locationManager?.currentLatLng()
             if NMGPosition != nil {
-                self.mapView.moveCameraPositionWithZoom(LocationLiterals.gangnamStation, 2000)
+                self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.gangnamStation, Int(MapLiterals.ZoomScale.KM1_5))
             }
             isInitialPoint = true
         }
@@ -470,7 +470,7 @@ extension MainMapVC {
                 guard let self = self else { return }
                 let accumulate = MapAccumulationCalculator.zoomLevelToDistance(level: zoomLevel)
                 self.currentZoom = Double(accumulate)
-                self.fetchRestaurantList(zoom: Double(accumulate))
+                self.fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
             }).disposed(by: self.disposeBag)
         
         mapView.setSelectPoint
@@ -573,6 +573,11 @@ extension MainMapVC {
         if !hasCurrent {
             currentCategory = ""
         }
+    }
+    
+    private func resetCurrentCategory() {
+        selectedCategories = Array(repeating: false, count: 10)
+        currentCategory = ""
     }
     
     private func matchRestaurantId(position: NMGLatLng) -> String {
@@ -694,7 +699,8 @@ extension MainMapVC {
         if canUseLocation {
             if let lng = locationManager?.currentLatLng().lng,
                let lat = locationManager?.currentLatLng().lat {
-                RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
+                
+                RestaurantService.shared.fetchRestaurantList(longitude: lng, latitude: lat, zoom: zoom, category: currentCategory) { networkResult in
                     switch networkResult {
                     case .success(let data):
                         if let data = data as? [MainMapEntity] {
@@ -724,7 +730,7 @@ extension MainMapVC {
         if canUseLocation {
             if let lng = locationManager?.currentLatLng().lng,
                let lat = locationManager?.currentLatLng().lat {
-                RestaurantService.shared.fetchRestaurantList(longitude: lat, latitude: lng, zoom: zoom, category: currentCategory) { networkResult in
+                RestaurantService.shared.fetchRestaurantList(longitude: lng, latitude: lat, zoom: zoom, category: currentCategory) { networkResult in
                     switch networkResult {
                     case .success(let data):
                         if let data = data as? [MainMapEntity] {
@@ -782,8 +788,10 @@ extension MainMapVC {
 }
 
 extension MainMapVC {
-    private func showUpperToast() {
-        makeVibrate()
+    private func showUpperToast(scrapCount: Int) {
+        scrapListEmptyToastView.title = (scrapCount == 0
+                                         ? I18N.Map.Main.scrapEmptyGuide
+                                         : "\(scrapCount)개의 스크랩 식당이 있습니다")
         scrapListEmptyToastView.snp.remakeConstraints { make in
             make.width.equalTo(300)
             make.height.equalTo(40)
@@ -840,14 +848,14 @@ extension MainMapVC: CLLocationManagerDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.mapView.naverMapView.mapView.positionMode = .normal
                 self.canUseLocation = true
-                self.fetchRestaurantList(zoom: 2000)
+                self.fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
             }
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.mapView.naverMapView.mapView.positionMode = .normal
                 self.canUseLocation = true
-                self.fetchRestaurantList(zoom: 2000)
+                self.fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
             }
         @unknown default:
             break

@@ -12,7 +12,7 @@ enum ReviewRouter {
     case requestReviewWrite(userId: String, restaurantId: String, score: Double, taste: String, good: [String], content: String, image: [UIImage])
     case getReviewList(restaurantId: String)
     case requestUserReview(userId: String)
-    case getBlogReviewList(restaurantName: String)
+    case getBlogReviewList(restaurantId: String)
     case requestReviewEnabled(userId: String, restaurantId: String)
     case requestReviewDelete(reviewId: String)
     case requestReviewEdit(reviewId: String, score: Double, taste: String, good: [String], content: String, image: [UIImage], nameList: [String])
@@ -40,10 +40,10 @@ extension ReviewRouter: BaseRouter {
             return "/review/user/\(userId)"
         case .requestReviewWrite(let userId, let restaurantId,_,_,_,_,_):
             return "/review/user/\(userId)/restaurant/\(restaurantId)"
-        case .getBlogReviewList(let restaurantName):
-            return "review/restaurant/\(restaurantName)/blog"
+        case .getBlogReviewList(let restaurantId):
+            return "review/\(restaurantId)/blog"
         case .requestReviewEnabled(let userId, let restaurantId):
-            return "/review/check/\(userId)/\(restaurantId)"
+            return "/user/check/\(userId)/\(restaurantId)"
         case .requestReviewDelete(let reviewId):
             return "/review/\(reviewId)"
         case .requestReviewEdit(let reviewId,_,_,_,_,_,_):
@@ -66,9 +66,9 @@ extension ReviewRouter: BaseRouter {
                 "userId": userId
             ]
             return .query(requestParams)
-        case .getBlogReviewList(let restaurantName):
+        case .getBlogReviewList(let restaurantId):
             let requestParams: [String: Any] = [
-                "restaurantName": restaurantName
+                "restaurantId": restaurantId
             ]
             return .query(requestParams)
         case .requestReviewEnabled(let userId, let restaurantId):

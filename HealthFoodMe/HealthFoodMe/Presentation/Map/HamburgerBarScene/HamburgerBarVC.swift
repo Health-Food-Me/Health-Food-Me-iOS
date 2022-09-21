@@ -27,8 +27,8 @@ class HamburgerBarVC: UIViewController {
     // MARK: - Properties
     
     weak var delegate: HamburgerbarVCDelegate?
-    var hambergurBarViewTranslation = CGPoint(x: 0, y: 0)
-    var hambergurBarViewVelocity = CGPoint(x: 0, y: 0)
+    var hamburgerBarViewTranslation = CGPoint(x: 0, y: 0)
+    var hamburgerBarViewVelocity = CGPoint(x: 0, y: 0)
     var name: String? = " "
     private var isBrowsing: Bool {
         return UserManager.shared.isBrowsing
@@ -433,7 +433,8 @@ extension HamburgerBarVC {
                       title: I18N.HelfmeAlert.logout,
                       subtitle: I18N.HelfmeAlert.logoutContent) {
                 if UserManager.shared.isAppleLoginned {
-                    
+                    UserManager.shared.clearUserInform()
+                    self.pushSocialLoginVC()
                 } else {
                     self.logoutWithKakao()
                 }
@@ -511,18 +512,19 @@ extension HamburgerBarVC {
     
     @objc func moveHamburgerBarWithGesture(_ sender: UIPanGestureRecognizer) {
         
-        hambergurBarViewTranslation = sender.translation(in: hamburgerBarView)
-        hambergurBarViewVelocity = sender.velocity(in: hamburgerBarView)
+        hamburgerBarViewTranslation = sender.translation(in: hamburgerBarView)
+        hamburgerBarViewVelocity = sender.velocity(in: hamburgerBarView)
 
         switch sender.state {
         case .changed:
-            if hambergurBarViewVelocity.x < 0 {
+            if hamburgerBarViewTranslation.x > 0 {
+            } else {
                 UIView.animate(withDuration: 0.1) {
-                    self.hamburgerBarView.transform = CGAffineTransform(translationX: self.hambergurBarViewTranslation.x, y: 0)
+                    self.hamburgerBarView.transform = CGAffineTransform(translationX: self.hamburgerBarViewTranslation.x, y: 0)
                 }
             }
         case .ended:
-            if hambergurBarViewTranslation.x > -80 {
+            if hamburgerBarViewTranslation.x > -80 {
                 let containerViewWidth = screenWidth * 0.71
                 self.hamburgerBarView.snp.updateConstraints { make in
                     make.trailing.equalToSuperview().inset(screenWidth - containerViewWidth)

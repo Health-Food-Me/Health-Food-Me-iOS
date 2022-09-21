@@ -207,7 +207,7 @@ extension MapDetailSummaryView {
         restaurantNameLabel.text = data.name
         let score = round(data.score * 10) / 10
         rateLabel.text = "(\(score))"
-        tagList = data.hashtag
+        tagList = data.category
         makeConstraints()
         tagCollectionView.reloadData()
     }

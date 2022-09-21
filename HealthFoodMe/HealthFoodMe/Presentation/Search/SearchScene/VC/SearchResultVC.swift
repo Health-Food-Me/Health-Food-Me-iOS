@@ -190,8 +190,8 @@ extension SearchResultVC {
             lng = position.lng
             lat = position.lat
         } else {
-            lng = LocationLiterals.gangnamStation.lng
-            lat = LocationLiterals.gangnamStation.lat
+            lng = MapLiterals.Location.gangnamStation.lng
+            lat = MapLiterals.Location.gangnamStation.lat
         }
         if let text = searchTextField.text {
             searchContent = text
