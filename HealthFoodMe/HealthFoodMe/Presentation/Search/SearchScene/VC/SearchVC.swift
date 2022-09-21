@@ -223,7 +223,7 @@ extension SearchVC {
         }
     }
     
-    private func fetchSearchResultData(keyword: String, fromRecent: Bool) {
+    private func fetchSearchResultData(keyword: String, fromRecent: Bool, isCategory: Bool) {
         let NMGPosition = self.locationManager?.currentLatLng()
         var lng: Double = 0.0
         var lat: Double = 0.0
@@ -237,9 +237,15 @@ extension SearchVC {
         if let text = searchTextField.text {
             searchContent = text
         }
-        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lng,
-                                                                         latitude: lat,
-                                                                         keyword: keyword), fromRecent: fromRecent)
+        if isCategory {
+            requestCategorySearchResult(searchRequest: SearchCategoryRequestEntity(longitude: lng,
+                                                                                   latitude: lat,
+                                                                                   category: keyword), fromRecent: fromRecent)
+        } else {
+            requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lng,
+                                                                             latitude: lat,
+                                                                             keyword: keyword), fromRecent: fromRecent)
+        }
     }
     
     private func setUI() {
@@ -388,7 +394,7 @@ extension SearchVC: UITextFieldDelegate {
         if let text = searchTextField.text {
             let searchContent = text.trimmingCharacters(in: .whitespaces)
             if !searchContent.isEmpty {
-                fetchSearchResultData(keyword: searchContent, fromRecent: false)
+                fetchSearchResultData(keyword: searchContent, fromRecent: false, isCategory: false)
             }
         }
         return true
@@ -460,18 +466,24 @@ extension SearchVC: UITableViewDataSource {
         case .recent:
             HelfmeLoadingView.shared.show(self.view)
             searchTextField.text = searchRecentList[indexPath.row].title
-            fetchSearchResultData(keyword: searchRecentList[indexPath.row].title, fromRecent: true)
+            fetchSearchResultData(keyword: searchRecentList[indexPath.row].title, fromRecent: true, isCategory: searchRecentList[indexPath.row].isCategory)
             addSearchRecent(title: searchRecentList[indexPath.row].title, isCategory: searchRecentList[indexPath.row].isCategory)
         case .search:
-            searchTextField.text = searchList[indexPath.row].title
-            let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
-            searchResultVC.delegate = self
-            searchResultVC.fromSearchType = .searchRecent
-            searchResultVC.fromSearchCellInitial = searchList[indexPath.row].id
-            searchResultVC.searchContent = searchList[indexPath.row].title
-            searchResultVC.isCategory = searchList[indexPath.row].isCategory
-            searchResultVC.searchResultList = searchResultList
-            navigationController?.pushViewController(searchResultVC, animated: false)
+            if searchList[indexPath.row].isCategory {
+                HelfmeLoadingView.shared.show(self.view)
+                searchTextField.text = searchList[indexPath.row].title
+                fetchSearchResultData(keyword: searchList[indexPath.row].title, fromRecent: true, isCategory: searchList[indexPath.row].isCategory)
+            } else {
+                searchTextField.text = searchList[indexPath.row].title
+                let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
+                searchResultVC.delegate = self
+                searchResultVC.fromSearchType = .searchRecent
+                searchResultVC.fromSearchCellInitial = searchList[indexPath.row].id
+                searchResultVC.searchContent = searchList[indexPath.row].title
+                searchResultVC.isCategory = searchList[indexPath.row].isCategory
+                searchResultVC.searchResultList = searchResultList
+                navigationController?.pushViewController(searchResultVC, animated: false)
+            }
             addSearchRecent(title: searchList[indexPath.row].title, isCategory: searchList[indexPath.row].isCategory)
         case .searchResult:
             searchTextField.text = searchResultList[indexPath.row].storeName
@@ -480,10 +492,9 @@ extension SearchVC: UITableViewDataSource {
             searchResultVC.fromSearchType = .searchCell
             searchResultVC.fromSearchCellInitial = searchResultList[indexPath.row].id
             searchResultVC.searchContent = searchResultList[indexPath.row].storeName
-            searchResultVC.isCategory = searchRecentList[indexPath.row].isCategory
             searchResultVC.searchResultList = searchResultList
             navigationController?.pushViewController(searchResultVC, animated: false)
-            addSearchRecent(title: searchResultList[indexPath.row].storeName, isCategory: searchRecentList[indexPath.row].isCategory)
+            addSearchRecent(title: searchResultList[indexPath.row].storeName, isCategory: false)
         }
     }
 }
@@ -560,4 +571,29 @@ extension SearchVC {
             }
         }
     }
+    
+    private func requestCategorySearchResult(searchRequest: SearchCategoryRequestEntity, fromRecent: Bool) {
+        RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: searchRequest.longitude,
+                                                                                                  latitude: searchRequest.latitude,
+                                                                                                  keyword: searchRequest.category)) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? [SearchResultEntity] {
+                    HelfmeLoadingView.shared.hide() {
+                        print("로딩 종료")
+                    }
+                    self.searchResultList.removeAll()
+                    for searchResultData in data {
+                        self.searchResultList.append(searchResultData.toDomain())
+                    }
+                    self.searchResultList = self.searchResultList.sorted(by: { $0.distance < $1.distance })
+                    self.isSearchResult(fromRecent: fromRecent)
+                    self.searchTableView.reloadData()
+                }
+            default:
+                break;
+            }
+        }
+    }
+
 }
