@@ -18,8 +18,8 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     static var isFromNib: Bool = false
     var foldState: Bool = false
     let disposeBag = DisposeBag()
-    let toggleButtonTapped = PublishRelay<Void>()
     let telePhoneLabelTapped = PublishRelay<String>()
+    private let toggleButtonTapped = PublishRelay<Void>()
     
     // MARK: - UI Components
     
@@ -137,16 +137,37 @@ extension ExpandableInfoTVC {
         case 1:
             iconImageView.image = ImageLiterals.MainDetail.timeIcon
             toggleButton.isHidden = !expandableData.isExpandable
-                print("@@#@#@",expandableData.labelText)
+            let currentDay = Date().dayNumberOfWeek()
+            
             if expandableData.labelText.count > 0 {
-                print("2")
 
-                var result = ""
-                for line in expandableData.labelText {
-                    result += line
-                    result += "\n"
+                var result = NSMutableAttributedString()
+                for (index,line) in expandableData.labelText.enumerated() {
+                    if  isOpenned       &&
+                        currentDay >= 0 &&
+                        !expandableData.labelText[currentDay].isEmpty {
+                        let attributedStr = NSMutableAttributedString(string: "\(line)\n")
+                        
+                        let font: UIFont = index == currentDay ?
+                        UIFont.NotoBold(size: 12) : UIFont.NotoMedium(size: 12)
+                        
+                        let textColor: UIColor = index == currentDay ?
+                        UIColor.black : UIColor.helfmeGray1
+                        
+                        attributedStr.addAttributes([.font: font,
+                                                        .foregroundColor: textColor]
+                                                        ,range: NSRange(location: 0, length: attributedStr.string.count))
+
+                        result.append(attributedStr)
+                    } else {
+                        let attributedString =  NSMutableAttributedString(string: expandableData.labelText[currentDay])
+                        attributedString.addAttributes([.font: UIFont.NotoMedium(size: 12),
+                                                        .foregroundColor: UIColor.helfmeGray1]
+                                                        ,range: NSRange(location: 0, length: attributedString.string.count))
+                        result = attributedString
+                    }
                 }
-                infoLabel.text = result
+                infoLabel.attributedText = result
                 infoLabel.sizeToFit()
                 toggleButton.isHidden = false
                 toggleButtonInfnoLabel.isHidden = false

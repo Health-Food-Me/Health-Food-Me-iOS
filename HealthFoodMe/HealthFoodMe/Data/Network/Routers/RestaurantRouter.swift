@@ -10,6 +10,7 @@ import Alamofire
 enum RestaurantRouter {
     case requestRestaurantSearch(query: String)
     case requestRestaurantSearchResult(searchRequest: SearchRequestEntity)
+    case requestCategorySearchResult(searchRequest: SearchCategoryRequestEntity)
     case fetchRestaurantSummary(restaurantId: String, userId: String)
     case getMenuPrescription(restaurantId: String)
     case fetchRestaurantList(longitude: Double, latitude: Double, zomm: Double, category: String)
@@ -30,6 +31,8 @@ extension RestaurantRouter: BaseRouter {
             return "/restaurant/search/auto"
         case .requestRestaurantSearchResult:
             return "/restaurant/search/card"
+        case .requestCategorySearchResult:
+            return "/restaurant/search/category"
         case .getMenuPrescription(let restaurantId):
             return "/restaurant/\(restaurantId)/prescription"
         case .fetchRestaurantSummary(let restaurantId, let userId):
@@ -55,6 +58,13 @@ extension RestaurantRouter: BaseRouter {
                 "longitude": searchRequest.longitude,
                 "latitude": searchRequest.latitude,
                 "keyword": searchRequest.keyword
+            ]
+            return .query(requestQuery)
+        case .requestCategorySearchResult(let searchRequest):
+            let requestQuery: [String: Any] = [
+                "longitude": searchRequest.longitude,
+                "latitude": searchRequest.latitude,
+                "category": searchRequest.category
             ]
             return .query(requestQuery)
         case .fetchRestaurantList(let lng, let lat, let zoom, let category):

@@ -25,6 +25,10 @@ extension RestaurantService {
         requestObject(RestaurantRouter.requestRestaurantSearchResult(searchRequest: searchRequest), type: [SearchResultEntity].self, decodingMode: .model, completion: completion)
     }
     
+    func requestCategorySearchResult(searchRequest: SearchCategoryRequestEntity, completion: @escaping (NetworkResult<Any>) -> Void) {
+        requestObject(RestaurantRouter.requestCategorySearchResult(searchRequest: searchRequest), type: [SearchResultEntity].self, decodingMode: .model, completion: completion)
+    }
+    
     func fetchRestaurantSummary(restaurantId: String, userId: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         requestObject(RestaurantRouter.fetchRestaurantSummary(restaurantId: restaurantId, userId: userId), type: RestaurantSummaryEntity.self, decodingMode: .model, completion: completion)
     }
