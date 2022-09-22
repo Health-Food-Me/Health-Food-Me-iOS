@@ -87,7 +87,6 @@ class MainDetailVC: UIViewController {
         setDelegate()
         bindViewModels()
         setButtonAction()
-        print("🍎\(self.restaurantId)")
         fetchRestauranDetail(restaurantId: self.restaurantId) {
             self.isInitialLoad = false
             self.requestReviewEnabled(restaurantId: self.restaurantId)
@@ -487,7 +486,6 @@ extension MainDetailVC: CopingGestureDelegate {
                 .drive(onNext: { [weak self] sender in
                     
                     let windowTranslation = sender.translation(in: self?.view)
-                    print(windowTranslation)
                     switch sender.state {
                     case .changed:
                         self?.mainTableView.isScrollEnabled = false
@@ -533,7 +531,6 @@ extension MainDetailVC: CopingGestureDelegate {
 extension MainDetailVC: SwipeDismissDelegate {
     func swipeToDismiss() {
         if panGestureEnabled {
-            print("swipeToDismiss")
             if mainTableView.contentOffset.y == 0 {
                 self.dismiss(animated: false) {
                     self.translationClosure?(self.scrapButtonInstance.isSelected)

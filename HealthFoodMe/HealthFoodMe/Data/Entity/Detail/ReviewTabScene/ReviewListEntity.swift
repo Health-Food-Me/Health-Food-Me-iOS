@@ -8,7 +8,7 @@
 import Foundation
 
 struct ReviewListEntity: Codable {
-    let id, writer, content: String
+    let _id, writer, content: String
     let score: Float
     let image: [Image]
     let taste: String

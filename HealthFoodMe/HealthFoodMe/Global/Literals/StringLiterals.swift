@@ -22,6 +22,7 @@ struct I18N {
       struct ChangeNickname {
         static let headerTitle = "프로필 편집"
         static let guideText = "변경할 닉네임을 설정해주세요"
+        static let placeholder = "닉네임을 설정해 주세요"
         static let conditionText = "* 특수문자, 이모티콘은 사용 불가합니다\n* 띄어쓰기 포함 최대 12글자"
         static let ctaButtonTitle = "수정 완료"
         static let formatErrMessage =  "닉네임 설정 기준에 적합하지 않습니다"
@@ -126,7 +127,7 @@ struct I18N {
     }
     
     struct Search {
-        static let search = "식당 검색"
+        static let search = "식당, 음식 검색"
         static let searchRecent = "최근 검색어"
         static let searchMap = "지도 보기"
         static let searchList = "목록 보기"

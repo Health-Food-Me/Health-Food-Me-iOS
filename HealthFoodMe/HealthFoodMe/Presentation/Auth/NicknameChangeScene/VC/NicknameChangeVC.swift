@@ -67,6 +67,7 @@ final class NicknameChangeVC: UIViewController {
     textField.font = UIFont.NotoMedium(size: 16)
     textField.clearButtonMode = .whileEditing
     textField.autocorrectionType = .no
+    textField.placeholder = I18N.Auth.ChangeNickname.placeholder
     return textField
   }()
   

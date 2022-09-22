@@ -11,7 +11,7 @@ import Foundation
 struct MyReviewEntity: Codable {
     let restaurant, restaurantId: String
     let score: Float
-    let content, id: String
+    let content, _id: String
     let image: [MyReviewImage]
     let good: [String]
     let taste: String
@@ -28,7 +28,7 @@ struct MyReviewEntity: Codable {
         for img in self.image {
             imageList.append(img.url)
         }
-        return MyReviewModel.init(reviewId: id, restaurantName: restaurant,
+        return MyReviewModel.init(reviewId: _id, restaurantName: restaurant,
                                   restaurantId: restaurantId,
                                   starRate: score,
                                   tagList: hashTagList,

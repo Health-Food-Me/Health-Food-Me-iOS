@@ -6,29 +6,31 @@
 //
 
 struct ReviewEditEntity: Codable {
-    let id, restaurant, writer: String
-    let score: Double
-    let content: String
-    let image: [editImage]
-    let taste: String
-    let good: [String]
-    let v: Int
+    let id, restaurantID, restaurant, writerID: String
+        let writer: String
+        let score: Double
+        let content: String
+        let image: [EditImage]
+        let taste: String
+        let good: [String]
 
-    enum CodingKeys: String, CodingKey {
-        case id = "_id"
-        case restaurant, writer, score, content, image, taste, good
-        case v = "__v"
+        enum CodingKeys: String, CodingKey {
+            case id = "_id"
+            case restaurantID = "restaurantId"
+            case restaurant
+            case writerID = "writerId"
+            case writer, score, content, image, taste, good
+        }
     }
-}
 
-// MARK: - Image
-struct editImage: Codable {
-    let name: String
-    let url: String
-    let id: String
+    // MARK: - Image
+    struct EditImage: Codable {
+        let name: String
+        let url: String
+        let id: String
 
-    enum CodingKeys: String, CodingKey {
-        case name, url
-        case id = "_id"
+        enum CodingKeys: String, CodingKey {
+            case name, url
+            case id = "_id"
+        }
     }
-}

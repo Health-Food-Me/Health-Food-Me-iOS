@@ -26,6 +26,7 @@ final class SearchResultVC: UIViewController {
     var fromSearchType = FromSearchType.searchResult
     var fromSearchCellInitial: String = ""
     var searchContent: String = ""
+    var isCategory: Bool = false
     weak var delegate: SearchResultVCDelegate?
     private var isMapView: Bool = true
     var searchResultList: [SearchResultDataModel] = []
@@ -195,25 +196,48 @@ extension SearchResultVC {
         if let text = searchTextField.text {
             searchContent = text
         }
-        requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lng, latitude: lat,
-                                                                         keyword: keyword), fromRecent: fromRecent) {
-            self.mapViewController.initialId = self.fromSearchCellInitial
-            self.mapViewController.IDsForMap = self.searchResultList.map({
-                $0.id
-            })
-            self.addChild(self.mapViewController)
-            self.view.addSubview(self.mapViewController.view)
-            self.mapViewController.didMove(toParent: self)
-            UIView.animate(withDuration: 0.2, animations: {
-                self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
-            })
-            self.setLayout()
-            self.setUI()
-            self.mapViewController.setSelectPointForSummary()
-            self.setUIForViewMap()
-            self.addBtnAction()
-            self.setDelegate()
-            self.registerCell()
+        if isCategory {
+            requestCategorySearchResult(searchRequest: SearchCategoryRequestEntity(longitude: lng, latitude: lat,
+                                                                                   category: keyword), fromRecent: fromRecent) {
+                self.mapViewController.initialId = self.fromSearchCellInitial
+                self.mapViewController.IDsForMap = self.searchResultList.map({
+                    $0.id
+                })
+                self.addChild(self.mapViewController)
+                self.view.addSubview(self.mapViewController.view)
+                self.mapViewController.didMove(toParent: self)
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
+                })
+                self.setLayout()
+                self.setUI()
+                self.mapViewController.setSelectPointForSummary()
+                self.setUIForViewMap()
+                self.addBtnAction()
+                self.setDelegate()
+                self.registerCell()
+            }
+        } else {
+            requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lng, latitude: lat,
+                                                                             keyword: keyword), fromRecent: fromRecent) {
+                self.mapViewController.initialId = self.fromSearchCellInitial
+                self.mapViewController.IDsForMap = self.searchResultList.map({
+                    $0.id
+                })
+                self.addChild(self.mapViewController)
+                self.view.addSubview(self.mapViewController.view)
+                self.mapViewController.didMove(toParent: self)
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
+                })
+                self.setLayout()
+                self.setUI()
+                self.mapViewController.setSelectPointForSummary()
+                self.setUIForViewMap()
+                self.addBtnAction()
+                self.setDelegate()
+                self.registerCell()
+            }
         }
     }
     
@@ -441,6 +465,26 @@ extension SearchResultVC {
         RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: searchRequest.longitude,
                                                                                                   latitude: searchRequest.latitude,
                                                                                                   keyword: searchRequest.keyword)) { networkResult in
+            switch networkResult {
+            case .success(let data):
+                if let data = data as? [SearchResultEntity] {
+                    self.searchResultList.removeAll()
+                    for searchResultData in data {
+                        self.searchResultList.append(searchResultData.toDomain())
+                    }
+                    self.searchResultList = self.searchResultList.sorted(by: { $0.distance < $1.distance })
+                    completion()
+                }
+            default:
+                break;
+            }
+        }
+    }
+    
+    private func requestCategorySearchResult(searchRequest: SearchCategoryRequestEntity, fromRecent: Bool, completion: @escaping(() -> Void)) {
+        RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: searchRequest.longitude,
+                                                                                                  latitude: searchRequest.latitude,
+                                                                                                  keyword: searchRequest.category)) { networkResult in
             switch networkResult {
             case .success(let data):
                 if let data = data as? [SearchResultEntity] {
