@@ -106,17 +106,17 @@ PODS:
   - GoogleUtilities/UserDefaults (7.8.0):
     - GoogleUtilities/Logger
   - ImageSlideShowSwift (0.1.8)
-  - KakaoSDKAuth (2.11.2):
-    - KakaoSDKCommon (= 2.11.2)
-  - KakaoSDKCommon (2.11.2):
-    - KakaoSDKCommon/Common (= 2.11.2)
-    - KakaoSDKCommon/Network (= 2.11.2)
-  - KakaoSDKCommon/Common (2.11.2)
-  - KakaoSDKCommon/Network (2.11.2):
+  - KakaoSDKAuth (2.11.1):
+    - KakaoSDKCommon (= 2.11.1)
+  - KakaoSDKCommon (2.11.1):
+    - KakaoSDKCommon/Common (= 2.11.1)
+    - KakaoSDKCommon/Network (= 2.11.1)
+  - KakaoSDKCommon/Common (2.11.1)
+  - KakaoSDKCommon/Network (2.11.1):
     - Alamofire (~> 5.1)
-    - KakaoSDKCommon/Common (= 2.11.2)
-  - KakaoSDKUser (2.11.2):
-    - KakaoSDKAuth (= 2.11.2)
+    - KakaoSDKCommon/Common (= 2.11.1)
+  - KakaoSDKUser (2.11.1):
+    - KakaoSDKAuth (= 2.11.1)
   - Kingfisher (7.3.2)
   - lottie-ios (3.4.3)
   - nanopb (2.30909.0):
@@ -216,9 +216,9 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
   ImageSlideShowSwift: bd0d5150bb687a6c47bafa92d654fb85310d5317
-  KakaoSDKAuth: 98f90fb67b2c2015cc94066a4489d54bb2f2a68e
-  KakaoSDKCommon: 83fef177bcad9a8f9cb728f92e04a464882d3a82
-  KakaoSDKUser: bf7b02e23257199995cdd03d59feb716416d14d6
+  KakaoSDKAuth: bb2dfa7be30daa8403c9cfc8001aa6fde7a5b779
+  KakaoSDKCommon: 555e1bb46595b842ded01cf7888cc17bbae4e113
+  KakaoSDKUser: 08c0a4f40bebdebdf948a9e3d0e44ed5c2754f99
   Kingfisher: 0086ad83719761ba9b2cdaf6ef4d5b4878cbae23
   lottie-ios: 9ae750cdc7820fecbd3c2f0cfc493038208fcdc4
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
