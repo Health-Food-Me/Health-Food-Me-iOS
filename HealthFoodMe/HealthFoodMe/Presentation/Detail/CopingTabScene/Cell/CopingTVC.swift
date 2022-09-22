@@ -14,6 +14,7 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
     static var isFromNib = false
     private var copingHeader = CopingHeaderView()
     private var copingEmptyView = CopingEmptyView()
+    private var isOnlyCategory: Bool = false
     var copingDataModel: CopingTabEntity?
     var restaurantId = ""
     var recommendList: [String] = [] {
@@ -70,7 +71,6 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
     // MARK: - Life Cycle Part
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-//        fetchData()
         checkEmptyView()
         setLayout()
         setDelegate()
@@ -90,12 +90,19 @@ extension CopingTVC {
         copingTableView.isHidden = (recommendList.isEmpty && eatingList.isEmpty)
     }
     
+    private func updateEmptyViewConstraint() {
+        let topInset = isOnlyCategory ? 32 : 0
+        copingEmptyView.snp.updateConstraints { make in
+            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(topInset)
+        }
+    }
+    
     private func setLayout() {
         contentView.addSubviews(copingTableView, copingEmptyView, categoryView)
         
         categoryView.snp.makeConstraints { make in
             make.centerX.equalTo(copingEmptyView.snp.centerX)
-            make.centerY.equalTo(copingEmptyView.snp.top)
+            make.centerY.equalTo(contentView.snp.top).offset(32)
             make.height.equalTo(32)
             make.width.equalTo(117)
         }
@@ -107,14 +114,14 @@ extension CopingTVC {
         }
         
         copingTableView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(26)
+            make.top.equalTo(contentView.safeAreaLayoutGuide)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
             make.height.equalTo(headerHeight * 2 + rowHeight * (recommendList.count + eatingList.count) + bottomMargin)
         }
         
         copingEmptyView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(26)
+            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(32)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
             make.height.equalTo(346)
@@ -131,10 +138,13 @@ extension CopingTVC {
         copingTableView.dataSource = self
     }
     
-    func setData(category: String, data: Content){
-        self.categoryLabel.text = category
+    func setData(category: String, data: CopingDataModel, isOnlyCategory: Bool){
+        self.categoryLabel.text = "#\(category)"
         self.recommendList = data.recommend
         self.eatingList = data.tip
+        self.categoryView.isHidden = !isOnlyCategory
+        self.isOnlyCategory = isOnlyCategory
+        self.updateEmptyViewConstraint()
     }
     
     private func updateTableViewLayout() {

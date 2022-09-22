@@ -11,12 +11,12 @@ import Foundation
 
 struct CopingTabEntity: Codable {
     let category: String
-    let content: Content
+    let prescription: CopingDataModel
 }
 
 // MARK: - Content
 
-struct Content: Codable {
+struct CopingDataModel: Codable {
     let recommend, tip: [String]
 }
  
