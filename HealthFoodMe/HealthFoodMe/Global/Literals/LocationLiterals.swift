@@ -17,7 +17,7 @@ extension MapLiterals {
     }
     
     struct ZoomScale {
-        static let Maximum = 1000.0 * 100.0
+        static let Maximum = 1000.0 * 1000.0 * 10
         static let KM1 = 1000.0
         static let KM1_5 = 1500.0
         static let KM2 = 2000.0
