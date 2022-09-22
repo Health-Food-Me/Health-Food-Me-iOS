@@ -18,11 +18,14 @@ protocol CopingGestureDelegate {
 class CopingTabVC: UIViewController {
     
     // MARK: - Properties
+    var topScrollAnimationNotFinished: Bool = true
     private var copingTVC = CopingTVC()
     private let disposeBag = DisposeBag()
-    private var category: String = ""
-    private var contentData: Content = Content(recommend: [], tip: [])
-    var topScrollAnimationNotFinished: Bool = true
+    private var categoryNameList: [String] = []
+    private var copingDataList: [CopingDataModel] = []
+    private var currentIdx: CategoryIndex = 0 { didSet {
+        copingTabTableView.reloadData()
+    }}
     weak var delegate: ScrollDeliveryDelegate?
     var panDelegate: CopingGestureDelegate?
     var restaurantId = ""
@@ -64,7 +67,7 @@ extension CopingTabVC {
         view.addSubviews(copingTabTableView)
         
         copingTabTableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
             make.height.equalTo(1500)
@@ -122,11 +125,11 @@ extension CopingTabVC {
             print(networkResult)
             switch networkResult {
             case .success(let data):
-                if let data = data as? CopingTabEntity {
-                    self.category = data.category
-                    self.contentData = data.content
+                if let data = data as? [CopingTabEntity] {
+                    self.categoryNameList = data.map { $0.category }
+                    self.copingDataList   = data.map { $0.prescription }
+                    self.copingTabTableView.reloadData()
                 }
-                self.copingTabTableView.reloadData()
             default:
                 break;
             }
@@ -138,10 +141,9 @@ extension CopingTabVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 50
-            
+            return copingDataList.count == 1 ? 0 : 72
         } else {
-            return 1000
+            return UITableView.automaticDimension
         }
     }
 }
@@ -160,13 +162,23 @@ extension CopingTabVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTVC.className, for: indexPath) as? CategoryTVC else { return UITableViewCell() }
+            cell.setCategoryData(nameList: categoryNameList)
+            cell.clickedCategoryIndex = { [weak self] idx in
+                    self?.currentIdx = idx
+                    self?.copingTabTableView.reloadData()
+                }
+
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CopingTVC.className, for: indexPath) as? CopingTVC else { return UITableViewCell() }
-            cell.setData(category: category, data: contentData)
+            cell.selectionStyle = .none
+            if categoryNameList.count > currentIdx {
+                cell.setData(category: categoryNameList[currentIdx],
+                             data    : copingDataList[currentIdx],
+                             isOnlyCategory: copingDataList.count == 1)
+            }
+
             return cell
         }
     }
 }
-
-
