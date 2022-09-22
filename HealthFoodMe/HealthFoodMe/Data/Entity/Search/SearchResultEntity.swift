@@ -10,9 +10,11 @@ import Foundation
 struct SearchResultEntity: Codable {
     let _id: String
     let name: String
-    let category: String
+    let category: [String]
     let score: Double
     let distance: Double
+    let longitude: Double
+    let latitude: Double
     let logo: String
     
     func toDomain() -> SearchResultDataModel {
@@ -21,6 +23,8 @@ struct SearchResultEntity: Codable {
                                           foodCategory: category,
                                           storeName: name,
                                           starRate: score,
-                                          distance: distance)
+                                          distance: distance,
+                                          longitude: longitude,
+                                          latitude: latitude)
     }
 }

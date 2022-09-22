@@ -289,7 +289,7 @@ extension ReviewDetailVC {
     }
     
     private func requestBlogReviewListWithAPI()  {
-        ReviewService.shared.requestBlogReviewList(restaurantName: restaurantName) { networkResult in
+        ReviewService.shared.requestBlogReviewList(restaurantId: restaurantId) { networkResult in
             switch networkResult {
             case .success(let data):
                 self.blogReviewData.removeAll()

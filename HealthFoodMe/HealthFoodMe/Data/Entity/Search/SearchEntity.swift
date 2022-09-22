@@ -10,11 +10,19 @@ import Foundation
 struct SearchEntity: Codable {
     let _id: String
     let name: String
-    let isDietRestaurant: Bool
+    let isDiet: Bool
+    let isCategory: Bool
+    let distance: Double?
+    let longitude: Double
+    let latitude: Double
     
     func toDomain() -> SearchDataModel {
         return SearchDataModel.init(id: _id,
                                     title: name,
-                                    isDiet: isDietRestaurant)
+                                    isDiet: isDiet,
+                                    isCategory: isCategory,
+                                    distance: distance,
+                                    latitude: latitude,
+                                    longitude: longitude)
     }
 }

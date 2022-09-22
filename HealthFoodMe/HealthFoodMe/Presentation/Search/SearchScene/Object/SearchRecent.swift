@@ -11,4 +11,5 @@ import RealmSwift
 
 class SearchRecent: Object {
     @objc dynamic var title: String = ""
+    @objc dynamic var isCategory: Bool = false
 }

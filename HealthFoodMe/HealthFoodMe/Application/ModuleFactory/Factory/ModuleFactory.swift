@@ -87,7 +87,6 @@ class ModuleFactory: ModuleFactoryProtocol {
     
     // MARK: - Map
     func makeMainMapNavigationController() -> MainMapNavigationController {
-        print("")
         return MainMapNavigationController.controllerFromStoryboard(.mainMap)
     }
     

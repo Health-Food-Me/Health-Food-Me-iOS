@@ -10,8 +10,10 @@ import Foundation
 struct SearchResultDataModel {
     let id: String
     let imgURL: String
-    let foodCategory: String
+    let foodCategory: [String]
     let storeName: String
     let starRate: Double
     let distance: Double
+    let longitude: Double
+    let latitude: Double
 }
