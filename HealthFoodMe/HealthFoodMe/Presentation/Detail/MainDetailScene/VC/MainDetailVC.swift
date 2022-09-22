@@ -134,8 +134,15 @@ extension MainDetailVC {
         scrapButton.setImage(ImageLiterals.MainDetail.scrapIcon, for: .normal)
         scrapButton.setImage(ImageLiterals.MainDetail.scrapIcon_filled, for: .selected)
         scrapButton.addAction(UIAction(handler: { _ in
-            scrapButton.isSelected.toggle()
-            self.putScrap(userId: UserManager.shared.getUserId ?? "", restaurantId: self.restaurantId)
+            if self.isBrowsing {
+                let alert = ModuleFactory.resolve().makeHelfmeLoginAlertVC()
+                alert.modalPresentationStyle = .overFullScreen
+                alert.modalTransitionStyle = .crossDissolve
+                self.present(alert, animated: true)
+            } else {
+                scrapButton.isSelected.toggle()
+                self.putScrap(userId: UserManager.shared.getUserId ?? "", restaurantId: self.restaurantId)
+            }
         }), for: .touchUpInside)
         scrapButtonInstance = scrapButton
         
