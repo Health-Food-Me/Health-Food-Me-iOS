@@ -38,10 +38,10 @@ extension ReviewRouter: BaseRouter {
             return "review/restaurant/\(restaurantId)/"
         case .requestUserReview(let userId):
             return "/review/user/\(userId)"
-        case .requestReviewWrite(let userId, let restaurantId,_,_,_,_,_):
-            return "/review/user/\(userId)/restaurant/\(restaurantId)"
-        case .getBlogReviewList(let restaurantId):
-            return "review/\(restaurantId)/blog"
+        case .requestReviewWrite(let userId,let restaurantId,_,_,_,_,_):
+            return "/review/\(userId)/\(restaurantId)"
+        case .getBlogReviewList(let restaurantName):
+            return "review/restaurant/\(restaurantName)/blog"
         case .requestReviewEnabled(let userId, let restaurantId):
             return "/user/check/\(userId)/\(restaurantId)"
         case .requestReviewDelete(let reviewId):
