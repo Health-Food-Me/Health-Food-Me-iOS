@@ -34,7 +34,12 @@ extension ReviewService {
                                                                             content: content,
                                                                             image: image).multipart,
                          with: ReviewRouter.requestReviewWrite(userId: userId,
-                                                               restaurantId: restaurantId, score: score, taste: taste, good: good, content: content, image: image)).responseData { response in
+                                                               restaurantId: restaurantId,
+                                                               score: score,
+                                                               taste: taste,
+                                                               good: good,
+                                                               content: content,
+                                                               image: image)).responseData { response in
             switch(response.result) {
             case .success(let data):
                 guard let statusCode = response.response?.statusCode else { return }
