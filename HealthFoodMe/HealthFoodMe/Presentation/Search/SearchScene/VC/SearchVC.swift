@@ -30,6 +30,7 @@ final class SearchVC: UIViewController {
             searchTableView.reloadData()
         }
     }
+    private var category: String?
     var searchContent: String = ""
     var searchRecentList: [SearchRecentDataModel] = []
     var searchList: [SearchDataModel] = []
@@ -340,6 +341,7 @@ extension SearchVC {
             }
             let searchRecent = SearchRecent()
             searchRecent.title = title
+            searchRecent.isCategory = isCategory
             realm?.add(searchRecent)
         }
         searchRecentList.insert(SearchRecentDataModel(title: title, isCategory: isCategory), at: 0)
@@ -352,6 +354,7 @@ extension SearchVC {
         viewMapButton.isHidden = true
         searchEmptyView.isHidden = true
         searchType = .recent
+        category = nil
     }
     
     private func isSearch() {
@@ -360,16 +363,17 @@ extension SearchVC {
         searchTableView.tableHeaderView = nil
         searchEmptyView.isHidden = true
         searchType = .search
+        category = nil
     }
     
-    private func isSearchResult(fromRecent: Bool) {
+    private func isSearchResult(fromRecent: Bool, isCategory: Bool) {
         if searchList.isEmpty && !fromRecent {
             searchEmptyView.isHidden = false
         } else {
             searchEmptyView.isHidden = true
             searchTextField.resignFirstResponder()
             if let text = searchTextField.text {
-                if !searchList.isEmpty {
+                if !searchList.isEmpty && !isCategory {
                     addSearchRecent(title: text, isCategory: false)
                 }
             }
@@ -444,7 +448,7 @@ extension SearchVC: UITableViewDataSource {
             return cell
         case .searchResult:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTVC.className, for: indexPath) as? SearchResultTVC else { return UITableViewCell() }
-            cell.setData(data: searchResultList[indexPath.row])
+            cell.setData(data: searchResultList[indexPath.row], category: category)
             return cell
         }
     }
@@ -465,12 +469,16 @@ extension SearchVC: UITableViewDataSource {
         case .recent:
             HelfmeLoadingView.shared.show(self.view)
             searchTextField.text = searchRecentList[indexPath.row].title
+            if searchRecentList[indexPath.row].isCategory {
+                category = searchRecentList[indexPath.row].title
+            }
             fetchSearchResultData(keyword: searchRecentList[indexPath.row].title, fromRecent: true, isCategory: searchRecentList[indexPath.row].isCategory)
             addSearchRecent(title: searchRecentList[indexPath.row].title, isCategory: searchRecentList[indexPath.row].isCategory)
         case .search:
             if searchList[indexPath.row].isCategory {
                 HelfmeLoadingView.shared.show(self.view)
                 searchTextField.text = searchList[indexPath.row].title
+                category = searchList[indexPath.row].title
                 fetchSearchResultData(keyword: searchList[indexPath.row].title, fromRecent: true, isCategory: searchList[indexPath.row].isCategory)
             } else {
                 searchTextField.text = searchList[indexPath.row].title
@@ -562,7 +570,7 @@ extension SearchVC {
                         self.searchResultList.append(searchResultData.toDomain())
                     }
                     self.searchResultList = self.searchResultList.sorted(by: { $0.distance < $1.distance })
-                    self.isSearchResult(fromRecent: fromRecent)
+                    self.isSearchResult(fromRecent: fromRecent, isCategory: false)
                     self.searchTableView.reloadData()
                 }
             default:
@@ -586,7 +594,7 @@ extension SearchVC {
                         self.searchResultList.append(searchResultData.toDomain())
                     }
                     self.searchResultList = self.searchResultList.sorted(by: { $0.distance < $1.distance })
-                    self.isSearchResult(fromRecent: fromRecent)
+                    self.isSearchResult(fromRecent: fromRecent, isCategory: true)
                     self.searchTableView.reloadData()
                 }
             default:
