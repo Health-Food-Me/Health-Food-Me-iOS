@@ -503,7 +503,7 @@ extension SearchVC: UITableViewDataSource {
 extension SearchVC: SearchRecentTVCDelegate {
     func searchRecentTVCDelete(index: Int) {
         try? realm?.write {
-            if let savedSearchRecent =  realm?.objects(SearchRecent.self).filter("title == '\(searchRecentList[index])'") {
+            if let savedSearchRecent =  realm?.objects(SearchRecent.self).filter("title == '\(searchRecentList[index].title)'") {
                 realm?.delete(savedSearchRecent)
             }
         }
