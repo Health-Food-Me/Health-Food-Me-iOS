@@ -106,9 +106,13 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
 // MARK: - Methods
 
 extension SearchResultTVC {
-    func setData(data: SearchResultDataModel) {
+    func setData(data: SearchResultDataModel, category: String?) {
         storeImageView.setImage(with: data.imgURL)
-        foodLabel.text = data.foodCategory[0]
+        if let category = category {
+            foodLabel.text = category
+        } else {
+            foodLabel.text = data.foodCategory[0]
+        }
         storeNameLabel.text = data.storeName
         starView.rate = data.starRate
         starLabel.text = "(\(data.starRate))"
