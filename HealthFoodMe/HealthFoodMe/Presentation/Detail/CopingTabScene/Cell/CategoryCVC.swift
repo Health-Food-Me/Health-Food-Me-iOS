@@ -14,17 +14,11 @@ class CategoryCVC: UICollectionViewCell, UICollectionViewRegisterable {
     // MARK: - Properties
   
     static var isFromNib: Bool = false
-    override var isSelected: Bool {
-        didSet {
-            resetUI()
-        }
-    }
     
     // MARK: - UI Components
     
     private let categoryLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "샌드위치"
         lb.textColor = .black
         lb.font = .NotoMedium(size: 15)
         return lb
@@ -46,6 +40,18 @@ class CategoryCVC: UICollectionViewCell, UICollectionViewRegisterable {
 // MARK: - Methods
 
 extension CategoryCVC {
+    internal func setCategoryData(name: String, isClicked: Bool) {
+        categoryLabel.text = name
+        categoryLabel.textColor = isClicked ? .helfmeWhite : .helfmeTagGray
+        categoryLabel.font = isClicked ? UIFont.NotoBold(size: 14) : UIFont.NotoMedium(size: 14)
+        self.layer.borderWidth = 1
+        self.layer.borderColor = isClicked ? UIColor.clear.cgColor : UIColor.helfmeLineGray.cgColor
+        self.backgroundColor = isClicked ? .helfmeGreenSubDark : .helfmeWhite
+        
+    }
+}
+
+extension CategoryCVC {
     private func setUI() {
         self.layer.cornerRadius = 16
         categoryLabel.textColor = .helfmeTagGray
@@ -57,10 +63,12 @@ extension CategoryCVC {
     private func resetUI() {
         if isSelected {
             categoryLabel.textColor = .helfmeWhite
+            categoryLabel.font = UIFont.NotoBold(size: 14)
             self.layer.borderWidth = 0
             self.backgroundColor = .helfmeGreenSubDark
         } else {
             categoryLabel.textColor = .helfmeTagGray
+            categoryLabel.font = UIFont.NotoMedium(size: 14)
             self.layer.borderWidth = 1
             self.layer.borderColor = UIColor.helfmeLineGray.cgColor
             self.backgroundColor = .helfmeWhite
