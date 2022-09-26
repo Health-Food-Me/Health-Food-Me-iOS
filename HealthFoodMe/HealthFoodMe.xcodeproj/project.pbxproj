@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BCBE9990A8E07926BBD94C0 /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F8F127EE6D9D22D3BD5A953 /* Pods_HealthFoodMe.framework */; };
 		3B07FD3128BFD845004D84A8 /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B07FD3028BFD845004D84A8 /* WebViewVC.swift */; };
 		3B089C4A287D877B00DA80B9 /* GodoB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B089C49287D876F00DA80B9 /* GodoB.ttf */; };
 		3B089C4B287D877F00DA80B9 /* GodoB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B089C48287D876F00DA80B9 /* GodoB.otf */; };
@@ -73,7 +74,6 @@
 		69D7074B2888062E00C2C278 /* ReviewDeleteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D7074A2888062E00C2C278 /* ReviewDeleteEntity.swift */; };
 		69D7074D28885B9900C2C278 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69D7074C28885B9900C2C278 /* GoogleService-Info.plist */; };
 		69D7074F28888D6500C2C278 /* ReviewEditEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D7074E28888D6500C2C278 /* ReviewEditEntity.swift */; };
-		6BEFB254B7D85D0EA33F292A /* Pods_HealthFoodMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2783D3C6A88042BCABC1755 /* Pods_HealthFoodMe.framework */; };
 		A90CFDCF2885B4DC0018AB94 /* SearchDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90CFDCE2885B4DC0018AB94 /* SearchDataModel.swift */; };
 		A90CFDD12885B4E70018AB94 /* SearchResultDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90CFDD02885B4E70018AB94 /* SearchResultDataModel.swift */; };
 		A90ED6252886644400FCE149 /* SearchEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90ED6222886644400FCE149 /* SearchEntity.swift */; };
@@ -253,6 +253,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F8F127EE6D9D22D3BD5A953 /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B07FD3028BFD845004D84A8 /* WebViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
 		3B089C48287D876F00DA80B9 /* GodoB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoB.otf; sourceTree = "<group>"; };
 		3B089C49287D876F00DA80B9 /* GodoB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GodoB.ttf; sourceTree = "<group>"; };
@@ -287,8 +288,7 @@
 		3BCC441D28745FD800661A12 /* SocialLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginVC.swift; sourceTree = "<group>"; };
 		3BCC441F28745FE500661A12 /* SocialLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SocialLogin.storyboard; sourceTree = "<group>"; };
 		3BDE7F282882054200EE7F47 /* ReviewEmptyViewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewEmptyViewCVC.swift; sourceTree = "<group>"; };
-		437C44B292106E2C98BA2B80 /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
-		5CF02965DEC0B24D6DAF6C2E /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
+		626DC14817FE7750430B780C /* Pods-HealthFoodMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.release.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.release.xcconfig"; sourceTree = "<group>"; };
 		69028BA52874673600373984 /* MenuCellCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellCVC.swift; sourceTree = "<group>"; };
 		69028BA72874675800373984 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		69028BA9287467F100373984 /* MenuDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailView.swift; sourceTree = "<group>"; };
@@ -354,7 +354,7 @@
 		A9E593C62874266200B0F8B5 /* SearchRecent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecent.swift; sourceTree = "<group>"; };
 		A9E593CE2876C26900B0F8B5 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		A9E593D0287818E900B0F8B5 /* SearchTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTVC.swift; sourceTree = "<group>"; };
-		C2783D3C6A88042BCABC1755 /* Pods_HealthFoodMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HealthFoodMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA04A4F638C8793D7D4D0A44 /* Pods-HealthFoodMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthFoodMe.debug.xcconfig"; path = "Target Support Files/Pods-HealthFoodMe/Pods-HealthFoodMe.debug.xcconfig"; sourceTree = "<group>"; };
 		EB033E83287B5BE300C48FB9 /* StarRatingView.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; tabWidth = 4; };
 		EB085ED628716E1900361837 /* HealthFoodMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthFoodMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB085EE728716E1B00361837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -513,13 +513,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BEFB254B7D85D0EA33F292A /* Pods_HealthFoodMe.framework in Frameworks */,
+				0BCBE9990A8E07926BBD94C0 /* Pods_HealthFoodMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2793CE9929740B1C4E450707 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2F8F127EE6D9D22D3BD5A953 /* Pods_HealthFoodMe.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3B089C4C287DDD8900DA80B9 /* ReviewTabScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -1044,18 +1052,10 @@
 		E3F60CBC9B890A7FB4D4AAAF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				437C44B292106E2C98BA2B80 /* Pods-HealthFoodMe.debug.xcconfig */,
-				5CF02965DEC0B24D6DAF6C2E /* Pods-HealthFoodMe.release.xcconfig */,
+				AA04A4F638C8793D7D4D0A44 /* Pods-HealthFoodMe.debug.xcconfig */,
+				626DC14817FE7750430B780C /* Pods-HealthFoodMe.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		E93357958934D7418C7B888B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C2783D3C6A88042BCABC1755 /* Pods_HealthFoodMe.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		EB033E82287B5B6E00C48FB9 /* UI Components */ = {
@@ -1079,7 +1079,7 @@
 				EB085ED728716E1900361837 /* Products */,
 				E3F60CBC9B890A7FB4D4AAAF /* Pods */,
 				A90CFDA5288328C90018AB94 /* Recovered References */,
-				E93357958934D7418C7B888B /* Frameworks */,
+				2793CE9929740B1C4E450707 /* Frameworks */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -2044,12 +2044,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EB085EEA28716E1B00361837 /* Build configuration list for PBXNativeTarget "HealthFoodMe" */;
 			buildPhases = (
-				6FBB4073AB74AFDF8900C0B8 /* [CP] Check Pods Manifest.lock */,
+				6656EF6B5F19537E890B9466 /* [CP] Check Pods Manifest.lock */,
 				EB085ED228716E1900361837 /* Sources */,
 				EB085ED328716E1900361837 /* Frameworks */,
 				EB085ED428716E1900361837 /* Resources */,
 				EBFAEB012885551B009C569C /* Run Script */,
-				CA56AEAC6CFE6AC93CAB5766 /* [CP] Embed Pods Frameworks */,
+				A73C64C0E75ED158DD5345D0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2139,7 +2139,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6FBB4073AB74AFDF8900C0B8 /* [CP] Check Pods Manifest.lock */ = {
+		6656EF6B5F19537E890B9466 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2161,7 +2161,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CA56AEAC6CFE6AC93CAB5766 /* [CP] Embed Pods Frameworks */ = {
+		A73C64C0E75ED158DD5345D0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2545,7 +2545,7 @@
 		};
 		EB085EEB28716E1B00361837 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 437C44B292106E2C98BA2B80 /* Pods-HealthFoodMe.debug.xcconfig */;
+			baseConfigurationReference = AA04A4F638C8793D7D4D0A44 /* Pods-HealthFoodMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2553,7 +2553,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 202209221;
+				CURRENT_PROJECT_VERSION = 2022092402;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = FY8N9XTH66;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FY8N9XTH66;
@@ -2589,7 +2589,7 @@
 		};
 		EB085EEC28716E1B00361837 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5CF02965DEC0B24D6DAF6C2E /* Pods-HealthFoodMe.release.xcconfig */;
+			baseConfigurationReference = 626DC14817FE7750430B780C /* Pods-HealthFoodMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2597,7 +2597,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 202209221;
+				CURRENT_PROJECT_VERSION = 2022092402;
 				DEVELOPMENT_TEAM = FY8N9XTH66;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = FY8N9XTH66;
 				GENERATE_INFOPLIST_FILE = YES;
