@@ -141,7 +141,7 @@ extension CopingTabVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return copingDataList.count == 1 ? 0 : 72
+            return copingDataList.count == 1 ? 20 : 72
         } else {
             return UITableView.automaticDimension
         }

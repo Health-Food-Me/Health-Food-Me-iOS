@@ -41,6 +41,7 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
         let view = UIView()
         view.backgroundColor = .helfmeGreenSubDark
         view.layer.cornerRadius = 16
+        view.clipsToBounds = false
         return view
     }()
     
@@ -91,8 +92,15 @@ extension CopingTVC {
     }
     
     private func updateEmptyViewConstraint() {
-        let topInset = isOnlyCategory ? 32 : 0
+        let topInset = isOnlyCategory ? 16 : 0
         copingEmptyView.snp.updateConstraints { make in
+            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(topInset)
+        }
+    }
+    
+    private func updateCopingTableView() {
+        let topInset = isOnlyCategory ? 16 : 0
+        copingTableView.snp.updateConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(topInset)
         }
     }
@@ -101,8 +109,8 @@ extension CopingTVC {
         contentView.addSubviews(copingTableView, copingEmptyView, categoryView)
         
         categoryView.snp.makeConstraints { make in
-            make.centerX.equalTo(copingEmptyView.snp.centerX)
-            make.centerY.equalTo(contentView.snp.top).offset(32)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(contentView.safeAreaLayoutGuide)
             make.height.equalTo(32)
             make.width.equalTo(117)
         }
@@ -114,7 +122,7 @@ extension CopingTVC {
         }
         
         copingTableView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.safeAreaLayoutGuide)
+            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(16)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(headerHeight * 2 + rowHeight * (recommendList.count + eatingList.count) + bottomMargin)
@@ -145,6 +153,7 @@ extension CopingTVC {
         self.categoryView.isHidden = !isOnlyCategory
         self.isOnlyCategory = isOnlyCategory
         self.updateEmptyViewConstraint()
+        self.updateCopingTableView()
     }
     
     private func updateTableViewLayout() {
