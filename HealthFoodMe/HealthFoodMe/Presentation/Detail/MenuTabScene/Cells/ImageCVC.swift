@@ -63,4 +63,8 @@ extension ImageCVC {
         photoImageView.layer.cornerRadius = 8
         photoImageView.layer.masksToBounds = true
     }
+    
+    func setData(menuBoard: String) {
+        photoImageView.setImage(with: menuBoard)
+    }
 }
