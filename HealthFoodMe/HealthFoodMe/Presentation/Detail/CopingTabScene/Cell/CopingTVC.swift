@@ -115,15 +115,15 @@ extension CopingTVC {
         
         copingTableView.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().inset(20)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.height.equalTo(headerHeight * 2 + rowHeight * (recommendList.count + eatingList.count) + bottomMargin)
         }
         
         copingEmptyView.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(32)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().inset(20)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.height.equalTo(346)
         }
     }
