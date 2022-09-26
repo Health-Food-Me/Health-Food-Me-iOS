@@ -40,6 +40,8 @@ final class MenuTabVC: UIViewController {
 			}
 		}
 	}
+	var menuBoard: [String] = []
+	
 	let panGesture = UIPanGestureRecognizer()
 	weak var delegate: ScrollDeliveryDelegate?
 	var swipeDismissDelegate: SwipeDismissDelegate?
@@ -121,7 +123,7 @@ extension MenuTabVC {
 		menuCV.isScrollEnabled = false
 	}
 	
-	func setData(data: [Menu]) {
+	func setData(data: [Menu], restaurantMenuBoard: [String]) {
 		var models: [MenuDataModel] = []
 		data.forEach {
 			models.append($0.toDomain())
@@ -140,7 +142,10 @@ extension MenuTabVC {
 		pickModel += notPickModel
 		
 		self.menuData = pickModel
+		self.menuBoard = restaurantMenuBoard
+//		print(menuBoard, "🐬")
 	}
+	
 	
 	private func addObserver() {
 		addObserverAction(.menuPhotoClicked) { noti in
