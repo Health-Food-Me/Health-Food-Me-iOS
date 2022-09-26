@@ -87,13 +87,13 @@ extension ContentTVC {
             checkImageView.image = ImageLiterals.Coping.icnTipPink
         }
         contentLabel.text = content
-        
-        if isLast { updateBottomCellMargin() }
+        updateBottomCellMargin(isLast)
     }
     
-    private func updateBottomCellMargin() {
+    private func updateBottomCellMargin( _ isLast: Bool) {
+        let bottomMargin: CGFloat = isLast ? 52 : 9
         contentStackView.snp.updateConstraints { make in
-            make.bottom.equalToSuperview().inset(52)
+            make.bottom.equalToSuperview().inset(bottomMargin)
         }
     }
 }

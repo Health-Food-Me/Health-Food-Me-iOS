@@ -52,7 +52,7 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
     }()
     
     private lazy var copingTableView: UITableView = {
-        let tv = UITableView(frame: .zero, style: .plain)
+        let tv = UITableView(frame: .zero, style: .grouped)
         tv.separatorStyle = .none
         tv.backgroundColor = .white
         tv.clipsToBounds = true
@@ -75,6 +75,7 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
         setLayout()
         setDelegate()
         registerCell()
+        addObserver()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -146,6 +147,18 @@ extension CopingTVC {
         copingTableView.dataSource = self
     }
     
+    private func addObserver() {
+        addObserverAction(.copingCellScrollToTop) { _ in
+            let topOffset = CGPoint(x: 0, y: 0)
+            self.copingTableView.setContentOffset(topOffset, animated: true)
+        }
+        
+        addObserverAction(.copingCellScrollToBottom) { _ in
+            let bottomOffset = CGPoint(x: 0, y: self.copingTableView.contentSize.height - self.copingTableView.bounds.height + self.copingTableView.contentInset.bottom)
+            self.copingTableView.setContentOffset(bottomOffset, animated: true)
+        }
+    }
+    
     func setData(category: String, data: CopingDataModel, isOnlyCategory: Bool){
         self.categoryLabel.text = "#\(category)"
         self.recommendList = data.recommend
@@ -157,37 +170,36 @@ extension CopingTVC {
     }
     
     private func updateTableViewLayout() {
+        let cellCalculator = CopingCellCalculator.shared
         var cellHeight: CGFloat {
-            let recommendListHeight = calculateCellHeight(tipList: recommendList)
-            let eatingListHeight = calculateCellHeight(tipList: eatingList)
+            let recommendListHeight = cellCalculator.calculateCellHeight(tipList: recommendList)
+            let eatingListHeight = cellCalculator.calculateCellHeight(tipList: eatingList)
             return recommendListHeight + eatingListHeight
         }
         
+        var tableViewHeight: CGFloat {
+            let calculatedHeight: CGFloat = headerHeight * 2 + cellHeight + bottomMargin
+
+            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            let top = window?.safeAreaInsets.top ?? 0
+            let bottom = window?.safeAreaInsets.bottom ?? 0
+            let screenHeight: CGFloat = UIScreen.main.bounds.height - top - bottom
+
+            let maximumHeight: CGFloat = screenHeight - 176
+            
+            print(calculatedHeight, maximumHeight)
+            if maximumHeight > calculatedHeight {
+                postObserverAction(.isOverFillCopingVC,object: false)
+                return calculatedHeight
+            } else {
+                postObserverAction(.isOverFillCopingVC,object: true)
+                return maximumHeight
+            }
+        }
+        
         copingTableView.snp.updateConstraints { make in
-            make.height.equalTo(headerHeight * 2 + cellHeight + bottomMargin)
+            make.height.equalTo(tableViewHeight)
         }
-    }
-    
-    private func calculateCellHeight(tipList: [String]) -> CGFloat {
-        guard !tipList.isEmpty else { return 0 }
-        var totalHeight: CGFloat = 0
-        let topMargin: CGFloat = 9
-        let bottomMargin: CGFloat = 9
-        let screenWidth = UIScreen.main.bounds.width
-        
-        let mockLabel = UILabel()
-        mockLabel.textColor = .helfmeBlack
-        mockLabel.font = .NotoRegular(size: 12)
-        mockLabel.numberOfLines = 0
-        mockLabel.lineBreakMode = .byCharWrapping
-        mockLabel.frame = CGRect(x: 0, y: 0, width: screenWidth - 170, height: 0)
-        
-        for tip in tipList {
-            mockLabel.text = tip
-            mockLabel.sizeToFit()
-            totalHeight += (mockLabel.frame.height + topMargin + bottomMargin)
-        }
-        return totalHeight
     }
 }
 
@@ -238,6 +250,34 @@ extension CopingTVC: UITableViewDataSource {
         } else {
             cell.setData(section: 1, content: eatingList[indexPath.row], isLast: eatingList.count - 1 == indexPath.row)
         }
+        cell.selectionStyle = .none
         return cell
+    }
+}
+
+struct CopingCellCalculator {
+    static let shared = CopingCellCalculator()
+    private init () { }
+    
+    func calculateCellHeight(tipList: [String]) -> CGFloat {
+        guard !tipList.isEmpty else { return 0 }
+        var totalHeight: CGFloat = 0
+        let topMargin: CGFloat = 9
+        let bottomMargin: CGFloat = 9
+        let screenWidth = UIScreen.main.bounds.width
+        
+        let mockLabel = UILabel()
+        mockLabel.textColor = .helfmeBlack
+        mockLabel.font = .NotoRegular(size: 12)
+        mockLabel.numberOfLines = 0
+        mockLabel.lineBreakMode = .byCharWrapping
+        mockLabel.frame = CGRect(x: 0, y: 0, width: screenWidth - 170, height: 0)
+        
+        for tip in tipList {
+            mockLabel.text = tip
+            mockLabel.sizeToFit()
+            totalHeight += (mockLabel.frame.height + topMargin + bottomMargin)
+        }
+        return totalHeight
     }
 }

@@ -19,6 +19,8 @@ class CopingTabVC: UIViewController {
     
     // MARK: - Properties
     var topScrollAnimationNotFinished: Bool = true
+    private var isOverFlowTableView: Bool = false
+    private let panGesture = UIPanGestureRecognizer()
     private var copingTVC = CopingTVC()
     private let disposeBag = DisposeBag()
     private var categoryNameList: [String] = []
@@ -56,6 +58,7 @@ class CopingTabVC: UIViewController {
         setDelegate()
         registerCell()
         addPanGesture()
+        addObserver()
     }
 }
 
@@ -67,10 +70,9 @@ extension CopingTabVC {
         view.addSubviews(copingTabTableView)
         
         copingTabTableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(1500)
         }
     }
     
@@ -84,32 +86,44 @@ extension CopingTabVC {
         copingTabTableView.dataSource = self
     }
     
+    private func addObserver() {
+        addObserverAction(.isOverFillCopingVC) { noti in
+            if let state = noti.object as? Bool {
+                self.isOverFlowTableView = state
+            }
+        }
+    }
+    
     private func fetchData() {
         getMenuPrescription()
         copingTabTableView.reloadData()
     }
     
     private func addPanGesture() {
-        let panGesture = UIPanGestureRecognizer()
         view.addGestureRecognizer(panGesture)
         panGesture.rx.event.asDriver { _ in .never() }
             .drive(onNext: { [weak self] sender in
-                let velocity = sender.velocity(in: self?.view)
+                guard let self = self else { return }
+                let velocity = sender.velocity(in: self.view)
                 let isVertical = abs(velocity.y) > abs(velocity.x)
                 switch (isVertical, velocity.x, velocity.y) {
                 case (true, _, let y) where y < 0:
-                    self?.delegate?.scrollStarted(velocity: -10, scrollView: UIScrollView())
+                    self.delegate?.scrollStarted(velocity: -10, scrollView: UIScrollView())
+                    if self.isOverFlowTableView { self.postObserverAction(.copingCellScrollToBottom) }
                     
                 case (true, _, let y) where y > 0:
-                    self?.swipeDelegate?.swipeToDismiss()
-                    self?.delegate?.childViewScrollDidEnd(type: .coping)
-                    
+                    self.swipeDelegate?.swipeToDismiss()
+                    self.delegate?.childViewScrollDidEnd(type: .coping)
+                    if self.isOverFlowTableView { self.postObserverAction(.copingCellScrollToTop) }
+
                 case (false, let x, _) where x > 0:
-                    self?.panDelegate?.panGestureSwipe(isRight: false)
-                    
+                    self.panDelegate?.panGestureSwipe(isRight: false)
+                    if self.isOverFlowTableView { self.postObserverAction(.copingCellScrollToTop) }
+
                 case (false, let x, _) where x < 0:
-                    self?.panDelegate?.panGestureSwipe(isRight: true)
-                    
+                    self.panDelegate?.panGestureSwipe(isRight: true)
+                    if self.isOverFlowTableView { self.postObserverAction(.copingCellScrollToTop) }
+
                 default: return
                 }
             }).disposed(by: disposeBag)
@@ -164,10 +178,11 @@ extension CopingTabVC: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTVC.className, for: indexPath) as? CategoryTVC else { return UITableViewCell() }
             cell.setCategoryData(nameList: categoryNameList)
             cell.clickedCategoryIndex = { [weak self] idx in
-                    self?.currentIdx = idx
-                    self?.copingTabTableView.reloadData()
-                }
-
+                self?.currentIdx = idx
+                self?.postObserverAction(.copingCellScrollToTop)
+                self?.copingTabTableView.reloadData()
+            }
+            
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CopingTVC.className, for: indexPath) as? CopingTVC else { return UITableViewCell() }
@@ -177,7 +192,7 @@ extension CopingTabVC: UITableViewDataSource {
                              data    : copingDataList[currentIdx],
                              isOnlyCategory: copingDataList.count == 1)
             }
-
+            
             return cell
         }
     }
