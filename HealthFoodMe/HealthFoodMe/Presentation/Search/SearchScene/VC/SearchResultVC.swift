@@ -27,6 +27,7 @@ final class SearchResultVC: UIViewController {
     var fromSearchCellInitial: String = ""
     var searchContent: String = ""
     var isCategory: Bool = false
+    private var category: String?
     weak var delegate: SearchResultVCDelegate?
     private var isMapView: Bool = true
     var searchResultList: [SearchResultDataModel] = []
@@ -197,6 +198,7 @@ extension SearchResultVC {
             searchContent = text
         }
         if isCategory {
+            category = keyword
             requestCategorySearchResult(searchRequest: SearchCategoryRequestEntity(longitude: lng, latitude: lat,
                                                                                    category: keyword), fromRecent: fromRecent) {
                 self.mapViewController.initialId = self.fromSearchCellInitial
@@ -425,7 +427,7 @@ extension SearchResultVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTVC.className, for: indexPath) as? SearchResultTVC else { return UITableViewCell() }
-        cell.setData(data: searchResultList[indexPath.row])
+        cell.setData(data: searchResultList[indexPath.row], category: category)
         return cell
     }
 }
