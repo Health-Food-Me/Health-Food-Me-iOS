@@ -31,9 +31,8 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
             updateTableViewLayout()
         }
     }
-    private let headerHeight = 130
-    private let rowHeight = 38
-    private let bottomMargin = 115
+    private let headerHeight: CGFloat = 126
+    private let bottomMargin: CGFloat = 52
     
     // MARK: - UI Components
     
@@ -106,6 +105,7 @@ extension CopingTVC {
     }
     
     private func setLayout() {
+
         contentView.addSubviews(copingTableView, copingEmptyView, categoryView)
         
         categoryView.snp.makeConstraints { make in
@@ -125,7 +125,7 @@ extension CopingTVC {
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(16)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(headerHeight * 2 + rowHeight * (recommendList.count + eatingList.count) + bottomMargin)
+            make.height.equalTo(0)
         }
         
         copingEmptyView.snp.makeConstraints { make in
@@ -157,9 +157,37 @@ extension CopingTVC {
     }
     
     private func updateTableViewLayout() {
-        copingTableView.snp.updateConstraints { make in
-            make.height.equalTo(headerHeight * 2 + rowHeight * (recommendList.count + eatingList.count) + bottomMargin)
+        var cellHeight: CGFloat {
+            let recommendListHeight = calculateCellHeight(tipList: recommendList)
+            let eatingListHeight = calculateCellHeight(tipList: eatingList)
+            return recommendListHeight + eatingListHeight
         }
+        
+        copingTableView.snp.updateConstraints { make in
+            make.height.equalTo(headerHeight * 2 + cellHeight + bottomMargin)
+        }
+    }
+    
+    private func calculateCellHeight(tipList: [String]) -> CGFloat {
+        guard !tipList.isEmpty else { return 0 }
+        var totalHeight: CGFloat = 0
+        let topMargin: CGFloat = 9
+        let bottomMargin: CGFloat = 9
+        let screenWidth = UIScreen.main.bounds.width
+        
+        let mockLabel = UILabel()
+        mockLabel.textColor = .helfmeBlack
+        mockLabel.font = .NotoRegular(size: 12)
+        mockLabel.numberOfLines = 0
+        mockLabel.lineBreakMode = .byCharWrapping
+        mockLabel.frame = CGRect(x: 0, y: 0, width: screenWidth - 170, height: 0)
+        
+        for tip in tipList {
+            mockLabel.text = tip
+            mockLabel.sizeToFit()
+            totalHeight += (mockLabel.frame.height + topMargin + bottomMargin)
+        }
+        return totalHeight
     }
 }
 
@@ -170,7 +198,7 @@ extension CopingTVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 130
+        return headerHeight
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -206,9 +234,9 @@ extension CopingTVC: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContentTVC.className, for: indexPath) as? ContentTVC else { return UITableViewCell() }
         
         if indexPath.section == 0 {
-            cell.setData(section: 0, content: recommendList[indexPath.row])
+            cell.setData(section: 0, content: recommendList[indexPath.row], isLast: recommendList.count - 1 == indexPath.row)
         } else {
-            cell.setData(section: 1, content: eatingList[indexPath.row])
+            cell.setData(section: 1, content: eatingList[indexPath.row], isLast: eatingList.count - 1 == indexPath.row)
         }
         return cell
     }
