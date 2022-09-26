@@ -40,7 +40,13 @@ final class MenuTabVC: UIViewController {
 			}
 		}
 	}
-	var menuBoard: [String] = []
+	var menuBoard: [String] = [] {
+		didSet {
+			DispatchQueue.main.async {
+				self.menuCV.reloadData()
+			}
+		}
+	}
 	
 	let panGesture = UIPanGestureRecognizer()
 	weak var delegate: ScrollDeliveryDelegate?
@@ -230,7 +236,8 @@ extension MenuTabVC: UICollectionViewDelegate {
 extension MenuTabVC: UICollectionViewDataSource {
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return 2
+		let count: Int = self.menuBoard.count == 0 ? 1 : 2
+		return count
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
