@@ -328,15 +328,12 @@ extension ReviewDetailVC: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
         let yVelocity = scrollView.panGestureRecognizer.velocity(in: scrollView).y
-        print(yVelocity)
-        print(scrollView.contentOffset.y)
         if yVelocity > 300 && scrollView.contentOffset.y == 0 {
             delegate?.childViewScrollDidEnd(type: .menu)
             return
         }
         
         if yVelocity < 0 && topScrollAnimationNotFinished {
-            print(reviewCV.isScrollEnabled)
             reviewCV.isScrollEnabled = false
         }
         delegate?.scrollStarted(velocity: yVelocity, scrollView: scrollView)
