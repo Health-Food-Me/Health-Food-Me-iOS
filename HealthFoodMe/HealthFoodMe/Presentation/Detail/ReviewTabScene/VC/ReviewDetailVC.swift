@@ -64,7 +64,6 @@ class ReviewDetailVC: UIViewController {
         setDelegate()
         registerCell()
         addObserver()
-//        addPanGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
