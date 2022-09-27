@@ -87,9 +87,9 @@ extension CopingTabVC {
     }
     
     private func addObserver() {
-        addObserverAction(.isOverFillCopingVC) { noti in
+        addObserverAction(.copingPanGestureEnabled) { noti in
             if let state = noti.object as? Bool {
-                self.isOverFlowTableView = state
+                self.panGesture.isEnabled = state
             }
         }
     }
@@ -109,20 +109,20 @@ extension CopingTabVC {
                 switch (isVertical, velocity.x, velocity.y) {
                 case (true, _, let y) where y < 0:
                     self.delegate?.scrollStarted(velocity: -10, scrollView: UIScrollView())
-                    if self.isOverFlowTableView { self.postObserverAction(.copingCellScrollToBottom) }
+//                    if self.isOverFlowTableView { self.postObserverAction(.copingCellScrollToBottom) }
                     
                 case (true, _, let y) where y > 0:
                     self.swipeDelegate?.swipeToDismiss()
                     self.delegate?.childViewScrollDidEnd(type: .coping)
-                    if self.isOverFlowTableView { self.postObserverAction(.copingCellScrollToTop) }
+//                    if self.isOverFlowTableView { self.postObserverAction(.copingCellScrollToTop) }
 
                 case (false, let x, _) where x > 0:
                     self.panDelegate?.panGestureSwipe(isRight: false)
-                    if self.isOverFlowTableView { self.postObserverAction(.copingCellScrollToTop) }
+//                    if self.isOverFlowTableView { self.postObserverAction(.copingCellScrollToTop) }
 
                 case (false, let x, _) where x < 0:
                     self.panDelegate?.panGestureSwipe(isRight: true)
-                    if self.isOverFlowTableView { self.postObserverAction(.copingCellScrollToTop) }
+//                    if self.isOverFlowTableView { self.postObserverAction(.copingCellScrollToTop) }
 
                 default: return
                 }
@@ -179,7 +179,6 @@ extension CopingTabVC: UITableViewDataSource {
             cell.setCategoryData(nameList: categoryNameList)
             cell.clickedCategoryIndex = { [weak self] idx in
                 self?.currentIdx = idx
-                self?.postObserverAction(.copingCellScrollToTop)
                 self?.copingTabTableView.reloadData()
             }
             

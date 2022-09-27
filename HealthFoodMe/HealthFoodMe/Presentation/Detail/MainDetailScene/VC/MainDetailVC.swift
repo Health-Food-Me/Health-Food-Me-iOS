@@ -30,7 +30,9 @@ class MainDetailVC: UIViewController {
     private var phoneMenuTouched: Bool = false
     private var navigationTitle: String = ""
     private var isOpenned: Bool = false
+    private var copingTapPanGestureDisabled: Bool = false
     private var mainInfoInitialReload: Bool = true
+    private var lastContentOffset: CGFloat = 0
     private var isBrowsing: Bool {
         return UserManager.shared.isBrowsing
     }
@@ -305,6 +307,8 @@ extension MainDetailVC: UITableViewDelegate {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollHeaderHeight = mainTableView.rowHeight
         
+        // scrollHeaderHeight 처리 부분
+    
         if scrollView.contentOffset.y <= scrollHeaderHeight {
             if scrollView.contentOffset.y >= 0 {
                 scrollView.contentInset = UIEdgeInsets(top: -scrollView.contentOffset.y, left: 0, bottom: 0, right: 0)
@@ -312,6 +316,13 @@ extension MainDetailVC: UITableViewDelegate {
         } else {
             scrollView.contentInset = UIEdgeInsets(top: -(scrollHeaderHeight+1), left: 0, bottom: 0, right: 0)
         }
+        
+        // 외식 대처법 에서 스와이프 액션 처리를 위해서 상/하 구분
+        if (self.lastContentOffset > scrollView.contentOffset.y) && copingTapPanGestureDisabled{
+            postObserverAction(.copingPanGestureEnabled,object: true)
+            copingTapPanGestureDisabled = false
+        }
+        self.lastContentOffset = scrollView.contentOffset.y
     }
 }
 
@@ -457,6 +468,10 @@ extension MainDetailVC: ScrollDeliveryDelegate {
         if velocity < 0 {
             self.mainTableView.scrollToRow(at: IndexPath.init(row: 0, section: 1), at: .top, animated: true)
             setNavigationTitle(isShown: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.postObserverAction(.copingPanGestureEnabled,object: false)
+                self.copingTapPanGestureDisabled = true
+            }
         }
     }
     

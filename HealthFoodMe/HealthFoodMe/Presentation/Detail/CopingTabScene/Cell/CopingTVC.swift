@@ -147,18 +147,6 @@ extension CopingTVC {
         copingTableView.dataSource = self
     }
     
-    private func addObserver() {
-        addObserverAction(.copingCellScrollToTop) { _ in
-            let topOffset = CGPoint(x: 0, y: 0)
-            self.copingTableView.setContentOffset(topOffset, animated: true)
-        }
-        
-        addObserverAction(.copingCellScrollToBottom) { _ in
-            let bottomOffset = CGPoint(x: 0, y: self.copingTableView.contentSize.height - self.copingTableView.bounds.height + self.copingTableView.contentInset.bottom)
-            self.copingTableView.setContentOffset(bottomOffset, animated: true)
-        }
-    }
-    
     func setData(category: String, data: CopingDataModel, isOnlyCategory: Bool){
         self.categoryLabel.text = "#\(category)"
         self.recommendList = data.recommend
@@ -179,22 +167,7 @@ extension CopingTVC {
         
         var tableViewHeight: CGFloat {
             let calculatedHeight: CGFloat = headerHeight * 2 + cellHeight + bottomMargin
-
-            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-            let top = window?.safeAreaInsets.top ?? 0
-            let bottom = window?.safeAreaInsets.bottom ?? 0
-            let screenHeight: CGFloat = UIScreen.main.bounds.height - top - bottom
-
-            let maximumHeight: CGFloat = screenHeight - 176
-            
-            print(calculatedHeight, maximumHeight)
-            if maximumHeight > calculatedHeight {
-                postObserverAction(.isOverFillCopingVC,object: false)
-                return calculatedHeight
-            } else {
-                postObserverAction(.isOverFillCopingVC,object: true)
-                return maximumHeight
-            }
+            return calculatedHeight
         }
         
         copingTableView.snp.updateConstraints { make in
