@@ -75,7 +75,6 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
         setLayout()
         setDelegate()
         registerCell()
-        addObserver()
     }
     
     required init?(coder aDecoder: NSCoder) {
