@@ -149,7 +149,6 @@ extension MenuTabVC {
 		
 		self.menuData = pickModel
 		self.menuBoard = restaurantMenuBoard
-//		print(menuBoard, "🐬")
 	}
 	
 	
@@ -266,7 +265,6 @@ extension MenuTabVC: UICollectionViewDataSource {
 		case .menuImage:
 			guard let imageCell = menuCV.dequeueReusableCell(withReuseIdentifier: AllImageCVC.className, for: indexPath) as? AllImageCVC
 			else { return UICollectionViewCell() }
-//			print(self.menuBoard, "❤️")
 			DispatchQueue.main.async {
 				imageCell.setData(menuBoardList: self.menuBoard)
 			}

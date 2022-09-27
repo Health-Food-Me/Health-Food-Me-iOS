@@ -78,7 +78,6 @@ extension AllImageCVC: UICollectionViewDataSource {
         guard let allImageCell = menuImageCV.dequeueReusableCell(withReuseIdentifier: ImageCVC.className, for: indexPath) as? ImageCVC
         else { return UICollectionViewCell() }
         allImageCell.setData(menuBoard: imgURLList[indexPath.row])
-//        print(imgURLList[indexPath.row], "👀👀👀")
         return allImageCell
     }
 }
