@@ -64,6 +64,7 @@ class ReviewDetailVC: UIViewController {
         setDelegate()
         registerCell()
         addObserver()
+//        addPanGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -464,7 +465,8 @@ extension ReviewDetailVC: UICollectionViewDelegateFlowLayout {
                 if reviewData.count == 0 {
                     let cellWidth = width
                     let cellHeight = width * 200/width
-                    return CGSize(width: cellWidth, height: cellHeight)
+                    let maximumHeight: CGFloat = 1000
+                    return CGSize(width: cellWidth, height: cellHeight + maximumHeight)
                 } else {
                     let cellWidth = width
                     let cellHeight = calculateReviewCellHeight(containsPhoto: reviewData[indexPath.row].data.reviewImageURLList?.count != 0,
