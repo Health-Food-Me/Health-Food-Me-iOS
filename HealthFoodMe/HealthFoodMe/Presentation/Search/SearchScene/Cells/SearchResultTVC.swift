@@ -65,7 +65,7 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
     private lazy var starStackView: UIStackView = {
         let sv = UIStackView()
         sv.addArrangedSubviews(starView, starLabel)
-        sv.alignment = .top
+        sv.alignment = .leading
         sv.axis = .horizontal
         sv.spacing = 4
         return sv
