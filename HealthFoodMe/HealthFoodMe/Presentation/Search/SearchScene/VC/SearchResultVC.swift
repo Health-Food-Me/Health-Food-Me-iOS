@@ -50,7 +50,7 @@ final class SearchResultVC: UIViewController {
         let tf = UITextField()
         tf.leftViewMode = .always
         tf.rightViewMode = .always
-        tf.font = .NotoRegular(size: 15)
+        tf.font = .NotoRegular(size: 16)
         tf.text = searchContent
         tf.textColor = .helfmeBlack
         tf.backgroundColor = .helfmeWhite

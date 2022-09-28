@@ -47,7 +47,7 @@ final class SearchVC: UIViewController {
         tf.rightViewMode = .never
         tf.enablesReturnKeyAutomatically = true
         tf.attributedPlaceholder = NSAttributedString(string: I18N.Search.search, attributes: [NSAttributedString.Key.foregroundColor: UIColor.helfmeTagGray])
-        tf.font = .NotoRegular(size: 15)
+        tf.font = .NotoRegular(size: 16)
         tf.textColor = .helfmeBlack
         tf.backgroundColor = .helfmeWhite
         tf.addTarget(self, action: #selector(editingChanged(_:)), for: .editingChanged)
