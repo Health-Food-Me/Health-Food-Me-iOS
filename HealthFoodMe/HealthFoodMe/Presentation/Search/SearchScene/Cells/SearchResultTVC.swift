@@ -36,7 +36,7 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
     private var foodLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .mainGreen
-        lb.font = .NotoMedium(size: 10)
+        lb.font = .NotoMedium(size: 12)
         return lb
     }()
     
