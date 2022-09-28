@@ -237,7 +237,7 @@ extension MapDetailSummaryView: UICollectionViewDelegateFlowLayout {
     private func isDoubleLineHeight(tags: [String]) -> Bool {
         var width: CGFloat = 0
         tags.forEach { tag in
-            width += tag.size(withAttributes: [NSAttributedString.Key.font: UIFont.NotoRegular(size: 10)]).width
+            width += tag.size(withAttributes: [NSAttributedString.Key.font: UIFont.NotoMedium(size: 10)]).width
         }
         return width > 200
     }
