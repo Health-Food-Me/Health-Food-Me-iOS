@@ -29,7 +29,7 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
     private var storeImageView: UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 8
-        iv.image = ImageLiterals.MainDetail.tempSalady
+        iv.clipsToBounds = true
         return iv
     }()
     
