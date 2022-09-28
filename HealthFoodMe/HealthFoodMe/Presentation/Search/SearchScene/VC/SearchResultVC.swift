@@ -356,9 +356,9 @@ extension SearchResultVC {
     private func viewMap() {
         UIView.animate(withDuration: 0.2, animations: {
             self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 585)
+        }, completion: { _ in
+            self.mapViewController.showLocationButton()
         })
-        
-        mapViewController.showSummaryViewForResult()
         
         setUIForViewMap()
     }
@@ -367,7 +367,7 @@ extension SearchResultVC {
         UIView.animate(withDuration: 0.2, animations: {
             self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
         })
-        mapViewController.showSummaryViewForResult()
+        mapViewController.showSummaryView()
         mapViewController.setSelectPointForSummary()
         
         setUIForViewMap()
@@ -452,6 +452,7 @@ extension SearchResultVC: SupplementMapVCDelegate {
     func supplementMapMarkerClicked() {
         UIView.animate(withDuration: 0.2) {
             self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
+            self.mapViewController.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
         } completion: { _ in
             self.mapViewController.showSummaryView()
         }
