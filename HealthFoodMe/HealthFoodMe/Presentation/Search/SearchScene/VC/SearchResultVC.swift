@@ -89,7 +89,7 @@ final class SearchResultVC: UIViewController {
         btn.titleLabel?.font = .NotoRegular(size: 12)
         btn.isHidden = true
         btn.semanticContentAttribute = .forceLeftToRight
-        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 6)
+        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 20)
         return btn
     }()
     
@@ -101,7 +101,7 @@ final class SearchResultVC: UIViewController {
         btn.titleLabel?.font = .NotoRegular(size: 12)
         btn.isHidden = true
         btn.semanticContentAttribute = .forceLeftToRight
-        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 6)
+        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 20)
         return btn
     }()
     
@@ -318,15 +318,13 @@ extension SearchResultVC {
         viewMapButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().inset(20)
-            $0.width.equalTo(67)
-            $0.height.equalTo(16)
+            $0.width.equalTo(72)
         }
         
         viewListButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
+            $0.top.equalToSuperview().offset(18)
             $0.trailing.equalToSuperview().inset(20)
-            $0.width.equalTo(67)
-            $0.height.equalTo(14)
+            $0.width.equalTo(72)
         }
         
         searchResultTableView.snp.makeConstraints {

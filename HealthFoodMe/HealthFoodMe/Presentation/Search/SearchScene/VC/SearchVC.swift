@@ -39,11 +39,7 @@ final class SearchVC: UIViewController {
     
     // MARK: - UI Components
     
-    private let searchView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .mainRed
-        return view
-    }()
+    private let searchView: UIView = UIView()
     
     private lazy var searchTextField: UITextField = {
         let tf = UITextField()
@@ -299,8 +295,7 @@ extension SearchVC {
         viewMapButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().inset(20)
-            $0.width.equalTo(67)
-            $0.height.equalTo(16)
+            $0.width.equalTo(72)
         }
         
         searchView.snp.makeConstraints {
