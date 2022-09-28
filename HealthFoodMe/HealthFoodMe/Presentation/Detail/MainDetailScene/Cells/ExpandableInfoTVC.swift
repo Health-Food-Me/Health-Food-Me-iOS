@@ -26,8 +26,8 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
     private let iconImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
-        iv.clipsToBounds = true
-        iv.image = ImageLiterals.MainDetail.locationIcon
+        iv.clipsToBounds = false
+        iv.image = ImageLiterals.MainDetail.timeIcon
         iv.isHidden = false
         return iv
     }()
@@ -69,7 +69,7 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
         setLayout()
-
+        
     }
     
     required init?(coder: NSCoder) {
@@ -86,6 +86,7 @@ final class ExpandableInfoTVC: UITableViewCell, UITableViewRegisterable {
 extension ExpandableInfoTVC {
     private func setUI() {
         self.contentView.backgroundColor = .helfmeWhite
+        self.contentView.clipsToBounds = false
     }
     
     private func setLayout() {
@@ -93,8 +94,8 @@ extension ExpandableInfoTVC {
         
         iconImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
-            make.width.height.equalTo(15)
-            make.top.equalToSuperview().offset(8)
+            make.width.height.equalTo(18)
+            make.top.equalToSuperview().offset(7)
         }
         
         infoLabel.snp.makeConstraints { make in
@@ -133,19 +134,19 @@ extension ExpandableInfoTVC {
         case 0:
             iconImageView.image = ImageLiterals.MainDetail.locationIcon
             infoLabel.text = expandableData.location
-                toggleButtonInfnoLabel.isHidden = true
+            toggleButtonInfnoLabel.isHidden = true
         case 1:
             iconImageView.image = ImageLiterals.MainDetail.timeIcon
             toggleButton.isHidden = !expandableData.isExpandable
             let currentDay = Date().dayNumberOfWeek()
             
             if expandableData.labelText.count > 0 {
-
+                
                 var result = NSMutableAttributedString()
                 for (index,line) in expandableData.labelText.enumerated() {
                     if  isOpenned       &&
-                        currentDay >= 0 &&
-                        !expandableData.labelText[currentDay].isEmpty {
+                            currentDay >= 0 &&
+                            !expandableData.labelText[currentDay].isEmpty {
                         let attributedStr = NSMutableAttributedString(string: "\(line)\n")
                         
                         let font: UIFont = index == currentDay ?
@@ -155,15 +156,15 @@ extension ExpandableInfoTVC {
                         UIColor.black : UIColor.helfmeGray1
                         
                         attributedStr.addAttributes([.font: font,
-                                                        .foregroundColor: textColor]
-                                                        ,range: NSRange(location: 0, length: attributedStr.string.count))
-
+                                                     .foregroundColor: textColor]
+                                                    ,range: NSRange(location: 0, length: attributedStr.string.count))
+                        
                         result.append(attributedStr)
                     } else {
                         let attributedString =  NSMutableAttributedString(string: expandableData.labelText[currentDay])
                         attributedString.addAttributes([.font: UIFont.NotoMedium(size: 12),
                                                         .foregroundColor: UIColor.helfmeGray1]
-                                                        ,range: NSRange(location: 0, length: attributedString.string.count))
+                                                       ,range: NSRange(location: 0, length: attributedString.string.count))
                         result = attributedString
                     }
                 }
@@ -173,8 +174,6 @@ extension ExpandableInfoTVC {
                 toggleButtonInfnoLabel.isHidden = false
                 toggleButtonInfnoLabel.isEnabled = true
                 toggleButton.isEnabled = true
-
-
             } else {
                 toggleButton.isHidden = true
                 toggleButton.isEnabled = false
@@ -183,17 +182,16 @@ extension ExpandableInfoTVC {
                 toggleButtonInfnoLabel.isHidden = true
                 toggleButtonInfnoLabel.isEnabled = false
                 infoLabel.text = "영업시간 정보 없음"
-
+                
                 infoLabel.sizeToFit()
             }
-
         default:
             iconImageView.image = ImageLiterals.MainDetail.phoneIcon
             let telephoneString = expandableData.telephone
             let attributeString = NSMutableAttributedString(string: telephoneString)
             attributeString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: telephoneString.count))
             infoLabel.attributedText = attributeString
-                toggleButtonInfnoLabel.isHidden = true
+            toggleButtonInfnoLabel.isHidden = true
             setTapGesture()
         }
         
