@@ -27,6 +27,7 @@ final class SearchVC: UIViewController {
     let realm = try? Realm()
     var searchType: SearchType = SearchType.recent {
         didSet {
+            searchTableView.setContentOffset(CGPointZero, animated: false)
             searchTableView.reloadData()
         }
     }
@@ -220,6 +221,7 @@ extension SearchVC {
     }
     
     private func fetchSearchResultData(keyword: String, fromRecent: Bool, isCategory: Bool) {
+        searchTableView.setContentOffset(CGPointZero, animated: false)
         let NMGPosition = self.locationManager?.currentLatLng()
         var lng: Double = 0.0
         var lat: Double = 0.0
@@ -566,7 +568,6 @@ extension SearchVC {
                     }
                     self.searchResultList = self.searchResultList.sorted(by: { $0.distance < $1.distance })
                     self.isSearchResult(fromRecent: fromRecent, isCategory: false)
-                    self.searchTableView.reloadData()
                 }
             default:
                 break;
@@ -590,7 +591,6 @@ extension SearchVC {
                     }
                     self.searchResultList = self.searchResultList.sorted(by: { $0.distance < $1.distance })
                     self.isSearchResult(fromRecent: fromRecent, isCategory: true)
-                    self.searchTableView.reloadData()
                 }
             default:
                 break;
