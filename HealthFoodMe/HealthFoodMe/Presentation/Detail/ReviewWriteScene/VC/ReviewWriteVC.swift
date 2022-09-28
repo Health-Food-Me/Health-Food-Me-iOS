@@ -291,7 +291,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         let lb = UILabel()
         lb.text = I18N.Detail.Review.questionPhotoOption
         lb.textColor = .helfmeGray2
-        lb.font = .NotoRegular(size: 10)
+        lb.font = .NotoBold(size: 12)
         return lb
     }()
     
