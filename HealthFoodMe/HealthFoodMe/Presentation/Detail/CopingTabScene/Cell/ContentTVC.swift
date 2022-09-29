@@ -61,6 +61,7 @@ extension ContentTVC {
     }
     
     private func setLayout() {
+        let screenWidth = UIScreen.main.bounds.width
         self.contentView.addSubviews(contentStackView)
         
         checkImageView.snp.makeConstraints {  make in
@@ -68,7 +69,7 @@ extension ContentTVC {
         }
         
         contentLabel.snp.makeConstraints { make in
-            make.width.equalTo(228)
+            make.width.equalTo(screenWidth - 170)
             make.trailing.equalTo(contentStackView.snp.trailing)
         }
         
@@ -79,12 +80,20 @@ extension ContentTVC {
         }
     }
     
-    func setData(section: Int, content: String) {
+    func setData(section: Int, content: String, isLast: Bool) {
         if section == 0 {
             checkImageView.image = ImageLiterals.Coping.icnTipGreen
         } else {
             checkImageView.image = ImageLiterals.Coping.icnTipPink
         }
         contentLabel.text = content
+        updateBottomCellMargin(isLast)
+    }
+    
+    private func updateBottomCellMargin( _ isLast: Bool) {
+        let bottomMargin: CGFloat = isLast ? 52 : 9
+        contentStackView.snp.updateConstraints { make in
+            make.bottom.equalToSuperview().inset(bottomMargin)
+        }
     }
 }
