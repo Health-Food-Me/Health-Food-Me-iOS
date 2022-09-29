@@ -355,7 +355,7 @@ extension SearchResultVC {
     
     private func viewMap() {
         UIView.animate(withDuration: 0.2, animations: {
-            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 585)
+            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: self.height * (585/815))
         }, completion: { _ in
             self.mapViewController.showLocationButton()
         })
@@ -445,7 +445,7 @@ extension SearchResultVC: UIScrollViewDelegate {
 extension SearchResultVC: SupplementMapVCDelegate {
     func supplementMapClicked() {
         UIView.animate(withDuration: 0.2) {
-            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 585)
+            self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: self.height * (585/815))
         }
     }
     
