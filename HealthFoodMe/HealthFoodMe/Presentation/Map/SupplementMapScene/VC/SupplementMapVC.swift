@@ -17,6 +17,11 @@ protocol SupplementMapVCDelegate: AnyObject {
     func supplementMapMarkerClicked()
 }
 
+struct cancelScrap {
+    var restaurantId: String
+    var isCancel: Bool
+}
+
 class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
     
     // MARK: - Properties
@@ -37,6 +42,7 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
     var IDsForMap: [String] = []
     var mapType = SupplementMapType.scrap
     var targetMarkerPointList: [MapPointDataModel] = []
+    var cancelScrapClosure: ((cancelScrap) -> (Void))?
     
     // MARK: - UI Components
     
@@ -49,6 +55,7 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
     private lazy var customNavigationBar: HelfmeNaviBar = {
         let view = HelfmeNaviBar()
         view.buttonClosure = {
+            self.cancelScrapClosure?(cancelScrap(restaurantId: self.currentRestaurantId, isCancel: !self.mapDetailSummaryView.scrapButton.isSelected))
             self.popViewController()
         }
         return view
