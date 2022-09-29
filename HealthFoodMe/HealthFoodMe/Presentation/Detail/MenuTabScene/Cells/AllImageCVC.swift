@@ -13,7 +13,9 @@ class AllImageCVC: UICollectionViewCell, UICollectionViewRegisterable {
     // MARK: - Properties
     
     static var isFromNib = false
-    let imgURLList = ["123", "123", "123", "123"] // 테스트용
+    var imgURLList = [String]() {didSet {
+        menuImageCV.reloadData()
+    }}
     
     // MARK: - UI Components
     lazy var menuImageCV: UICollectionView = {
@@ -60,18 +62,22 @@ extension AllImageCVC {
             make.edges.equalToSuperview()
         }
     }
+    
+    func setData(menuBoardList: [String]) {
+        self.imgURLList = menuBoardList
+    }
 }
 
 extension AllImageCVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4 //임시로 넣어둔 값 (서버 붙일때 수정 예정)
+        return imgURLList.count
     }
         
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let allImageCell = menuImageCV.dequeueReusableCell(withReuseIdentifier: ImageCVC.className, for: indexPath) as? ImageCVC
         else { return UICollectionViewCell() }
-//        allImageCell.setData(menuData: MenuTabVC().menuData[indexPath.row])
+        allImageCell.setData(menuBoard: imgURLList[indexPath.row])
         return allImageCell
     }
 }

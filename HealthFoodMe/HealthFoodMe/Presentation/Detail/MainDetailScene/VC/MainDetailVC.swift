@@ -553,7 +553,7 @@ extension MainDetailVC {
                         self.restaurantName = data.restaurant.name
                         self.mainInfoTVC.isInitialReload = self.mainInfoInitialReload
                         self.mainInfoTVC.setData(data: data)
-                        self.menuTabVC.setData(data: data.menu)
+                        self.menuTabVC.setData(data: data.menu, restaurantMenuBoard: data.restaurant.menuBoard)
                         self.reviewTabVC.restaurantName = data.restaurant.name
                         self.restaurantName = data.restaurant.name
                         self.scrapButtonInstance.isSelected = data.restaurant.isScrap

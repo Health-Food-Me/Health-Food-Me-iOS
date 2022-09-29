@@ -19,7 +19,3 @@ struct MenuDataModel: Codable {
     let fat: Int?
     let per: String?
 }
-
-extension MenuDataModel {
-
-}
