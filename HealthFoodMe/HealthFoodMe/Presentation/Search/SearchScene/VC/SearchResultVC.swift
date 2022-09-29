@@ -434,13 +434,13 @@ extension SearchResultVC: UITableViewDataSource {
 
 extension SearchResultVC: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y == 0 {
-            if isMapView {
+        if scrollView.contentOffset.y == 0 && isMapView {
                 viewList()
-            }
         }
     }
 }
+
+// MARK: - SupplementMapVCDelegate
 
 extension SearchResultVC: SupplementMapVCDelegate {
     func supplementMapClicked() {
