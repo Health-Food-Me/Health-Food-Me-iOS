@@ -75,7 +75,7 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
         return bt
     }()
     
-    private var mapDetailSummaryView = MapDetailSummaryView()
+    var mapDetailSummaryView = MapDetailSummaryView()
     
     // MARK: - View Life Cycle
     
@@ -461,20 +461,15 @@ extension SupplementMapVC {
         }
     }
     
-    func showSummaryViewForResult() {
-        let summaryViewHeight: CGFloat = 189
+    func showLocationButton() {
+        let topSafeArea = UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0.0
         self.mapDetailSummaryView.snp.updateConstraints { make in
-            make.top.equalToSuperview().inset(UIScreen.main.bounds.height - summaryViewHeight)
+            make.top.equalToSuperview().offset(641 + topSafeArea)
         }
         
         let mapDetailViewTopCosntraint = self.mapDetailSummaryView.snp.top
         self.myLocationButton.snp.updateConstraints { make in
             make.bottom.equalTo(mapDetailViewTopCosntraint).offset(-12)
-        }
-        
-        UIView.animate(withDuration: 0.3, delay: 0) {
-            self.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: 0)
-            self.view.layoutIfNeeded()
         }
     }
     

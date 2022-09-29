@@ -50,7 +50,7 @@ final class SearchResultVC: UIViewController {
         let tf = UITextField()
         tf.leftViewMode = .always
         tf.rightViewMode = .always
-        tf.font = .NotoRegular(size: 15)
+        tf.font = .NotoRegular(size: 16)
         tf.text = searchContent
         tf.textColor = .helfmeBlack
         tf.backgroundColor = .helfmeWhite
@@ -89,7 +89,7 @@ final class SearchResultVC: UIViewController {
         btn.titleLabel?.font = .NotoRegular(size: 12)
         btn.isHidden = true
         btn.semanticContentAttribute = .forceLeftToRight
-        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 6)
+        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 20)
         return btn
     }()
     
@@ -101,7 +101,7 @@ final class SearchResultVC: UIViewController {
         btn.titleLabel?.font = .NotoRegular(size: 12)
         btn.isHidden = true
         btn.semanticContentAttribute = .forceLeftToRight
-        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 6)
+        btn.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 20)
         return btn
     }()
     
@@ -318,15 +318,13 @@ extension SearchResultVC {
         viewMapButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().inset(20)
-            $0.width.equalTo(67)
-            $0.height.equalTo(16)
+            $0.width.equalTo(72)
         }
         
         viewListButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
+            $0.top.equalToSuperview().offset(18)
             $0.trailing.equalToSuperview().inset(20)
-            $0.width.equalTo(67)
-            $0.height.equalTo(14)
+            $0.width.equalTo(72)
         }
         
         searchResultTableView.snp.makeConstraints {
@@ -358,9 +356,9 @@ extension SearchResultVC {
     private func viewMap() {
         UIView.animate(withDuration: 0.2, animations: {
             self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: 585)
+        }, completion: { _ in
+            self.mapViewController.showLocationButton()
         })
-        
-        mapViewController.showSummaryViewForResult()
         
         setUIForViewMap()
     }
@@ -369,7 +367,7 @@ extension SearchResultVC {
         UIView.animate(withDuration: 0.2, animations: {
             self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
         })
-        mapViewController.showSummaryViewForResult()
+        mapViewController.showSummaryView()
         mapViewController.setSelectPointForSummary()
         
         setUIForViewMap()
@@ -454,6 +452,7 @@ extension SearchResultVC: SupplementMapVCDelegate {
     func supplementMapMarkerClicked() {
         UIView.animate(withDuration: 0.2) {
             self.searchResultTableView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
+            self.mapViewController.mapDetailSummaryView.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
         } completion: { _ in
             self.mapViewController.showSummaryView()
         }
