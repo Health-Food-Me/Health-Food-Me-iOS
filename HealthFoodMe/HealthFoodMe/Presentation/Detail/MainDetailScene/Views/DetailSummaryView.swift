@@ -44,21 +44,21 @@ final class DetailSummaryView: UIView {
     private let starRateStackView: UIStackView = {
         let st = UIStackView()
         st.axis = .horizontal
-        st.spacing = 2
+        st.spacing = 3
         st.distribution = .fillProportionally
         st.alignment = .leading
         return st
     }()
     
     private let starRateView: StarRatingView = {
-        let st = StarRatingView(starScale: 14)
-        st.rate = 4.3
+        let st = StarRatingView(starScale: 16)
+        st.rate = 0.0
         return st
     }()
     
     private let rateLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "(4.3)"
+        lb.text = "(0.0)"
         lb.textColor = .lightGray
         lb.font = .NotoRegular(size: 12)
         return lb
@@ -118,7 +118,7 @@ extension DetailSummaryView {
         starRateStackView.addArrangedSubviews(starRateView, rateLabel)
         
         starRateView.snp.makeConstraints { make in
-            make.width.equalTo(70)
+            make.width.equalTo(80)
             make.centerY.equalToSuperview()
         }
         
@@ -128,6 +128,7 @@ extension DetailSummaryView {
         
         rateLabel.snp.makeConstraints { make in
             make.height.equalTo(13)
+            make.centerY.equalTo(starRateView).offset(-1)
         }
         
         titleStackView.snp.makeConstraints { make in

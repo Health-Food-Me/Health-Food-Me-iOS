@@ -78,15 +78,15 @@ final class MapDetailSummaryView: UIView {
     private let starRateStackView: UIStackView = {
         let st = UIStackView()
         st.axis = .horizontal
-        st.spacing = 2
+        st.spacing = 3
         st.distribution = .fillEqually
         st.alignment = .leading
         return st
     }()
     
     private let starRateView: StarRatingView = {
-        let st = StarRatingView(starScale: 14)
-        st.rate = 4.3
+        let st = StarRatingView(starScale: 16)
+        st.rate = 0.0
         return st
     }()
     
@@ -165,7 +165,7 @@ extension MapDetailSummaryView {
         starRateStackView.addArrangedSubviews(starRateView, rateLabel)
         
         starRateView.snp.makeConstraints { make in
-            make.width.equalTo(70)
+            make.width.equalTo(80)
             make.centerY.equalToSuperview()
         }
         
@@ -175,6 +175,7 @@ extension MapDetailSummaryView {
         
         rateLabel.snp.makeConstraints { make in
             make.height.equalTo(13)
+            make.centerY.equalTo(starRateView).offset(-0.5)
         }
         
         tagCollectionView.snp.makeConstraints { make in
@@ -237,7 +238,7 @@ extension MapDetailSummaryView: UICollectionViewDelegateFlowLayout {
     private func isDoubleLineHeight(tags: [String]) -> Bool {
         var width: CGFloat = 0
         tags.forEach { tag in
-            width += tag.size(withAttributes: [NSAttributedString.Key.font: UIFont.NotoRegular(size: 10)]).width
+            width += tag.size(withAttributes: [NSAttributedString.Key.font: UIFont.NotoMedium(size: 10)]).width
         }
         return width > 200
     }

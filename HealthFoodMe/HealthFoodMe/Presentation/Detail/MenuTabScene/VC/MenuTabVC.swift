@@ -40,6 +40,14 @@ final class MenuTabVC: UIViewController {
 			}
 		}
 	}
+	var menuBoard: [String] = [] {
+		didSet {
+			DispatchQueue.main.async {
+				self.menuCV.reloadData()
+			}
+		}
+	}
+	
 	let panGesture = UIPanGestureRecognizer()
 	weak var delegate: ScrollDeliveryDelegate?
 	var swipeDismissDelegate: SwipeDismissDelegate?
@@ -121,7 +129,7 @@ extension MenuTabVC {
 		menuCV.isScrollEnabled = false
 	}
 	
-	func setData(data: [Menu]) {
+	func setData(data: [Menu], restaurantMenuBoard: [String]) {
 		var models: [MenuDataModel] = []
 		data.forEach {
 			models.append($0.toDomain())
@@ -140,7 +148,9 @@ extension MenuTabVC {
 		pickModel += notPickModel
 		
 		self.menuData = pickModel
+		self.menuBoard = restaurantMenuBoard
 	}
+	
 	
 	private func addObserver() {
 		addObserverAction(.menuPhotoClicked) { noti in
@@ -225,7 +235,8 @@ extension MenuTabVC: UICollectionViewDelegate {
 extension MenuTabVC: UICollectionViewDataSource {
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return 2
+		let count: Int = self.menuBoard.count == 0 ? 1 : 2
+		return count
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -254,6 +265,9 @@ extension MenuTabVC: UICollectionViewDataSource {
 		case .menuImage:
 			guard let imageCell = menuCV.dequeueReusableCell(withReuseIdentifier: AllImageCVC.className, for: indexPath) as? AllImageCVC
 			else { return UICollectionViewCell() }
+			DispatchQueue.main.async {
+				imageCell.setData(menuBoardList: self.menuBoard)
+			}
 			return imageCell
 		}
 	}
