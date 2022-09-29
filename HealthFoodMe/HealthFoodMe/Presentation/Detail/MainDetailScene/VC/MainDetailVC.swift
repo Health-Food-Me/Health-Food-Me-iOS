@@ -145,7 +145,9 @@ extension MainDetailVC {
         }), for: .touchUpInside)
         scrapButtonInstance = scrapButton
         
-        reviewWriteCTAButton.layer.cornerRadius = 20
+        let reviewWriteButtonWidth = UIScreen.main.bounds.width * (335 / 375)
+        
+        reviewWriteCTAButton.layer.cornerRadius = reviewWriteButtonWidth * (44/335) / 2
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: scrapButton)
