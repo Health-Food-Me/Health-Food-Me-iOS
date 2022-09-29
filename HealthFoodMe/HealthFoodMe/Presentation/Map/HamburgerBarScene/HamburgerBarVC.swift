@@ -110,7 +110,11 @@ class HamburgerBarVC: UIViewController {
     
     private lazy var needLoginImageButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageLiterals.HamburgerBar.editNameBtn, for: .normal)
+        if self.isBrowsing {
+            button.setImage(ImageLiterals.HamburgerBar.needLoginBtn, for: .normal)
+        } else {
+            button.setImage(ImageLiterals.HamburgerBar.editNameBtn, for: .normal)
+        }
         
         return button
     }()
