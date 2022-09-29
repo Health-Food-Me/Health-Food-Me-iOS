@@ -60,6 +60,7 @@ class ScrapVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         scrapCollectionView.reloadData()
+        scrapCollectionView.setContentOffset(CGPointZero, animated: false)
     }
     
     override func viewDidLoad() {
