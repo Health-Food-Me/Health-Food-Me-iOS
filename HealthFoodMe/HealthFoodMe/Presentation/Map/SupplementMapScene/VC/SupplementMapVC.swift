@@ -55,11 +55,7 @@ class SupplementMapVC: UIViewController, NMFLocationManagerDelegate {
     private lazy var customNavigationBar: HelfmeNaviBar = {
         let view = HelfmeNaviBar()
         view.buttonClosure = {
-            if !self.mapDetailSummaryView.scrapButton.isSelected {
-                self.cancelScrapClosure?(cancelScrap(restaurantId: self.currentRestaurantId, isCancel: true))
-            } else {
-                self.cancelScrapClosure?(cancelScrap(restaurantId: self.currentRestaurantId, isCancel: false))
-            }
+            self.cancelScrapClosure?(cancelScrap(restaurantId: self.currentRestaurantId, isCancel: !self.mapDetailSummaryView.scrapButton.isSelected))
             self.popViewController()
         }
         return view
