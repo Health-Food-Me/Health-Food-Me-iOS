@@ -105,7 +105,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         let btn = UIButton()
         btn.setTitle(I18N.Detail.Review.tagGood, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
-        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.titleLabel?.font = .NotoMedium(size: 14)
         btn.backgroundColor = .helfmeWhite
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
@@ -119,7 +119,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         let btn = UIButton()
         btn.setTitle(I18N.Detail.Review.tagSoso, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
-        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.titleLabel?.font = .NotoMedium(size: 14)
         btn.backgroundColor = .helfmeWhite
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
@@ -133,7 +133,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         let btn = UIButton()
         btn.setTitle(I18N.Detail.Review.tagBad, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
-        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.titleLabel?.font = .NotoMedium(size: 14)
         btn.backgroundColor = .helfmeWhite
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
@@ -181,7 +181,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         let btn = UIButton()
         btn.setTitle(I18N.Detail.Review.tagNoBurden, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
-        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.titleLabel?.font = .NotoMedium(size: 14)
         btn.backgroundColor = .helfmeWhite
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
@@ -195,7 +195,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         let btn = UIButton()
         btn.setTitle(I18N.Detail.Review.tagEasy, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
-        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.titleLabel?.font = .NotoMedium(size: 14)
         btn.backgroundColor = .helfmeWhite
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
@@ -209,7 +209,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         let btn = UIButton()
         btn.setTitle(I18N.Detail.Review.tagStrong, for: .normal)
         btn.setTitleColor(UIColor.helfmeGray2, for: UIControl.State.normal)
-        btn.titleLabel?.font = .NotoRegular(size: 14)
+        btn.titleLabel?.font = .NotoMedium(size: 14)
         btn.backgroundColor = .helfmeWhite
         btn.layer.borderColor = UIColor.helfmeGray2.cgColor
         btn.layer.borderWidth = 0.5
@@ -291,7 +291,7 @@ final class ReviewWriteVC: UIViewController, UIScrollViewDelegate {
         let lb = UILabel()
         lb.text = I18N.Detail.Review.questionPhotoOption
         lb.textColor = .helfmeGray2
-        lb.font = .NotoRegular(size: 10)
+        lb.font = .NotoBold(size: 12)
         return lb
     }()
     
