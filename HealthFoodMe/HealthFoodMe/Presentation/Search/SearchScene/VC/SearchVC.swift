@@ -170,13 +170,7 @@ extension SearchVC {
     }
     
     @objc func pushToSearchResultVC() {
-        let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
-        searchResultVC.delegate = self
-        if let searchText = searchTextField.text {
-            searchResultVC.searchContent = searchText
-            searchResultVC.searchResultList = searchResultList
-        }
-        navigationController?.pushViewController(searchResultVC, animated: false)
+        viewList()
     }
     
     @objc func popToMainMapVC() {
@@ -382,6 +376,26 @@ extension SearchVC {
         searchTextField.rightViewMode = .always
         searchTextField.rightView = resultCloseButton
         searchType = .searchResult
+    }
+    
+    private func viewList() {
+        let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
+        searchResultVC.delegate = self
+        if let searchText = searchTextField.text {
+            searchResultVC.searchContent = searchText
+            searchResultVC.searchResultList = searchResultList
+        }
+        navigationController?.pushViewController(searchResultVC, animated: false)
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension SearchVC: UIScrollViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if scrollView.contentOffset.y < 0 && searchType == .searchResult {
+            viewList()
+        }
     }
 }
 
