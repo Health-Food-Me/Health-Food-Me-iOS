@@ -63,6 +63,7 @@ struct ImageLiterals {
     
     struct HamburgerBar {
         static let editNameBtn = UIImage(named: "btn_edit")
+        static let needLoginBtn = UIImage(named: "btn_more_restaurant")
     }
     
     struct Auth {

@@ -289,11 +289,6 @@ extension HamburgerBarVC {
             make.trailing.equalTo(hamburgerBarView).inset(10)
         }
         
-//        editNameButton.snp.makeConstraints { make in
-//            make.centerY.equalTo(nickNameStackView.snp.centerY)
-//            make.leading.equalTo(nickNameStackView.snp.trailing).offset(8)
-//        }
-
         dividingLineViews[0].snp.makeConstraints { make in
             make.width.equalTo(hamburgerBarView)
             make.top.equalTo(helloStackView.snp.bottom).offset(38)
@@ -303,7 +298,7 @@ extension HamburgerBarVC {
         
         storeButtonStackView.snp.makeConstraints { make in
             make.top.equalTo(dividingLineViews[0].snp.bottom).offset(28)
-            make.leading.equalTo(hamburgerBarView).inset(20)
+            make.leading.trailing.equalTo(hamburgerBarView).inset(20)
         }
         
         dividingLineViews[1].snp.makeConstraints { make in

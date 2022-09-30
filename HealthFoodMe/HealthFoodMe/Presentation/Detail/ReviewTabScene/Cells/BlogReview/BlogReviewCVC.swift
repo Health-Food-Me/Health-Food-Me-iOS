@@ -19,7 +19,7 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     private lazy var blogReviewTitleLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
-        lb.font = UIFont.NotoBold(size: 14)
+        lb.font = UIFont.NotoBold(size: 15)
         
         return lb
     }()
@@ -27,7 +27,7 @@ class BlogReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     private lazy var blogReviewContentsLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
-        lb.font = UIFont.NotoRegular(size: 12)
+        lb.font = UIFont.NotoRegular(size: 13)
         lb.numberOfLines = 3
         return lb
     }()
