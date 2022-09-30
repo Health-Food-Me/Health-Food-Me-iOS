@@ -241,7 +241,6 @@ extension HamburgerBarVC {
             button.setTitleColor(.helfmeBlack, for: .normal)
             button.titleLabel?.font = UIFont.PretendardRegular(size: 16)
             button.contentHorizontalAlignment = .leading
-            
             menuButtons.append(button)
             
             if buttonIndex < 2 {
@@ -300,7 +299,7 @@ extension HamburgerBarVC {
             make.leading.equalTo(hamburgerBarView).inset(20)
             make.trailing.equalTo(hamburgerBarView).inset(10)
         }
-
+        
         dividingLineViews[0].snp.makeConstraints { make in
             make.width.equalTo(hamburgerBarView)
             make.top.equalTo(helloStackView.snp.bottom).offset(38)
