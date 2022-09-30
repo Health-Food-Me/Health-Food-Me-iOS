@@ -92,7 +92,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         let bt = UIButton()
         bt.titleLabel?.font = .NotoRegular(size: 10)
         bt.setTitle("편집", for: .normal)
-        bt.setTitleColor(UIColor.helfmeGray2, for: .normal)
+        bt.setTitleColor(UIColor.helfmeGray1, for: .normal)
         bt.addAction(UIAction(handler: { _ in
             self.delegate?.editButtonTapped(reviewId: self.reviewId, restaurantName: self.restaurantName, score: self.starScore, tagList: self.tagList, content: self.content, image: self.image)
         }), for: .touchUpInside)
@@ -101,7 +101,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     private let verticalView: UIView = {
         let view = UIView()
-        view.backgroundColor = .helfmeGray1.withAlphaComponent(0.3)
+        view.backgroundColor = .helfmeLineGray.withAlphaComponent(0.3)
         view.snp.makeConstraints { make in
             make.height.equalTo(12)
             make.width.equalTo(1)
@@ -113,7 +113,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
         let bt = UIButton()
         bt.titleLabel?.font = .NotoRegular(size: 10)
         bt.setTitle("삭제", for: .normal)
-        bt.setTitleColor(UIColor.helfmeGray2, for: .normal)
+        bt.setTitleColor(UIColor.helfmeGray1, for: .normal)
         bt.addAction(UIAction(handler: { _ in
             self.delegate?.deleteButtonTapped(reviewId: self.reviewId)
         }), for: .touchUpInside)
@@ -255,7 +255,7 @@ extension MyReviewCVC {
         }
         
         reviewPhotoCV.snp.makeConstraints { make in
-            make.top.equalTo(tagCV.snp.bottom).offset(10)
+            make.top.equalTo(tagCV.snp.bottom).offset(12)
             make.leading.equalToSuperview()
             make.height.equalTo(width * (105/375))
             make.width.equalToSuperview()
@@ -320,7 +320,7 @@ extension MyReviewCVC {
         contentView.addSubviews(reviewPhotoCV)
         
         reviewPhotoCV.snp.remakeConstraints { make in
-            make.top.equalTo(tagCV.snp.bottom).offset(10)
+            make.top.equalTo(tagCV.snp.bottom).offset(12)
             make.leading.equalToSuperview()
             make.height.equalTo(width * (105/375))
             make.width.equalToSuperview()
@@ -337,7 +337,7 @@ extension MyReviewCVC {
         reviewPhotoCV.isHidden = false
         
         reviewPhotoCV.snp.remakeConstraints { make in
-            make.top.equalTo(tagCV.snp.bottom).offset(10)
+            make.top.equalTo(tagCV.snp.bottom).offset(12)
             make.leading.equalToSuperview()
             make.height.equalTo(width * (105/375))
             make.width.equalToSuperview()
@@ -444,7 +444,7 @@ extension MyReviewCVC: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCVC.className, for: indexPath) as? TagCVC else { return UICollectionViewCell() }
             if let data = cellViewModel {
                 cell.setData(tagData: data.tagList[indexPath.row])
-                cell.layer.borderWidth = 1
+                cell.layer.borderWidth = 0.5
                 cell.layer.borderColor = UIColor.mainRed.cgColor
                 cell.layer.cornerRadius = 11
                 cell.layer.masksToBounds = true
