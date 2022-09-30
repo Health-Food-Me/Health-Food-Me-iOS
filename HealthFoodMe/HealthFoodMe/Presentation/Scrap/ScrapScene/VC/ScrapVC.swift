@@ -16,6 +16,7 @@ class ScrapVC: UIViewController {
     
     private let scrapEmptyView = ScrapEmptyView()
     private var scrapList: [ScrapListEntity] = []
+    var cancelScrapList: [String] = []
     
     // MARK: - UI Components
     
@@ -56,6 +57,11 @@ class ScrapVC: UIViewController {
     }()
     
     // MARK: - View Life Cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        scrapCollectionView.reloadData()
+        scrapCollectionView.setContentOffset(CGPointZero, animated: false)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,6 +166,12 @@ extension ScrapVC: UICollectionViewDelegate {
         let initialPoint = scrapList[indexPath.row]
         vc.initialPoint = MapPointDataModel.init(latitude: initialPoint.latitude, longtitude: initialPoint.longtitude, restaurantName: nil, type: .normalFood)
         vc.targetMarkerPointList = pointList
+        vc.cancelScrapClosure = { cancel in
+            self.cancelScrapList = self.cancelScrapList.filter { $0 != cancel.restaurantId }
+            if cancel.isCancel {
+                self.cancelScrapList.append(cancel.restaurantId)
+            }
+        }
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -176,6 +188,9 @@ extension ScrapVC: UICollectionViewDataSource {
         cell.setData(data: scrapList[indexPath.row])
         cell.restaurantId = scrapList[indexPath.row]._id
         cell.delegate = self
+        if !(cancelScrapList.filter{ $0 == scrapList[indexPath.row]._id }.isEmpty) {
+            cell.setScrap(data: cancelScrapList.first ?? "")
+        }
         return cell
     }
 }
@@ -202,8 +217,12 @@ extension ScrapVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension ScrapVC: ScrapCVCDelegate {
-    func scrapCVCButtonDidTap(restaurantId: String) {
+    func scrapCVCButtonDidTap(restaurantId: String, isCancel: Bool) {
         putScrap(userId: UserManager.shared.getUserId ?? "", restaurantId: restaurantId)
+        self.cancelScrapList = self.cancelScrapList.filter { $0 != restaurantId }
+        if isCancel {
+            self.cancelScrapList.append(restaurantId)
+        }
     }
 }
 

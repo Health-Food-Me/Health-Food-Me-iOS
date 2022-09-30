@@ -51,6 +51,7 @@ class CategoryTVC: UITableViewCell, UITableViewRegisterable {
 
 extension CategoryTVC {
     public func setCategoryData(nameList: [String]) {
+        categoryCV.isHidden = nameList.count == 1
         categoryNameList = nameList
         categoryCV.reloadData()
     }
