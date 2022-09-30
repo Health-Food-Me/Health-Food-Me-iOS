@@ -358,7 +358,7 @@ extension SearchVC {
     }
     
     private func isSearchResult(fromRecent: Bool, isCategory: Bool) {
-        if searchList.isEmpty && !fromRecent {
+        if searchList.filter({ $0.isCategory == false }).count == 0 && !fromRecent {
             searchEmptyView.isHidden = false
         } else {
             searchEmptyView.isHidden = true
