@@ -112,7 +112,7 @@ extension SplashVC {
             self.makeAlert(title: "최신 버전으로 업데이트 해야합니다",
                            subtitle: "현재 다운로드된 버전이 너무 낮아 앱이 정상 작동하지 않을 수 있습니다.",
                            okAction: {
-                
+                URLSchemeManager.shared.loadHelfMeDownload()
             }) {
                 self.fetchNeedsUpdate()
             }
@@ -124,7 +124,7 @@ extension SplashVC {
             self.makeAlert(title: "최신 버전으로 업데이트 하시겠습니까?",
                            subtitle: "최신 버전(\(self.latestAppVersion ?? ""))에서 최적의 사용 환경을 보장할 수 있습니다.",
                            okAction: {
-                
+                URLSchemeManager.shared.loadHelfMeDownload()
             }) {
                 self.startFlow()
             }

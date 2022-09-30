@@ -65,6 +65,12 @@ final class URLSchemeManager: NSObject {
             UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
         }
     }
+    
+    func loadHelfMeDownload() {
+        if let url = URL(string: "https://itunes.apple.com/kr/app/id1632788399") {
+            UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+        }
+    }
 }
 
 enum NaverTerms: String{
