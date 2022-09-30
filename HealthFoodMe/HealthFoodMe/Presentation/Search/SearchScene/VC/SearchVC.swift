@@ -27,6 +27,7 @@ final class SearchVC: UIViewController {
     let realm = try? Realm()
     var searchType: SearchType = SearchType.recent {
         didSet {
+            searchTableView.setContentOffset(CGPointZero, animated: false)
             searchTableView.reloadData()
         }
     }
@@ -39,11 +40,7 @@ final class SearchVC: UIViewController {
     
     // MARK: - UI Components
     
-    private let searchView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .mainRed
-        return view
-    }()
+    private let searchView: UIView = UIView()
     
     private lazy var searchTextField: UITextField = {
         let tf = UITextField()
@@ -51,7 +48,7 @@ final class SearchVC: UIViewController {
         tf.rightViewMode = .never
         tf.enablesReturnKeyAutomatically = true
         tf.attributedPlaceholder = NSAttributedString(string: I18N.Search.search, attributes: [NSAttributedString.Key.foregroundColor: UIColor.helfmeTagGray])
-        tf.font = .NotoRegular(size: 15)
+        tf.font = .NotoRegular(size: 16)
         tf.textColor = .helfmeBlack
         tf.backgroundColor = .helfmeWhite
         tf.addTarget(self, action: #selector(editingChanged(_:)), for: .editingChanged)
@@ -173,13 +170,7 @@ extension SearchVC {
     }
     
     @objc func pushToSearchResultVC() {
-        let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
-        searchResultVC.delegate = self
-        if let searchText = searchTextField.text {
-            searchResultVC.searchContent = searchText
-            searchResultVC.searchResultList = searchResultList
-        }
-        navigationController?.pushViewController(searchResultVC, animated: false)
+        viewList()
     }
     
     @objc func popToMainMapVC() {
@@ -224,6 +215,7 @@ extension SearchVC {
     }
     
     private func fetchSearchResultData(keyword: String, fromRecent: Bool, isCategory: Bool) {
+        searchTableView.setContentOffset(CGPointZero, animated: false)
         let NMGPosition = self.locationManager?.currentLatLng()
         var lng: Double = 0.0
         var lat: Double = 0.0
@@ -299,8 +291,7 @@ extension SearchVC {
         viewMapButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().inset(20)
-            $0.width.equalTo(67)
-            $0.height.equalTo(16)
+            $0.width.equalTo(72)
         }
         
         searchView.snp.makeConstraints {
@@ -385,6 +376,26 @@ extension SearchVC {
         searchTextField.rightViewMode = .always
         searchTextField.rightView = resultCloseButton
         searchType = .searchResult
+    }
+    
+    private func viewList() {
+        let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
+        searchResultVC.delegate = self
+        if let searchText = searchTextField.text {
+            searchResultVC.searchContent = searchText
+            searchResultVC.searchResultList = searchResultList
+        }
+        navigationController?.pushViewController(searchResultVC, animated: false)
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension SearchVC: UIScrollViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if scrollView.contentOffset.y < 0 && searchType == .searchResult {
+            viewList()
+        }
     }
 }
 
@@ -571,7 +582,6 @@ extension SearchVC {
                     }
                     self.searchResultList = self.searchResultList.sorted(by: { $0.distance < $1.distance })
                     self.isSearchResult(fromRecent: fromRecent, isCategory: false)
-                    self.searchTableView.reloadData()
                 }
             default:
                 break;
@@ -595,7 +605,6 @@ extension SearchVC {
                     }
                     self.searchResultList = self.searchResultList.sorted(by: { $0.distance < $1.distance })
                     self.isSearchResult(fromRecent: fromRecent, isCategory: true)
-                    self.searchTableView.reloadData()
                 }
             default:
                 break;

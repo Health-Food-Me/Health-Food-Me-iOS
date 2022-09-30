@@ -75,12 +75,12 @@ extension CopingHeaderView {
         self.addSubviews(icnImageView, headerLabel, lineView)
         
         icnImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(53)
+            make.top.equalToSuperview().offset(36)
             make.centerX.equalToSuperview()
         }
         
         lineView.snp.makeConstraints { make in
-            make.bottom.equalTo(icnImageView.snp.top).offset(-25)
+            make.bottom.equalTo(icnImageView.snp.top).offset(-36)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().inset(16)
             make.height.equalTo(1)
