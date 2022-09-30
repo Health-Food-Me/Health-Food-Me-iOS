@@ -158,6 +158,7 @@ class HamburgerBarVC: UIViewController {
         button.setTitle(I18N.Map.HamburgerBar.setting, for: .normal)
         button.setTitleColor(.helfmeBlack, for: .normal)
         button.titleLabel?.font = UIFont.PretendardRegular(size: 16)
+        button.contentHorizontalAlignment = .leading
         
         return button
     }()
@@ -239,12 +240,19 @@ extension HamburgerBarVC {
             button.setTitle(buttonTitles[buttonIndex], for: .normal)
             button.setTitleColor(.helfmeBlack, for: .normal)
             button.titleLabel?.font = UIFont.PretendardRegular(size: 16)
+            button.contentHorizontalAlignment = .leading
+            
             menuButtons.append(button)
             
             if buttonIndex < 2 {
                 storeButtonStackView.addArrangedSubviews(menuButtons[buttonIndex])
             } else {
                 reportButtonStackView.addArrangedSubviews(menuButtons[buttonIndex])
+            }
+            
+            menuButtons[buttonIndex].snp.makeConstraints { make in
+                make.width.equalToSuperview()
+                make.leading.equalToSuperview().inset(0)
             }
         }
     }
@@ -292,11 +300,6 @@ extension HamburgerBarVC {
             make.leading.equalTo(hamburgerBarView).inset(20)
             make.trailing.equalTo(hamburgerBarView).inset(10)
         }
-        
-//        editNameButton.snp.makeConstraints { make in
-//            make.centerY.equalTo(nickNameStackView.snp.centerY)
-//            make.leading.equalTo(nickNameStackView.snp.trailing).offset(8)
-//        }
 
         dividingLineViews[0].snp.makeConstraints { make in
             make.width.equalTo(hamburgerBarView)
@@ -307,7 +310,7 @@ extension HamburgerBarVC {
         
         storeButtonStackView.snp.makeConstraints { make in
             make.top.equalTo(dividingLineViews[0].snp.bottom).offset(28)
-            make.leading.equalTo(hamburgerBarView).inset(20)
+            make.leading.trailing.equalTo(hamburgerBarView).inset(20)
         }
         
         dividingLineViews[1].snp.makeConstraints { make in
@@ -319,7 +322,7 @@ extension HamburgerBarVC {
         
         reportButtonStackView.snp.makeConstraints { make in
             make.top.equalTo(dividingLineViews[1].snp.bottom).offset(28)
-            make.leading.equalTo(hamburgerBarView).inset(20)
+            make.leading.trailing.equalTo(hamburgerBarView).inset(20)
         }
         
         dividingLineViews[2].snp.makeConstraints { make in
@@ -331,7 +334,7 @@ extension HamburgerBarVC {
 
         settingButton.snp.makeConstraints { make in
             make.top.equalTo(dividingLineViews[2].snp.bottom).offset(28)
-            make.leading.equalTo(hamburgerBarView).inset(20)
+            make.leading.trailing.equalTo(hamburgerBarView).inset(20)
         }
         
         logoutButton.snp.makeConstraints { make in
