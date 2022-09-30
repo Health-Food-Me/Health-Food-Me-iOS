@@ -470,8 +470,9 @@ extension SupplementMapVC {
     
     func showLocationButton() {
         let topSafeArea = UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0.0
+        let height = UIScreen.main.bounds.height
         self.mapDetailSummaryView.snp.updateConstraints { make in
-            make.top.equalToSuperview().offset(641 + topSafeArea)
+            make.top.equalToSuperview().inset(height * (641/815) + topSafeArea)
         }
         
         let mapDetailViewTopCosntraint = self.mapDetailSummaryView.snp.top

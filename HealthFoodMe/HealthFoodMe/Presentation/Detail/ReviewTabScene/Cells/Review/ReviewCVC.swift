@@ -350,7 +350,7 @@ extension ReviewCVC: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCVC.className, for: indexPath) as? TagCVC else { return UICollectionViewCell() }
             if let data = cellViewModel {
                 cell.setData(tagData: data.tagList[indexPath.row])
-                cell.layer.borderWidth = 1
+                cell.layer.borderWidth = 0.5
                 cell.layer.borderColor = UIColor.mainRed.cgColor
                 cell.layer.cornerRadius = 11
                 cell.layer.masksToBounds = true

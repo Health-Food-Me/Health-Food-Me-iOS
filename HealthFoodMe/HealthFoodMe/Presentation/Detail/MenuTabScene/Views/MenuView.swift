@@ -52,7 +52,7 @@ final class MenuView: UIView {
         let lb = UILabel()
         lb.textColor = .helfmeBlack
         lb.numberOfLines = 2
-        lb.font = .NotoBold(size: 14)
+        lb.font = .NotoBold(size: 15)
         return lb
     }()
     
@@ -170,6 +170,7 @@ extension MenuView {
             make.leading.equalTo(menuImageView.snp.trailing).offset(20)
             make.trailing.equalToSuperview().inset(97)
             make.centerY.equalTo(menuImageView.snp.centerY)
+            make.width.equalTo(UIScreen.main.bounds.width * 103)
         }
         
         kcalView.addSubview(kcalStackView)
