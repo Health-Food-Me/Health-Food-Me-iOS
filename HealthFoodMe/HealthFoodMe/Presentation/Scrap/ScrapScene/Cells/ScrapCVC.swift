@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol ScrapCVCDelegate: AnyObject {
-    func scrapCVCButtonDidTap(restaurantId: String)
+    func scrapCVCButtonDidTap(restaurantId: String, isCancel: Bool)
 }
 
 class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
@@ -25,8 +25,7 @@ class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     private var storeImageView: UIImageView = {
         let iv = UIImageView()
-        iv.layer.cornerRadius = 5
-        iv.contentMode = .scaleAspectFit
+        iv.layer.cornerRadius = 8
         iv.clipsToBounds = true
         return iv
     }()
@@ -79,17 +78,22 @@ class ScrapCVC: UICollectionViewCell, UICollectionViewRegisterable {
 extension ScrapCVC {
     @objc func didTapScrapButton(_ sender: UIButton) {
         sender.isSelected.toggle()
-        delegate?.scrapCVCButtonDidTap(restaurantId: restaurantId)
+        delegate?.scrapCVCButtonDidTap(restaurantId: restaurantId, isCancel: sender.isSelected)
     }
 }
 
 // MARK: - Methods
 
 extension ScrapCVC {
+    func setScrap(data: String) {
+        scrapButton.isSelected = true
+    }
+    
     func setData(data: ScrapListEntity) {
         storeImageView.setImage(with: data.logo)
         storeNameLabel.text = data.name
         locationLabel.text = data.address
+        scrapButton.isSelected = false
     }
     
     private func setUI() {

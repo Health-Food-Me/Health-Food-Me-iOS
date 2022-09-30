@@ -21,7 +21,7 @@ final class TagSummaryCVC: UICollectionViewCell, UICollectionViewRegisterable {
         let lb = UILabel()
         lb.text = ""
         lb.textColor = .mainRed
-        lb.font = .NotoRegular(size: 10)
+        lb.font = .NotoMedium(size: 10)
         return lb
     }()
     
@@ -42,9 +42,9 @@ final class TagSummaryCVC: UICollectionViewCell, UICollectionViewRegisterable {
 
 extension TagSummaryCVC {
     private func setUI() {
-        self.layer.cornerRadius = 8
+        self.layer.cornerRadius = 9
         self.layer.borderColor = UIColor.mainRed.cgColor
-        self.layer.borderWidth = 1
+        self.layer.borderWidth = 0.5
         self.backgroundColor = .white
     }
     

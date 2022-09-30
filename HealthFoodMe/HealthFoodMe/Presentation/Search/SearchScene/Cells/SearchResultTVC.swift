@@ -29,14 +29,14 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
     private var storeImageView: UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 8
-        iv.image = ImageLiterals.MainDetail.tempSalady
+        iv.clipsToBounds = true
         return iv
     }()
     
     private var foodLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .mainGreen
-        lb.font = .NotoMedium(size: 10)
+        lb.font = .NotoMedium(size: 11)
         return lb
     }()
     
@@ -65,7 +65,7 @@ final class SearchResultTVC: UITableViewCell, UITableViewRegisterable {
     private lazy var starStackView: UIStackView = {
         let sv = UIStackView()
         sv.addArrangedSubviews(starView, starLabel)
-        sv.alignment = .top
+        sv.alignment = .leading
         sv.axis = .horizontal
         sv.spacing = 4
         return sv
