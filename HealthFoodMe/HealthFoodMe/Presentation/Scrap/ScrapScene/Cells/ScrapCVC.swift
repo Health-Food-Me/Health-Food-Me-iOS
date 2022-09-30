@@ -107,9 +107,10 @@ extension ScrapCVC {
                                 storeNameLabel, locationLabel)
         
         storeImageView.snp.makeConstraints {
+            let width = UIScreen.main.bounds.width
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(160)
+            $0.height.equalTo(width * (160/375))
         }
         
         scrapButton.snp.makeConstraints {
