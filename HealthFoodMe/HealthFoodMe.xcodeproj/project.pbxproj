@@ -106,6 +106,7 @@
 		EB033E84287B5BE300C48FB9 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB033E83287B5BE300C48FB9 /* StarRatingView.swift */; };
 		EB1C254528E6DDE000C46B2F /* NSBundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1C254428E6DDE000C46B2F /* NSBundle+.swift */; };
 		EB1C254728E6E2E900C46B2F /* remote_config_defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB1C254628E6E2E900C46B2F /* remote_config_defaults.plist */; };
+		EB1C254928E8197100C46B2F /* UIApplcation+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1C254828E8197100C46B2F /* UIApplcation+.swift */; };
 		EB6A44C7287366DF00749582 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = EB6A44C6287366DF00749582 /* .swiftlint.yml */; };
 		EB6A44D128737CC400749582 /* MainDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44CB28737CC400749582 /* MainDetailUseCase.swift */; };
 		EB6A44D228737CC400749582 /* MainDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6A44CC28737CC400749582 /* MainDetailRepository.swift */; };
@@ -362,6 +363,7 @@
 		EB085EE728716E1B00361837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB1C254428E6DDE000C46B2F /* NSBundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBundle+.swift"; sourceTree = "<group>"; };
 		EB1C254628E6E2E900C46B2F /* remote_config_defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = remote_config_defaults.plist; sourceTree = "<group>"; };
+		EB1C254828E8197100C46B2F /* UIApplcation+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplcation+.swift"; sourceTree = "<group>"; };
 		EB6A44C6287366DF00749582 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		EB6A44CB28737CC400749582 /* MainDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailUseCase.swift; sourceTree = "<group>"; };
 		EB6A44CC28737CC400749582 /* MainDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailRepository.swift; sourceTree = "<group>"; };
@@ -1471,6 +1473,7 @@
 				EBF66A5B287227F500DE0ED1 /* UITextField+.swift */,
 				EBF66A5C287227F500DE0ED1 /* UIImage+.swift */,
 				EBF66A5D287227F500DE0ED1 /* UITableView+.swift */,
+				EB1C254828E8197100C46B2F /* UIApplcation+.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -2376,6 +2379,7 @@
 				695758E52881852F00E36789 /* CopingEmptyView.swift in Sources */,
 				FD72FCC028834AB60092746F /* MainMapNavigationController.swift in Sources */,
 				EBA8C14B2882A737009DBA49 /* AuthRouter.swift in Sources */,
+				EB1C254928E8197100C46B2F /* UIApplcation+.swift in Sources */,
 				69028BAC2874681700373984 /* MenuTabVC.swift in Sources */,
 				EBD19265287DC33900EA053E /* TagCVCFlowLayout.swift in Sources */,
 				695758C5287DF08800E36789 /* ListPhotoCVC.swift in Sources */,
