@@ -27,6 +27,24 @@ class APIEventLogger: EventMonitor, RequestInterceptor {
         }
     }
     
+    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
+        guard let pathComponents = request.request?.url?.pathComponents,
+              !pathComponents.contains("token"),
+              let response = request.task?.response as? HTTPURLResponse,
+              response.statusCode == 401 else {
+            completion(.doNotRetryWithError(error))
+            return
+        }
+
+        UserManager.shared.reissuanceAccessToken { isSucceed in
+            if isSucceed {
+                completion(.retry)
+            } else {
+                completion(.doNotRetry)
+            }
+        }
+    }
+    
     private func showNetworkErrorAlert(completion: @escaping (()->Void)) {
         alertAlreadySet = true
         DispatchQueue.main.async {
