@@ -93,9 +93,9 @@ extension SplashVC {
                 let versionCompare = appVersion.compare(versionStandard, options: .numeric)
                 
                 switch (versionCompare, needUpdate) {
-                case (_, true):
+                case (.orderedAscending, true):
                     self.showForceUpdateAlert()
-                case (.orderedAscending, _):
+                case (.orderedAscending, false):
                     self.showRecommendUpdateAlert()
                 default:
                     self.startFlow()
