@@ -17,15 +17,15 @@ class APIEventLogger: EventMonitor, RequestInterceptor {
     
     private var alertAlreadySet: Bool = false
     
-    func adapt(_ urlRequest: URLRequest, for session: Alamofire.Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        if !isConnectedToInternet && !alertAlreadySet {
-            self.showNetworkErrorAlert {
-                completion(.success(urlRequest))
-            }
-        } else {
-            completion(.success(urlRequest))
-        }
-    }
+//    func adapt(_ urlRequest: URLRequest, for session: Alamofire.Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+//        if !isConnectedToInternet && !alertAlreadySet {
+//            self.showNetworkErrorAlert {
+//                completion(.success(urlRequest))
+//            }
+//        } else {
+//            completion(.success(urlRequest))
+//        }
+//    }
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         guard let pathComponents = request.request?.url?.pathComponents,
