@@ -7,8 +7,54 @@
 
 import Alamofire
 import Foundation
+import KakaoSDKAuth
 
-class APIEventLogger: EventMonitor {
+class APIEventLogger: EventMonitor, RequestInterceptor {
+
+    private var isConnectedToInternet: Bool {
+        return NetworkReachabilityManager()!.isReachable
+    }
+    
+    private var alertAlreadySet: Bool = false
+    
+//    func adapt(_ urlRequest: URLRequest, for session: Alamofire.Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+//        if !isConnectedToInternet && !alertAlreadySet {
+//            self.showNetworkErrorAlert {
+//                completion(.success(urlRequest))
+//            }
+//        } else {
+//            completion(.success(urlRequest))
+//        }
+//    }
+    
+    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
+        guard let pathComponents = request.request?.url?.pathComponents,
+              !pathComponents.contains("token"),
+              let response = request.task?.response as? HTTPURLResponse,
+              response.statusCode == 401 else {
+            completion(.doNotRetryWithError(error))
+            return
+        }
+
+        UserManager.shared.reissuanceAccessToken { isSucceed in
+            if isSucceed {
+                completion(.retry)
+            } else {
+                completion(.doNotRetry)
+            }
+        }
+    }
+    
+    private func showNetworkErrorAlert(completion: @escaping (()->Void)) {
+        alertAlreadySet = true
+        DispatchQueue.main.async {
+            let rootViewController = UIApplication.getMostTopViewController()
+            rootViewController?.makeAlert(title: "네트워크 에러", message: "네트워크 연결 상태를 확인해주세요") { _ in
+                completion()
+                self.alertAlreadySet = false
+            }
+        }
+    }
     
     let queue = DispatchQueue(label: "NetworkLogger")
     

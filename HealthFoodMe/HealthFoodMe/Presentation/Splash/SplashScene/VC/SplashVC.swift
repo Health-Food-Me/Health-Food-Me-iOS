@@ -8,12 +8,22 @@
 import UIKit
 
 import Lottie
+import FirebaseRemoteConfig
 
 class SplashVC: UIViewController {
     
     // MARK: - Properties
     
     let userManager = UserManager.shared
+    lazy var remoteConfig = {
+        let config = RemoteConfig.remoteConfig()
+        let settings = RemoteConfigSettings()
+        settings.minimumFetchInterval = 0
+        config.configSettings = settings
+        config.setDefaults(fromPlist: "remote_config_defaults")
+        return config
+    }()
+    private var latestAppVersion: String?
     
     // MARK: - UI Components
     
@@ -66,12 +76,66 @@ extension SplashVC {
             UIView.animate(withDuration: 1) {
                 self.animationView.alpha = 0
             } completion: { _ in
-                if self.userManager.isLogin == true {
-                    self.reissuanceToken()
-                } else {
-                    self.presentSocialLoginVC()
-                }
+                self.fetchNeedsUpdate()
             }
+        }
+    }
+    
+    private func fetchNeedsUpdate() {
+        self.remoteConfig.fetchAndActivate { (status, error) -> Void in
+            switch status {
+            case .successFetchedFromRemote, .successUsingPreFetchedData:
+                let needUpdate = self.remoteConfig.configValue(forKey: "forceUpdate").boolValue
+                guard let appVersion = Bundle.appVersion,
+                      let versionStandard = self.remoteConfig.configValue(forKey: "versionStandard").stringValue else { return }
+                
+                self.latestAppVersion = versionStandard
+                let versionCompare = appVersion.compare(versionStandard, options: .numeric)
+                
+                switch (versionCompare, needUpdate) {
+                case (.orderedAscending, true):
+                    self.showForceUpdateAlert()
+                case (.orderedAscending, false):
+                    self.showRecommendUpdateAlert()
+                default:
+                    self.startFlow()
+                }
+            default:
+                print("Config not fetched")
+                print("Error: \(error?.localizedDescription ?? "No error available.")")
+            }
+        }
+    }
+    
+    private func showForceUpdateAlert() {
+        DispatchQueue.main.async {
+            self.makeAlert(title: "최신 버전으로 업데이트 해야합니다",
+                           subtitle: "현재 다운로드된 버전이 너무 낮아 앱이 정상 작동하지 않을 수 있습니다.",
+                           okAction: {
+                URLSchemeManager.shared.loadHelfMeDownload()
+            }) {
+                self.fetchNeedsUpdate()
+            }
+        }
+    }
+    
+    private func showRecommendUpdateAlert() {
+        DispatchQueue.main.async {
+            self.makeAlert(title: "최신 버전으로 업데이트 하시겠습니까?",
+                           subtitle: "최신 버전(\(self.latestAppVersion ?? ""))에서 최적의 사용 환경을 보장할 수 있습니다.",
+                           okAction: {
+                URLSchemeManager.shared.loadHelfMeDownload()
+            }) {
+                self.startFlow()
+            }
+        }
+    }
+    
+    private func startFlow() {
+        if self.userManager.isLogin == true {
+            self.reissuanceToken()
+        } else {
+            self.presentSocialLoginVC()
         }
     }
 }

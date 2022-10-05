@@ -13,7 +13,7 @@ import RxSwift
 class BaseService {
     
     var disposeBag = DisposeBag()
-
+    
     @frozen enum DecodingMode {
         case model
         case message
@@ -26,7 +26,7 @@ class BaseService {
         configuration.timeoutIntervalForRequest = NetworkEnvironment.requestTimeOut
         configuration.timeoutIntervalForResource = NetworkEnvironment.resourceTimeOut
         let eventLogger = APIEventLogger()
-        session = Session(configuration: configuration, eventMonitors: [eventLogger])
+        session = Session(configuration: configuration, interceptor: eventLogger, eventMonitors: [eventLogger])
         return session
     }()
     
@@ -73,10 +73,10 @@ class BaseService {
     func judgeStatusWithEmptyReponse(by statusCode: Int?) -> NetworkResult<Any> {
         guard let statusCode = statusCode else { return .pathErr }
         switch statusCode {
-            case 200..<300: return .success(())
-            case 400..<500: return .requestErr(())
-            case 500:       return .serverErr
-            default:        return .networkFail
+        case 200..<300: return .success(())
+        case 400..<500: return .requestErr(())
+        case 500:       return .serverErr
+        default:        return .networkFail
         }
     }
     

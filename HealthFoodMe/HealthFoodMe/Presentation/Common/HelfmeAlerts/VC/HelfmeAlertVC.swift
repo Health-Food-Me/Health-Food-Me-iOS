@@ -24,6 +24,7 @@ final class HelfmeAlertVC: UIViewController {
     var alertTitle: String?
     var alertContent: String?
     var okAction: (() -> Void)?
+    var closeAction: (()->Void)?
     
     // MARK: - UI Components
     
@@ -134,5 +135,6 @@ extension HelfmeAlertVC: AlertDelegate {
     
     func alertDismiss() {
         dismiss(animated: true)
+        self.closeAction?()
     }
 }

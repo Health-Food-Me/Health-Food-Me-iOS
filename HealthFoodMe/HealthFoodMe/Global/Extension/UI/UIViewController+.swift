@@ -44,4 +44,27 @@ extension UIViewController {
         alertVC.modalPresentationStyle = .overCurrentContext
         present(alertVC, animated: true)
     }
+    
+    func makeAlert(alertType: AlertType = .logoutAlert,
+                   title: String?,
+                   subtitle: String?,
+                   okAction: (() -> Void)?,
+                   closeAction: (()->Void)?) {
+        
+        let alertVC = ModuleFactory.resolve().makeHelfmeAlertVC(type: alertType)
+        
+        alertVC.alertType = alertType
+        if let title = title {
+            alertVC.alertTitle = title
+        }
+        if let subtitle = subtitle {
+            alertVC.alertContent = subtitle
+        }
+        alertVC.okAction = okAction
+        alertVC.closeAction = closeAction
+        
+        alertVC.modalTransitionStyle = .crossDissolve
+        alertVC.modalPresentationStyle = .overCurrentContext
+        present(alertVC, animated: true)
+    }
 }
