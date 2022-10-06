@@ -236,11 +236,12 @@ extension NaverMapContainerView {
                     marker.captionText = caption
                     marker.captionHaloColor = .helfmeWhite
                     marker.isForceShowCaption = false
+                    marker.isForceShowIcon = false
                     marker.captionTextSize = 12
                     marker.captionMinZoom = 12
                     marker.captionColor = .helfmeBlack
                 }
-                marker.isHideCollidedMarkers = false
+                marker.isHideCollidedMarkers = true
                 marker.isHideCollidedCaptions = true
                 marker.isHideCollidedSymbols = true
                 self.markers.append(marker)
@@ -263,6 +264,7 @@ extension NaverMapContainerView {
         if let seletedMark = self.selectedMarker,
            let type = selectedMarkerType?.type {
             seletedMark.isForceShowCaption = false
+            seletedMark.isForceShowIcon = false
             seletedMark.zIndex = 0
             switch type {
                 case .healthFood:
@@ -280,6 +282,7 @@ extension NaverMapContainerView {
         self.selectedMarker = marker
         self.selectedMarker?.zIndex = 100
         self.selectedMarker?.isForceShowCaption = true
+        self.selectedMarker?.isForceShowIcon = true
         self.selectedMarkerType = selectedPoint
     }
     
