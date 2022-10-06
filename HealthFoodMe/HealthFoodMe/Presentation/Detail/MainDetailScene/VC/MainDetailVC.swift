@@ -323,6 +323,7 @@ extension MainDetailVC: UITableViewDelegate {
             postObserverAction(.copingPanGestureEnabled,object: true)
             copingTapPanGestureDisabled = false
         }
+
         self.lastContentOffset = scrollView.contentOffset.y
     }
 }
@@ -391,12 +392,15 @@ extension MainDetailVC: UITableViewDataSource {
                     if ratio < 1/3{
                         self.menuCase = .menu
                         self.menuTabVC.topScrollAnimationNotFinished = true
+                        self.mainTableView.isScrollEnabled = true
                     } else if ratio < 2/3 {
                         self.menuCase = .coping
                         self.copingTabVC.topScrollAnimationNotFinished = true
+                        self.mainTableView.isScrollEnabled = false
                     } else {
                         self.menuCase = .review
                         self.reviewTabVC.topScrollAnimationNotFinished = true
+                        self.mainTableView.isScrollEnabled = true
                     }
                     
                     if ratio == 0 {
@@ -458,10 +462,10 @@ extension MainDetailVC: ScrollDeliveryDelegate {
         self.mainTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         setNavigationTitle(isShown: false)
         switch(type) {
-        case .menu:     menuTabVC.topScrollAnimationNotFinished = true
-        case .coping:   copingTabVC.topScrollAnimationNotFinished = true
-        case .review:
-            reviewTabVC.topScrollAnimationNotFinished = true
+            case .menu:     menuTabVC.topScrollAnimationNotFinished = true
+            case .coping:   copingTabVC.topScrollAnimationNotFinished = true
+            case .review:
+                reviewTabVC.topScrollAnimationNotFinished = true
         }
     }
     
@@ -479,21 +483,21 @@ extension MainDetailVC: ScrollDeliveryDelegate {
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < 10 {
             switch(menuCase) {
-            case .menu: menuTabVC.topScrollAnimationNotFinished = true
-            case .coping: copingTabVC.topScrollAnimationNotFinished = true
-            case .review: reviewTabVC.topScrollAnimationNotFinished = true
+                case .menu: menuTabVC.topScrollAnimationNotFinished = true
+                case .coping: copingTabVC.topScrollAnimationNotFinished = true
+                case .review: reviewTabVC.topScrollAnimationNotFinished = true
             }
         }
         
         if scrollView.contentOffset.y > 50 {
             switch(menuCase) {
-            case .menu: menuTabVC.topScrollAnimationNotFinished = false
-            case .coping: copingTabVC.topScrollAnimationNotFinished = false
-            case .review: reviewTabVC.topScrollAnimationNotFinished = false
+                case .menu: menuTabVC.topScrollAnimationNotFinished = false
+                case .coping: copingTabVC.topScrollAnimationNotFinished = false
+                case .review: reviewTabVC.topScrollAnimationNotFinished = false
             }
         }
     }
-}
+    }
 
 extension MainDetailVC: CopingGestureDelegate {
     func downPanGestureSwipe(panGesture: ControlEvent<UIPanGestureRecognizer>.Element) {

@@ -15,20 +15,21 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
     private var copingHeader = CopingHeaderView()
     private var copingEmptyView = CopingEmptyView()
     private var isOnlyCategory: Bool = false
+    private var lastPosY: CGFloat = 0
     var copingDataModel: CopingTabEntity?
     var restaurantId = ""
     var recommendList: [String] = [] {
         didSet {
             copingTableView.reloadData()
             checkEmptyView()
-            updateTableViewLayout()
+//            updateTableViewLayout()
         }
     }
     var eatingList: [String] = [] {
         didSet {
             copingTableView.reloadData()
             checkEmptyView()
-            updateTableViewLayout()
+//            updateTableViewLayout()
         }
     }
     private let headerHeight: CGFloat = 126
@@ -58,7 +59,8 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
         tv.clipsToBounds = true
         tv.sectionFooterHeight = 0
         tv.allowsSelection = false
-        tv.bounces = false
+        tv.isScrollEnabled = false
+        tv.bounces = true
         tv.layer.borderColor = UIColor.helfmeLineGray.cgColor
         tv.layer.borderWidth = 0.5
         tv.layer.cornerRadius = 15
@@ -67,6 +69,8 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
         }
         return tv
     }()
+    
+    private let footerView = UIView()
 
     // MARK: - Life Cycle Part
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -75,6 +79,7 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
         setLayout()
         setDelegate()
         registerCell()
+        addObserver()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -104,9 +109,17 @@ extension CopingTVC {
         }
     }
     
+    private func addObserver() {
+        addObserverAction(.copingPanGestureEnabled) { noti in
+            if let state = noti.object as? Bool {
+                self.copingTableView.isScrollEnabled = !state
+            }
+        }
+    }
+    
     private func setLayout() {
 
-        contentView.addSubviews(copingTableView, copingEmptyView, categoryView)
+        contentView.addSubviews(copingTableView, copingEmptyView, categoryView, footerView)
         
         categoryView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -125,7 +138,7 @@ extension CopingTVC {
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(16)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(0)
+            make.bottom.equalToSuperview().inset(48)
         }
         
         copingEmptyView.snp.makeConstraints { make in
@@ -172,6 +185,7 @@ extension CopingTVC {
         copingTableView.snp.updateConstraints { make in
             make.height.equalTo(tableViewHeight)
         }
+        self.contentView.layoutIfNeeded()
     }
 }
 
@@ -181,8 +195,16 @@ extension CopingTVC: UITableViewDelegate {
         return tableView.rowHeight
     }
     
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
+    }
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return headerHeight
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -196,6 +218,17 @@ extension CopingTVC: UITableViewDelegate {
             bottomHeaderCell.setHeaderData(section: 1)
             return bottomHeaderCell
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if (self.lastPosY > scrollView.contentOffset.y) && scrollView.contentOffset.y < 10
+            || self.lastPosY < 0{
+            postObserverAction(.copingTableViewScrollTop)
+        }
+            
+        lastPosY = scrollView.contentOffset.y
+        
     }
 }
 
@@ -237,13 +270,14 @@ struct CopingCellCalculator {
         let topMargin: CGFloat = 9
         let bottomMargin: CGFloat = 9
         let screenWidth = UIScreen.main.bounds.width
+        let labelWidth = screenWidth - 122
         
         let mockLabel = UILabel()
         mockLabel.textColor = .helfmeBlack
         mockLabel.font = .NotoRegular(size: 12)
         mockLabel.numberOfLines = 0
         mockLabel.lineBreakMode = .byCharWrapping
-        mockLabel.frame = CGRect(x: 0, y: 0, width: screenWidth - 170, height: 0)
+        mockLabel.frame = CGRect(x: 0, y: 0, width: labelWidth, height: 0)
         
         for tip in tipList {
             mockLabel.text = tip
