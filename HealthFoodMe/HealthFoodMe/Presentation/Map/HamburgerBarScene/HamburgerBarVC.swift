@@ -407,8 +407,8 @@ extension HamburgerBarVC {
             if self.isBrowsing {
                 self.presentSocialLoginAlert()
             } else {
-                self.dismiss(animated: false)
-                self.postObserverAction(.moveFromHamburgerBar,object: HamburgerType.scrap)
+                let scrapVC = ModuleFactory.resolve().makeScrapVC()
+                self.navigationController?.pushViewController(scrapVC, animated: true)
             }
         }
         
@@ -416,8 +416,8 @@ extension HamburgerBarVC {
             if self.isBrowsing {
                 self.presentSocialLoginAlert()
             } else {
-                self.dismiss(animated: false)
-                self.postObserverAction(.moveFromHamburgerBar,object: HamburgerType.myReview)
+                let myReviewVC = ModuleFactory.resolve().makeMyReviewVC()
+                self.navigationController?.pushViewController(myReviewVC, animated: true)
             }
         }
         
@@ -430,8 +430,8 @@ extension HamburgerBarVC {
         }
         
         settingButton.press {
-            self.dismiss(animated: false)
-            self.postObserverAction(.moveFromHamburgerBar,object: HamburgerType.setting)
+            let settingVC = ModuleFactory.resolve().makeSettingVC()
+            self.navigationController?.pushViewController(settingVC, animated: true)
         }
         
         logoutButton.press {

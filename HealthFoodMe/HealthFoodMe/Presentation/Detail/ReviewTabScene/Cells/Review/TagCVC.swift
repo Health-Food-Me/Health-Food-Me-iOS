@@ -18,7 +18,7 @@ class TagCVC: UICollectionViewCell, UICollectionViewRegisterable {
     private lazy var tagTextView: UITextView = {
         let tv = UITextView()
         tv.textColor = .mainRed
-        tv.font = UIFont.NotoRegular(size: 10)
+        tv.font = UIFont.NotoMedium(size: 10)
         tv.isEditable = false
         tv.isScrollEnabled = false
         tv.textContainerInset = .zero
