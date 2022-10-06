@@ -236,7 +236,19 @@ extension SearchVC {
         } else {
             requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lng,
                                                                              latitude: lat,
-                                                                             keyword: keyword), fromRecent: fromRecent)
+                                                                             keyword: keyword), fromRecent: fromRecent) {
+                if self.searchResultList.count == 1 {
+                    self.searchTextField.text = self.searchResultList[0].storeName
+                    let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
+                    searchResultVC.searchTextField.text = self.searchResultList[0].storeName
+                    searchResultVC.delegate = self
+                    searchResultVC.fromSearchType = .searchRecent
+                    searchResultVC.fromSearchCellInitial = self.searchResultList[0].id
+                    searchResultVC.searchContent = self.searchResultList[0].storeName
+                    searchResultVC.searchResultList = self.searchResultList
+                    self.navigationController?.pushViewController(searchResultVC, animated: false)
+                }
+            }
         }
     }
     
@@ -366,6 +378,8 @@ extension SearchVC {
             if let text = searchTextField.text {
                 if !searchList.isEmpty && !isCategory {
                     addSearchRecent(title: text, isCategory: false)
+                } else {
+                    addSearchRecent(title: text, isCategory: true)
                 }
             }
             searchTableView.tableHeaderView = searchHeaderView
@@ -408,7 +422,12 @@ extension SearchVC: UITextFieldDelegate {
         if let text = searchTextField.text {
             let searchContent = text.trimmingCharacters(in: .whitespaces)
             if !searchContent.isEmpty {
-                fetchSearchResultData(keyword: searchContent, fromRecent: false, isCategory: false)
+                if  !searchList.isEmpty && searchList[0].isCategory && searchContent == searchList[0].title {
+                    category = searchContent
+                    fetchSearchResultData(keyword: searchContent, fromRecent: false, isCategory: true)
+                } else {
+                    fetchSearchResultData(keyword: searchContent, fromRecent: false, isCategory: false)
+                }
             }
         }
         return true
@@ -566,7 +585,7 @@ extension SearchVC {
         }
     }
     
-    private func requestRestaurantSearchResult(searchRequest: SearchRequestEntity, fromRecent: Bool) {
+    private func requestRestaurantSearchResult(searchRequest: SearchRequestEntity, fromRecent: Bool, completion: @escaping(() -> Void)) {
         RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: searchRequest.longitude,
                                                                                                   latitude: searchRequest.latitude,
                                                                                                   keyword: searchRequest.keyword)) { networkResult in
@@ -582,6 +601,7 @@ extension SearchVC {
                     }
                     self.searchResultList = self.searchResultList.sorted(by: { $0.distance < $1.distance })
                     self.isSearchResult(fromRecent: fromRecent, isCategory: false)
+                    completion()
                 }
             default:
                 break;
