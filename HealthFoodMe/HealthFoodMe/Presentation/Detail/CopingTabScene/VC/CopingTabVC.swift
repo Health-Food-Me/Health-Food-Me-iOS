@@ -40,6 +40,7 @@ class CopingTabVC: UIViewController {
         tv.separatorStyle = .none
         tv.backgroundColor = .white
         tv.clipsToBounds = true
+        tv.isScrollEnabled = false
         tv.sectionFooterHeight = 0
         tv.allowsSelection = false
         tv.bounces = false
@@ -70,9 +71,10 @@ extension CopingTabVC {
         view.addSubviews(copingTabTableView)
         
         copingTabTableView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview()
         }
     }
     
@@ -91,6 +93,11 @@ extension CopingTabVC {
             if let state = noti.object as? Bool {
                 self.panGesture.isEnabled = state
             }
+        }
+        
+        addObserverAction(.copingTableViewScrollTop) { _ in
+            self.swipeDelegate?.swipeToDismiss()
+            self.delegate?.childViewScrollDidEnd(type: .coping)
         }
     }
     
@@ -125,6 +132,52 @@ extension CopingTabVC {
             }).disposed(by: disposeBag)
         
     }
+    
+    private func calculateContentCellHeight() -> CGFloat {
+
+        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        let statusBarManager = window?.windowScene?.statusBarManager
+        let statusBarView = UIView(frame: statusBarManager?.statusBarFrame ?? CGRect.zero)
+        
+        let statusBarHeight = statusBarView.frame.height
+        let navigationBarHeight = self.navigationController?.navigationBar.frame.height ?? 0
+        
+        let categoryCellHeight: CGFloat = (copingDataList.count == 1 ? 20 : 72)
+        let menuCellHeight: CGFloat = 44
+        
+        let screenHeight = UIScreen.main.bounds.height
+        let topElementsHeight = statusBarHeight + navigationBarHeight + categoryCellHeight + menuCellHeight
+        
+        let estimatedMaximumHeight = screenHeight - topElementsHeight - 38
+        let tableViewHeight = copingTableViewHeight()
+        if estimatedMaximumHeight > tableViewHeight {
+            return tableViewHeight
+        } else {
+            return estimatedMaximumHeight
+        }
+    }
+    
+    private func copingTableViewHeight() -> CGFloat {
+        guard !copingDataList.isEmpty,
+              copingDataList.count > currentIdx else { return 1000 }
+        
+        let headerHeight: CGFloat = 126
+        let bottomMargin: CGFloat = 52
+        
+        let cellCalculator = CopingCellCalculator.shared
+        var cellHeight: CGFloat {
+            let recommendListHeight = cellCalculator.calculateCellHeight(tipList: copingDataList[currentIdx].recommend)
+            let eatingListHeight = cellCalculator.calculateCellHeight(tipList: copingDataList[currentIdx].tip)
+            return recommendListHeight + eatingListHeight
+        }
+        
+        var tableViewHeight: CGFloat {
+            let calculatedHeight: CGFloat = headerHeight * 2 + cellHeight + bottomMargin * 2
+            return calculatedHeight
+        }
+        
+        return tableViewHeight + 50
+    }
 }
 
 // MARK: - Network
@@ -153,8 +206,16 @@ extension CopingTabVC: UITableViewDelegate {
         if indexPath.section == 0 {
             return copingDataList.count == 1 ? 20 : 72
         } else {
-            return UITableView.automaticDimension
+            return calculateContentCellHeight()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
     }
 }
 
