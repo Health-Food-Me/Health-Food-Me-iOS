@@ -61,7 +61,6 @@ extension ContentTVC {
     }
     
     private func setLayout() {
-        let screenWidth = UIScreen.main.bounds.width
         self.contentView.addSubviews(contentStackView)
         
         checkImageView.snp.makeConstraints {  make in
@@ -69,14 +68,14 @@ extension ContentTVC {
         }
         
         contentLabel.snp.makeConstraints { make in
-            make.width.equalTo(screenWidth - 170)
             make.trailing.equalTo(contentStackView.snp.trailing)
         }
         
         contentStackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(9)
             make.bottom.equalToSuperview().inset(9)
-            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().offset(46)
+            make.trailing.equalToSuperview().inset(46)
         }
     }
     
