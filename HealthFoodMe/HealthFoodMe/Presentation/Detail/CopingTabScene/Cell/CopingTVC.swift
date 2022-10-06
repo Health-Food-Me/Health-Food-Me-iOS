@@ -60,10 +60,11 @@ class CopingTVC: UITableViewCell, UITableViewRegisterable {
         tv.sectionFooterHeight = 0
         tv.allowsSelection = false
         tv.isScrollEnabled = false
-        tv.bounces = true
+        tv.bounces = false
         tv.layer.borderColor = UIColor.helfmeLineGray.cgColor
         tv.layer.borderWidth = 0.5
         tv.layer.cornerRadius = 15
+        tv.automaticallyAdjustsScrollIndicatorInsets = false
         if #available(iOS 15, *) {
             tv.sectionHeaderTopPadding = 0
         }
@@ -192,7 +193,7 @@ extension CopingTVC {
 extension CopingTVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.rowHeight
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -220,14 +221,11 @@ extension CopingTVC: UITableViewDelegate {
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        if (self.lastPosY > scrollView.contentOffset.y) && scrollView.contentOffset.y < 10
-            || self.lastPosY < 0{
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+
+        if scrollView.contentOffset.y < 15 {
             postObserverAction(.copingTableViewScrollTop)
         }
-            
-        lastPosY = scrollView.contentOffset.y
         
     }
 }

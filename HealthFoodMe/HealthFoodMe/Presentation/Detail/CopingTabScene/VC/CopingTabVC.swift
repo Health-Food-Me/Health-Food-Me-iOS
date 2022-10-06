@@ -148,10 +148,14 @@ extension CopingTabVC {
         let screenHeight = UIScreen.main.bounds.height
         let topElementsHeight = statusBarHeight + navigationBarHeight + categoryCellHeight + menuCellHeight
         
-        let estimatedMaximumHeight = screenHeight - topElementsHeight - 48
+        let estimatedMaximumHeight = screenHeight - topElementsHeight - 68
         let tableViewHeight = copingTableViewHeight()
-        print("HEIGHT",estimatedMaximumHeight,tableViewHeight)
-        return min(estimatedMaximumHeight,tableViewHeight)
+        print("HEIEHE",estimatedMaximumHeight,tableViewHeight)
+        if estimatedMaximumHeight > tableViewHeight {
+            return tableViewHeight
+        } else {
+            return estimatedMaximumHeight
+        }
     }
     
     private func copingTableViewHeight() -> CGFloat {
