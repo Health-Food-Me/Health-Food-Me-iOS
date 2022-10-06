@@ -425,11 +425,15 @@ extension MainMapVC {
     private func setIntitialMapPoint() {
         if !initialMapOpened {
             initialMapOpened = true
-            let NMGPosition = self.locationManager?.currentLatLng()
-            if NMGPosition != nil {
-                self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.gangnamStation, Int(MapLiterals.ZoomScale.KM1_5))
-            }
+            self.setInitialMapPointAfterAuth()
             isInitialPoint = true
+        }
+    }
+    
+    private func setInitialMapPointAfterAuth() {
+        let NMGPosition = self.locationManager?.currentLatLng()
+        if NMGPosition != nil {
+            self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.eonjuStation, Int(MapLiterals.ZoomScale.KM1))
         }
     }
     
@@ -849,6 +853,7 @@ extension MainMapVC: CLLocationManagerDelegate {
                 self.mapView.naverMapView.mapView.positionMode = .normal
                 self.canUseLocation = true
                 self.fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
+                self.setInitialMapPointAfterAuth()
             }
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
@@ -856,6 +861,7 @@ extension MainMapVC: CLLocationManagerDelegate {
                 self.mapView.naverMapView.mapView.positionMode = .normal
                 self.canUseLocation = true
                 self.fetchRestaurantList(zoom: MapLiterals.ZoomScale.Maximum)
+                self.setInitialMapPointAfterAuth()
             }
         @unknown default:
             break

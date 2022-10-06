@@ -223,8 +223,8 @@ extension SearchVC {
             lng = position.lng
             lat = position.lat
         } else {
-            lng = MapLiterals.Location.gangnamStation.lng
-            lat = MapLiterals.Location.gangnamStation.lat
+            lng = MapLiterals.Location.eonjuStation.lng
+            lat = MapLiterals.Location.eonjuStation.lat
         }
         if let text = searchTextField.text {
             searchContent = text

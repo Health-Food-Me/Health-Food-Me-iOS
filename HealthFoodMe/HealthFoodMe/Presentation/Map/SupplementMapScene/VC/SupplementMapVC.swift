@@ -162,7 +162,7 @@ extension SupplementMapVC {
             if let id = initialId {
                 self.setInitialPointForSearchVC(id: id, needShowSummary: needShowSummary)
             } else {
-                self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.gangnamStation, 200)
+                self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.eonjuStation, 200)
             }
         case .scrap:
             if let initial = self.initialPoint {
@@ -175,7 +175,7 @@ extension SupplementMapVC {
                     }
                 }
             } else {
-                self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.gangnamStation, 200)
+                self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.eonjuStation, 200)
             }
         }
     }
@@ -322,7 +322,7 @@ extension SupplementMapVC {
             self.currentLocation = Location(latitude: position.latitude, longitude: position.longtitude)
             self.currentSelectedPosition = position
         } else {
-            self.setCurrentPositionToGangnam()
+            self.setCurrentPositionToEonju()
         }
         
         if needShowSummary {
@@ -359,9 +359,9 @@ extension SupplementMapVC {
         }
     }
     
-    private func setCurrentPositionToGangnam() {
-        self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.gangnamStation, 200)
-        self.currentLocation = Location(latitude: MapLiterals.Location.gangnamStation.lat, longitude: MapLiterals.Location.gangnamStation.lng)
+    private func setCurrentPositionToEonju() {
+        self.mapView.moveCameraPositionWithZoom(MapLiterals.Location.eonjuStation, 200)
+        self.currentLocation = Location(latitude: MapLiterals.Location.eonjuStation.lat, longitude: MapLiterals.Location.eonjuStation.lng)
     }
     
     private func bindSetSelectPointForSearchVC(dataModel: MapPointDataModel) {
