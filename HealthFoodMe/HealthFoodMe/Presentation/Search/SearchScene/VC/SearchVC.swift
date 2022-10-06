@@ -236,7 +236,19 @@ extension SearchVC {
         } else {
             requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: lng,
                                                                              latitude: lat,
-                                                                             keyword: keyword), fromRecent: fromRecent)
+                                                                             keyword: keyword), fromRecent: fromRecent) {
+                if self.searchResultList.count == 1 {
+                    self.searchTextField.text = self.searchResultList[0].storeName
+                    let searchResultVC = ModuleFactory.resolve().makeSearchResultVC()
+                    searchResultVC.searchTextField.text = self.searchResultList[0].storeName
+                    searchResultVC.delegate = self
+                    searchResultVC.fromSearchType = .searchRecent
+                    searchResultVC.fromSearchCellInitial = self.searchResultList[0].id
+                    searchResultVC.searchContent = self.searchResultList[0].storeName
+                    searchResultVC.searchResultList = self.searchResultList
+                    self.navigationController?.pushViewController(searchResultVC, animated: false)
+                }
+            }
         }
     }
     
@@ -566,7 +578,7 @@ extension SearchVC {
         }
     }
     
-    private func requestRestaurantSearchResult(searchRequest: SearchRequestEntity, fromRecent: Bool) {
+    private func requestRestaurantSearchResult(searchRequest: SearchRequestEntity, fromRecent: Bool, completion: @escaping(() -> Void)) {
         RestaurantService.shared.requestRestaurantSearchResult(searchRequest: SearchRequestEntity(longitude: searchRequest.longitude,
                                                                                                   latitude: searchRequest.latitude,
                                                                                                   keyword: searchRequest.keyword)) { networkResult in
@@ -582,6 +594,7 @@ extension SearchVC {
                     }
                     self.searchResultList = self.searchResultList.sorted(by: { $0.distance < $1.distance })
                     self.isSearchResult(fromRecent: fromRecent, isCategory: false)
+                    completion()
                 }
             default:
                 break;

@@ -46,7 +46,7 @@ final class SearchResultVC: UIViewController {
         return view
     }()
     
-    private lazy var searchTextField: UITextField = {
+    lazy var searchTextField: UITextField = {
         let tf = UITextField()
         tf.leftViewMode = .always
         tf.rightViewMode = .always
