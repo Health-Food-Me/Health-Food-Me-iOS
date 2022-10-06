@@ -14,6 +14,7 @@ struct MapLiterals {
 extension MapLiterals {
     struct Location {
         static let gangnamStation: NMGLatLng = NMGLatLng(lat: 37.497952, lng: 127.027619)
+        static let eonjuStation: NMGLatLng = NMGLatLng(lat: 37.5073, lng: 127.0339)
     }
     
     struct ZoomScale {

@@ -139,13 +139,18 @@ extension MenuTabVC {
 		var notPickModel: [MenuDataModel] = []
 		
 		models.forEach { data in
-			if data.isPick {
+			if data.isPick && data.menuKcal != -1 {
 				pickModel.append(data)
-			} else {
+			} else if data.isPick {
+				pickModel.insert(data, at: 0)
+			} else if data.menuKcal != -1 {
 				notPickModel.append(data)
+			} else {
+				notPickModel.insert(data, at: 0)
 			}
 		}
-		pickModel += notPickModel
+		pickModel = pickModel.reversed()
+		pickModel += notPickModel.reversed()
 		
 		self.menuData = pickModel
 		self.menuBoard = restaurantMenuBoard
