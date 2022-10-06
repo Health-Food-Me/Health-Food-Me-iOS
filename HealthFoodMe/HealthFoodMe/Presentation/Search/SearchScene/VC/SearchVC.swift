@@ -378,6 +378,8 @@ extension SearchVC {
             if let text = searchTextField.text {
                 if !searchList.isEmpty && !isCategory {
                     addSearchRecent(title: text, isCategory: false)
+                } else {
+                    addSearchRecent(title: text, isCategory: true)
                 }
             }
             searchTableView.tableHeaderView = searchHeaderView
@@ -420,7 +422,12 @@ extension SearchVC: UITextFieldDelegate {
         if let text = searchTextField.text {
             let searchContent = text.trimmingCharacters(in: .whitespaces)
             if !searchContent.isEmpty {
-                fetchSearchResultData(keyword: searchContent, fromRecent: false, isCategory: false)
+                if  !searchList.isEmpty && searchList[0].isCategory && searchContent == searchList[0].title {
+                    category = searchContent
+                    fetchSearchResultData(keyword: searchContent, fromRecent: false, isCategory: true)
+                } else {
+                    fetchSearchResultData(keyword: searchContent, fromRecent: false, isCategory: false)
+                }
             }
         }
         return true
