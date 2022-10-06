@@ -101,7 +101,7 @@ class MyReviewCVC: UICollectionViewCell, UICollectionViewRegisterable {
     
     private let verticalView: UIView = {
         let view = UIView()
-        view.backgroundColor = .helfmeLineGray.withAlphaComponent(0.3)
+        view.backgroundColor = .helfmeLineGray
         view.snp.makeConstraints { make in
             make.height.equalTo(12)
             make.width.equalTo(1)
@@ -444,7 +444,7 @@ extension MyReviewCVC: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCVC.className, for: indexPath) as? TagCVC else { return UICollectionViewCell() }
             if let data = cellViewModel {
                 cell.setData(tagData: data.tagList[indexPath.row])
-                cell.layer.borderWidth = 0.5
+                cell.layer.borderWidth = 0.4
                 cell.layer.borderColor = UIColor.mainRed.cgColor
                 cell.layer.cornerRadius = 11
                 cell.layer.masksToBounds = true
@@ -504,11 +504,7 @@ extension MyReviewCVC: UICollectionViewDelegateFlowLayout {
         case tagCV:
             guard let cellViewModel = cellViewModel else { return .zero }
             let tagWidth = calculateTagCellWidth(cellViewModel.tagList[indexPath.row])
-            if tagWidth < 95 {
-                return CGSize(width: tagWidth, height: 22)
-            } else {
-                return CGSize(width: 95, height: 22)
-            }
+            return CGSize(width: tagWidth, height: 22)
         case reviewPhotoCV:
             let cellWidth = width * (105/375)
             let cellHeight = cellWidth * (105/105)
